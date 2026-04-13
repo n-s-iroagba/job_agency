@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerCurator Admin Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#54647a",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-container-high": "#e6e8ea",
+                    "background": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c3c6d7",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "primary": "#004ac6",
+                    "tertiary": "#943700",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-primary-fixed": "#00174b",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary-fixed": "#ffdbcd",
+                    "tertiary-container": "#bc4800",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#ffede6",
+                    "on-background": "#191c1e",
+                    "secondary": "#505f76",
+                    "surface-tint": "#0053db",
+                    "outline": "#737686",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary-container": "#2563eb",
+                    "surface": "#f7f9fb",
+                    "secondary-container": "#d0e1fb",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-surface-variant": "#434655",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-primary-container": "#eeefff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-variant": "#e0e3e5",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "on-surface": "#191c1e",
+                    "primary-fixed": "#dbe1ff",
+                    "inverse-primary": "#b4c5ff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "surface-container": "#eceef0",
+                    "surface-dim": "#d8dadc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased flex">
+<!-- Admin SideNavBar -->
+<aside class="h-screen w-72 fixed left-0 top-0 bg-slate-900 flex flex-col space-y-2 z-50">
+<!-- Brand / Header -->
+<div class="px-8 py-10">
+<h1 class="text-white font-black tracking-tighter text-2xl">CareerCurator</h1>
+<div class="mt-4 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                    AU
+                </div>
+<div>
+<p class="text-white text-sm font-bold">Admin Console</p>
+<p class="text-slate-400 text-[10px] uppercase tracking-widest">System Oversight</p>
+</div>
+</div>
+</div>
+<!-- Nav Items -->
+<nav class="flex-1 px-4">
+<div class="space-y-1">
+<!-- Overview: Active State -->
+<a class="bg-blue-600/10 text-blue-400 rounded-lg flex items-center px-4 py-3 transition-all duration-150 scale-95" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="analytics">analytics</span>
+<span class="font-sans text-xs uppercase font-semibold">Overview</span>
+</a>
+<a class="text-slate-400 px-4 py-3 flex items-center hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="assignment">assignment</span>
+<span class="font-sans text-xs uppercase font-semibold">Applications</span>
+</a>
+<a class="text-slate-400 px-4 py-3 flex items-center hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
+<span class="font-sans text-xs uppercase font-semibold">Payments</span>
+</a>
+<a class="text-slate-400 px-4 py-3 flex items-center hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="business_center">business_center</span>
+<span class="font-sans text-xs uppercase font-semibold">Job Management</span>
+</a>
+<a class="text-slate-400 px-4 py-3 flex items-center hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="account_balance">account_balance</span>
+<span class="font-sans text-xs uppercase font-semibold">Finance</span>
+</a>
+<a class="text-slate-400 px-4 py-3 flex items-center hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="chat">chat</span>
+<span class="font-sans text-xs uppercase font-semibold">Communication</span>
+</a>
+<a class="text-slate-400 px-4 py-3 flex items-center hover:bg-slate-800 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="health_and_safety">health_and_safety</span>
+<span class="font-sans text-xs uppercase font-semibold">System Health</span>
+</a>
+</div>
+</nav>
+<!-- Footer / Logout -->
+<div class="p-6">
+<button class="w-full flex items-center justify-center px-4 py-3 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="logout">logout</span>
+<span class="text-xs font-bold uppercase tracking-wider">Secure Sign Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-72 flex-1 min-h-screen bg-surface">
+<!-- Header -->
+<header class="h-20 px-10 flex items-center justify-between sticky top-0 bg-white/70 backdrop-blur-xl z-40 border-b border-outline-variant/10">
+<div>
+<h2 class="text-xl font-bold tracking-tight text-on-surface">Administrative Overview</h2>
+<p class="text-on-surface-variant text-xs font-medium">Monitoring Precision Professional Placement Systems</p>
+</div>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-2 bg-surface-container px-3 py-1.5 rounded-full">
+<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">System Live</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="settings">settings</button>
+</div>
+</header>
+<div class="p-10 space-y-10">
+<!-- Bento Stats Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Summary Card 1: Applications -->
+<div class="bg-surface-container-lowest p-8 rounded-lg shadow-sm shadow-slate-200/50 flex flex-col justify-between h-44 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl" data-icon="assignment">assignment</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">New Applications</p>
+<h3 class="text-5xl font-extrabold mt-2 text-primary">15</h3>
+</div>
+<div class="flex items-center text-emerald-600 font-bold text-xs">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="trending_up">trending_up</span>
+                        +12% from yesterday
+                    </div>
+</div>
+<!-- Summary Card 2: Unpaid -->
+<div class="bg-surface-container-lowest p-8 rounded-lg shadow-sm shadow-slate-200/50 flex flex-col justify-between h-44 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl" data-icon="payments">payments</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest text-error">Unpaid Payments</p>
+<h3 class="text-5xl font-extrabold mt-2 text-on-surface">07</h3>
+</div>
+<div class="flex items-center text-error font-bold text-xs">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="warning">warning</span>
+                        Requires Immediate Attention
+                    </div>
+</div>
+<!-- Summary Card 3: Unverified -->
+<div class="bg-surface-container-lowest p-8 rounded-lg shadow-sm shadow-slate-200/50 flex flex-col justify-between h-44 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest text-tertiary">Unverified (Pending)</p>
+<h3 class="text-5xl font-extrabold mt-2 text-on-surface">05</h3>
+</div>
+<div class="flex items-center text-on-surface-variant font-bold text-xs">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="hourglass_empty">hourglass_empty</span>
+                        Processing backlog
+                    </div>
+</div>
+</section>
+<!-- Operational Insight Layer -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- System Health Widget -->
+<div class="lg:col-span-4 bg-slate-900 text-white rounded-lg p-8 shadow-2xl shadow-slate-300">
+<h4 class="text-sm font-bold uppercase tracking-widest mb-8 border-b border-slate-800 pb-4 flex items-center">
+<span class="material-symbols-outlined mr-2 text-emerald-400" data-icon="health_and_safety">health_and_safety</span>
+                        System Health Status
+                    </h4>
+<div class="space-y-8">
+<!-- CPU -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-medium text-slate-400">Core Processor Load</span>
+<span class="text-sm font-bold text-emerald-400">24% - Optimal</span>
+</div>
+<div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[24%]"></div>
+</div>
+</div>
+<!-- Memory -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-medium text-slate-400">System Memory (RAM)</span>
+<span class="text-sm font-bold text-amber-400">68% - Elevated</span>
+</div>
+<div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 w-[68%]"></div>
+</div>
+</div>
+<!-- DB -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-medium text-slate-400">Database Latency</span>
+<span class="text-sm font-bold text-emerald-400">12ms - Healthy</span>
+</div>
+<div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[12%]"></div>
+</div>
+</div>
+<!-- Security -->
+<div class="pt-4 border-t border-slate-800">
+<div class="flex items-center space-x-3 bg-slate-800/50 p-3 rounded-lg">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Encryption Modules Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="lg:col-span-8 bg-surface-container-low rounded-lg p-8">
+<div class="flex items-center justify-between mb-8">
+<h4 class="text-sm font-bold uppercase tracking-widest text-on-surface flex items-center">
+<span class="material-symbols-outlined mr-2" data-icon="history">history</span>
+                            Real-time Operational Logs
+                        </h4>
+<button class="text-xs font-bold text-primary hover:underline">Download full log</button>
+</div>
+<div class="space-y-0 relative">
+<!-- Activity Line Vertical -->
+<div class="absolute left-3.5 top-0 bottom-0 w-px bg-outline-variant opacity-30"></div>
+<!-- Entry 1 -->
+<div class="relative pl-10 pb-8">
+<div class="absolute left-2 top-0 w-3 h-3 bg-primary rounded-full ring-4 ring-surface-container-low"></div>
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold text-on-surface">Payment Verification Uploaded</p>
+<span class="text-[10px] text-on-surface-variant font-medium">2 mins ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Admin <span class="font-bold">Sarah J.</span> uploaded verification batch #PV-992 for candidate "Marcus Aurelius".</p>
+</div>
+<!-- Entry 2 -->
+<div class="relative pl-10 pb-8">
+<div class="absolute left-2 top-0 w-3 h-3 bg-tertiary rounded-full ring-4 ring-surface-container-low"></div>
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold text-on-surface">Application Stage Advanced</p>
+<span class="text-[10px] text-on-surface-variant font-medium">14 mins ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">System moved <span class="font-bold">8 applications</span> from 'Review' to 'Interviewing' for Job ID #CUR-204.</p>
+</div>
+<!-- Entry 3 -->
+<div class="relative pl-10 pb-8">
+<div class="absolute left-2 top-0 w-3 h-3 bg-emerald-500 rounded-full ring-4 ring-surface-container-low"></div>
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold text-on-surface">Batch Settlement Completed</p>
+<span class="text-[10px] text-on-surface-variant font-medium">42 mins ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Finance core successfully settled 14 outgoing payments to tier-1 recruitment partners.</p>
+</div>
+<!-- Entry 4 -->
+<div class="relative pl-10">
+<div class="absolute left-2 top-0 w-3 h-3 bg-slate-400 rounded-full ring-4 ring-surface-container-low"></div>
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold text-on-surface">New Admin Profile Created</p>
+<span class="text-[10px] text-on-surface-variant font-medium">1 hour ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Access granted to user <span class="font-bold">David Chen</span> with 'Regional Manager' permissions.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Dashboard Spot: The Precision Spotlight (Asymmetric Hero Section) -->
+<section class="bg-primary overflow-hidden rounded-lg relative min-h-[300px] flex items-center shadow-xl">
+<div class="absolute inset-0 opacity-20" data-alt="Abstract data visualization dashboard with glowing lines and business growth charts on a dark background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAsRvRNz8bYnSXFp1Qx2FHNfdExNyyOsTYiBj-mTEfUy3zIU4Bs4V5PZcfSsxjMnz0ZW_0GJISWfVsKlNZdxDe35sm5zJePLboVDAryVKEUHtvqESeY8zFQmVHLqYgMcnhGpBanm8Hn9h6AcIyg0JUxwZiZIRKDYSz4mb9Qa2XZSwborkNH0BrCfkmv-wf5qzn_py6VTyTyX0SU6RdyeHcJvc9eDbELvdlBovLoiiS635r-BBrtmf6WgcRYrGT2wsnVw4fWJwqGNf0S'); background-size: cover; background-position: center;"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent"></div>
+<div class="relative z-10 px-12 py-10 max-w-2xl">
+<p class="text-blue-200 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Precision Insight</p>
+<h2 class="text-4xl font-bold text-white mb-6 leading-tight tracking-tight">System Performance has reached a <span class="text-blue-300">New High</span> this quarter.</h2>
+<p class="text-blue-100/80 text-sm mb-8 leading-relaxed">Operational efficiency in placement matching is up 22%. Your proactive management of payment verifications has reduced average cycle time by 1.2 days.</p>
+<div class="flex space-x-4">
+<button class="bg-white text-primary px-6 py-3 rounded-lg text-xs font-extrabold uppercase tracking-wider hover:bg-blue-50 transition-colors">Generate Report</button>
+<button class="bg-white/10 text-white backdrop-blur-md px-6 py-3 rounded-lg text-xs font-extrabold uppercase tracking-wider hover:bg-white/20 transition-colors">Dismiss</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 bg-slate-50 border-t border-outline-variant/10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div class="col-span-1 md:col-span-2">
+<p class="font-bold text-slate-900 text-lg mb-2">CareerCurator</p>
+<p class="text-xs font-normal text-slate-500 leading-relaxed max-w-xs">© 2024 CareerCurator. Precision in Professional Placement. Advanced Enterprise Resource Planning for Modern Talent Agencies.</p>
+</div>
+<div>
+<p class="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest">Administrative</p>
+<ul class="space-y-2">
+<li><a class="text-xs font-normal text-slate-500 hover:text-blue-600 transition-opacity" href="#">Security Logs</a></li>
+<li><a class="text-xs font-normal text-slate-500 hover:text-blue-600 transition-opacity" href="#">Staff Permissions</a></li>
+<li><a class="text-xs font-normal text-slate-500 hover:text-blue-600 transition-opacity" href="#">Database Backup</a></li>
+</ul>
+</div>
+<div>
+<p class="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest">Support</p>
+<ul class="space-y-2">
+<li><a class="text-xs font-normal text-slate-500 hover:text-blue-600 transition-opacity" href="#">Tech Documentation</a></li>
+<li><a class="text-xs font-normal text-slate-500 hover:text-blue-600 transition-opacity" href="#">Incident Reporting</a></li>
+<li><a class="text-xs font-normal text-slate-500 hover:text-blue-600 transition-opacity" href="#">Legal &amp; Compliance</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

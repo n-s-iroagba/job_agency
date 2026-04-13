@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Applications View - Career Curator Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#360f00",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary": "#505f76",
+                        "surface-tint": "#0053db",
+                        "on-surface-variant": "#434655",
+                        "background": "#f7f9fb",
+                        "secondary-container": "#d0e1fb",
+                        "on-primary-container": "#eeefff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-error": "#ffffff",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-primary-fixed": "#00174b",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "surface-container": "#eceef0",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "surface": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "outline-variant": "#c3c6d7",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary-container": "#54647a",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#dbe1ff",
+                        "primary": "#004ac6",
+                        "tertiary-container": "#bc4800",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#943700",
+                        "surface-bright": "#f7f9fb",
+                        "outline": "#737686",
+                        "inverse-surface": "#2d3133",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 px-4 bg-slate-50 dark:bg-slate-950 h-screen w-64 border-r-0 z-50 overflow-y-auto">
+<div class="mb-10 px-4">
+<span class="text-xl font-bold tracking-tight text-blue-700 dark:text-blue-400">Admin Portal</span>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-semibold">The Precision Curator</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-blue-700 dark:text-blue-400 font-semibold border-r-4 border-blue-600 bg-blue-50/50" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="text-sm font-medium">Application Pipeline</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="text-sm font-medium">Stage Builder</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="card_giftcard">card_giftcard</span>
+<span class="text-sm font-medium">Agency Benefits</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">System Settings</span>
+</a>
+</nav>
+<button class="mt-8 mx-2 py-3 px-4 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-lg text-sm font-bold shadow-md hover:opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+            Create New Job
+        </button>
+<div class="mt-auto pt-8 border-t border-slate-200 dark:border-slate-800 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-sm font-medium">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm font-medium">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm">
+<div class="flex items-center gap-4">
+<h1 class="text-lg font-black text-blue-800 dark:text-blue-200">Career Curator Admin</h1>
+<div class="h-6 w-[1px] bg-outline-variant/30"></div>
+<nav class="flex gap-6">
+<span class="text-blue-600 dark:text-blue-400 font-bold text-sm">Pipeline Overview</span>
+<span class="text-slate-600 dark:text-slate-400 text-sm hover:text-blue-500 transition-all cursor-pointer">Analytics</span>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/40 w-64 transition-all" placeholder="Search applications..." type="text"/>
+</div>
+<div class="flex gap-4">
+<button class="text-slate-600 hover:text-blue-500 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-600 hover:text-blue-500 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+</div>
+<img alt="User profile" class="w-10 h-10 rounded-full border-2 border-primary-container" data-alt="portrait of a professional male executive in a studio setting with clean lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNy4xRzBSMiYIh_xz_Qwe2JXbrJ6KYQrASc66w7YcAeuBsaZWGbxV1Yj-jeeWMKJMK3VMw0hkiqGzoYZoZiM-ymNNQhZu9DCfUjLGVaTl8Wzyi21JhSOrKM2CmaSuevGouyLEXACShygiaeGoiirJFHxrdpv9gR6Ba6jkx9jOyVjWXmjhOMiOZKYYOinteJyo0BczlvOCy-1GhWEXIu9XJgcY_VrTpe_aKp2of8Gk6Erxs9e-_dywd9Bq7dGD395gxOfjP2b4e-ylI"/>
+</div>
+</header>
+<!-- View Content -->
+<section class="p-8 flex-1">
+<!-- Breadcrumbs & Header -->
+<div class="mb-8">
+<div class="flex items-center gap-2 text-xs font-medium text-on-surface-variant uppercase tracking-widest mb-2">
+<span>Recruitment</span>
+<span class="material-symbols-outlined text-[10px]" data-icon="chevron_right">chevron_right</span>
+<span>Pipeline</span>
+<span class="material-symbols-outlined text-[10px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold">New Applications</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-[3.5rem] font-bold tracking-tight text-on-surface leading-none mb-2">New Applications</h2>
+<p class="text-on-surface-variant text-lg max-w-2xl">Review and triage incoming talent. Total pending submissions: <span class="text-primary font-bold">24</span></p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container-high text-on-secondary-container px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all hover:bg-surface-container-highest">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+                            Filter Results
+                        </button>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-lg font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                            Export CSV
+                        </button>
+</div>
+</div>
+</div>
+<!-- Main Data Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-2xl shadow-slate-200/50 overflow-hidden border border-white/40">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-5 text-[0.75rem] font-bold uppercase tracking-widest text-on-surface-variant">Applicant Name</th>
+<th class="px-8 py-5 text-[0.75rem] font-bold uppercase tracking-widest text-on-surface-variant">Job Title</th>
+<th class="px-8 py-5 text-[0.75rem] font-bold uppercase tracking-widest text-on-surface-variant">Submission Date</th>
+<th class="px-8 py-5 text-[0.75rem] font-bold uppercase tracking-widest text-on-surface-variant">Current Stage</th>
+<th class="px-8 py-5 text-[0.75rem] font-bold uppercase tracking-widest text-on-surface-variant">Payment Status</th>
+<th class="px-8 py-5 text-[0.75rem] font-bold uppercase tracking-widest text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1 -->
+<tr class="group hover:bg-surface-container-low transition-colors duration-200">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-700 font-bold">AS</div>
+<div>
+<p class="font-bold text-on-surface">Adrian Sterling</p>
+<p class="text-xs text-on-surface-variant">adrian.s@design.co</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="font-semibold text-on-surface">Senior Product Designer</p>
+<p class="text-xs text-on-surface-variant">Full-time • Remote</p>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface">Oct 24, 2023</p>
+<p class="text-xs text-on-surface-variant">14:20 PM</p>
+</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container">
+                                        Technical Review
+                                    </span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-sm font-medium text-on-surface">Paid</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-2 text-primary font-bold text-sm hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-surface-container-low transition-colors duration-200">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-orange-700 font-bold">EM</div>
+<div>
+<p class="font-bold text-on-surface">Elena Moretti</p>
+<p class="text-xs text-on-surface-variant">e.moretti@it.it</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="font-semibold text-on-surface">Head of Engineering</p>
+<p class="text-xs text-on-surface-variant">Contract • Hybrid</p>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface">Oct 23, 2023</p>
+<p class="text-xs text-on-surface-variant">09:15 AM</p>
+</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary-fixed text-on-primary-fixed">
+                                        Final Interview
+                                    </span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-slate-300"></span>
+<span class="text-sm font-medium text-on-surface">Pending</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-2 text-primary font-bold text-sm hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-surface-container-low transition-colors duration-200">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<img alt="Candidate" class="w-10 h-10 rounded-lg object-cover" data-alt="professional portrait of a confident woman in business attire with a warm friendly expression and neutral office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrvvAN2NOOcJNVOojy1zAAwoJZiskiNnXpGet1VxJiaAMg4nWBYWC4DkBP5AdE9eSkjaPJ9draYHcE0Wr4QjqnlTqHIiFGxopf3eGNB414T6POtTTxcLqgKkCNNmxWDMjRMHTa-avpemvBhHoLD5QO5f5VEUYnJmjmcXiGklETxNy9H8-kgiN9YbPhq7iHHr3CMRaAn8267EcAuIlGw_r8NCzCPTFLMQvxroDEGYuYKilm-L9q-d5sg7ueqrifzoM2Ii1waCwMbvF9"/>
+<div>
+<p class="font-bold text-on-surface">Sarah Jenkins</p>
+<p class="text-xs text-on-surface-variant">s.jenkins@media.net</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="font-semibold text-on-surface">Marketing Director</p>
+<p class="text-xs text-on-surface-variant">Full-time • On-site</p>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface">Oct 22, 2023</p>
+<p class="text-xs text-on-surface-variant">17:45 PM</p>
+</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-tertiary-fixed text-on-tertiary-fixed">
+                                        Initial Screening
+                                    </span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-sm font-medium text-on-surface">Paid</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-2 text-primary font-bold text-sm hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-surface-container-low transition-colors duration-200">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">TC</div>
+<div>
+<p class="font-bold text-on-surface">Thomas Chen</p>
+<p class="text-xs text-on-surface-variant">t.chen@tech.io</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="font-semibold text-on-surface">Full Stack Developer</p>
+<p class="text-xs text-on-surface-variant">Full-time • Remote</p>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface">Oct 22, 2023</p>
+<p class="text-xs text-on-surface-variant">11:00 AM</p>
+</td>
+<td class="px-8 py-6">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-secondary-container text-on-secondary-container">
+                                        Coding Test
+                                    </span>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-red-500"></span>
+<span class="text-sm font-medium text-on-surface">Failed</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="px-4 py-2 text-primary font-bold text-sm hover:underline">View Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-8 py-6 flex items-center justify-between bg-surface-container-low/30 border-t border-surface-container">
+<p class="text-sm text-on-surface-variant">Showing <span class="font-bold text-on-surface">1 - 4</span> of <span class="font-bold text-on-surface">24</span> applications</p>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-primary text-on-primary font-bold">1</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">2</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">3</button>
+<span class="mx-1 text-on-surface-variant">...</span>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">6</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dashboard Style Metrics -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-8 bg-surface-container-low rounded-xl border border-white/40">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-blue-100 rounded-lg text-blue-700">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">+12% vs LY</span>
+</div>
+<h3 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-1">Weekly Velocity</h3>
+<p class="text-3xl font-black text-on-surface">42 Applications</p>
+</div>
+<div class="p-8 bg-surface-container-low rounded-xl border border-white/40">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-orange-100 rounded-lg text-orange-700">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+</div>
+<span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded">-4.2% Slowdown</span>
+</div>
+<h3 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-1">Avg. Review Time</h3>
+<p class="text-3xl font-black text-on-surface">1.8 Days</p>
+</div>
+<div class="p-8 bg-gradient-to-br from-primary to-blue-800 rounded-xl shadow-xl shadow-primary/20 text-on-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-white/20 rounded-lg">
+<span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
+</div>
+</div>
+<h3 class="text-sm font-bold text-white/70 uppercase tracking-widest mb-1">Top Performer</h3>
+<p class="text-3xl font-black">Sarah Jenkins</p>
+<p class="text-xs mt-2 text-white/50">98% Match Score for Marketing Dir.</p>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="px-8 py-6 border-t border-surface-container-high text-on-surface-variant text-xs flex justify-between">
+<div>
+                © 2023 Career Curator Administration. Internal Access Only.
+            </div>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Security Controls</a>
+</div>
+</footer>
+</main>
+</body></html>

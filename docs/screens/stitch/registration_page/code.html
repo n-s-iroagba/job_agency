@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register | CareerCurator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-container": "#ffede6",
+                        "on-surface": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "tertiary-container": "#bc4800",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-container-high": "#e6e8ea",
+                        "outline-variant": "#c3c6d7",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "outline": "#737686",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "primary": "#004ac6",
+                        "surface-tint": "#0053db",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "tertiary": "#943700",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-primary": "#b4c5ff",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "surface-bright": "#f7f9fb",
+                        "on-surface-variant": "#434655",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary-fixed": "#ffdbcd",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary": "#505f76",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 w-full z-50 glass-panel shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
+<nav class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">CareerCurator</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-500 font-medium hover:text-slate-900 transition-colors" href="#">Jobs</a>
+<a class="text-slate-500 font-medium hover:text-slate-900 transition-colors" href="#">Companies</a>
+<a class="text-slate-500 font-medium hover:text-slate-900 transition-colors" href="#">Insights</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-slate-500 font-medium hover:text-slate-900 transition-colors" href="#">Sign In</a>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2 rounded-lg font-semibold active:scale-95 duration-200 transition-all">Register</button>
+</div>
+</nav>
+</header>
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-6">
+<div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<!-- Left Side: Editorial Content -->
+<div class="hidden lg:block space-y-8 pr-12">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container text-on-secondary-fixed-variant text-xs font-semibold tracking-wider uppercase">
+                    Precision in Professionalism
+                </div>
+<h1 class="text-6xl font-bold leading-[1.1] text-on-surface tracking-tight">
+                    Join the <span class="text-primary">elite</span> network.
+                </h1>
+<p class="text-xl text-on-surface-variant font-light leading-relaxed">
+                    Step into a curated ecosystem where your potential meets precision. Beyond job listings, we build career legacies.
+                </p>
+<div class="space-y-6 pt-4">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-semibold text-on-surface">Curated Opportunities</h3>
+<p class="text-sm text-on-surface-variant">Access roles hand-selected for high-impact professionals.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div>
+<h3 class="font-semibold text-on-surface">Precision Insights</h3>
+<p class="text-sm text-on-surface-variant">Real-time market data to guide your next strategic move.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Registration Form -->
+<div class="w-full max-w-md mx-auto lg:mx-0">
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] p-8 md:p-10">
+<div class="mb-8">
+<h2 class="text-2xl font-bold text-on-surface">Create Account</h2>
+<p class="text-on-surface-variant text-sm mt-2">Start your professional curation today.</p>
+</div>
+<form class="space-y-6" onsubmit="return false;">
+<!-- Full Name -->
+<div class="space-y-2">
+<label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant" for="fullname">Full Name</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all duration-300 outline-none placeholder:text-outline/60 text-on-surface" id="fullname" placeholder="Enter your full name" type="text"/>
+<span class="absolute right-4 top-3 text-outline/40 material-symbols-outlined">person</span>
+</div>
+</div>
+<!-- Email -->
+<div class="space-y-2">
+<label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant" for="email">Work Email</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all duration-300 outline-none placeholder:text-outline/60 text-on-surface" id="email" placeholder="name@company.com" type="email"/>
+<span class="absolute right-4 top-3 text-outline/40 material-symbols-outlined">mail</span>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-2">
+<label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant" for="password">Password</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all duration-300 outline-none placeholder:text-outline/60 text-on-surface" id="password" placeholder="••••••••" type="password"/>
+<span class="absolute right-4 top-3 text-outline/40 material-symbols-outlined">lock</span>
+</div>
+<!-- Password Strength Indicator -->
+<div class="mt-3">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Security Tier</span>
+<span class="text-[10px] font-bold uppercase text-primary">High Strength</span>
+</div>
+<div class="flex gap-1 h-1">
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-surface-container-high rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Privacy Policy -->
+<div class="flex items-start gap-3">
+<input class="mt-1 rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" id="privacy" type="checkbox"/>
+<label class="text-sm text-on-surface-variant leading-tight" for="privacy">
+                                I agree to the <a class="text-primary hover:underline font-medium" href="#">Privacy Policy</a> and <a class="text-primary hover:underline font-medium" href="#">Terms of Service</a>.
+                            </label>
+</div>
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-lg font-bold text-sm tracking-wide shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 active:scale-[0.98]">
+                            CREATE ACCOUNT
+                        </button>
+<div class="relative py-4">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-outline-variant/20"></div></div>
+<div class="relative flex justify-center text-xs uppercase tracking-widest font-bold"><span class="bg-surface-container-lowest px-4 text-outline">or curate with</span></div>
+</div>
+<button class="w-full flex items-center justify-center gap-3 bg-surface-container-low hover:bg-surface-container-high text-on-surface py-4 rounded-lg font-semibold text-sm transition-all duration-300">
+<img alt="" class="w-5 h-5" data-alt="Official Google G logo in company colors on a transparent background" logo\".svg"="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVWX4iy0_5eaiAXonwNLDvP8692U5GTszw7-tPy19Dd82YwDmxQhm6cjfBA_sS4pvHjM4vJc6COAw1hvcY4GNpNhlZ6ocAbPRkRUEDVWTl8JiPsTQhAyQBegXYbOTlenmmlzn7Jmg0WVojkiUIkGAckxrERj-qi5WiAwBvCV2KcgNnGyNZb4WvSej5KLHTTQ4_UzNKlsJsbZm_uiTZNhy1O_4pnKy2SR2tz9jM-ywWzCXcL9ObRCj5gXJdlA83JZJiRZ1VDM8UNem2"/>
+                            Continue with Google
+                        </button>
+</form>
+<p class="text-center text-sm text-on-surface-variant mt-8">
+                        Already part of the network? <a class="text-primary font-bold hover:underline" href="#">Sign In</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-slate-50 dark:bg-slate-950 py-12 px-8 mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-6">
+<div class="text-lg font-bold text-slate-900 dark:text-white">CareerCurator</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-colors hover:underline decoration-blue-600 underline-offset-4" href="#">Privacy Policy</a>
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-colors hover:underline decoration-blue-600 underline-offset-4" href="#">Terms of Service</a>
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-colors hover:underline decoration-blue-600 underline-offset-4" href="#">Cookie Settings</a>
+<a class="text-slate-500 font-medium hover:text-blue-600 transition-colors hover:underline decoration-blue-600 underline-offset-4" href="#">Contact</a>
+</div>
+<div class="text-slate-500 text-xs font-medium uppercase tracking-wider">
+                © 2024 CareerCurator. Precision in Professionalism.
+            </div>
+</div>
+</footer>
+</body></html>

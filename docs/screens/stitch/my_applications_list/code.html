@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Applications | EliteTalent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#eeefff",
+                    "surface-container": "#eceef0",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-low": "#f2f4f6",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#191c1e",
+                    "on-tertiary-container": "#ffede6",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "surface-tint": "#0053db",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-container": "#d0e1fb",
+                    "on-tertiary-fixed": "#360f00",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary": "#943700",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#bc4800",
+                    "surface-container-high": "#e6e8ea",
+                    "surface": "#f7f9fb",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-secondary-container": "#54647a",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "surface-variant": "#e0e3e5",
+                    "primary-container": "#2563eb",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline-variant": "#c3c6d7",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "background": "#f7f9fb",
+                    "secondary": "#505f76",
+                    "on-error": "#ffffff",
+                    "outline": "#737686",
+                    "on-surface": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#004ac6",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container-highest": "#e0e3e5",
+                    "inverse-primary": "#b4c5ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+    </style>
+</head>
+<body class="text-on-surface bg-surface">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-bold tracking-tighter text-slate-900">EliteTalent</span>
+<div class="hidden md:flex gap-8 items-center font-['Inter'] font-medium text-sm tracking-tight">
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">Discover</a>
+<a class="text-blue-700 border-b-2 border-blue-600 pb-1" href="#">My Applications</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">Resumes</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">Messages</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-sm w-64 focus:ring-2 focus:ring-primary/20" placeholder="Search applications..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-all active:scale-95">Create Profile</button>
+<img alt="User avatar" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-container-high" data-alt="Close up portrait of a professional woman smiling confidently in a modern bright office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvM51PHxLVdlZ6paAe_i1mRwxyhy3wnlNPf8sSxZPJdetovxO31XSXqxCPfxairiJHVx7W3QqrShGmxQJk4wyOOGtj06jAdfry9vLG5j6UeWzyN9dQ35LOUonhLQD6I_FpcDrRchl4xYdW9OS_WHpaYyp_SAfklbPEIauzj-3fDvZIMiy9Y4OxKayZth88eSTFayzS13_S66XFQ_l1QvbnvhFIvKtAkCtJ4DMyxLklkK3-iupBhDS3kD_ug5eTDtB0qAC2winf5MQe"/>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-32 pb-24 px-8 max-w-screen-2xl mx-auto min-h-screen">
+<!-- Header Section -->
+<header class="mb-12">
+<h1 class="text-[3.5rem] font-bold leading-none tracking-tight text-on-surface mb-4">Application Hub</h1>
+<p class="text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                Manage your professional journey. Track active submissions, resume drafts, and completed interview cycles in one curated space.
+            </p>
+</header>
+<!-- Stats Bento Grid (Mini) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2">
+<span class="label-md text-outline uppercase tracking-widest font-semibold text-[0.65rem]">Active Paths</span>
+<span class="text-3xl font-bold text-primary">04</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2">
+<span class="label-md text-outline uppercase tracking-widest font-semibold text-[0.65rem]">In Review</span>
+<span class="text-3xl font-bold text-secondary">02</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2 border-l-4 border-tertiary">
+<span class="label-md text-outline uppercase tracking-widest font-semibold text-[0.65rem]">Action Required</span>
+<span class="text-3xl font-bold text-tertiary">01</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col gap-2">
+<span class="label-md text-outline uppercase tracking-widest font-semibold text-[0.65rem]">Success Rate</span>
+<span class="text-3xl font-bold text-on-surface">82%</span>
+</div>
+</div>
+<!-- Application List -->
+<section class="space-y-4">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-semibold text-on-surface">Recent Submissions</h2>
+<div class="flex gap-2">
+<button class="bg-surface-container-high px-4 py-1.5 rounded-full text-xs font-medium text-on-surface">All</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors">Active</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors">Completed</button>
+</div>
+</div>
+<!-- Card: Active -->
+<div class="group bg-surface-container-lowest p-8 rounded-xl flex flex-col md:flex-row md:items-center gap-8 shadow-sm hover:shadow-md transition-all duration-300">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 rounded-xl bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-weight="fill">architecture</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[0.7rem] font-bold uppercase tracking-wider">Active</span>
+<span class="text-outline text-xs">• Applied 2 days ago</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-1">Senior Product Architect</h3>
+<p class="text-on-surface-variant text-sm mb-4">Vortex Global Systems • New York (Remote)</p>
+<div class="max-w-xs">
+<div class="flex justify-between text-[0.7rem] font-semibold text-on-surface-variant mb-2">
+<span>Interview Stage</span>
+<span>65%</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-3 min-w-[140px]">
+<button class="w-full bg-primary text-on-primary py-2.5 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:translate-y-[-2px] transition-all">View Details</button>
+<button class="w-full text-primary text-sm font-semibold hover:bg-surface-container-low py-2 rounded-lg transition-colors">Withdraw</button>
+</div>
+</div>
+<!-- Card: Draft -->
+<div class="group bg-surface-container-lowest p-8 rounded-xl flex flex-col md:flex-row md:items-center gap-8 shadow-sm hover:shadow-md transition-all duration-300">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 rounded-xl bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-weight="fill">edit_note</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-tertiary-fixed text-tertiary px-3 py-1 rounded-full text-[0.7rem] font-bold uppercase tracking-wider">Draft</span>
+<span class="text-outline text-xs">• Last edited 4 hours ago</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-1">Lead Creative Director</h3>
+<p class="text-on-surface-variant text-sm mb-4">Stellar Creative Agency • Los Angeles</p>
+<div class="max-w-xs">
+<div class="flex justify-between text-[0.7rem] font-semibold text-on-surface-variant mb-2">
+<span>Profile Completion</span>
+<span>30%</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[30%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-3 min-w-[140px]">
+<button class="w-full bg-primary text-on-primary py-2.5 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:translate-y-[-2px] transition-all">Continue</button>
+<button class="w-full text-secondary text-sm font-semibold hover:bg-surface-container-low py-2 rounded-lg transition-colors">Discard Draft</button>
+</div>
+</div>
+<!-- Card: Completed (Success) -->
+<div class="group bg-surface-container-lowest p-8 rounded-xl flex flex-col md:flex-row md:items-center gap-8 shadow-sm hover:shadow-md transition-all duration-300 border-l-4 border-green-500">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600 text-3xl" data-weight="fill">verified</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[0.7rem] font-bold uppercase tracking-wider">Completed</span>
+<span class="text-outline text-xs">• Offer Received</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-1">Staff Software Engineer</h3>
+<p class="text-on-surface-variant text-sm mb-4">CloudScale Dynamics • Austin</p>
+<div class="max-w-xs">
+<div class="flex justify-between text-[0.7rem] font-semibold text-on-surface-variant mb-2">
+<span>Process Complete</span>
+<span>100%</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-green-500 h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-3 min-w-[140px]">
+<button class="w-full bg-green-600 text-on-primary py-2.5 rounded-lg text-sm font-bold shadow-lg shadow-green-600/20 hover:translate-y-[-2px] transition-all">Review Offer</button>
+</div>
+</div>
+<!-- Card: Completed (Archive) -->
+<div class="group bg-surface-container-low/50 p-8 rounded-xl flex flex-col md:flex-row md:items-center gap-8 opacity-75 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-3xl" data-weight="fill">archive</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[0.7rem] font-bold uppercase tracking-wider">Completed</span>
+<span class="text-outline text-xs">• 1 month ago</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-1">Marketing Analyst</h3>
+<p class="text-on-surface-variant text-sm mb-4">Urban Pulse Media • Chicago</p>
+<div class="max-w-xs">
+<div class="flex justify-between text-[0.7rem] font-semibold text-on-surface-variant mb-2">
+<span>Process Ended</span>
+<span>100%</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-outline h-full w-[100%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-3 min-w-[140px]">
+<button class="w-full bg-surface-container-high text-on-surface-variant py-2.5 rounded-lg text-sm font-bold hover:bg-surface-container-highest transition-all">Feedback</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-slate-50 border-t border-slate-200/20">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-screen-2xl mx-auto gap-8">
+<div class="text-xs font-normal text-slate-500 uppercase tracking-widest">
+                © 2024 Precision Curator Agency. All rights reserved.
+            </div>
+<div class="flex gap-8">
+<a class="text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Terms of Service</a>
+<a class="text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Contact Support</a>
+<a class="text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Diversity &amp; Inclusion</a>
+</div>
+</div>
+</footer>
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/70 backdrop-blur-xl flex justify-around items-center py-4 px-2 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] z-50">
+<div class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[0.6rem] font-bold">Discover</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-blue-700">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="text-[0.6rem] font-bold">Applied</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">description</span>
+<span class="text-[0.6rem] font-bold">Resumes</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">mail</span>
+<span class="text-[0.6rem] font-bold">Inbox</span>
+</div>
+</nav>
+</body></html>

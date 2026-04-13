@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Details | EliteTalent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#eeefff",
+                    "surface-container": "#eceef0",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-low": "#f2f4f6",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#191c1e",
+                    "on-tertiary-container": "#ffede6",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "surface-tint": "#0053db",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-container": "#d0e1fb",
+                    "on-tertiary-fixed": "#360f00",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary": "#943700",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#bc4800",
+                    "surface-container-high": "#e6e8ea",
+                    "surface": "#f7f9fb",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-secondary-container": "#54647a",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "surface-variant": "#e0e3e5",
+                    "primary-container": "#2563eb",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline-variant": "#c3c6d7",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "background": "#f7f9fb",
+                    "secondary": "#505f76",
+                    "on-error": "#ffffff",
+                    "outline": "#737686",
+                    "on-surface": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#004ac6",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container-highest": "#e0e3e5",
+                    "inverse-primary": "#b4c5ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-bold tracking-tighter text-slate-900">EliteTalent</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-blue-700 border-b-2 border-blue-600 pb-1 font-medium text-sm tracking-tight" href="#">Discover</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors font-medium text-sm tracking-tight" href="#">My Applications</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors font-medium text-sm tracking-tight" href="#">Resumes</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors font-medium text-sm tracking-tight" href="#">Messages</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-all duration-300">
+                    Create Profile
+                </button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-high">
+<img alt="User avatar" data-alt="Close up portrait of a professional man with a kind expression in a bright modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxK-fmMQ3HzEGeh6_IZCxIGfExVtrCFN4URce5KDfkMeRfN4EhzKvnUjbDXgizI_6QFSurcQHttFf3Ygypw09jv0XFuKBcvNdHWIjV5och9JzV-temte7fN_uF1mvuVWWtOH4Sh_LBSzoYyIOtAr-2kQ7E2UxxB7rlpr-y5rgnuJb4WM8gydXFNls_HOvKh-SxKY-1e_DBpQDglYN6MRzS9NLK4frdKjuJaWQQYZnKof20tXBMLNLbvfITxtSkxt20oke5C2yQEKIR"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-8 max-w-screen-2xl mx-auto">
+<!-- Hero Job Header -->
+<div class="flex flex-col md:flex-row gap-12 items-start mb-16">
+<div class="flex-1 space-y-6">
+<div class="flex items-center gap-3">
+<span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded text-xs font-bold uppercase tracking-widest">Premium Partner</span>
+<span class="text-on-surface-variant text-sm font-medium">Posted 2 days ago</span>
+</div>
+<h1 class="text-[3.5rem] font-bold leading-tight tracking-tight text-on-surface">Senior Creative Strategist, EMEA</h1>
+<div class="flex flex-wrap gap-4 text-on-surface-variant font-medium">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">apartment</span>
+<span>Nexus Design Collective</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span>London (Hybrid)</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">payments</span>
+<span>£95,000 - £120,000</span>
+</div>
+</div>
+</div>
+<div class="w-full md:w-80 bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] border border-outline-variant/10">
+<button class="w-full bg-primary-container text-white py-4 rounded-lg font-bold text-lg hover:shadow-lg transition-all mb-4">
+                    Start Application
+                </button>
+<button class="w-full bg-surface-container-high text-on-surface py-4 rounded-lg font-bold text-lg hover:bg-surface-container-highest transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">bookmark</span>
+                    Save for Later
+                </button>
+<p class="text-xs text-center text-on-surface-variant mt-4 leading-relaxed">
+                    By starting your application, you agree to our terms and diversity policy.
+                </p>
+</div>
+</div>
+<!-- Asymmetric Content Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Role Details -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Role Conditions Bento Section -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-surface-container-low p-8 rounded-xl">
+<h3 class="text-xl font-bold mb-4">The Mission</h3>
+<p class="text-on-surface-variant leading-relaxed text-lg">
+                            We are seeking a visionary Strategist to lead our EMEA expansion. You will be the bridge between global creative vision and regional execution, managing a multi-disciplinary team across 4 capital cities. Your role is not just to manage, but to define the next decade of brand storytelling.
+                        </p>
+</div>
+<div class="bg-primary/5 p-8 rounded-xl border border-primary/10">
+<h4 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Quick Stats</h4>
+<ul class="space-y-4">
+<li class="flex justify-between items-center">
+<span class="text-on-surface-variant text-sm">Experience</span>
+<span class="font-bold">8+ Years</span>
+</li>
+<li class="flex justify-between items-center">
+<span class="text-on-surface-variant text-sm">Team Size</span>
+<span class="font-bold">12 Direct</span>
+</li>
+<li class="flex justify-between items-center">
+<span class="text-on-surface-variant text-sm">Contract</span>
+<span class="font-bold">Permanent</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- Detailed Content -->
+<section class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+<span class="w-8 h-1 bg-primary rounded-full"></span>
+                            Key Responsibilities
+                        </h2>
+<ul class="space-y-4 text-on-surface-variant leading-relaxed list-none">
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container">check_circle</span>
+                                Oversee creative direction for major EMEA accounts, ensuring brand consistency across diverse markets.
+                            </li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container">check_circle</span>
+                                Direct stakeholder management with C-suite executives at global partner organizations.
+                            </li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container">check_circle</span>
+                                Lead high-stakes pitches and conceptual development for multi-channel campaigns.
+                            </li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/5">
+<h2 class="text-2xl font-bold mb-6">Benefits &amp; Conditions</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<div>
+<h4 class="font-bold">Health &amp; Wellness</h4>
+<p class="text-sm text-on-surface-variant">Premium private insurance and mental health support for you and your family.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">travel_explore</span>
+</div>
+<div>
+<h4 class="font-bold">Global Mobility</h4>
+<p class="text-sm text-on-surface-variant">Annual work-from-anywhere credit and relocation assistance if needed.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<h4 class="font-bold">Equity Options</h4>
+<p class="text-sm text-on-surface-variant">Stock option plan with immediate vesting acceleration milestones.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h4 class="font-bold">Learning Grant</h4>
+<p class="text-sm text-on-surface-variant">£3,000 annual budget for conferences, courses, and certifications.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Application Journey -->
+<div class="lg:col-span-4 space-y-8">
+<div class="bg-surface-container-high/40 p-8 rounded-xl">
+<h3 class="text-xl font-bold mb-8">Application Journey</h3>
+<div class="relative space-y-12">
+<!-- Step 1 -->
+<div class="relative flex gap-6">
+<div class="absolute left-4 top-10 h-14 border-l-2 border-dashed border-outline-variant"></div>
+<div class="z-10 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs">01</div>
+<div>
+<h4 class="font-bold">Profile Screening</h4>
+<p class="text-sm text-on-surface-variant">Initial review of your resume and portfolio by our talent curators.</p>
+<span class="text-[10px] uppercase tracking-widest text-primary font-bold mt-1 inline-block">Avg. 3 Days</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex gap-6">
+<div class="absolute left-4 top-10 h-14 border-l-2 border-dashed border-outline-variant"></div>
+<div class="z-10 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">02</div>
+<div>
+<h4 class="font-bold">Discovery Call</h4>
+<p class="text-sm text-on-surface-variant">30-minute chat with the Creative Director about vision and culture.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex gap-6">
+<div class="absolute left-4 top-10 h-14 border-l-2 border-dashed border-outline-variant"></div>
+<div class="z-10 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">03</div>
+<div>
+<h4 class="font-bold">Strategic Workshop</h4>
+<p class="text-sm text-on-surface-variant">A paid 3-hour deep dive into a real-world business challenge.</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex gap-6">
+<div class="z-10 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">04</div>
+<div>
+<h4 class="font-bold">Final Offer</h4>
+<p class="text-sm text-on-surface-variant">Meeting with the Executive Team followed by a transparent offer package.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Glassmorphism Card for Diversity -->
+<div class="p-8 rounded-xl bg-white/40 backdrop-blur-md border border-white/20 shadow-xl overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-primary/20 text-6xl">diversity_3</span>
+</div>
+<h4 class="text-lg font-bold mb-4 relative z-10">Our Commitment</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed relative z-10">
+                        EliteTalent works exclusively with agencies that prioritize diversity. This role is open to all qualified applicants regardless of background. We offer specialized support for neurodivergent candidates throughout the interview process.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Similar Roles Section (Asymmetric Grid) -->
+<div class="mt-24">
+<h3 class="text-2xl font-bold mb-8">Related Opportunities</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="group bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<span class="text-xs font-bold text-primary">New</span>
+</div>
+<h4 class="font-bold text-lg group-hover:text-primary transition-colors">Design Director</h4>
+<p class="text-on-surface-variant text-sm mb-6">Berlin • Hybrid • Full-time</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium bg-surface-container-low px-3 py-1 rounded">€110k - €130k</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<div class="group bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">rocket_launch</span>
+</div>
+</div>
+<h4 class="font-bold text-lg group-hover:text-primary transition-colors">VP of Product Branding</h4>
+<p class="text-on-surface-variant text-sm mb-6">Paris • On-site • Full-time</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium bg-surface-container-low px-3 py-1 rounded">€140k - €165k</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<div class="group bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+</div>
+<h4 class="font-bold text-lg group-hover:text-primary transition-colors">Insights &amp; Analytics Lead</h4>
+<p class="text-on-surface-variant text-sm mb-6">Amsterdam • Remote • Full-time</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium bg-surface-container-low px-3 py-1 rounded">€85k - €105k</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-slate-50 border-t border-slate-200/20">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-screen-2xl mx-auto space-y-6 md:space-y-0">
+<p class="font-['Inter'] text-xs font-normal text-slate-500 uppercase tracking-widest">
+                © 2024 Precision Curator Agency. All rights reserved.
+            </p>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Privacy Policy</a>
+<a class="font-['Inter'] text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Terms of Service</a>
+<a class="font-['Inter'] text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Contact Support</a>
+<a class="font-['Inter'] text-xs font-normal text-slate-400 uppercase tracking-widest hover:text-blue-500 transition-colors" href="#">Diversity &amp; Inclusion</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerCurator - Notifications Centre</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#434655",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-variant": "#e0e3e5",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "inverse-primary": "#b4c5ff",
+                    "tertiary": "#943700",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "background": "#f7f9fb",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#191c1e",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#eceef0",
+                    "secondary": "#505f76",
+                    "tertiary-fixed": "#ffdbcd",
+                    "surface": "#f7f9fb",
+                    "primary-fixed": "#dbe1ff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-primary-container": "#eeefff",
+                    "tertiary-container": "#bc4800",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-secondary-container": "#54647a",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#2563eb",
+                    "on-tertiary-container": "#ffede6",
+                    "on-surface": "#191c1e",
+                    "surface-dim": "#d8dadc",
+                    "surface-tint": "#0053db",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "secondary-container": "#d0e1fb",
+                    "on-primary-fixed": "#00174b",
+                    "outline": "#737686",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e6e8ea",
+                    "outline-variant": "#c3c6d7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-layering-no-lines {
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background antialiased">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm dark:shadow-none tonal-layering-no-lines">
+<div class="flex justify-between items-center px-8 h-16 max-w-full">
+<div class="text-xl font-bold tracking-tighter text-blue-700 dark:text-blue-500">CareerCurator</div>
+<nav class="hidden md:flex items-center space-x-8 font-sans text-sm font-medium tracking-tight">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Discover</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Applications</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors duration-200" href="#">Messages</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="relative p-2 text-blue-700 dark:text-blue-400 font-semibold transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="professional portrait of a confident young executive with a warm smile, neutral grey background, studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXau9xXnxqeoa2JxPu1gkT3ox5jGsA8LfcQ3VUpVgdab6VA9NPH4-KralN-tXd1fq6mQS2tXeLi80MJaFK9N4KyVUT-pRy4QJGfuvVbgQxxOaMRgEg2HT0cmNgQk2H3c1PRdzZLRWtyE6CsMXgSn-aytXGX2OA8LzXisNo-iuWJOOZ_oyv5hzfgfivxkscN3ZKAidaYcGoSOPiQZ_ojHRdQQOwzsCxJecS7Lyq2gWayPHvI1ZeELvpFjxXO60-uDiUDOkQHSWfoxvn"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-5xl mx-auto min-h-screen">
+<!-- Header Section -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-[3.5rem] font-bold leading-tight tracking-tight text-on-surface mb-2">Updates</h1>
+<p class="text-on-surface-variant text-lg max-w-xl">Stay informed on your professional journey. Manage your application status, payments, and team communications in one place.</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 bg-surface-container-high hover:bg-surface-container-highest text-on-secondary-container font-semibold rounded-lg transition-all duration-300">
+<span class="material-symbols-outlined text-[20px]" data-icon="done_all">done_all</span>
+                    Mark all as read
+                </button>
+</div>
+</section>
+<!-- Notifications Container -->
+<div class="space-y-4">
+<!-- Notification Group: Today -->
+<div class="mb-8">
+<h3 class="text-[0.75rem] font-bold tracking-widest uppercase text-on-surface-variant mb-6 px-4">Today</h3>
+<div class="space-y-3">
+<!-- Notification Card (Unread - Stage Update) -->
+<div class="group relative bg-surface-container-lowest hover:shadow-[0_20_40_rgba(25,28,30,0.06)] p-6 rounded-xl transition-all duration-300 flex items-start gap-5 cursor-pointer">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-12 bg-primary rounded-r-full"></div>
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-base font-semibold text-on-surface">Application Stage Updated</h4>
+<span class="text-[0.75rem] font-medium text-on-surface-variant">2m ago</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-3">Your application for <span class="font-semibold text-on-surface">Senior UX Architect</span> at <span class="font-semibold text-on-surface">DesignFlow Studio</span> has moved to the <span class="text-primary font-bold">Interview</span> stage.</p>
+<button class="text-sm font-semibold text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                                View Application Detail
+                                <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Notification Card (Read - Payment) -->
+<div class="group bg-surface-container-low/50 hover:bg-surface-container-lowest p-6 rounded-xl transition-all duration-300 flex items-start gap-5 cursor-pointer opacity-80 hover:opacity-100">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-base font-semibold text-on-surface">Payment Successful</h4>
+<span class="text-[0.75rem] font-medium text-on-surface-variant">3h ago</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-3">Receipt #INV-8829 for your Premium Career Subscription has been processed successfully.</p>
+<button class="text-sm font-semibold text-secondary flex items-center gap-1">
+                                Download Invoice
+                                <span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Group: Yesterday -->
+<div class="mb-8">
+<h3 class="text-[0.75rem] font-bold tracking-widest uppercase text-on-surface-variant mb-6 px-4">Yesterday</h3>
+<div class="space-y-3">
+<!-- Notification Card (Unread - Admin Message) -->
+<div class="group relative bg-surface-container-lowest hover:shadow-[0_20_40_rgba(25,28,30,0.06)] p-6 rounded-xl transition-all duration-300 flex items-start gap-5 cursor-pointer">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-12 bg-primary rounded-r-full"></div>
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-base font-semibold text-on-surface">Message from Recruiter</h4>
+<span class="text-[0.75rem] font-medium text-on-surface-variant">Yesterday, 4:20 PM</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-3">Sarah from Meta HR sent you a direct message regarding your portfolio links. Please respond at your earliest convenience.</p>
+<button class="text-sm font-semibold text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                                Open Chat
+                                <span class="material-symbols-outlined text-[16px]" data-icon="chat">chat</span>
+</button>
+</div>
+</div>
+<!-- Notification Card (Read - Info) -->
+<div class="group bg-surface-container-low/50 hover:bg-surface-container-lowest p-6 rounded-xl transition-all duration-300 flex items-start gap-5 cursor-pointer opacity-80 hover:opacity-100">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-base font-semibold text-on-surface">Profile View Milestone</h4>
+<span class="text-[0.75rem] font-medium text-on-surface-variant">Yesterday, 9:15 AM</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-3">Your profile was viewed by 15 hiring managers this week. This is 40% higher than your average.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State Fallback (Hidden) -->
+<div class="hidden flex-col items-center justify-center py-24 text-center">
+<div class="w-24 h-24 rounded-full bg-surface-container flex items-center justify-center text-outline-variant mb-6">
+<span class="material-symbols-outlined text-5xl" data-icon="notifications_off">notifications_off</span>
+</div>
+<h2 class="text-2xl font-bold text-on-surface mb-2">You're all caught up</h2>
+<p class="text-on-surface-variant max-w-xs">We'll notify you when something important happens in your career journey.</p>
+</div>
+</main>
+<!-- BottomNavBar (Shared Component) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl shadow-[0_-10px_40_rgba(0,0,0,0.05)] z-50 rounded-t-2xl tonal-layering-no-lines">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Jobs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Applied</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl px-4 py-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Account</span>
+</a>
+</nav>
+<!-- Optional FAB (Contextual suppression applied if on sub-screens, but here it might serve as "Refresh") -->
+<button class="fixed bottom-24 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all md:bottom-8">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+</button>
+</body></html>

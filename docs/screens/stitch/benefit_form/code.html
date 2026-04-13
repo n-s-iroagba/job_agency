@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Benefit Configuration | CareerCurator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbcd",
+                        "background": "#f7f9fb",
+                        "secondary-container": "#d0e1fb",
+                        "surface": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-container": "#bc4800",
+                        "surface-tint": "#0053db",
+                        "on-tertiary-container": "#ffede6",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "primary": "#004ac6",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-bright": "#f7f9fb",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e0e3e5",
+                        "outline": "#737686",
+                        "on-primary-fixed": "#00174b",
+                        "secondary": "#505f76",
+                        "on-surface": "#191c1e",
+                        "tertiary": "#943700",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container": "#eceef0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased min-h-screen flex">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="hidden md:flex flex-col py-6 px-4 gap-4 h-screen w-64 border-r border-slate-200/20 bg-slate-50 dark:bg-slate-950 font-['Inter'] text-sm font-medium sticky top-0">
+<div class="px-2 mb-6">
+<h1 class="text-lg font-bold text-slate-900 dark:text-slate-50">Agency Portal</h1>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest">Precision Management</p>
+</div>
+<nav class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 hover:translate-x-1 transition-transform duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 hover:translate-x-1 transition-transform duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+                Postings
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                Candidates
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 hover:translate-x-1 transition-transform duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                Wallets
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 hover:translate-x-1 transition-transform duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+                System
+            </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-200/20 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Help
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-on-surface" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopAppBar (Authority: JSON) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 max-w-full mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] font-['Inter'] antialiased">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">CareerCurator</span>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Opportunities</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Talent</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Categories</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="Recruiter Profile" class="w-10 h-10 rounded-full border border-slate-200" data-alt="Professional headshot of a recruitment manager in a modern office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWon1rz7Kb9B01CKJvrhjlF6N5WYPVvARNqd4J_37HreE0nZ8uZeGQ2i2qyNW0X6UU-Rt6GGepHmb9A-QFDkjhAQm51UfLg39t-GEemSutd769T5Rq1svTXiWoGUaxVcHgtJHqwcQdbkMjdT8-ke5ASxmZj3pzgTLLF8vruDazXWuCtz-rvbEJqFQ8lEqeebsyLANKEEtu9b9htElBIpcMHxlsrsJeeQjGJlP9Ayo4POrc6KbKGpsrRUAIejStnlYtNPJQ5_fmlrgI"/>
+</div>
+</header>
+<!-- Page Content -->
+<div class="mt-20 p-8 lg:p-12 max-w-6xl mx-auto w-full">
+<!-- Header Section -->
+<div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<nav class="flex items-center gap-2 text-label-md text-on-surface-variant mb-4 font-medium uppercase tracking-wider">
+<span>System</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Benefit Configuration</span>
+</nav>
+<h2 class="text-[3.5rem] font-bold leading-none tracking-tight text-on-surface mb-4">Benefit Editor</h2>
+<p class="text-lg text-on-surface-variant max-w-xl">Configure high-value compensation packages and perks for top-tier candidate placements.</p>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono text-outline">
+<div class="px-3 py-1 bg-surface-container-high rounded">SCR-ADM-BENFORM-001</div>
+<div class="px-3 py-1 bg-surface-container-high rounded">STK-ADM-BEN-001</div>
+</div>
+</div>
+<!-- Bento Form Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Main Form Section -->
+<div class="lg:col-span-8 bg-surface-container-lowest p-10 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
+<form class="space-y-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Benefit Type -->
+<div class="space-y-3">
+<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Benefit Type</label>
+<div class="relative">
+<select class="w-full h-14 pl-4 pr-10 bg-surface-container-low border-none rounded-lg appearance-none focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all">
+<option value="salary">Salary &amp; Wages</option>
+<option value="pto">Paid Time Off (PTO)</option>
+<option value="health">Health &amp; Medical</option>
+<option value="401k">Retirement / 401k</option>
+<option value="bonus">Performance Bonus</option>
+<option value="equity">Equity &amp; Stock Options</option>
+</select>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Value -->
+<div class="space-y-3">
+<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Benefit Value</label>
+<div class="relative">
+<input class="w-full h-14 px-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all" placeholder="e.g., $160k/yr or 25 Days" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-primary/40">payments</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Description -->
+<div class="space-y-3">
+<label class="block text-sm font-semibold text-on-surface-variant uppercase tracking-widest">Description</label>
+<textarea class="w-full p-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all resize-none" placeholder="Provide a detailed overview of the eligibility, scope, and specific terms of this benefit..." rows="6"></textarea>
+</div>
+<!-- Action Controls -->
+<div class="flex items-center justify-end gap-4 pt-6">
+<button class="px-8 h-12 text-sm font-semibold text-on-surface-variant hover:text-on-surface transition-colors" type="button">Discard Changes</button>
+<button class="px-10 h-12 bg-gradient-to-r from-primary to-primary-container text-on-primary font-semibold rounded-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" type="submit">Save Benefit Package</button>
+</div>
+</form>
+</div>
+<!-- Guidance & Context Panel -->
+<div class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container-low p-8 rounded-xl">
+<div class="flex items-center gap-3 mb-6 text-tertiary">
+<span class="material-symbols-outlined">info</span>
+<h3 class="text-sm font-bold uppercase tracking-wider">Curator Guidance</h3>
+</div>
+<ul class="space-y-6">
+<li class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">1</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Ensure descriptions are editorial and precise. Avoid bullet points in the primary description field.</p>
+</li>
+<li class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">2</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Values should follow a standard format for comparison analytics (e.g., Currency/Period).</p>
+</li>
+<li class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">3</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">This record is tracked under compliance ticket <span class="font-mono text-xs font-semibold">STK-ADM-BEN-002</span>.</p>
+</li>
+</ul>
+</div>
+<!-- Visual Asset - Editorial feel -->
+<div class="relative group h-64 rounded-xl overflow-hidden shadow-xl">
+<img alt="Modern Office" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-alt="Minimalist modern glass office building interior with clean architectural lines and bright ethereal natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCniYr84HC8Os3oO6g-cV0dSZVugkgbFHIOKqQrGLK0Ugpe8kxR5q1DKmnPrqq4ZWF6-6yBHaR9NTvnxGWqCzRWuDPw5M1Mboo8kqJv39djpO1nUH9Jc3ojHh4Lm_39Sl2I0fW8TE8mS_MR0_6gDalqf_5oEyPoTv_gPZ6Wux4s6sV0CVAGyCxMUYPwuCsBlzduTSikwg_O2gJziJJuF881EmZdKwSUrzwcssXP5xmRTOJjmByOzEGkIZlcxLWwRxBYk6tlvEIPhXsF"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6">
+<span class="text-[10px] uppercase font-bold text-white/80 tracking-widest mb-1 block">Contextual Preview</span>
+<h4 class="text-white font-semibold">Premium Placement Standards</h4>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation (Authority: Logic/Layout) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-lg flex items-center justify-around z-50 border-t border-slate-100">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-medium">Panel</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="text-[10px] font-medium">Jobs</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-[10px] font-medium">Talent</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-medium">Config</span>
+</button>
+</nav>
+</body></html>

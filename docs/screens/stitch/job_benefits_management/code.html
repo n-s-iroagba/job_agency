@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Benefits Management | Career Curator Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#360f00",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary": "#505f76",
+                    "surface-tint": "#0053db",
+                    "on-surface-variant": "#434655",
+                    "background": "#f7f9fb",
+                    "secondary-container": "#d0e1fb",
+                    "on-primary-container": "#eeefff",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-error": "#ffffff",
+                    "primary-container": "#2563eb",
+                    "on-tertiary-container": "#ffede6",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-primary-fixed": "#00174b",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d8dadc",
+                    "surface-container": "#eceef0",
+                    "surface-variant": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "surface": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "outline-variant": "#c3c6d7",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b4c5ff",
+                    "on-secondary-container": "#54647a",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#dbe1ff",
+                    "primary": "#004ac6",
+                    "tertiary-container": "#bc4800",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#943700",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#737686",
+                    "inverse-surface": "#2d3133",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#0b1c30"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-effect {
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar Shell -->
+<nav class="fixed left-0 top-0 h-full flex flex-col py-8 px-4 bg-slate-50 dark:bg-slate-950 h-screen w-64 border-r-0 z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-bold tracking-tight text-blue-700 dark:text-blue-400">Admin Portal</h1>
+<p class="text-[10px] font-medium tracking-widest text-slate-400 uppercase mt-1">The Precision Curator</p>
+</div>
+<div class="flex flex-col gap-1 flex-grow">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="text-sm font-medium">Application Pipeline</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="text-sm font-medium">Stage Builder</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-blue-700 dark:text-blue-400 font-semibold border-r-4 border-blue-600 bg-blue-50/50 dark:bg-blue-900/10" href="#">
+<span class="material-symbols-outlined" data-icon="card_giftcard">card_giftcard</span>
+<span class="text-sm font-medium">Agency Benefits</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">System Settings</span>
+</a>
+</div>
+<div class="mt-auto pt-8 border-t border-slate-200 dark:border-slate-800 space-y-1">
+<div class="flex items-center gap-3 px-4 mb-6">
+<img alt="Admin profile photo" class="w-10 h-10 rounded-full object-cover" data-alt="professional portrait of a middle-aged male administrator in a light grey studio background with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdyLxA0fRqc_iqjrs_U1LGoQQvR9QpP0GT0qrz7hdRZBB4OqkxhQCe-mtsLTIkFSfd9WlDYMpRai9BRJrrk58HWU6zJnHml_1IPgwjtzfA7A2zG2qq47nJPoJzMx97dKetqLOkNcU9WWCIbGLiLhGbt2v4Alvd7YYhMJUV9ReyYM1_O7JHjZdtYSE12uyyHU7EO2XXAXw0bwmlGBU7sqbWvq3IRXMIShDS0cW9ATPmR9iv5rAleuHgl4n4pDLkwj7Lc9Xrb8mYl8bu"/>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-slate-100">Alex Rivers</p>
+<p class="text-xs text-slate-500">Chief Curator</p>
+</div>
+</div>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-500 hover:text-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-sm font-medium">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-500 hover:text-red-600 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm font-medium">Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 ml-64 max-w-[calc(100%-16rem)] bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl">
+<div class="flex items-center gap-2">
+<span class="text-lg font-black text-blue-800 dark:text-blue-200 tracking-tighter">Career Curator Admin</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-sm">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search benefits..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-slate-600 hover:text-blue-500 hover:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 hover:text-blue-500 hover:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 ml-2"></div>
+<button class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-sm">add</span>
+                    Create New Job
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-12 max-w-[1400px]">
+<!-- Header Section -->
+<header class="mb-12 flex justify-between items-end">
+<div class="max-w-2xl">
+<span class="text-[10px] font-bold tracking-[0.2em] text-primary uppercase mb-3 block">Governance &amp; Incentives</span>
+<h2 class="text-5xl font-bold tracking-tight text-on-surface mb-4">Agency Benefits</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed">Design and manage the premium incentive structures offered across your portfolio. Curated benefits drive higher engagement and candidate retention.</p>
+</div>
+<button class="px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold rounded-lg shadow-xl shadow-primary/10 hover:scale-[1.02] active:scale-95 transition-all">
+                Add New Benefit
+            </button>
+</header>
+<!-- Stats Bento Grid (Precision Style) -->
+<div class="grid grid-cols-12 gap-6 mb-12">
+<div class="col-span-12 md:col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-slate-100/50">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
+<div>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Benefits</p>
+<p class="text-3xl font-black text-on-surface">24</p>
+</div>
+</div>
+<div class="h-1 bg-slate-100 rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary"></div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-8 bg-surface-container-low p-8 rounded-xl flex items-center justify-between">
+<div>
+<h3 class="text-xl font-bold mb-1">Benefit Distribution</h3>
+<p class="text-sm text-on-surface-variant">Top-performing categories based on job applications.</p>
+</div>
+<div class="flex gap-8 items-center">
+<div class="text-center">
+<span class="block text-2xl font-bold text-primary">42%</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Health</span>
+</div>
+<div class="text-center">
+<span class="block text-2xl font-bold text-secondary">28%</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Financial</span>
+</div>
+<div class="text-center">
+<span class="block text-2xl font-bold text-tertiary">30%</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Wellness</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Data Canvas -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<!-- Table Controls -->
+<div class="px-8 py-6 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                        All Categories
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-lg">sort</span>
+                        Recently Modified
+                    </button>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-slate-400">DISPLAYING 1-8 OF 24</span>
+</div>
+</div>
+<!-- Precision Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-8 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Benefit Type</th>
+<th class="px-8 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Description</th>
+<th class="px-8 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Associated Jobs</th>
+<th class="px-8 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Competitive Salary</p>
+<span class="text-[10px] font-bold text-primary px-2 py-0.5 bg-primary/5 rounded-full uppercase tracking-tighter">Financial</span>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface-variant max-w-sm line-clamp-2 leading-relaxed">High-percentile compensation packages with annual review cycles and performance-based bonuses.</p>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-on-surface">142</span>
+<span class="text-xs text-slate-400">open roles</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-slate-400 hover:text-error hover:bg-error/5 transition-all ml-1">
+<span class="material-symbols-outlined">delete_outline</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">flight</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Unlimited PTO</p>
+<span class="text-[10px] font-bold text-secondary px-2 py-0.5 bg-secondary/10 rounded-full uppercase tracking-tighter">Lifestyle</span>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface-variant max-w-sm line-clamp-2 leading-relaxed">Flexibility for work-life harmony, encouraging employees to take the time they need to recharge.</p>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-on-surface">86</span>
+<span class="text-xs text-slate-400">open roles</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-slate-400 hover:text-error hover:bg-error/5 transition-all ml-1">
+<span class="material-symbols-outlined">delete_outline</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">medical_services</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Premium Health Plan</p>
+<span class="text-[10px] font-bold text-tertiary px-2 py-0.5 bg-tertiary/5 rounded-full uppercase tracking-tighter">Health</span>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface-variant max-w-sm line-clamp-2 leading-relaxed">Zero-deductible healthcare covering vision, dental, and comprehensive mental health support.</p>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-on-surface">215</span>
+<span class="text-xs text-slate-400">open roles</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-slate-400 hover:text-error hover:bg-error/5 transition-all ml-1">
+<span class="material-symbols-outlined">delete_outline</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/50 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">laptop_mac</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Remote Setup Stipend</p>
+<span class="text-[10px] font-bold text-primary px-2 py-0.5 bg-primary/5 rounded-full uppercase tracking-tighter">Utility</span>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<p class="text-sm text-on-surface-variant max-w-sm line-clamp-2 leading-relaxed">One-time $2,000 allowance for home office ergonomics and hardware upgrades.</p>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-on-surface">54</span>
+<span class="text-xs text-slate-400">open roles</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-slate-400 hover:text-error hover:bg-error/5 transition-all ml-1">
+<span class="material-symbols-outlined">delete_outline</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-8 py-6 flex items-center justify-between border-t border-slate-100">
+<button class="text-sm font-bold text-slate-400 hover:text-primary transition-colors flex items-center gap-1 disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-sm">arrow_back_ios</span>
+                    Previous
+                </button>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-lg bg-primary text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-slate-100 text-xs font-bold">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-slate-100 text-xs font-bold">3</button>
+</div>
+<button class="text-sm font-bold text-primary hover:text-blue-800 transition-colors flex items-center gap-1">
+                    Next
+                    <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+</button>
+</div>
+</div>
+<!-- Featured Benefit Highlight (Editorial Signature Component) -->
+<section class="mt-16 relative h-[400px] rounded-2xl overflow-hidden group">
+<div class="absolute inset-0 z-0">
+<img alt="Modern collaborative office space" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="ultra-modern minimalist office interior with glass walls, designer furniture, and soft cinematic lighting reflecting off polished floors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2uXuA3hLXSpy9sBnTY5Kp7sPIVdBQZyZjrpX0OZYW6PTN7kWVVrWWaTpFmUZcTpUWqny7u9GJeqlmx0N48e5vnU44sv6l3WAgAoWn3K0Yiodwrv25fhDj_-I15MSy9_gt3m6Tx0MoM_KvshvJ0gaMvi8Q-DGN80FVeL9sZc5JocpKmckNlsokxsoN4w-4Vh0SFqpDQESoeEBBJRTLUT-nfWgCz_PeGUDD2TfcS2v9IJGEPLtJJDxOquQcEZxvJyq9pu6DThtaAreV"/>
+<div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/40 to-transparent"></div>
+</div>
+<div class="relative z-10 h-full flex flex-col justify-center p-16 max-w-xl text-white">
+<span class="text-[10px] font-bold tracking-[0.3em] uppercase text-blue-300 mb-4 block">Candidate Spotlight</span>
+<h3 class="text-4xl font-black mb-6 leading-tight italic tracking-tight">"The health benefits package was the deciding factor in my journey."</h3>
+<div class="flex items-center gap-4">
+<img alt="Testimonial profile" class="w-12 h-12 rounded-full border-2 border-white/20 object-cover" data-alt="professional headshot of a smiling black woman in a blazer with a confident expression in an office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEx9Fu5RS4qEtam734dqyz2L0BWN-Yk4WF_rPmACF2C5h3-X8hfhn7rIeIzXVzuF3qj8oO1PJgA3EvJUXz4uRXcf-cXkFG57iRvYuIcJDzO3Np625UaV9RKZIsPJiswObyTbYZZQIcOPqgqlVKMxDi0Gnh3zZQScj5_zsdfj-2CBTaBWNnctueH7yqlsdujvW0Bfb05m7XmV7692GDEx0CEfetVPN-JVtOzcwzNUjeiGg5rfDe7XkOGUs48S4p7WpgjEVkyvd4XnzY"/>
+<div>
+<p class="font-bold text-lg">Elena Vance</p>
+<p class="text-sm text-blue-200">Senior Product Designer, TechFlow</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Helper (Suppressing Main FAB as per context) -->
+<!-- Shell Visibility & Relevance applied: Suppressing FAB on management screen -->
+</body></html>

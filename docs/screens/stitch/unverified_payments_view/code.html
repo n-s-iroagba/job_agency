@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerCurator Admin - Unverified Payments</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-tint": "#0053db",
+                        "inverse-primary": "#b4c5ff",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-fixed": "#ffdbcd",
+                        "tertiary-container": "#bc4800",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "primary-fixed": "#dbe1ff",
+                        "outline": "#737686",
+                        "on-error-container": "#93000a",
+                        "primary": "#004ac6",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-fixed": "#0b1c30",
+                        "background": "#f7f9fb",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-surface": "#191c1e",
+                        "error": "#ba1a1a",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-container": "#ffede6",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#d0e1fb",
+                        "tertiary": "#943700",
+                        "on-primary-container": "#eeefff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-primary": "#ffffff",
+                        "on-background": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "surface-bright": "#f7f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "outline-variant": "#c3c6d7",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary": "#505f76"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- SideNavBar Shell -->
+<aside class="flex flex-col h-screen w-64 py-6 px-4 bg-slate-50 dark:bg-slate-900 sticky top-0 shrink-0">
+<div class="mb-8 px-2">
+<h1 class="text-xl font-bold tracking-tight text-blue-700 dark:text-blue-500">CareerCurator</h1>
+<p class="text-[0.75rem] font-medium uppercase tracking-wider text-on-surface-variant opacity-70">Admin Console</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-blue-700 dark:text-blue-400 font-semibold border-r-4 border-blue-600 bg-slate-200/30" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Payments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">Applicants</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="text-sm font-medium">Messages</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="text-sm font-medium">System Health</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 border-t border-slate-200/50 pt-4">
+<button class="w-full mb-4 py-2.5 px-4 bg-primary text-on-primary rounded-lg font-semibold text-sm shadow-md hover:opacity-90 transition-opacity">
+                New Broadcast
+            </button>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 bg-surface">
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center w-full px-8 h-16 sticky top-0 z-40 glass-header shadow-sm">
+<div class="flex items-center gap-8">
+<span class="text-lg font-black text-blue-700 dark:text-blue-500">CareerCurator Admin</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 text-sm font-medium transition-all" href="#">Overview</a>
+<a class="text-blue-700 dark:text-blue-400 border-b-2 border-blue-600 pb-1 text-sm font-semibold" href="#">Reports</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 text-sm font-medium transition-all" href="#">Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<input class="bg-surface-container-low border-none rounded-full px-4 py-1.5 text-sm w-64 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search payments..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1.5 text-on-surface-variant text-lg">search</span>
+</div>
+<button class="p-2 text-slate-500 hover:text-blue-700 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-blue-700 transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<img alt="Admin Avatar" class="w-8 h-8 rounded-full border border-outline-variant/20" data-alt="close-up portrait of a professional male administrator in a light blue shirt with a clean modern studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgwio6qWlv7F0962ID4KC3qHiTxIm-fShrbdaWHwbcaabZ1TjNgvnVevWY6mBiRhLffGf64hBLK3pp8QgBK8JaUM84DxmKXVvId78y9ufqZv8RQkP3ncfMU55BDTMgE1Mp9Q8v1Th-s-nnwCoESiphDR7sYcAIE9z9JKwoGYcUq9oV5yVtzPGnwCTPkLXn5Dsum7-M5hCVmsyXQYZynn6Izu2OMf5ZMt-AuzYYp3lfZHQ19DrmDEkIywdFMKeivV8jof05Lt2Rdblg"/>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 max-w-7xl mx-auto w-full">
+<!-- Hero Stats / Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<h2 class="text-[3.5rem] font-bold tracking-tight text-on-surface leading-none mb-4">Unverified Payments</h2>
+<p class="text-on-surface-variant text-lg max-w-2xl">Confirm candidate deposit screenshots to finalize enrollment. High-value transactions are flagged for priority audit.</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border-l-4 border-primary">
+<p class="text-[0.75rem] font-bold text-primary uppercase tracking-widest mb-1">Pending Total</p>
+<p class="text-2xl font-bold">$24,850.00</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border-l-4 border-tertiary">
+<p class="text-[0.75rem] font-bold text-tertiary uppercase tracking-widest mb-1">High Value</p>
+<p class="text-2xl font-bold">03 Items</p>
+</div>
+</div>
+</div>
+<!-- Payment List Section (No Borders, Tonal Shift) -->
+<div class="space-y-6">
+<!-- Item 1: High Value Flagged -->
+<div class="group bg-surface-container-lowest rounded-xl p-6 transition-all hover:shadow-md relative overflow-hidden">
+<div class="absolute top-0 right-0">
+<div class="bg-tertiary text-on-tertiary px-4 py-1 text-[0.65rem] font-bold tracking-widest uppercase rounded-bl-lg">
+                            High Value Transaction
+                        </div>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-center gap-8">
+<div class="w-24 h-32 rounded-lg bg-surface-container-high overflow-hidden cursor-pointer relative group-hover:opacity-90">
+<img alt="Payment Screenshot" class="w-full h-full object-cover" data-alt="Close up of a digital bank transfer confirmation screen showing transaction details on a mobile device screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqVeiwdfIENwgYTN-hgFJfpyrIGYKLQi1WYDC9D-m4pX7F-rnwqJ4xIeAIeah8kobZU5K3uOPOwFD-dnKXApRm1HqjcxHihbv89Rdazj7WkEJN16a592QGF5kF1ahytkjEcO7FhjkhRTvAVFP7vw9_qokvdUypceWeoeI2nolx6CPjoMgPfqgZgH8YfYD_VF_DCPds-BNO89RMxidHVzmAsqJEZSjzu2DanTF-GsRtw_2lfpPpXfmcBZ6bp6vyPQdMgwzvveLu3UP1"/>
+<div class="absolute inset-0 flex items-center justify-center bg-on-surface/20 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">zoom_in</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Applicant</h4>
+<p class="font-semibold text-lg">Marcus Holloway</p>
+<p class="text-sm text-on-surface-variant">Senior Cloud Architect</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Transaction Details</h4>
+<p class="font-bold text-xl text-primary">$8,500.00</p>
+<p class="text-sm text-on-surface-variant">Batch Ref: #PF-90210</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Uploaded</h4>
+<p class="text-sm font-medium">Oct 24, 2023 · 14:22 PM</p>
+<p class="text-xs text-on-surface-variant mt-1 italic">IP: 192.168.1.45</p>
+</div>
+</div>
+<div class="flex lg:flex-col gap-2 shrink-0">
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm">verified</span> Verify
+                            </button>
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-surface-container-high text-on-secondary-container rounded-lg font-semibold text-sm hover:bg-error-container hover:text-on-error-container transition-all">
+<span class="material-symbols-outlined text-sm">block</span> Reject
+                            </button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 transition-all hover:shadow-md">
+<div class="flex flex-col lg:flex-row lg:items-center gap-8">
+<div class="w-24 h-32 rounded-lg bg-surface-container-high overflow-hidden cursor-pointer relative hover:opacity-90 transition-opacity">
+<img alt="Payment Screenshot" class="w-full h-full object-cover" data-alt="high quality screenshot of a digital wire transfer receipt with visible bank logo and confirmation numbers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKxRkmhl7qBF8z7GgEZg3JgWQ3yv1uhHDVezHZ_FUj7vQuDKJ0ZGF-fd1MpomvHpwFrVTHIots6cHsCLV-EFq78n-k6-ZMF4wWyeGm9l6z0T6hj-kUB9qG6nLU5N6AF-8Tf303hXGQQtqEB7XBjPypIYwMI16gfuRPbIiPt92l-BFNgOfyAcXwqPcPrdWQZDUU8QMe9ziJeCy0qtb2bXe0CEVncV0ppSab77S1EHV0bWXmdHDwgZelorz19IdSsWpOTgUwfct2IOkP"/>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Applicant</h4>
+<p class="font-semibold text-lg">Elena Rodriguez</p>
+<p class="text-sm text-on-surface-variant">UX Design Lead</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Transaction Details</h4>
+<p class="font-bold text-xl">$1,200.00</p>
+<p class="text-sm text-on-surface-variant">Batch Ref: #PF-88421</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Uploaded</h4>
+<p class="text-sm font-medium">Oct 24, 2023 · 09:15 AM</p>
+<p class="text-xs text-on-surface-variant mt-1 italic">IP: 203.0.113.1</p>
+</div>
+</div>
+<div class="flex lg:flex-col gap-2 shrink-0">
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm">verified</span> Verify
+                            </button>
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-surface-container-high text-on-secondary-container rounded-lg font-semibold text-sm hover:bg-error-container hover:text-on-error-container transition-all">
+<span class="material-symbols-outlined text-sm">block</span> Reject
+                            </button>
+</div>
+</div>
+</div>
+<!-- Item 3: High Value -->
+<div class="group bg-surface-container-lowest rounded-xl p-6 transition-all hover:shadow-md relative overflow-hidden">
+<div class="absolute top-0 right-0">
+<div class="bg-tertiary text-on-tertiary px-4 py-1 text-[0.65rem] font-bold tracking-widest uppercase rounded-bl-lg">
+                            High Value Transaction
+                        </div>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-center gap-8">
+<div class="w-24 h-32 rounded-lg bg-surface-container-high overflow-hidden cursor-pointer relative hover:opacity-90">
+<img alt="Payment Screenshot" class="w-full h-full object-cover" data-alt="professional scan of a formal bank deposit slip with handwritten entries and official stamp markings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSccnMF-TplvwILmNpRdH5f8Om-AwfS6MrvPmrM-l2qmLUIl0LlhGN8oWoVoSwCjZwCDbL8C3wcYAwn5t4x3bDnC_ovVedsLXimWU9fa-iKQW-1skKFD-hjLXVJ2FGpBulkulXRQEBSTEQ9M6ebV1cMSrxFxSvweP7EzV5v-XoGaLe6Sir2rx363wc5f6GSHNZEgxfVOzW1bcJbfgI9QnPJzKS2Y7C7gBSTxSK0ezirPOUi70F8ZxM9wH6HeW51QKkPEu8Z2Cx1WJs"/>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Applicant</h4>
+<p class="font-semibold text-lg">Dr. Simon Kovic</p>
+<p class="text-sm text-on-surface-variant">Biotech Research Fellow</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Transaction Details</h4>
+<p class="font-bold text-xl text-primary">$12,400.00</p>
+<p class="text-sm text-on-surface-variant">Batch Ref: #PF-77312</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Uploaded</h4>
+<p class="text-sm font-medium">Oct 23, 2023 · 18:45 PM</p>
+<p class="text-xs text-on-surface-variant mt-1 italic">IP: 45.12.8.221</p>
+</div>
+</div>
+<div class="flex lg:flex-col gap-2 shrink-0">
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm">verified</span> Verify
+                            </button>
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-surface-container-high text-on-secondary-container rounded-lg font-semibold text-sm hover:bg-error-container hover:text-on-error-container transition-all">
+<span class="material-symbols-outlined text-sm">block</span> Reject
+                            </button>
+</div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 transition-all hover:shadow-md">
+<div class="flex flex-col lg:flex-row lg:items-center gap-8">
+<div class="w-24 h-32 rounded-lg bg-surface-container-high overflow-hidden cursor-pointer relative hover:opacity-90">
+<img alt="Payment Screenshot" class="w-full h-full object-cover" data-alt="clean digital capture of a mobile banking app success screen with green checkmark and transaction ID" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkzW8UeDme_23qvmHwvMpoLMcyEC2HiFJyxROhwA4F5hpAAcMPNqCGs0i4AGbAauiv9RBIeOM0BLCyTJVFry_51msy3vhomJjgp12GRiU4KYJ9OYLaVzkZmnMVDVbSnrRDRZ23sM4Qz-273BzZSRysystOHuKcByth_SZs_ZOrgACISf0iG4_2_AP8O3hSlg43zwK79II7gtA4JuelSNI80G552sYsA6wTy2FRn_1Pge1SPoMSjw2KuFUuPH0c78GRZ4FLyWcI_RaD"/>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Applicant</h4>
+<p class="font-semibold text-lg">Sarah Jenkins</p>
+<p class="text-sm text-on-surface-variant">Product Manager</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Transaction Details</h4>
+<p class="font-bold text-xl">$2,750.00</p>
+<p class="text-sm text-on-surface-variant">Batch Ref: #PF-12004</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Uploaded</h4>
+<p class="text-sm font-medium">Oct 23, 2023 · 11:10 AM</p>
+<p class="text-xs text-on-surface-variant mt-1 italic">IP: 172.16.254.1</p>
+</div>
+</div>
+<div class="flex lg:flex-col gap-2 shrink-0">
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm">verified</span> Verify
+                            </button>
+<button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-surface-container-high text-on-secondary-container rounded-lg font-semibold text-sm hover:bg-error-container hover:text-on-error-container transition-all">
+<span class="material-symbols-outlined text-sm">block</span> Reject
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination (The "Smooth Tech" way) -->
+<div class="mt-16 flex items-center justify-between border-t border-outline-variant/10 pt-8">
+<span class="text-sm text-on-surface-variant">Showing <span class="font-bold text-on-surface">1 - 4</span> of 18 pending payments</span>
+<div class="flex gap-2">
+<button class="flex items-center justify-center w-10 h-10 rounded-lg bg-surface-container-low text-on-surface-variant opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-on-primary font-bold shadow-md">1</button>
+<button class="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface font-medium">2</button>
+<button class="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface font-medium">3</button>
+<button class="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface font-medium">4</button>
+<button class="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#434655",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "surface-variant": "#e0e3e5",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "inverse-primary": "#b4c5ff",
+                    "tertiary": "#943700",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "background": "#f7f9fb",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#191c1e",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#eceef0",
+                    "secondary": "#505f76",
+                    "tertiary-fixed": "#ffdbcd",
+                    "surface": "#f7f9fb",
+                    "primary-fixed": "#dbe1ff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-primary-container": "#eeefff",
+                    "tertiary-container": "#bc4800",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-secondary-container": "#54647a",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#2563eb",
+                    "on-tertiary-container": "#ffede6",
+                    "on-surface": "#191c1e",
+                    "surface-dim": "#d8dadc",
+                    "surface-tint": "#0053db",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "secondary-container": "#d0e1fb",
+                    "on-primary-fixed": "#00174b",
+                    "outline": "#737686",
+                    "surface-container-highest": "#e0e3e5",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e6e8ea",
+                    "outline-variant": "#c3c6d7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-layering-no-lines {
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm flex justify-between items-center px-8 h-16 max-w-full">
+<div class="text-xl font-bold tracking-tighter text-blue-700">CareerCurator</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-500 hover:text-blue-600 font-sans text-sm font-medium tracking-tight transition-colors duration-200" href="#">Discover</a>
+<a class="text-slate-500 hover:text-blue-600 font-sans text-sm font-medium tracking-tight transition-colors duration-200" href="#">Applications</a>
+<a class="text-blue-700 font-semibold border-b-2 border-blue-600 font-sans text-sm tracking-tight" href="#">Payments</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:text-blue-600 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="professional headshot of a young businessman with a neutral expression against a clean office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW3gKEeJLYnEwsesN1j7y1op9mGcmMTB3MNQZYMt1YC-59rLS0v9vMwhl1AenXPQgUkgx-e5LTUji8buIzxxfpnyfozN2fgmTHRf5isVNQ3XEthBBi4ubZ9ZU7t0dazctTBYcrlair6-u8uVXgd93LEz2F1CxrHwMdqYhXrK9O20elomAko6yiglCUTqxc3D30tgIkfte8-8iVqZtvf9e2m_kr3PIG55tLXbvWOi6Z3WkluA2VZSuEc8jsa-GZXKJFcVgB7sSH9Uvr"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-5xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12">
+<h1 class="text-5xl font-bold tracking-tight text-on-surface mb-4">Payment Verification</h1>
+<p class="text-lg text-on-surface-variant max-w-2xl">To finalize your premium career placement services, please upload a clear screenshot of your transaction confirmation. Our curators will review it within 2 hours.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Upload Zone: Asymmetric Bento Style -->
+<div class="lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(25,28,30,0.06)] relative overflow-hidden group">
+<!-- Dropzone -->
+<div class="border-2 border-dashed border-outline-variant/30 rounded-lg p-12 flex flex-col items-center justify-center bg-surface-container-low transition-all duration-300 hover:bg-surface-container hover:border-primary/40">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">upload_file</span>
+</div>
+<h3 class="text-xl font-semibold mb-2">Drag and drop proof here</h3>
+<p class="text-on-surface-variant text-sm mb-6">JPEG, PNG, or PDF up to 10MB</p>
+<button class="px-6 py-2.5 bg-primary text-on-primary rounded-lg font-semibold hover:opacity-90 transition-all active:scale-95">
+                            Select Files
+                        </button>
+</div>
+<!-- Selected File Preview (Mocking Active State) -->
+<div class="mt-8 flex items-center gap-4 p-4 bg-surface-container-low rounded-lg">
+<div class="w-16 h-16 bg-surface-container-highest rounded-md flex items-center justify-center overflow-hidden">
+<img alt="Payment receipt preview" class="w-full h-full object-cover" data-alt="close-up of a digital payment confirmation screen with green checkmark and transaction details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnZwDZLiOPkFG8FhHKBgk_7t-fBIwjlsNaWSV5jr5HYlfGXBbYLkgekKXi8bSk3hvA_bumza0qjoIAf903Jar2MM_shovoIZV_mE43GSmFuIUSkzjI6Ful-4xQN3Tzn2he5vt5iwAYGCigc7-OXpzifKgTx46Zb3A5_pLaGtgwvNXqz7T6S7Y6VkDV_ick6yHFgyM_Nn4m3ezdb2gp0xtJD6bdgIoXQo6HCMVHdxDhkwBKdSwRcwVK9_bwD9_p0lmVSwJM9T5UabLV"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold truncate">payment_confirmation_0824.png</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-bold mt-1">2.4 MB • Processing</p>
+</div>
+<button class="p-2 text-error hover:bg-error/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Transaction Details Card -->
+<div class="bg-surface-container-low rounded-xl p-8">
+<h4 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-6">Reference Details</h4>
+<div class="grid grid-cols-2 gap-8">
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Invoice Number</p>
+<p class="font-semibold text-on-surface">INV-2024-8892</p>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Total Amount</p>
+<p class="font-semibold text-on-surface">$1,499.00 USD</p>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Service Tier</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-tertiary-fixed text-on-tertiary-fixed-variant uppercase">Executive Elite</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Status</p>
+<p class="font-semibold text-primary">Awaiting Proof</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Queue Status: Glassmorphism / Editorial Style -->
+<div class="lg:col-span-4 space-y-6">
+<div class="bg-primary-container p-8 rounded-xl text-on-primary-container">
+<h4 class="text-sm font-bold uppercase tracking-widest opacity-80 mb-6">Queue Position</h4>
+<div class="flex items-baseline gap-2 mb-2">
+<span class="text-6xl font-bold">04</span>
+<span class="text-xl font-medium opacity-70">/ 12</span>
+</div>
+<p class="text-sm font-medium leading-relaxed mb-6">You are next in line for manual verification. Most uploads are confirmed within 15 minutes during business hours.</p>
+<div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden">
+<div class="bg-white w-[65%] h-full rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<div class="flex items-start gap-4 mb-6">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">security</span>
+<div>
+<h4 class="font-bold text-on-surface mb-2">Secure Submission</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">All documents are encrypted with AES-256 and purged immediately after verification to ensure your privacy.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">help_outline</span>
+<div>
+<h4 class="font-bold text-on-surface mb-2">Need assistance?</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Contact support at finance@careercurator.com if you encounter issues.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-white/70 backdrop-blur-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-50 rounded-t-2xl">
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">work</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Jobs</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Applied</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-blue-50 text-blue-700 rounded-xl px-4 py-1">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Payments</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Account</span>
+</div>
+</div>
+</body></html>

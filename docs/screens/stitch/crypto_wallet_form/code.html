@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareerCurator | Wallet Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbcd",
+                        "background": "#f7f9fb",
+                        "secondary-container": "#d0e1fb",
+                        "surface": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-container": "#bc4800",
+                        "surface-tint": "#0053db",
+                        "on-tertiary-container": "#ffede6",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "primary": "#004ac6",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-bright": "#f7f9fb",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-high": "#e6e8ea",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e0e3e5",
+                        "outline": "#737686",
+                        "on-primary-fixed": "#00174b",
+                        "secondary": "#505f76",
+                        "on-surface": "#191c1e",
+                        "tertiary": "#943700",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container": "#eceef0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex">
+<!-- SideNavBar -->
+<aside class="hidden md:flex h-screen w-64 bg-slate-50 border-r border-slate-200/20 flex-col py-6 px-4 gap-4 fixed left-0 top-0 z-40">
+<div class="flex items-center gap-3 px-2 mb-6">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold text-xl shadow-lg">CC</div>
+<div>
+<h1 class="text-lg font-bold text-slate-900 leading-none">Agency Portal</h1>
+<p class="text-[10px] text-slate-500 font-medium tracking-wider uppercase mt-1">Precision Management</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="font-medium text-sm">Postings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-medium text-sm">Candidates</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-white text-blue-600 shadow-sm rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-semibold text-sm">Wallets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-medium text-sm">System</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-slate-200/40 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-sm font-medium">Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 md:ml-64 min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-0 md:left-64 h-20 glass-header flex justify-between items-center px-8 z-50">
+<div class="flex flex-col">
+<h2 class="text-xl font-bold tracking-tight text-slate-900">Wallet Configuration</h2>
+<nav class="flex gap-4 mt-1 hidden md:flex">
+<span class="text-xs text-slate-500 font-medium">System</span>
+<span class="text-xs text-slate-400">/</span>
+<span class="text-xs text-slate-500 font-medium">Finance</span>
+<span class="text-xs text-slate-400">/</span>
+<span class="text-xs text-blue-600 font-semibold">Wallet Management</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden border border-white">
+<img alt="Recruiter Profile" class="w-full h-full object-cover" data-alt="professional portrait of a corporate executive in a modern office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_hoKXjBN_mvWLAD6_uIe3HyW6502IWXoVQFzKu6F9NY6p9HSv9wX7cSJ-9fIaN_qf4uEK7QbPh79PPa8UQQ9yaHTDSKUULg58ufl6KD0GO6TGPYws1ZkbjSN-arWun5ofSCnnTHARqv5Qtq5xK8ZwNdr95QINVX-oLLVnng4vjvtYBouXC5VGqJa-Q90ZpKb2lxfTBhZTd7vk5p3AblbwRAxOnFPibY12LZ9DIYtYxEyjMwaFEmec4Y_1z0Zl4xLEtoDH0h2UsltY"/>
+</div>
+</div>
+</header>
+<!-- Form Content -->
+<div class="pt-28 pb-20 px-4 md:px-12 max-w-4xl mx-auto">
+<!-- Breadcrumb for Traceability -->
+<div class="mb-8 flex items-center justify-between">
+<div>
+<span class="px-2 py-1 bg-surface-container-high rounded text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">STK-ADM-CRYPTO-001</span>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 text-slate-600 font-medium text-sm hover:bg-surface-container-low rounded-lg transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="close">close</span>
+                        Discard
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-primary text-white font-semibold text-sm rounded-lg shadow-lg hover:shadow-xl transition-all scale-100 active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="save" style="font-variation-settings: 'FILL' 1;">save</span>
+                        Save Changes
+                    </button>
+</div>
+</div>
+<div class="space-y-8">
+<!-- Header Section -->
+<section>
+<h3 class="text-3xl font-bold text-on-surface tracking-tight mb-2">Configure Digital Asset</h3>
+<p class="text-on-surface-variant max-w-xl leading-relaxed">Manage your agency's cryptocurrency settlement addresses. Ensure the network and wallet type match the destination provider to avoid permanent loss of funds.</p>
+</section>
+<!-- Form Container -->
+<div class="bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] space-y-10">
+<!-- Form Fields -->
+<div class="grid grid-cols-1 gap-8">
+<!-- Display Label -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface ml-1">Display Label</label>
+<input class="w-full h-12 bg-surface-container-low border-none rounded-lg px-4 focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary/40 transition-all outline-none text-on-surface" placeholder="e.g. Primary Company Reserves" type="text" value="Corporate Settlement Wallet"/>
+<p class="text-[11px] text-on-surface-variant italic ml-1">Internal name for easy identification within the agency portal.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Crypto Type -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface ml-1">Cryptocurrency Type</label>
+<div class="relative">
+<select class="w-full h-12 bg-surface-container-low border-none rounded-lg px-4 appearance-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary/40 transition-all outline-none text-on-surface cursor-pointer">
+<option value="BTC">Bitcoin (BTC)</option>
+<option selected="" value="ETH">Ethereum (ETH)</option>
+<option value="USDT">Tether (USDT)</option>
+<option value="USDC">USD Coin (USDC)</option>
+<option value="SOL">Solana (SOL)</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-3 text-slate-400 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Network -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface ml-1">Network</label>
+<div class="relative">
+<select class="w-full h-12 bg-surface-container-low border-none rounded-lg px-4 appearance-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary/40 transition-all outline-none text-on-surface cursor-pointer">
+<option selected="" value="ERC20">Ethereum (ERC20)</option>
+<option value="BEP20">BNB Smart Chain (BEP20)</option>
+<option value="TRC20">Tron (TRC20)</option>
+<option value="POLYGON">Polygon Network</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-3 text-slate-400 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Wallet Address -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface ml-1">Wallet Address</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border-none rounded-lg pl-4 pr-12 font-mono text-sm focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary/40 transition-all outline-none text-on-surface" placeholder="0x..." type="text" value="0x71C7656EC7ab88b098defB751B7401B5f6d8976F"/>
+<button class="absolute right-3 top-2.5 p-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div class="flex items-center gap-2 mt-2 px-1">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="verified_user">verified_user</span>
+<span class="text-[11px] text-tertiary font-medium">Verified for TRC-20 and ERC-20 standards.</span>
+</div>
+</div>
+<!-- Status Toggle -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="power_settings_new">power_settings_new</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface">Wallet Active State</h4>
+<p class="text-[11px] text-on-surface-variant">Toggle visibility and usage for payouts.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Guidance Footer -->
+<div class="flex items-start gap-4 p-6 bg-secondary-container/30 rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="info">info</span>
+<div>
+<h5 class="text-sm font-bold text-on-secondary-container">Traceability Reference</h5>
+<p class="text-xs text-on-secondary-container/80 mt-1">This form is governed by security policy <span class="font-mono font-bold">STK-ADM-CRYPTO-002</span>. Every modification is logged with a timestamp and administrator signature to maintain financial transparency and compliance audit trails.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

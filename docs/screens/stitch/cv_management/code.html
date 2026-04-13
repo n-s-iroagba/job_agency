@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CV Management | EliteTalent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#dbe1ff",
+                    "on-primary-container": "#eeefff",
+                    "surface-container": "#eceef0",
+                    "on-primary-fixed": "#00174b",
+                    "surface-container-low": "#f2f4f6",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#191c1e",
+                    "on-tertiary-container": "#ffede6",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "surface-tint": "#0053db",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "secondary-container": "#d0e1fb",
+                    "on-tertiary-fixed": "#360f00",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary": "#943700",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#bc4800",
+                    "surface-container-high": "#e6e8ea",
+                    "surface": "#f7f9fb",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-secondary-container": "#54647a",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "surface-variant": "#e0e3e5",
+                    "primary-container": "#2563eb",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline-variant": "#c3c6d7",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "background": "#f7f9fb",
+                    "secondary": "#505f76",
+                    "on-error": "#ffffff",
+                    "outline": "#737686",
+                    "on-surface": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#004ac6",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container-highest": "#e0e3e5",
+                    "inverse-primary": "#b4c5ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cv-grid-asymmetric {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+        }
+        @media (max-width: 1024px) {
+            .cv-grid-asymmetric {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-bold tracking-tighter text-slate-900">EliteTalent</div>
+<div class="hidden md:flex items-center space-x-8 font-['Inter'] font-medium text-sm tracking-tight">
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">Discover</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">My Applications</a>
+<a class="text-blue-700 border-b-2 border-blue-600 pb-1" href="#">Resumes</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors" href="#">Messages</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="hidden md:block bg-primary-container text-white px-5 py-2 rounded-lg font-medium text-sm hover:translate-y-[-1px] transition-all">Create Profile</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a male executive with a warm smile and clear gaze in studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-w4bz3CuHUSxC8zHCLsQ-J1DqUqWRqawuy5FYOnzyDNYxtd_gRlea69sx9VuSIKh7ZMdA5l-ZcpjAKcEmLFbrW9Ak4ASPvD1k4bv9fiQkYoHqkuFMsnkKJFHmGPG_u6kF6yfS4D-ia2wkN3uncSx82t5cAuwUFQix75MFUMfWb2M0rmzr7BZHpcUKpu6KiyGNVkDTqmwfPU68pJlmhmu2fHitzYJb5-iaxLA6mRqmJudUDjmw5jbuaxWZGIg4RNXpnCu42VG4swB1"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-28 pb-20 px-6 max-w-screen-2xl mx-auto min-h-screen">
+<!-- Hero Header Section -->
+<header class="mb-12">
+<p class="text-primary font-semibold tracking-widest text-[10px] uppercase mb-2">Secure Document Vault</p>
+<h1 class="text-[3.5rem] font-bold leading-tight tracking-tight text-on-surface mb-4">Curate Your <span class="text-primary">Professional</span> Identity.</h1>
+<p class="text-on-surface-variant max-w-2xl text-lg font-light leading-relaxed">Manage your resumes and portfolios with bank-grade security. Link specific versions to targeted job applications for a tailored approach.</p>
+</header>
+<!-- Main Workspace: Asymmetric Grid -->
+<div class="cv-grid-asymmetric">
+<!-- Column 1: Upload & Active Management -->
+<div class="space-y-8">
+<!-- High-End Drag & Drop Zone -->
+<section class="bg-surface-container-lowest p-10 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] group relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="relative border-2 border-dashed border-outline-variant/30 group-hover:border-primary/40 transition-colors rounded-lg p-12 flex flex-col items-center justify-center text-center space-y-4">
+<div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-4xl" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-on-surface">Upload Professional CV</h3>
+<p class="text-on-surface-variant text-sm mt-1">PDF, DOCX, or RTF (Max 10MB)</p>
+</div>
+<button class="mt-6 bg-on-background text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                            Select Document
+                        </button>
+<p class="text-[10px] text-outline uppercase tracking-widest pt-4 font-bold">Or drag and drop here</p>
+</div>
+</section>
+<!-- Documents List -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-xl font-bold tracking-tight">Active Portfolio</h2>
+<span class="text-label-md bg-surface-container-high px-3 py-1 rounded-full text-on-surface-variant font-medium">3 Documents</span>
+</div>
+<!-- CV Card 1 (Active/Primary) -->
+<div class="bg-surface-container-lowest p-6 rounded-xl group transition-all duration-300 hover:shadow-lg">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 bg-red-50 text-red-600 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-bold text-lg text-on-surface tracking-tight">Senior_UX_Lead_2024_Main.pdf</h4>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Primary</span>
+</div>
+<div class="flex items-center gap-4 text-xs text-on-surface-variant mb-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span> Oct 12, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="database">database</span> 1.4 MB</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary-fixed border-2 border-surface-container-lowest flex items-center justify-center" title="Applied to Google">
+<img class="w-full h-full object-cover rounded-full" data-alt="Corporate logo on a glass office building background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4FHXKmH4nRgfDNuHYtwspEzU-8-VADU1oB5DG0SUKVMq2QZDgRvz3AkPQYLrTgYNIgjZ17tmq7QrLtN8xMAHYp4bDczPBPgohM8eeQAu5Oen0eqjwgI3WJZMgA4t_h3nA3-fIPTZe9Y8ms12WzkvfinryTzv4GCXyjK-y5Nn5zrlXLXqcdQw8rrwCud28WRC6JTgntssHaXrvPS53bjfy1yL-bdc-iiUJUhyy8778puzGatyaHD3rLAtfJTBwWAtg0QtN4iaTTVYd"/>
+</div>
+<div class="w-6 h-6 rounded-full bg-secondary-fixed border-2 border-surface-container-lowest flex items-center justify-center text-[10px] font-bold text-on-secondary-fixed">+2</div>
+</div>
+<p class="text-xs text-on-surface-variant italic">Linked to 3 active applications</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors" title="Preview">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors" title="Delete">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- CV Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl group transition-all duration-300 hover:shadow-lg">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl" data-icon="description">description</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-bold text-lg text-on-surface tracking-tight">Product_Manager_Tech_Focused.docx</h4>
+</div>
+<div class="flex items-center gap-4 text-xs text-on-surface-variant mb-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span> Sep 05, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="database">database</span> 850 KB</span>
+</div>
+<p class="text-xs text-outline italic">No active applications linked</p>
+</div>
+<div class="flex flex-col gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors" title="Preview">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors" title="Delete">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Column 2: Spotlight & Analytics -->
+<div class="space-y-8">
+<!-- Signature Component: Candidate Spotlight -->
+<aside class="bg-primary text-white p-8 rounded-xl relative overflow-hidden shadow-xl">
+<div class="absolute top-0 right-0 p-4 opacity-20">
+<span class="material-symbols-outlined text-9xl scale-150 rotate-12" data-icon="verified">verified</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-16 h-16 rounded-lg border-2 border-white/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a male executive" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSDs-bDttMTPacAcGr9sp8jXqnH_kKBZa3XrZuaGJ4BwTBopcwLURUrcotDpJiKrrwWHJQufhQEZEk_-88jtcwnxTlYE22A6of0HQPurUfPpHoV-cc8t2xWv2nuEPDn1rZXSYRGhNszCCB3AePaLRa6MhnlfiCfs78cjWwikyTA-HMuv79JdvSppXA-YjmqHoPFc2WNY2_rtmqNv_qIbUKBTGQLgTBu747XmM4TAMk2Tv-FGVrWF_TxZ2DZhkiIjrQwp08lw30fgUH"/>
+</div>
+<div>
+<h3 class="text-xl font-bold leading-none">Marcus Thorne</h3>
+<p class="text-primary-fixed text-xs font-medium uppercase tracking-widest mt-1">UX Visionary</p>
+</div>
+</div>
+<h2 class="text-3xl font-extrabold leading-tight mb-4">"Architecting human-centric digital ecosystems."</h2>
+<div class="pt-6 border-t border-white/10 space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-primary-fixed">Profile Strength</span>
+<span class="font-bold">94%</span>
+</div>
+<div class="w-full bg-white/20 h-2 rounded-full overflow-hidden">
+<div class="bg-white h-full w-[94%]"></div>
+</div>
+</div>
+<button class="mt-8 w-full bg-white text-primary font-bold py-3 rounded-lg hover:bg-primary-fixed transition-colors">Update USP Statement</button>
+</div>
+</aside>
+<!-- Security Panel -->
+<section class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 bg-on-background text-white rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</div>
+<h3 class="text-lg font-bold">Document Privacy</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-500 mt-0.5" data-icon="check_circle">check_circle</span>
+<div class="text-sm">
+<p class="font-bold">End-to-End Encryption</p>
+<p class="text-on-surface-variant leading-snug">All documents are encrypted at rest using AES-256 standards.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-500 mt-0.5" data-icon="check_circle">check_circle</span>
+<div class="text-sm">
+<p class="font-bold">Recruiter Access Control</p>
+<p class="text-on-surface-variant leading-snug">Documents are only visible to verified recruiters of jobs you applied to.</p>
+</div>
+</li>
+</ul>
+</section>
+<!-- Quick Help / Analytics Card -->
+<div class="p-1 bg-gradient-to-br from-primary/20 to-tertiary/20 rounded-xl">
+<div class="bg-surface-container-lowest p-6 rounded-lg">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Smart Insights</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">CV Health Check</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Your main CV is currently missing a <span class="text-primary font-semibold">LinkedIn Profile Link</span>. Adding one increases recruiter engagement by 23%.</p>
+<a class="mt-4 text-primary font-bold text-xs flex items-center gap-1 hover:underline" href="#">Enhance CV Now <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span></a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-12 bg-slate-50 dark:bg-slate-950 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 border-t border-slate-200/20 max-w-screen-2xl mx-auto space-y-6 md:space-y-0">
+<div class="flex flex-wrap justify-center gap-8 font-['Inter'] text-xs font-normal text-slate-500 uppercase tracking-widest">
+<a class="hover:text-blue-500 transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-blue-500 transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-blue-500 transition-colors" href="#">Contact Support</a>
+<a class="hover:text-blue-500 transition-colors" href="#">Diversity &amp; Inclusion</a>
+</div>
+<p class="text-[10px] text-slate-400 font-medium">© 2024 Precision Curator Agency. All rights reserved.</p>
+</div>
+</footer>
+</body></html>
