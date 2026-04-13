@@ -1,0 +1,59 @@
+export const CONSTANTS = {
+    APP_NAME: 'Job Agency',
+    API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
+
+    ROLES: {
+        ADMIN: 'ADMIN',
+        APPLICANT: 'APPLICANT',
+    },
+
+    ROUTES: {
+        HOME: '/',
+        LOGIN: '/login',
+        REGISTER: '/register',
+        PRIVACY: '/privacy',
+        DASHBOARD: '/dashboard',
+        APPLICATIONS: '/dashboard/applications',
+        CV: '/dashboard/cv',
+        NOTIFICATIONS: '/dashboard/notifications',
+        PROFILE: '/dashboard/profile',
+        JOBS: '/dashboard/jobs',
+        ADMIN: {
+            DASHBOARD: '/admin',
+            HEALTH: '/admin/health',
+            JOBS: '/admin/jobs',
+            CATEGORIES: '/admin/categories',
+            BENEFITS: '/admin/benefits',
+            CONDITIONS: '/admin/conditions',
+            BANK_ACCOUNTS: '/admin/bank-accounts',
+            CRYPTO_WALLETS: '/admin/crypto-wallets',
+            NEW_APPS: '/admin/applications/new',
+            DRAFTS: '/admin/applications/drafts',
+            UNPAID: '/admin/payments/unpaid',
+            UNVERIFIED: '/admin/payments/unverified',
+            MAIL: '/admin/mail',
+        }
+
+    },
+
+    STATUSES: {
+        PAYMENT: {
+            PENDING: 'Pending',
+            VERIFIED: 'Verified',
+            REJECTED: 'Rejected',
+            PAID: 'Paid',
+            UNPAID: 'Unpaid',
+        },
+        APPLICATION: {
+            DRAFT: 'Draft',
+            ACTIVE: 'Active',
+            COMPLETED: 'Completed',
+            REJECTED: 'Rejected',
+        }
+    },
+
+    FILE_CONSTRAINTS: {
+        CV_LIMIT_MB: 5,
+        PAYMENT_LIMIT_MB: 10,
+    }
+};
