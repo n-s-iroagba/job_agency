@@ -3,29 +3,16 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { CONSTANTS } from '@/constants';
-import {
-    LayoutDashboard,
-    Briefcase,
-    Layers,
-    Users,
-    CreditCard,
-    Activity,
-    Settings,
-    Mail,
-    LogOut,
-    ShieldCheck
-} from 'lucide-react';
 
 const navItems = [
-    { label: 'Overview', href: CONSTANTS.ROUTES.ADMIN.DASHBOARD, icon: LayoutDashboard },
-    { label: 'System Health', href: CONSTANTS.ROUTES.ADMIN.HEALTH, icon: Activity },
-    { label: 'Manage Jobs', href: CONSTANTS.ROUTES.ADMIN.JOBS, icon: Briefcase },
-    { label: 'Categories', href: CONSTANTS.ROUTES.ADMIN.CATEGORIES, icon: Layers },
-    { label: 'Applicants', href: '/admin/applicants', icon: Users },
-    { label: 'Unverified Proofs', href: CONSTANTS.ROUTES.ADMIN.UNVERIFIED, icon: ShieldCheck },
-    { label: 'Unpaid Queue', href: CONSTANTS.ROUTES.ADMIN.UNPAID, icon: CreditCard },
-    { label: 'Finance Settings', href: CONSTANTS.ROUTES.ADMIN.BANK_ACCOUNTS, icon: Settings },
-    { label: 'Mail Composer', href: CONSTANTS.ROUTES.ADMIN.MAIL, icon: Mail },
+    { label: 'Overview', href: CONSTANTS.ROUTES.ADMIN.DASHBOARD, icon: 'analytics' },
+    { label: 'Applications', href: '/admin/applicants', icon: 'assignment' },
+    { label: 'Payments Queue', href: CONSTANTS.ROUTES.ADMIN.UNVERIFIED, icon: 'payments' },
+    { label: 'Job Management', href: CONSTANTS.ROUTES.ADMIN.JOBS, icon: 'business_center' },
+    { label: 'Category Engine', href: CONSTANTS.ROUTES.ADMIN.CATEGORIES, icon: 'layers' },
+    { label: 'Mail Composer', href: CONSTANTS.ROUTES.ADMIN.MAIL, icon: 'chat' },
+    { label: 'System Health', href: CONSTANTS.ROUTES.ADMIN.HEALTH, icon: 'health_and_safety' },
+    { label: 'Bank Settings', href: CONSTANTS.ROUTES.ADMIN.BANK_ACCOUNTS, icon: 'account_balance' },
 ];
 
 export function AdminSidebar() {
@@ -39,38 +26,58 @@ export function AdminSidebar() {
     };
 
     return (
-        <aside className="w-64 h-screen fixed left-0 top-0 bg-slate-900 text-slate-300 flex flex-col py-6">
-            <div className="px-6 mb-10 flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center text-white font-bold">J</div>
-                <span className="font-bold text-lg text-white">Admin Central</span>
+        <aside className="h-screen w-72 fixed left-0 top-0 bg-slate-900 flex flex-col space-y-2 z-50 selection:bg-blue-500/30 selection:text-blue-200">
+            {/* Brand / Header */}
+            <div className="px-8 py-10">
+                <Link href={CONSTANTS.ROUTES.ADMIN.DASHBOARD}>
+                    <h1 className="text-white font-black tracking-tighter text-2xl hover:text-blue-400 transition-colors">CareerCurator</h1>
+                </Link>
+                <div className="mt-6 flex items-center space-x-3 bg-slate-800/50 p-3 rounded-xl border border-white/5">
+                    <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-blue-500/20">
+                        AU
+                    </div>
+                    <div>
+                        <p className="text-white text-xs font-bold uppercase tracking-tight">Admin Console</p>
+                        <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest opacity-80">System Oversight</p>
+                    </div>
+                </div>
             </div>
 
-            <nav className="flex-1 px-3 space-y-1">
+            {/* Nav Items */}
+            <nav className="flex-1 px-4 space-y-1">
                 {navItems.map((item) => {
                     const active = pathname === item.href;
                     return (
                         <Link
                             key={item.href}
                             href={item.href}
-                            className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${active
-                                    ? 'bg-primary text-white'
-                                    : 'hover:bg-slate-800 hover:text-white'
+                            className={`flex items-center px-4 py-3.5 rounded-xl transition-all duration-300 group ${active
+                                    ? 'bg-blue-600/10 text-blue-400 shadow-inner'
+                                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                                 }`}
                         >
-                            <item.icon className={`w-4 h-4 ${active ? 'text-white' : 'text-slate-400'}`} />
-                            {item.label}
+                            <span
+                                className={`material-symbols-outlined mr-4 transition-transform group-hover:scale-110 ${active ? 'font-bold' : ''}`}
+                                style={{ fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0" }}
+                            >
+                                {item.icon}
+                            </span>
+                            <span className={`font-bold text-[10px] uppercase tracking-[0.2em] ${active ? 'text-blue-400' : ''}`}>
+                                {item.label}
+                            </span>
                         </Link>
                     );
                 })}
             </nav>
 
-            <div className="px-3 pt-6 border-t border-slate-800 space-y-1">
+            {/* Footer / Logout */}
+            <div className="p-6">
                 <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-red-400 hover:bg-red-900/20 transition-colors"
+                    className="w-full flex items-center justify-center px-4 py-4 rounded-xl bg-slate-800 text-slate-400 hover:bg-error hover:text-white transition-all duration-300 group"
                 >
-                    <LogOut className="w-4 h-4" />
-                    System Logout
+                    <span className="material-symbols-outlined text-sm mr-2 group-hover:rotate-12 transition-transform">logout</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Secure Sign Out</span>
                 </button>
             </div>
         </aside>

@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Job Agency - Professional Recruitment Platform",
+  title: "CareerCurator | Your Gateway to Global Opportunities",
   description: "Secure and transparent job application platform with real-time tracking.",
 };
 
@@ -23,7 +23,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-full flex flex-col font-sans bg-surface text-on-surface">
         <Providers>
           {children}
         </Providers>
@@ -31,3 +34,4 @@ export default function RootLayout({
     </html>
   );
 }
+

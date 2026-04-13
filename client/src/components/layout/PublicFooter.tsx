@@ -1,47 +1,46 @@
-import Link from 'next/link';
+'use client';
+
 import { CONSTANTS } from '@/constants';
+import Link from 'next/link';
 
 export function PublicFooter() {
     return (
-        <footer className="bg-surface border-t border-border py-xl px-lg mt-auto">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-xl">
-                <div>
-                    <h3 className="mb-md">{CONSTANTS.APP_NAME}</h3>
-                    <p className="text-text-secondary text-sm leading-relaxed mb-lg">
-                        Connecting top talent with premium global opportunities. Verified, secure, and transparent recruitment.
+        <footer className="bg-slate-50 dark:bg-slate-950 w-full py-12 px-8 mt-auto">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <div className="space-y-4">
+                    <span className="font-bold text-slate-900 dark:text-white text-xl">CareerCurator</span>
+                    <p className="text-xs font-normal text-slate-500 dark:text-slate-400 leading-relaxed">
+                        © 2024 CareerCurator. Precision in Professional Placement.
                     </p>
-                    <div className="flex gap-md text-text-secondary">
-                        {/* Placeholder for social icons */}
-                        <div className="w-5 h-5 bg-slate-200 rounded-full" />
-                        <div className="w-5 h-5 bg-slate-200 rounded-full" />
-                        <div className="w-5 h-5 bg-slate-200 rounded-full" />
+                    <div className="flex gap-4">
+                        <a className="text-slate-400 hover:text-blue-600 transition-colors" href="#"><span className="material-symbols-outlined">public</span></a>
+                        <a className="text-slate-400 hover:text-blue-600 transition-colors" href="#"><span className="material-symbols-outlined">chat</span></a>
+                        <a className="text-slate-400 hover:text-blue-600 transition-colors" href="#"><span className="material-symbols-outlined">mail</span></a>
                     </div>
                 </div>
-
                 <div>
-                    <h4 className="font-semibold mb-md">Quick Links</h4>
-                    <ul className="space-y-sm text-sm text-text-secondary">
-                        <li><Link href={CONSTANTS.ROUTES.HOME} className="hover:text-primary transition-colors">Home</Link></li>
-                        <li><Link href={CONSTANTS.ROUTES.JOBS} className="hover:text-primary transition-colors">Browse Jobs</Link></li>
+                    <h6 className="font-bold text-slate-900 dark:text-white text-sm mb-4">Contact</h6>
+                    <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-2">
+                        <li>support@careercurator.com</li>
+                        <li>+1 (555) 000-8888</li>
+                        <li>Global HQ, New York</li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 className="font-bold text-slate-900 dark:text-white text-sm mb-4">Legal</h6>
+                    <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-2">
                         <li><Link href={CONSTANTS.ROUTES.PRIVACY} className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+                        <li><a className="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+                        <li><a className="hover:text-primary transition-colors" href="#">Cookie Policy</a></li>
                     </ul>
                 </div>
-
                 <div>
-                    <h4 className="font-semibold mb-md">Contact Us</h4>
-                    <ul className="space-y-sm text-sm text-text-secondary">
-                        <li>📧 support@jobagency.com</li>
-                        <li>📞 +1 (555) 123-4567</li>
-                        <li>📍 123 Agency Plaza, Suite 100</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto mt-xl pt-lg border-t border-border flex flex-col md:flex-row justify-between items-center gap-md text-xs text-text-secondary">
-                <p>© 2026 {CONSTANTS.APP_NAME}. All rights reserved.</p>
-                <div className="flex gap-lg">
-                    <Link href={CONSTANTS.ROUTES.PRIVACY} className="hover:text-primary transition-colors">Privacy Policy</Link>
-                    <span>Terms of Service</span>
+                    <h6 className="font-bold text-slate-900 dark:text-white text-sm mb-4">Subscribe</h6>
+                    <p className="text-[10px] text-slate-500 mb-4">Get curated job alerts directly.</p>
+                    <div className="flex">
+                        <input className="bg-white border border-outline-variant/30 rounded-l-lg text-xs w-full focus:ring-1 ring-primary px-3" placeholder="Email" type="text" />
+                        <button className="bg-primary text-white px-3 py-2 rounded-r-lg"><span className="material-symbols-outlined text-sm">send</span></button>
+                    </div>
                 </div>
             </div>
         </footer>

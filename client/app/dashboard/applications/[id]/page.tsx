@@ -3,17 +3,7 @@
 import React from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import { useParams } from 'next/navigation';
-import { ProgressTracker } from '@/components/ui/ProgressTracker';
 import { CONSTANTS } from '@/constants';
-import Link from 'next/link';
-import {
-    AlertCircle,
-    ArrowRight,
-    CheckCircle2,
-    CreditCard,
-    Download,
-    Info
-} from 'lucide-react';
 import { PaymentUpload } from '@/components/ui/PaymentUpload';
 
 interface JobStage {
@@ -47,7 +37,6 @@ export default function ApplicationDetailPage() {
         `/applications/${id}`
     );
 
-    // Fetch full job details to get stages (since findById doesn't include them on app)
     const { data: job } = useApiQuery<any>(
         ['job', app?.JobListing?.id?.toString() || ''],
         `/jobs/${app?.JobListing?.id}`,
@@ -58,144 +47,183 @@ export default function ApplicationDetailPage() {
         onSuccess: () => refetch()
     });
 
-    if (isLoading) return <div className="animate-pulse space-y-lg">
-        <div className="h-32 bg-slate-50 card" />
-        <div className="h-64 bg-slate-50 card" />
-    </div>;
+    if (isLoading) return (
+        <div className="space-y-12 animate-pulse">
+            <div className="h-40 bg-slate-100 rounded-2xl" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-8 h-96 bg-slate-100 rounded-2xl" />
+                <div className="lg:col-span-4 h-96 bg-slate-100 rounded-2xl" />
+            </div>
+        </div>
+    );
 
     if (!app) return <div>Application not found</div>;
 
     const stages = job?.JobStages?.sort((a: any, b: any) => a.orderPosition - b.orderPosition) || [];
-    const currentStage = stages.find((s: any) => s.id === app.currentStageId);
-
-    const mappedStages = stages.map((s: any) => ({
-        id: s.id,
-        name: s.name,
-        status: s.id === app.currentStageId ? 'current' :
-            stages.indexOf(s) < stages.findIndex((st: any) => st.id === app.currentStageId) ? 'completed' : 'upcoming',
-        requiresPayment: s.requiresPayment
-    }));
-
+    const currentStageIndex = stages.findIndex((s: any) => s.id === app.currentStageId);
+    const currentStage = stages[currentStageIndex];
     const currentPayment = app.Payments?.find(p => p.stageId === app.currentStageId);
 
     return (
-        <div className="space-y-xl max-w-4xl mx-auto">
-            <header className="flex flex-col md:flex-row justify-between items-start gap-md">
-                <div>
-                    <h1 className="mb-1">{app.JobListing.title}</h1>
-                    <p className="text-text-secondary">Application Ref: #{app.id.toString().padStart(5, '0')}</p>
+        <div className="space-y-12 selection:bg-primary-container selection:text-on-primary-container pb-24">
+            {/* Header Section */}
+            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="max-w-2xl">
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className={`px-3 py-1 text-[10px] font-bold tracking-widest uppercase rounded-full ${app.status === 'Active' ? 'bg-primary/10 text-primary' : 'bg-green-100 text-green-700'
+                            }`}>
+                            {app.status} Application
+                        </span>
+                        <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">• Ref: #CC-{app.id.toString().padStart(5, '0')}</span>
+                    </div>
+                    <h1 className="text-5xl font-bold tracking-tighter text-on-surface mb-4">{app.JobListing.title}</h1>
+                    <p className="text-lg text-on-surface-variant leading-relaxed font-light">
+                        Visualizing the future of global infrastructure. Currently in the <span className="font-bold text-primary italic uppercase tracking-tighter">{currentStage?.name || 'Processing'}</span> stage.
+                    </p>
                 </div>
-                <span className={`px-3 py-1 rounded-sm text-xs font-bold uppercase ${app.status === 'Active' ? 'bg-blue-50 text-primary' : 'bg-green-50 text-success'
-                    }`}>
-                    {app.status} Status
-                </span>
+                <div className="flex gap-3">
+                    <button className="px-6 py-3 bg-surface-container-high text-on-surface-variant rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">
+                        Withdraw
+                    </button>
+                    <button className="px-6 py-3 bg-slate-900 text-white rounded-lg font-bold text-xs uppercase tracking-widest shadow-xl shadow-slate-200 hover:bg-primary transition-all active:scale-95">
+                        Send Message
+                    </button>
+                </div>
             </header>
 
-            <section className="card">
-                <h3 className="mb-lg">Overall Progress</h3>
-                <ProgressTracker
-                    stages={mappedStages}
-                    currentPercent={app.completionPercentage}
-                />
-            </section>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Left Column: Stages & Payments */}
+                <div className="lg:col-span-8 space-y-8">
+                    {/* Action Required Card */}
+                    {currentStage?.requiresPayment && (!currentPayment || currentPayment.status !== CONSTANTS.STATUSES.PAYMENT.VERIFIED) && (
+                        <section className="bg-primary/5 rounded-2xl p-8 flex items-start gap-4 border-l-4 border-primary">
+                            <div className="bg-primary/10 p-3 rounded-lg text-primary">
+                                <span className="material-symbols-outlined font-bold">assignment_late</span>
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-lg font-bold text-on-surface mb-1 uppercase tracking-tight">Action Required: Strategy Contribution</h3>
+                                <p className="text-on-surface-variant text-sm mb-6 font-medium">To proceed to the next stage, a nominal processing fee of <span className="font-bold text-primary">${currentStage.amount}</span> is required as per the recruitment protocol.</p>
+                                <div className="bg-white/50 p-6 rounded-xl border border-primary/20">
+                                    <PaymentUpload
+                                        applicationId={app.id}
+                                        stageId={currentStage.id}
+                                        amount={currentStage.amount || 0}
+                                        onSuccess={refetch}
+                                    />
+                                </div>
+                            </div>
+                        </section>
+                    )}
 
-            {currentStage && (
-                <section className="space-y-lg">
-                    <div className="flex items-center gap-md">
-                        <div className="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center font-bold">
-                            {stages.indexOf(currentStage) + 1}
+                    {/* Stages Grid */}
+                    <section>
+                        <div className="flex items-center justify-between mb-8">
+                            <h2 className="text-xl font-bold tracking-tight uppercase">Application Path</h2>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{currentStageIndex + 1} of {stages.length} Stages</span>
                         </div>
-                        <h2>Current Stage: {currentStage.name}</h2>
-                    </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {stages.map((stage: any, index: number) => {
+                                const isPassed = index < currentStageIndex;
+                                const isCurrent = index === currentStageIndex;
+                                const isLocked = index > currentStageIndex;
 
-                    <div className="card space-y-md">
-                        <div className="flex items-start gap-md text-text-secondary leading-relaxed">
-                            <Info className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                            <div dangerouslySetInnerHTML={{ __html: currentStage.description }} />
-                        </div>
-
-                        {currentStage.requiresPayment && (
-                            <div className="mt-xl pt-xl border-t border-border space-y-lg">
-                                <h3 className="flex items-center gap-2">
-                                    <CreditCard className="w-5 h-5 text-warning" />
-                                    Payment Required: ${currentStage.amount}
-                                </h3>
-
-                                {!currentPayment || currentPayment.status === CONSTANTS.STATUSES.PAYMENT.UNPAID ? (
-                                    <div className="bg-amber-50 border border-amber-100 p-lg rounded-md space-y-md">
-                                        <p className="text-sm">Please follow the payment instructions below to proceed.</p>
-                                        <PaymentUpload
-                                            applicationId={app.id}
-                                            stageId={currentStage.id}
-                                            amount={currentStage.amount || 0}
-                                            onSuccess={refetch}
-                                        />
-                                    </div>
-                                ) : currentPayment.status === CONSTANTS.STATUSES.PAYMENT.PENDING ? (
-                                    <div className="bg-blue-50 border border-blue-100 p-lg rounded-md flex items-center gap-md text-primary">
-                                        <AlertCircle className="w-6 h-6" />
-                                        <div>
-                                            <p className="font-bold">Payment Proof Uploaded</p>
-                                            <p className="text-sm">Our finance team is verifying your payment. This usually takes 1-6 hours.</p>
+                                return (
+                                    <div
+                                        key={stage.id}
+                                        className={`p-6 rounded-2xl transition-all border ${isPassed ? 'bg-surface-container-lowest border-slate-100 grayscale-[0.5]' :
+                                                isCurrent ? 'bg-white shadow-2xl shadow-primary/10 border-primary/20 ring-4 ring-primary/5' :
+                                                    'bg-surface-container-low border-transparent opacity-60'
+                                            }`}
+                                    >
+                                        <div className="flex justify-between items-start mb-6">
+                                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isPassed ? 'bg-green-100 text-green-600' :
+                                                    isCurrent ? 'bg-primary text-white shadow-lg shadow-primary/30' :
+                                                        'bg-slate-200 text-slate-400'
+                                                }`}>
+                                                <span className="material-symbols-outlined font-bold" style={{ fontVariationSettings: "'FILL' 1" }}>
+                                                    {isPassed ? 'check_circle' : isCurrent ? 'pending' : 'lock'}
+                                                </span>
+                                            </div>
+                                            <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded ${isPassed ? 'bg-green-50 text-green-600' :
+                                                    isCurrent ? 'bg-primary/10 text-primary' :
+                                                        'bg-slate-100 text-slate-400'
+                                                }`}>
+                                                {isPassed ? 'Passed' : isCurrent ? 'Active' : 'Locked'}
+                                            </span>
                                         </div>
-                                    </div>
-                                ) : currentPayment.status === CONSTANTS.STATUSES.PAYMENT.VERIFIED ? (
-                                    <div className="bg-green-50 border border-green-100 p-lg rounded-md flex items-center gap-md text-success">
-                                        <CheckCircle2 className="w-6 h-6" />
-                                        <div>
-                                            <p className="font-bold">Payment Verified</p>
-                                            <p className="text-sm">You can now proceed to the next stage.</p>
+                                        <h4 className="font-bold text-on-surface mb-1">{stage.name}</h4>
+                                        <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-tight line-clamp-2">{stage.description.replace(/<[^>]*>?/gm, '')}</p>
+                                        <div className="mt-6 pt-6 border-t border-slate-100 flex justify-between items-center">
+                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Protocol</span>
+                                            <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
+                                                {stage.requiresPayment ? `Fee: $${stage.amount}` : 'No Fee'}
+                                            </span>
+                                        </div>
+                                        {isCurrent && !stage.requiresPayment && (
                                             <button
                                                 onClick={() => advanceMutation.mutate({})}
                                                 disabled={advanceMutation.isPending}
-                                                className="btn-primary mt-md flex items-center gap-2"
+                                                className="w-full mt-6 bg-slate-900 text-white py-3 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-primary transition-all active:scale-95"
                                             >
-                                                {advanceMutation.isPending ? 'Advancing...' : 'Proceed to Next Stage'} <ArrowRight className="w-4 h-4" />
+                                                {advanceMutation.isPending ? 'Advancing...' : 'Mark as Complete'}
                                             </button>
-                                        </div>
+                                        )}
                                     </div>
-                                ) : (
-                                    <div className="bg-red-50 border border-red-100 p-lg rounded-md space-y-md text-danger">
-                                        <p className="font-bold">Payment Rejected</p>
-                                        <p className="text-sm">Note: {currentPayment.adminNote || 'Please re-upload a clear proof.'}</p>
-                                        <PaymentUpload
-                                            applicationId={app.id}
-                                            stageId={currentStage.id}
-                                            amount={currentStage.amount || 0}
-                                            onSuccess={refetch}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {!currentStage.requiresPayment && (
-                            <div className="mt-xl pt-lg border-t border-border flex justify-end">
-                                <button
-                                    onClick={() => advanceMutation.mutate({})}
-                                    disabled={advanceMutation.isPending}
-                                    className="btn-primary flex items-center gap-2"
-                                >
-                                    {advanceMutation.isPending ? 'Advancing...' : 'Mark as Complete & Proceed'} <ArrowRight className="w-4 h-4" />
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </section>
-            )}
-
-            {app.status === 'Completed' && (
-                <div className="card bg-green-50 border-green-200 text-center py-2xl space-y-md">
-                    <div className="w-16 h-16 bg-success text-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                        <CheckCircle2 className="w-10 h-10" />
-                    </div>
-                    <h2>Congratulations!</h2>
-                    <p className="text-text-secondary max-w-md mx-auto">
-                        Your application for <strong>{app.JobListing.title}</strong> is fully completed.
-                        Our team will contact you for final orientation and logistics.
-                    </p>
+                                );
+                            })}
+                        </div>
+                    </section>
                 </div>
-            )}
+
+                {/* Right Column: Audit Trail & Stats */}
+                <div className="lg:col-span-4 space-y-8">
+                    <section className="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-slate-100/50">
+                        <h2 className="text-xl font-bold tracking-tight mb-8 uppercase text-slate-800">Activity History</h2>
+                        <div className="space-y-8 relative">
+                            <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>
+                            {[
+                                { title: 'Strategy Contribution', desc: 'Proof of payment submitted.', time: 'Today, 09:12 AM', color: 'bg-primary' },
+                                { title: 'Initial Screening', desc: 'System check passed successfully.', time: 'Oct 15, 02:30 PM', color: 'bg-slate-300' },
+                                { title: 'Application Initiated', desc: 'Package Ref #CC-88294 created.', time: 'Oct 12, 09:00 AM', color: 'bg-slate-300' }
+                            ].map((item, i) => (
+                                <div key={i} className="relative pl-10">
+                                    <div className={`absolute left-2 top-1.5 w-3 h-3 rounded-full ${item.color} border-4 border-white z-10 shadow-sm`}></div>
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{item.time}</span>
+                                        <p className="text-xs font-bold text-on-surface uppercase tracking-tight">{item.title}</p>
+                                        <p className="text-[10px] text-on-surface-variant font-medium">{item.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <button className="w-full mt-8 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest border border-slate-100 rounded-xl hover:bg-slate-50 transition-colors">
+                            View Full Audit Logs
+                        </button>
+                    </section>
+
+                    <section className="bg-slate-900 text-white rounded-2xl p-8 shadow-2xl shadow-slate-200">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-2xl font-bold italic tracking-tighter">N</div>
+                            <div>
+                                <h3 className="font-bold text-sm uppercase tracking-widest text-white">Global Partner</h3>
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">San Francisco • Technology</p>
+                            </div>
+                        </div>
+                        <div className="space-y-4">
+                            {[
+                                { label: 'Completion', value: `${app.completionPercentage}%` },
+                                { label: 'Integrity', value: 'High' },
+                                { label: 'Est. Offer', value: '$180k' }
+                            ].map((stat, i) => (
+                                <div key={i} className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
+                                    <span className="text-slate-500">{stat.label}</span>
+                                    <span>{stat.value}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     );
 }
