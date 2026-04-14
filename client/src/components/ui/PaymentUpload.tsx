@@ -25,7 +25,7 @@ export function PaymentUpload({ applicationId, stageId, amount, onSuccess }: Pay
 
     // STK-ADM-BANK-003: Fetch bank details for this specific amount
     const { data: bankAccounts } = useApiQuery<any[]>(
-        ['finance', 'bank', amount],
+        ['finance', 'bank', 'amount'],
         `/admin/finance/bank-accounts/by-amount?amount=${amount}`
     );
 
