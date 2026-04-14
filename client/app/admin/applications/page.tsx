@@ -1,6 +1,7 @@
 'use client';
 
 import { Application } from '@/types/models';
+import { useApiQuery } from '@/lib/hooks';
 
 interface ApplicationsResponse {
     rows: Application[];
