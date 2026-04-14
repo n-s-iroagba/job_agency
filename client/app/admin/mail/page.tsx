@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useApiMutation, useApiQuery } from '@/lib/hooks';
 import { useSearchParams } from 'next/navigation';
 
-export default function MailComposerPage() {
+function MailComposerContent() {
     const searchParams = useSearchParams();
     const [to, setTo] = useState(searchParams.get('to') || '');
     const [subject, setSubject] = useState('');
@@ -319,5 +319,17 @@ export default function MailComposerPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function MailComposerPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-surface flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        }>
+            <MailComposerContent />
+        </Suspense>
     );
 }
