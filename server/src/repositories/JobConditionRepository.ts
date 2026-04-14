@@ -3,8 +3,8 @@ import { JobCondition } from '../models';
 
 export class JobConditionRepository {
     // Maps to STK-ADM-COND-001, STK-ADM-COND-003, SCR-ADM-COND-001
-    public async findAll(transaction?: Transaction): Promise<JobCondition[]> {
-        return JobCondition.findAll({
+    public async findAll(transaction?: Transaction): Promise<{ rows: JobCondition[], count: number }> {
+        return JobCondition.findAndCountAll({
             order: [['name', 'ASC']],
             transaction
         });

@@ -2,14 +2,14 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/database';
 
 export class Notification extends Model {
-    public id!: number;
-    public userId!: number;
-    public subject!: string;
-    public message!: string;
-    public isRead!: boolean;
-    public type!: string; // e.g.EMAIL, PUSH
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare userId: number;
+    declare subject: string;
+    declare message: string;
+    declare isRead: boolean;
+    declare type: string; // e.g.EMAIL, PUSH
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 Notification.init({

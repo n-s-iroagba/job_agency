@@ -3,8 +3,8 @@ import { JobCategory } from '../models';
 
 export class JobCategoryRepository {
     // Maps to STK-ADM-CAT-001, SCR-ADM-CAT-001
-    public async findAll(transaction?: Transaction): Promise<JobCategory[]> {
-        return JobCategory.findAll({
+    public async findAll(transaction?: Transaction): Promise<{ rows: JobCategory[], count: number }> {
+        return JobCategory.findAndCountAll({
             order: [['name', 'ASC']],
             transaction
         });

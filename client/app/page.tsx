@@ -7,18 +7,12 @@ import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
 import { CONSTANTS } from '@/constants';
 
-interface Job {
-  id: number;
-  title: string;
-  location: string;
-  employmentType: string;
-  description: string;
-  JobCategory?: { name: string };
-  createdAt: string;
-}
+import { JobListing } from '@/types/models';
 
 export default function HomePage() {
-  const { data: jobs, isLoading } = useApiQuery<Job[]>(['jobs', 'public'], '/jobs');
+  const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(['jobs', 'public'], '/jobs');
+
+  const jobList = jobs?.rows || [];
 
   return (
     <div className="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
@@ -31,7 +25,7 @@ export default function HomePage() {
             <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[80%] rounded-full bg-primary/5 blur-[120px]"></div>
             <div className="absolute bottom-[-5%] left-[-5%] w-[40%] h-[60%] rounded-full bg-secondary/5 blur-[100px]"></div>
           </div>
-          <div className="container mx-auto px-8 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
+          <div className="w-full max-w-[1280px] mx-auto px-8 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/30 text-primary text-xs font-bold mb-6">
                 <span className="material-symbols-outlined text-sm text-fill">verified</span>
@@ -40,7 +34,7 @@ export default function HomePage() {
               <h1 className="text-slate-900 font-bold leading-[1.1] tracking-tight mb-6 text-[3.5rem] lg:text-[4.5rem]">
                 Your Gateway to <span className="text-primary">Global</span> Opportunities
               </h1>
-              <p className="text-on-surface-variant text-lg lg:text-xl max-w-xl mb-10 leading-relaxed">
+              <p className="text-on-surface-variant text-lg lg:text-xl max-w-[576px] mb-10 leading-relaxed">
                 An editorial approach to job searching. We curate high-impact roles for specialized professionals across the globe.
               </p>
               <div className="flex flex-wrap gap-4">
@@ -66,7 +60,7 @@ export default function HomePage() {
 
         {/* Trust Indicators */}
         <section className="py-16 bg-surface-container-low">
-          <div className="container mx-auto px-8">
+          <div className="w-full max-w-[1280px] mx-auto px-8">
             <p className="text-center text-slate-500 text-xs font-bold tracking-[0.2em] mb-10 uppercase">TRUSTED BY GLOBAL INSTITUTIONS</p>
             <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all">
               <div className="flex items-center gap-2">
@@ -91,7 +85,7 @@ export default function HomePage() {
 
         {/* Job Listings Search & Filters */}
         <section id="jobs" className="py-24 bg-surface">
-          <div className="container mx-auto px-8">
+          <div className="w-full max-w-[1280px] mx-auto px-8">
             <div className="mb-16">
               <h2 className="text-3xl font-bold text-slate-900 mb-8">Curated Opportunities</h2>
               <div className="bg-surface-container-low p-2 rounded-xl flex flex-col md:flex-row gap-2">
@@ -115,7 +109,7 @@ export default function HomePage() {
                   <div key={i} className="bg-white p-8 rounded-xl shadow-sm animate-pulse h-64 bg-slate-50" />
                 ))
               ) : (
-                jobs?.map(job => (
+                jobList.map((job: JobListing) => (
                   <div key={job.id} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-slate-100/50 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-start mb-6">
@@ -158,7 +152,7 @@ export default function HomePage() {
 
         {/* Candidate Spotlight / Signature Component */}
         <section className="py-24 bg-surface-container-low overflow-hidden">
-          <div className="container mx-auto px-8">
+          <div className="w-full max-w-[1280px] mx-auto px-8">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="relative">
                 <div className="bg-white p-10 rounded-[2rem] shadow-2xl relative z-10">

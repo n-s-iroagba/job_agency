@@ -2,12 +2,12 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/database';
 
 export class JobBenefit extends Model {
-    public id!: number;
-    public benefitType!: string;
-    public description!: string;
-    public value!: string | null;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare benefitType: string;
+    declare description: string;
+    declare value: string | null;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 JobBenefit.init({

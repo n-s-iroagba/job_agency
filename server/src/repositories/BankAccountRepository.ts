@@ -3,8 +3,8 @@ import { BankAccount } from '../models';
 
 export class BankAccountRepository {
     // Maps to STK-ADM-BANK-001, SCR-ADM-BANK-001
-    public async findAll(transaction?: Transaction): Promise<BankAccount[]> {
-        return BankAccount.findAll({
+    public async findAll(transaction?: Transaction): Promise<{ rows: BankAccount[], count: number }> {
+        return BankAccount.findAndCountAll({
             order: [['createdAt', 'DESC']],
             transaction
         });

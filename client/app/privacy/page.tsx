@@ -13,11 +13,11 @@ export default function PrivacyPolicyPage() {
 
             <main className="min-h-screen pb-24 flex-1">
                 {/* Hero Section */}
-                <section className="relative pt-32 pb-16 px-8 max-w-7xl mx-auto overflow-hidden">
+                <section className="relative pt-32 pb-16 px-8 max-w-[1280px] mx-auto overflow-hidden">
                     <div className="relative z-10">
                         <div className="flex flex-col gap-2 mb-4">
                             <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary">Compliance & Legal</span>
-                            <h1 className="text-[3.5rem] font-bold leading-[1.1] tracking-tight text-on-surface max-w-3xl">Privacy Policy</h1>
+                            <h1 className="text-[3.5rem] font-bold leading-[1.1] tracking-tight text-on-surface max-w-[768px]">Privacy Policy</h1>
                         </div>
                         <div className="flex items-center gap-6 mt-8 text-on-surface-variant">
                             <div className="flex items-center gap-2">
@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
                 </section>
 
                 {/* Content Grid */}
-                <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-16">
+                <div className="max-w-[1280px] mx-auto px-8 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-16">
                     {/* Sticky Table of Contents */}
                     <aside className="hidden lg:block">
                         <div className="sticky top-32 space-y-8">
@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
                     </aside>
 
                     {/* Document Body */}
-                    <article className="space-y-20 max-w-3xl">
+                    <article className="space-y-20 max-w-[768px]">
                         <section className="scroll-mt-32" id="introduction">
                             <h2 className="text-[1.75rem] font-semibold text-on-surface mb-6">1. Introduction</h2>
                             <div className="space-y-4 text-[1rem] leading-relaxed text-on-surface-variant">

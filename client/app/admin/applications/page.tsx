@@ -34,7 +34,7 @@ export default function AdminApplicationsPage() {
             </header>
 
             {/* Main Content Area */}
-            <main className="p-12 space-y-10 max-w-7xl">
+            <main className="p-12 space-y-10 max-w-[1280px]">
                 {/* Breadcrumbs & Title */}
                 <div className="flex justify-between items-end">
                     <div>
@@ -46,7 +46,7 @@ export default function AdminApplicationsPage() {
                             <span className="text-primary">New Applications</span>
                         </div>
                         <h2 className="text-[3.5rem] font-black tracking-tighter text-on-surface leading-none mb-4 uppercase">New Applications</h2>
-                        <p className="text-on-surface-variant text-lg max-w-2xl font-light italic">
+                        <p className="text-on-surface-variant text-lg max-w-[672px] font-light italic">
                             Review and triage incoming talent. Total pending submissions: <span className="text-primary font-bold not-italic">{totalCount}</span>
                         </p>
                     </div>

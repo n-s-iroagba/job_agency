@@ -16,6 +16,14 @@ export class AdminController {
         res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getFinancialConfigurations());
     }
 
+    public async getAllBankAccounts(req: Request, res: Response): Promise<void> {
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllBankAccounts());
+    }
+
+    public async getAllCryptoWallets(req: Request, res: Response): Promise<void> {
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllCryptoWallets());
+    }
+
     // STK-ADM-BANK-003: get bank accounts filtered by payment amount
     public async getBankAccountsForAmount(req: Request, res: Response): Promise<void> {
         const amount = parseFloat(req.query.amount as string);
@@ -58,6 +66,18 @@ export class AdminController {
     // ==========================
     public async getJobConfigs(req: Request, res: Response): Promise<void> {
         res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getJobConfigurations());
+    }
+
+    public async getAllCategories(req: Request, res: Response): Promise<void> {
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllCategories());
+    }
+
+    public async getAllConditions(req: Request, res: Response): Promise<void> {
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllConditions());
+    }
+
+    public async getAllBenefits(req: Request, res: Response): Promise<void> {
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllBenefits());
     }
 
     // Categories — STK-ADM-CAT-001

@@ -2,16 +2,16 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/database';
 
 export class JobListing extends Model {
-    public id!: number;
-    public title!: string;
-    public description!: string;
-    public location!: string;
-    public employmentType!: string;
-    public requirements!: string;
-    public categoryId!: number;
-    public isActive!: boolean;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare title: string;
+    declare description: string;
+    declare location: string;
+    declare employmentType: string;
+    declare requirements: string;
+    declare categoryId: number;
+    declare isActive: boolean;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 JobListing.init({

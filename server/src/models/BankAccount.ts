@@ -3,15 +3,15 @@ import { sequelize } from '../config/database';
 import { CONSTANTS } from '../constants';
 
 export class BankAccount extends Model {
-    public id!: number;
-    public bankName!: string;
-    public accountNumber!: string;
-    public accountType!: string; // Using CONSTANTS.BANK_ACCOUNT_TYPES
-    public routingCode!: string;
-    public currency!: string;
-    public isActive!: boolean;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare bankName: string;
+    declare accountNumber: string;
+    declare accountType: string; // Using CONSTANTS.BANK_ACCOUNT_TYPES
+    declare routingCode: string;
+    declare currency: string;
+    declare isActive: boolean;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 BankAccount.init({

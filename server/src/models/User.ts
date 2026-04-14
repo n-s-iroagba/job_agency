@@ -3,15 +3,15 @@ import { sequelize } from '../config/database';
 import { CONSTANTS } from '../constants';
 
 export class User extends Model {
-    public id!: number;
-    public fullName!: string;
-    public email!: string;
-    public passwordHash!: string;
-    public role!: string;
-    public preferences!: object;
-    public isVerified!: boolean;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare fullName: string;
+    declare email: string;
+    declare passwordHash: string;
+    declare role: string;
+    declare preferences: object;
+    declare isVerified: boolean;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 User.init({
@@ -39,8 +39,8 @@ User.init({
         allowNull: false,
     },
     preferences: {
-        type: DataTypes.JSONB,
-        defaultValue: { pushNotifications: true, emailNotifications: true },
+        type: DataTypes.JSON,
+        allowNull: true,
     },
     isVerified: {
         type: DataTypes.BOOLEAN,

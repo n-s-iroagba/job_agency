@@ -19,7 +19,7 @@ export default function ApplicantLayout({ children }: { children: React.ReactNod
                         </button>
                     </div>
                 </header>
-                <main className="p-10 max-w-7xl mx-auto w-full">
+                <main className="p-10 max-w-[1280px] mx-auto w-full">
                     {children}
                 </main>
             </div>

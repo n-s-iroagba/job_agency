@@ -12,7 +12,7 @@ export default function ProfilePage() {
             <header>
                 <p className="text-primary font-bold tracking-widest text-[10px] uppercase mb-2">Workspace Identity</p>
                 <h1 className="text-[3.5rem] font-bold leading-tight tracking-tighter text-on-surface mb-4">Account Settings</h1>
-                <p className="text-lg text-on-surface-variant max-w-2xl leading-relaxed font-light">
+                <p className="text-lg text-on-surface-variant max-w-[672px] leading-relaxed font-light">
                     Manage your professional identity, security preferences, and communication channels. Your precision career journey starts here.
                 </p>
             </header>
@@ -141,7 +141,7 @@ export default function ProfilePage() {
                     {/* Section: Danger Zone */}
                     <section className="bg-error/5 p-10 rounded-2xl border-2 border-dashed border-error/20" id="data">
                         <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-                            <div className="max-w-md">
+                            <div className="max-w-[448px]">
                                 <h2 className="text-xl font-bold text-error mb-2 uppercase tracking-tight">Identity Termination</h2>
                                 <p className="text-[10px] text-error font-bold leading-relaxed uppercase tracking-widest opacity-60">
                                     Permanent erasure of application history, portfolios, and saved credentials. This action is final. (REG-004)

@@ -39,13 +39,13 @@ export default function NotificationsPage() {
     );
 
     return (
-        <div className="space-y-12 selection:bg-primary-container selection:text-on-primary-container pb-24 max-w-5xl">
+        <div className="space-y-12 selection:bg-primary-container selection:text-on-primary-container pb-24 max-w-[1024px]">
             {/* Header Section */}
             <header>
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
                         <h1 className="text-[3.5rem] font-bold leading-tight tracking-tighter text-on-surface mb-2">Updates</h1>
-                        <p className="text-on-surface-variant text-lg max-w-xl font-light leading-relaxed">
+                        <p className="text-on-surface-variant text-lg max-w-[576px] font-light leading-relaxed">
                             Stay informed on your professional journey. Manage your application status, payments, and team communications in one place.
                         </p>
                     </div>
@@ -61,13 +61,13 @@ export default function NotificationsPage() {
 
             {/* Notifications Container */}
             <div className="space-y-12">
-                {notifications && notifications.length === 0 ? (
+                {(!notifications || (notifications as any).rows?.length === 0) ? (
                     <div className="flex flex-col items-center justify-center py-24 text-center bg-surface-container-low/30 rounded-3xl border-2 border-dashed border-slate-200">
                         <div className="w-24 h-24 rounded-full bg-surface-container flex items-center justify-center text-slate-300 mb-6">
                             <span className="material-symbols-outlined text-5xl font-bold">notifications_off</span>
                         </div>
                         <h2 className="text-xl font-bold text-on-surface mb-1 uppercase tracking-tight">You're all caught up</h2>
-                        <p className="text-on-surface-variant max-w-xs text-xs font-bold uppercase tracking-widest opacity-60 italic">We'll notify you when something important happens.</p>
+                        <p className="text-on-surface-variant max-w-[320px] text-xs font-bold uppercase tracking-widest opacity-60 italic">We'll notify you when something important happens.</p>
                     </div>
                 ) : (
                     <div className="space-y-8">
@@ -75,20 +75,20 @@ export default function NotificationsPage() {
                         <div>
                             <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-6 px-4">Latest Stream</h3>
                             <div className="space-y-3">
-                                {notifications?.map((n) => (
+                                {(notifications as any).rows?.map((n: Notification) => (
                                     <div
                                         key={n.id}
                                         className={`group relative p-6 rounded-2xl transition-all duration-300 flex items-start gap-5 border ${!n.isRead
-                                                ? 'bg-white shadow-2xl shadow-primary/5 border-primary/10'
-                                                : 'bg-surface-container-low/30 border-transparent opacity-70 grayscale-[0.3] hover:grayscale-0 hover:opacity-100 hover:bg-white'
+                                            ? 'bg-white shadow-2xl shadow-primary/5 border-primary/10'
+                                            : 'bg-surface-container-low/30 border-transparent opacity-70 grayscale-[0.3] hover:grayscale-0 hover:opacity-100 hover:bg-white'
                                             }`}
                                     >
                                         {!n.isRead && (
                                             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-primary rounded-r-full shadow-lg shadow-primary/40"></div>
                                         )}
                                         <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${n.type === 'SUCCESS' ? 'bg-green-100 text-green-600' :
-                                                n.type === 'ALERT' ? 'bg-amber-100 text-amber-600' :
-                                                    'bg-primary/10 text-primary'
+                                            n.type === 'ALERT' ? 'bg-amber-100 text-amber-600' :
+                                                'bg-primary/10 text-primary'
                                             }`}>
                                             <span className="material-symbols-outlined font-bold" style={{ fontVariationSettings: "'FILL' 1" }}>
                                                 {n.type === 'SUCCESS' ? 'check_circle' : n.type === 'ALERT' ? 'warning' : 'notifications'}
@@ -129,7 +129,7 @@ export default function NotificationsPage() {
                 </div>
                 <div className="relative z-10">
                     <h3 className="text-sm font-bold uppercase tracking-[0.2em] mb-4">Communications Integrity</h3>
-                    <p className="text-xs text-slate-400 font-medium leading-relaxed italic max-w-xl">
+                    <p className="text-xs text-slate-400 font-medium leading-relaxed italic max-w-[576px]">
                         EliteTalent ensures all communications are encrypted and verified. Critical updates are also mirrored via email and secure SMS protocols. (NFR-SEC-006)
                     </p>
                 </div>

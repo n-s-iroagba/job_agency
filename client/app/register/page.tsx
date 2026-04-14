@@ -68,7 +68,7 @@ export default function RegisterPage() {
         <div className="bg-surface text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
             {/* Top Navigation */}
             <header className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] px-8 h-16 flex items-center">
-                <nav className="flex justify-between items-center w-full max-w-7xl mx-auto">
+                <nav className="flex justify-between items-center w-full max-w-[1280px] mx-auto">
                     <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">CareerCurator</Link>
                     <div className="hidden md:flex items-center gap-8">
                         <Link href="/" className="text-slate-500 font-medium hover:text-primary transition-colors">Jobs</Link>
@@ -82,8 +82,8 @@ export default function RegisterPage() {
                 </nav>
             </header>
 
-            <main className="flex-grow flex items-center justify-center pt-24 pb-12 px-6">
-                <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <main className="flex-grow w-full flex flex-col items-center justify-center pt-24 pb-12 px-6">
+                <div className="max-w-[1152px] w-full flex-1 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {/* Left Side: Editorial Content */}
                     <div className="hidden lg:block space-y-8 pr-12 scale-90 origin-left">
                         <div className="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/30 text-primary text-xs font-semibold tracking-wider uppercase">
@@ -92,7 +92,7 @@ export default function RegisterPage() {
                         <h1 className="text-6xl font-bold leading-[1.1] text-on-surface tracking-tight">
                             Join the <span className="text-primary">elite</span> network.
                         </h1>
-                        <p className="text-xl text-on-surface-variant font-light leading-relaxed max-w-md">
+                        <p className="text-xl text-on-surface-variant font-light leading-relaxed max-w-[448px]">
                             Step into a curated ecosystem where your potential meets precision. Beyond job listings, we build career legacies.
                         </p>
                         <div className="space-y-6 pt-4">
@@ -118,7 +118,7 @@ export default function RegisterPage() {
                     </div>
 
                     {/* Right Side: Registration Form */}
-                    <div className="w-full max-w-md mx-auto lg:mx-0">
+                    <div className="w-full max-w-[448px] mx-auto lg:mx-0">
                         <div className="bg-surface-container-lowest rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] p-8 md:p-10 border border-slate-100/50">
                             <div className="mb-8 text-center lg:text-left">
                                 <h2 className="text-2xl font-bold text-on-surface">Create Account</h2>
@@ -252,7 +252,7 @@ export default function RegisterPage() {
 
             {/* Footer */}
             <footer className="bg-slate-50 py-12 px-8">
-                <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-6 text-center lg:text-left">
+                <div className="flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto gap-6 text-center lg:text-left">
                     <div className="text-lg font-bold text-slate-900">CareerCurator</div>
                     <div className="flex flex-wrap justify-center gap-8">
                         <Link className="text-slate-500 font-medium hover:text-primary transition-colors hover:underline underline-offset-4" href={CONSTANTS.ROUTES.PRIVACY}>Privacy Policy</Link>

@@ -3,8 +3,8 @@ import { CryptoWallet } from '../models';
 
 export class CryptoWalletRepository {
     // Maps to STK-ADM-CRYPTO-001, SCR-ADM-CRYPTO-001
-    public async findAll(transaction?: Transaction): Promise<CryptoWallet[]> {
-        return CryptoWallet.findAll({
+    public async findAll(transaction?: Transaction): Promise<{ rows: CryptoWallet[], count: number }> {
+        return CryptoWallet.findAndCountAll({
             order: [['createdAt', 'DESC']],
             transaction
         });

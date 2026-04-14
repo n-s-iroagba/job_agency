@@ -59,6 +59,9 @@ export class AdminService {
         };
     }
 
+    public async getAllBankAccounts() { return bankAccountRepository.findAll(); }
+    public async getAllCryptoWallets() { return cryptoWalletRepository.findAll(); }
+
     // STK-ADM-BANK-003: get bank account by amount threshold
     public async getBankAccountForAmount(amount: number) {
         const allAccounts = await bankAccountRepository.findAll();
@@ -102,6 +105,10 @@ export class AdminService {
             benefits: await jobBenefitRepository.findAll(),
         };
     }
+
+    public async getAllCategories() { return jobCategoryRepository.findAll(); }
+    public async getAllConditions() { return jobConditionRepository.findAll(); }
+    public async getAllBenefits() { return jobBenefitRepository.findAll(); }
 
     // Category CRUD — STK-ADM-CAT-001
     public async createCategory(data: any) { return jobCategoryRepository.create(data); }

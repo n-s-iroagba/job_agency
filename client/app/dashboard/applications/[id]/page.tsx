@@ -68,7 +68,7 @@ export default function ApplicationDetailPage() {
         <div className="space-y-12 selection:bg-primary-container selection:text-on-primary-container pb-24">
             {/* Header Section */}
             <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="max-w-2xl">
+                <div className="max-w-[672px]">
                     <div className="flex items-center gap-2 mb-4">
                         <span className={`px-3 py-1 text-[10px] font-bold tracking-widest uppercase rounded-full ${app.status === 'Active' ? 'bg-primary/10 text-primary' : 'bg-green-100 text-green-700'
                             }`}>

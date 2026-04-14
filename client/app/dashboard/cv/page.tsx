@@ -61,7 +61,7 @@ export default function CvManagementPage() {
             <header>
                 <p className="text-primary font-bold tracking-widest text-[10px] uppercase mb-2">Secure Document Vault</p>
                 <h1 className="text-[3.5rem] font-bold leading-tight tracking-tighter text-on-surface mb-4">Curate Your <span className="text-primary italic">Professional</span> Identity.</h1>
-                <p className="text-on-surface-variant max-w-2xl text-lg font-light leading-relaxed">
+                <p className="text-on-surface-variant max-w-[672px] text-lg font-light leading-relaxed">
                     Manage your resumes and portfolios with bank-grade security. Link specific versions to targeted job applications for a tailored approach.
                 </p>
             </header>

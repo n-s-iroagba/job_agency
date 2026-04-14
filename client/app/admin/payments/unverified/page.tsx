@@ -3,13 +3,15 @@
 import React, { useState } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import api from '@/lib/api';
+import Link from 'next/link';
+import { Payment } from '@/types/models';
 
 export default function UnverifiedProofsPage() {
-    const { data: proofs, isLoading, refetch } = useApiQuery<any>(
+    const { data: proofs, isLoading, refetch } = useApiQuery<{ rows: Payment[], count: number }>(
         ['admin', 'payments', 'unverified'],
         '/admin/payments/unverified'
     );
-    const [selectedProof, setSelectedProof] = useState<any>(null);
+    const [selectedProof, setSelectedProof] = useState<Payment | null>(null);
     const [note, setNote] = useState('');
 
     const executeVerify = async (id: number, status: string) => {
@@ -21,10 +23,10 @@ export default function UnverifiedProofsPage() {
         } catch (err) { alert('Verification failed'); }
     };
 
-    const proofList = proofs?.rows || proofs || [];
-    const totalPending = proofList.length;
-    const pendingValue = proofList.reduce((acc: number, p: any) => acc + (p.amount || 0), 0);
-    const highValueCount = proofList.filter((p: any) => (p.amount || 0) >= 5000).length;
+    const proofList = proofs?.rows || [];
+    const totalPending = proofs?.count || 0;
+    const pendingValue = proofList.reduce((acc: number, p: Payment) => acc + (p.amount || 0), 0);
+    const highValueCount = proofList.filter((p: Payment) => (p.amount || 0) >= 5000).length;
 
     return (
         <div className="flex flex-col min-h-screen bg-surface selection:bg-primary/10 selection:text-primary">
@@ -51,13 +53,13 @@ export default function UnverifiedProofsPage() {
             </header>
 
             {/* Main Content Area */}
-            <main className="p-12 space-y-12 max-w-7xl">
+            <main className="p-12 space-y-12 max-w-[1280px]">
                 {/* Hero Stats / Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="space-y-4">
                         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Compliance & Audit</span>
                         <h2 className="text-[4rem] font-black tracking-tighter text-on-surface leading-none uppercase">Unverified Payments</h2>
-                        <p className="text-on-surface-variant text-lg max-w-2xl font-light italic leading-relaxed">
+                        <p className="text-on-surface-variant text-lg max-w-[672px] font-light italic leading-relaxed">
                             Confirm candidate deposit screenshots to finalize enrollment. High-value transactions are <span className="text-tertiary font-bold not-italic">flagged</span> for priority audit.
                         </p>
                     </div>
@@ -88,7 +90,7 @@ export default function UnverifiedProofsPage() {
                             <span className="material-symbols-outlined text-8xl text-slate-100 mb-6 font-bold uppercase">verified_user</span>
                             <p className="text-slate-400 font-black uppercase tracking-[0.4em] italic text-sm">Audit Queue Zeroed • All transactions verified</p>
                         </div>
-                    ) : proofList.map((p: any) => (
+                    ) : proofList.map((p: Payment) => (
                         <div key={p.id} className={`group bg-white rounded-[2.5rem] p-8 transition-all hover:shadow-2xl hover:shadow-slate-200/50 relative overflow-hidden border border-slate-50 ${p.amount >= 5000 ? 'border-l-8 border-tertiary' : ''}`}>
                             {p.amount >= 5000 && (
                                 <div className="absolute top-0 right-0">
@@ -110,7 +112,7 @@ export default function UnverifiedProofsPage() {
                                             <span className="text-[8px] text-white/50 font-black uppercase tracking-widest">Digital PDF</span>
                                         </div>
                                     ) : (
-                                        <img src={p.proofUrl} alt="Proof" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                                        <img src={p.proofUrl || ''} alt="Proof" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                                     )}
                                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <span className="material-symbols-outlined text-white font-bold" style={{ fontSize: '32px' }}>zoom_in</span>
@@ -121,7 +123,7 @@ export default function UnverifiedProofsPage() {
                                 <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-10">
                                     <div className="space-y-2">
                                         <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Applicant Trace</h4>
-                                        <p className="font-black text-xl text-on-surface uppercase tracking-tighter">User ID: {p.userId}</p>
+                                        <p className="font-black text-xl text-on-surface uppercase tracking-tighter">{p.Application?.User?.fullName || `User ID: ${p.Application?.userId}`}</p>
                                         <p className="text-[10px] text-primary font-black uppercase tracking-widest">App ID: #{p.applicationId.toString().padStart(5, '0')}</p>
                                     </div>
                                     <div className="space-y-2">
@@ -132,7 +134,7 @@ export default function UnverifiedProofsPage() {
                                     <div className="space-y-2">
                                         <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Audit Metadata</h4>
                                         <p className="text-xs font-black text-on-surface uppercase tracking-tight"> {new Date(p.updatedAt).toLocaleDateString()} · {new Date(p.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                        <p className="text-[9px] text-slate-400 font-bold mt-1 italic tracking-widest uppercase">Verified Hash • Origin IP Hidden</p>
+                                        <p className="text-[9px] text-slate-400 font-bold mt-1 italic tracking-widest uppercase">{p.Verifier ? `Verified by ${p.Verifier.fullName}` : 'Verified Hash • Origin IP Hidden'}</p>
                                     </div>
                                 </div>
 
@@ -175,12 +177,12 @@ export default function UnverifiedProofsPage() {
             {/* Lightbox / Modal for Rejection or Inspection */}
             {selectedProof && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-8 bg-slate-900/95 backdrop-blur-3xl animate-in fade-in transition-all">
-                    <div className="bg-white rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden w-full max-w-5xl flex flex-col md:flex-row h-[80vh]">
+                    <div className="bg-white rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden w-full max-w-[1024px] flex flex-col md:flex-row h-[80vh]">
                         <div className="flex-1 bg-slate-100 relative group overflow-hidden">
                             {selectedProof.proofUrl?.endsWith('.pdf') ? (
                                 <iframe src={selectedProof.proofUrl} className="w-full h-full border-none" />
                             ) : (
-                                <img src={selectedProof.proofUrl} alt="Inspection" className="w-full h-full object-contain p-10 drop-shadow-2xl" />
+                                <img src={selectedProof.proofUrl || ''} alt="Inspection" className="w-full h-full object-contain p-10 drop-shadow-2xl" />
                             )}
                             <button
                                 onClick={() => setSelectedProof(null)}

@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routing API mappings
-app.use('/api/v1', apiRoutes);
+app.use('/api', apiRoutes);
 
 // Global Error Handler mapped at bottom of stack
 app.use(errorHandler);

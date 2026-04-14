@@ -3,11 +3,12 @@
 import React from 'react';
 import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
+import { User } from '@/types/models';
 
 export default function AdminApplicantsPage() {
-    const { data: users, isLoading } = useApiQuery<any>(['admin', 'users', 'all'], '/admin/users');
+    const { data: users, isLoading } = useApiQuery<{ rows: User[], count: number }>(['admin', 'users', 'all'], '/admin/users');
 
-    const userList = users?.rows || users || [];
+    const userList = users?.rows || [];
 
     return (
         <div className="flex flex-col min-h-screen bg-surface selection:bg-blue-500/10 selection:text-blue-600">
@@ -34,7 +35,7 @@ export default function AdminApplicantsPage() {
             </header>
 
             {/* Main Content Area */}
-            <main className="p-12 space-y-12 max-w-7xl">
+            <main className="p-12 space-y-12 max-w-[1280px]">
                 {/* Hero Header */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
@@ -42,7 +43,7 @@ export default function AdminApplicantsPage() {
                         <span className="text-[8px] font-bold text-slate-300 uppercase tracking-widest italic">REG-004 Compliance Active</span>
                     </div>
                     <h2 className="text-[4.5rem] font-black tracking-tighter text-on-surface leading-none uppercase italic">Applicant Base</h2>
-                    <p className="text-on-surface-variant text-lg max-w-2xl font-light leading-relaxed italic border-l-4 border-slate-100 pl-6">
+                    <p className="text-on-surface-variant text-lg max-w-[672px] font-light leading-relaxed italic border-l-4 border-slate-100 pl-6">
                         Centralized oversight for all platform stakeholders. Ensure identity verification and role-based access reflects current <span className="text-primary font-bold not-italic">security protocols</span>.
                     </p>
                 </div>
@@ -73,7 +74,7 @@ export default function AdminApplicantsPage() {
                             <tbody className="divide-y divide-slate-50">
                                 {isLoading ? (
                                     [1, 2, 3].map(i => <tr key={i} className="animate-pulse h-24"><td colSpan={5} className="bg-slate-50/10"></td></tr>)
-                                ) : userList.map((u: any) => (
+                                ) : userList.map((u: User) => (
                                     <tr key={u.id} className="hover:bg-slate-50/70 transition-all group cursor-pointer border-l-4 border-transparent hover:border-blue-600">
                                         <td className="px-10 py-8">
                                             <div className="flex items-center gap-5">
@@ -135,7 +136,7 @@ export default function AdminApplicantsPage() {
                         </div>
                         <div className="space-y-3">
                             <h4 className="text-xl font-black text-white uppercase tracking-tighter italic">Regulatory Audit Mode</h4>
-                            <p className="text-sm text-slate-400 font-bold leading-relaxed max-w-2xl italic uppercase tracking-tight">
+                            <p className="text-sm text-slate-400 font-bold leading-relaxed max-w-[672px] italic uppercase tracking-tight">
                                 User data management is strictly monitored per <span className="text-white">REG-004 protocols</span>. All modifications are logged in the secure audit vault. Deletion requests require formal cryptographic verification.
                             </p>
                         </div>

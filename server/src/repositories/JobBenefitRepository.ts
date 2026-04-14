@@ -3,8 +3,8 @@ import { JobBenefit } from '../models';
 
 export class JobBenefitRepository {
     // Maps to STK-ADM-BEN-001, STK-ADM-BEN-004, SCR-ADM-BEN-001
-    public async findAll(transaction?: Transaction): Promise<JobBenefit[]> {
-        return JobBenefit.findAll({
+    public async findAll(transaction?: Transaction): Promise<{ rows: JobBenefit[], count: number }> {
+        return JobBenefit.findAndCountAll({
             order: [['benefitType', 'ASC']],
             transaction
         });

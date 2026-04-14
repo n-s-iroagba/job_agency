@@ -32,7 +32,7 @@ export default function ApplicationsListPage() {
             {/* Header Section */}
             <header>
                 <h1 className="text-[3.5rem] font-bold leading-none tracking-tight text-on-surface mb-4">Application Hub</h1>
-                <p className="text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                <p className="text-lg text-on-surface-variant max-w-[672px] leading-relaxed">
                     Manage your professional journey. Track active submissions, resume drafts, and completed interview cycles in one curated space.
                 </p>
             </header>
@@ -101,7 +101,7 @@ export default function ApplicationsListPage() {
                                     </div>
                                     <h3 className="text-xl font-bold text-on-surface mb-1 group-hover:text-primary transition-colors">{app.JobListing.title}</h3>
                                     <p className="text-on-surface-variant text-sm mb-4">Global Recruitment Console • Remote Opportunity</p>
-                                    <div className="max-w-xs">
+                                    <div className="max-w-[320px]">
                                         <div className="flex justify-between text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-2">
                                             <span>Progress Status</span>
                                             <span>{app.completionPercentage}%</span>

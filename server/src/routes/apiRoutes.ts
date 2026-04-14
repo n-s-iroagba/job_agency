@@ -94,6 +94,8 @@ router.delete('/admin/jobs/stages/:stageId', ...adminMW, jobController.deleteJob
 
 // STK-ADM-BANK-001..004
 router.get('/admin/finance/configs', ...adminMW, adminController.getFinancialConfigs.bind(adminController));
+router.get('/admin/bank-accounts', ...adminMW, adminController.getAllBankAccounts.bind(adminController));
+router.get('/admin/crypto-wallets', ...adminMW, adminController.getAllCryptoWallets.bind(adminController));
 router.get('/admin/finance/bank-accounts/by-amount', ...adminMW, adminController.getBankAccountsForAmount.bind(adminController));
 router.post('/admin/bank-accounts', ...adminMW, adminController.createBankAccount.bind(adminController));
 router.put('/admin/bank-accounts/:id', ...adminMW, adminController.updateBankAccount.bind(adminController));
@@ -106,6 +108,9 @@ router.delete('/admin/crypto-wallets/:id', ...adminMW, adminController.deleteCry
 
 // STK-ADM-CAT-001..003
 router.get('/admin/jobs/metadata', ...adminMW, adminController.getJobConfigs.bind(adminController));
+router.get('/admin/categories', ...adminMW, adminController.getAllCategories.bind(adminController));
+router.get('/admin/conditions', ...adminMW, adminController.getAllConditions.bind(adminController));
+router.get('/admin/benefits', ...adminMW, adminController.getAllBenefits.bind(adminController));
 router.post('/admin/categories', ...adminMW, adminController.createCategory.bind(adminController));
 router.put('/admin/categories/:id', ...adminMW, adminController.updateCategory.bind(adminController));
 router.delete('/admin/categories/:id', ...adminMW, adminController.deleteCategory.bind(adminController));

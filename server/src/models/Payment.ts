@@ -3,17 +3,17 @@ import { sequelize } from '../config/database';
 import { CONSTANTS } from '../constants';
 
 export class Payment extends Model {
-    public id!: number;
-    public applicationId!: number;
-    public stageId!: number;
-    public status!: string;
-    public amount!: number;
-    public currency!: string;
-    public proofUrl!: string | null;
-    public adminNote!: string | null;
-    public verifiedById!: number | null;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare applicationId: number;
+    declare stageId: number;
+    declare status: string;
+    declare amount: number;
+    declare currency: string;
+    declare proofUrl: string | null;
+    declare adminNote: string | null;
+    declare verifiedById: number | null;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 Payment.init({

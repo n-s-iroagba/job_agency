@@ -17,16 +17,16 @@ interface CryptoWalletAttributes {
 interface CryptoWalletCreationAttributes extends Optional<CryptoWalletAttributes, 'id'> { }
 
 export class CryptoWallet extends Model<CryptoWalletAttributes, CryptoWalletCreationAttributes> implements CryptoWalletAttributes {
-    public id!: number;
-    public currencyName!: string;
-    public networkType!: string;
-    public walletAddress!: string;
-    public memoTag?: string;
-    public isActive!: boolean;
-    public displayLabel!: string;
+    declare id: number;
+    declare currencyName: string;
+    declare networkType: string;
+    declare walletAddress: string;
+    declare memoTag?: string;
+    declare isActive: boolean;
+    declare displayLabel: string;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 CryptoWallet.init(

@@ -3,14 +3,14 @@ import { sequelize } from '../config/database';
 import { CONSTANTS } from '../constants';
 
 export class Application extends Model {
-    public id!: number;
-    public userId!: number;
-    public jobId!: number;
-    public currentStageId!: number | null;
-    public status!: string;
-    public completionPercentage!: number;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare userId: number;
+    declare jobId: number;
+    declare currentStageId: number | null;
+    declare status: string;
+    declare completionPercentage: number;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 Application.init({

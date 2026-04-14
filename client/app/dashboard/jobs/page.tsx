@@ -69,7 +69,7 @@ export default function BrowseJobsPage() {
                     <div>
                         <span className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-primary">Opportunity Curator</span>
                         <h1 className="text-[3.5rem] font-bold tracking-tight text-on-surface leading-tight mt-1">Discover your next <span className="text-primary">career</span> step</h1>
-                        <p className="text-[1rem] text-on-surface-variant mt-4 max-w-xl font-light">Curated roles from top-tier agencies and startups. Focused on precision, impact, and growth.</p>
+                        <p className="text-[1rem] text-on-surface-variant mt-4 max-w-[576px] font-light">Curated roles from top-tier agencies and startups. Focused on precision, impact, and growth.</p>
                     </div>
                     <div className="flex items-center bg-surface-container-low p-1.5 rounded-xl self-start md:self-auto">
                         <button className="px-6 py-2 bg-white shadow-sm rounded-lg text-xs font-bold text-primary uppercase tracking-widest">Recommended</button>
@@ -84,7 +84,7 @@ export default function BrowseJobsPage() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {jobs?.map((job, index) => (
+                        {(jobs as any)?.rows?.map((job: Job, index: number) => (
                             <article
                                 key={job.id}
                                 className={`${index === 0 ? 'md:col-span-2 flex-row p-8' : 'flex-col p-6'} group bg-surface-container-lowest rounded-2xl flex gap-8 transition-all hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] border border-slate-100`}
@@ -104,7 +104,7 @@ export default function BrowseJobsPage() {
                                         <p className="text-sm font-bold text-slate-500 uppercase tracking-tight">{job.location} • {job.type}</p>
                                     </div>
                                     {index === 0 && (
-                                        <p className="text-on-surface-variant line-clamp-2 max-w-2xl font-light">
+                                        <p className="text-on-surface-variant line-clamp-2 max-w-[672px] font-light">
                                             {job.description || "Shape the future of professional infrastructure through strategic systems thinking and high-fidelity output."}
                                         </p>
                                     )}

@@ -2,11 +2,11 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/database';
 
 export class JobCategory extends Model {
-    public id!: number;
-    public name!: string;
-    public description!: string | null;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare name: string;
+    declare description: string | null;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 JobCategory.init({

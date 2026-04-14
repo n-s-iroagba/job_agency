@@ -3,8 +3,8 @@ import { JobStage } from '../models';
 
 export class JobStageRepository {
     // Maps to STK-ADM-STAGE-001, STK-ADM-STAGE-005, SCR-ADM-STAGE-001
-    public async findByJobId(jobId: number, transaction?: Transaction): Promise<JobStage[]> {
-        return JobStage.findAll({
+    public async findByJobId(jobId: number, transaction?: Transaction): Promise<{ rows: JobStage[], count: number }> {
+        return JobStage.findAndCountAll({
             where: { jobId },
             order: [['orderPosition', 'ASC']],
             transaction

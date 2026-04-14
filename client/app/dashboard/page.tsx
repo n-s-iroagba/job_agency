@@ -47,7 +47,7 @@ export default function DashboardPage() {
                     <h3 className="text-5xl font-bold tracking-tight text-on-surface mb-4">
                         Welcome back, {user.fullName.split(' ')[0]}!
                     </h3>
-                    <p className="text-on-surface-variant text-lg max-w-md leading-relaxed">
+                    <p className="text-on-surface-variant text-lg max-w-[448px] leading-relaxed">
                         Your professional journey is gaining momentum. You have {summary?.applicationCount || 0} active applications in the pipeline.
                     </p>
                 </div>

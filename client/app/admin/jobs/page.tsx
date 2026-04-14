@@ -2,13 +2,15 @@
 
 import React from 'react';
 import { useApiQuery } from '@/lib/hooks';
+import Link from 'next/link';
+import { JobListing } from '@/types/models';
 
 export default function AdminJobsPage() {
-    const { data: jobs, isLoading } = useApiQuery<any>(['admin', 'jobs', 'all'], '/admin/jobs');
+    const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(['admin', 'jobs', 'all'], '/admin/jobs');
 
-    const jobList = jobs || [];
-    const totalListings = jobList.length;
-    const activeRoles = jobList.filter((j: any) => j.isActive).length;
+    const jobList = jobs?.rows || [];
+    const totalListings = jobs?.count || 0;
+    const activeRoles = jobList.filter((j: JobListing) => j.isActive).length;
 
     return (
         <div className="flex flex-col min-h-screen bg-surface selection:bg-blue-500/10 selection:text-blue-600">
@@ -39,7 +41,7 @@ export default function AdminJobsPage() {
             </header>
 
             {/* Main Content Area */}
-            <main className="p-12 space-y-10 max-w-7xl">
+            <main className="p-12 space-y-10 max-w-[1280px]">
                 {/* Hero Stats Bento Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="bg-white p-8 rounded-3xl shadow-2xl shadow-slate-200/50 flex flex-col justify-between h-40 border border-slate-50 relative overflow-hidden group">
@@ -122,7 +124,7 @@ export default function AdminJobsPage() {
                             <tbody className="divide-y divide-slate-50">
                                 {isLoading ? (
                                     [1, 2, 3].map(i => <tr key={i} className="animate-pulse h-28"><td colSpan={6} className="bg-slate-50/10"></td></tr>)
-                                ) : jobList.map((job: any) => (
+                                ) : jobList.map((job: JobListing) => (
                                     <tr key={job.id} className="hover:bg-slate-50/50 transition-all group cursor-pointer border-l-4 border-transparent hover:border-primary">
                                         <td className="px-10 py-8">
                                             <div className="flex items-center gap-5">

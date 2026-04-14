@@ -20,12 +20,12 @@ JobListing.hasMany(JobStage, { foreignKey: 'jobId' });
 JobStage.belongsTo(JobListing, { foreignKey: 'jobId' });
 
 // JobListing <-> JobBenefit (M:N)
-JobListing.belongsToMany(JobBenefit, { through: 'ListingBenefits' });
-JobBenefit.belongsToMany(JobListing, { through: 'ListingBenefits' });
+JobListing.belongsToMany(JobBenefit, { through: 'ListingBenefits', foreignKey: 'jobId', otherKey: 'benefitId' });
+JobBenefit.belongsToMany(JobListing, { through: 'ListingBenefits', foreignKey: 'benefitId', otherKey: 'jobId' });
 
 // JobListing <-> JobCondition (M:N)
-JobListing.belongsToMany(JobCondition, { through: 'ListingConditions' });
-JobCondition.belongsToMany(JobListing, { through: 'ListingConditions' });
+JobListing.belongsToMany(JobCondition, { through: 'ListingConditions', foreignKey: 'jobId', otherKey: 'conditionId' });
+JobCondition.belongsToMany(JobListing, { through: 'ListingConditions', foreignKey: 'conditionId', otherKey: 'jobId' });
 
 // User <-> Application
 User.hasMany(Application, { foreignKey: 'userId' });

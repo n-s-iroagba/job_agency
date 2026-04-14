@@ -37,7 +37,7 @@ export default function JobDetailPage() {
     if (isLoading) return (
         <div className="bg-surface min-h-screen flex flex-col">
             <PublicHeader />
-            <main className="flex-1 pt-24 pb-16 px-4 md:px-8 max-w-7xl mx-auto animate-pulse">
+            <main className="flex-1 pt-24 pb-16 px-4 md:px-8 max-w-[1280px] mx-auto animate-pulse">
                 <div className="h-64 bg-slate-100 rounded-2xl" />
             </main>
             <PublicFooter />
@@ -61,7 +61,7 @@ export default function JobDetailPage() {
         <div className="bg-background text-on-surface antialiased min-h-screen flex flex-col">
             <PublicHeader />
 
-            <main className="pt-24 pb-16 px-4 md:px-8 max-w-7xl mx-auto flex-1">
+            <main className="pt-24 pb-16 px-4 md:px-8 max-w-[1280px] mx-auto flex-1">
                 {/* Hero Header Section */}
                 <header className="mb-12 relative flex flex-col md:flex-row gap-8 items-start">
                     <div className="flex-1 space-y-6">

@@ -18,8 +18,8 @@ export class JobRepository {
         if (options.employmentType) whereClause.employmentType = options.employmentType;
         if (options.searchQuery) {
             whereClause[Op.or] = [
-                { title: { [Op.iLike]: `%${options.searchQuery}%` } },
-                { location: { [Op.iLike]: `%${options.searchQuery}%` } }
+                { title: { [Op.like]: `%${options.searchQuery}%` } },
+                { location: { [Op.like]: `%${options.searchQuery}%` } }
             ];
         }
 

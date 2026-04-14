@@ -2,20 +2,20 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/database';
 
 export class JobStage extends Model {
-    public id!: number;
-    public jobId!: number;
-    public name!: string;
-    public description!: string;
-    public orderPosition!: number;
-    public requiresPayment!: boolean;
-    public amount!: number | null;
-    public currency!: string | null;
-    public instructions!: string | null;
-    public deadlineDays!: number | null;
-    public notifyEmail!: boolean;
-    public notifyPush!: boolean;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare id: number;
+    declare jobId: number;
+    declare name: string;
+    declare description: string;
+    declare orderPosition: number;
+    declare requiresPayment: boolean;
+    declare amount: number | null;
+    declare currency: string | null;
+    declare instructions: string | null;
+    declare deadlineDays: number | null;
+    declare notifyEmail: boolean;
+    declare notifyPush: boolean;
+    declare readonly createdAt: Date;
+    declare readonly updatedAt: Date;
 }
 
 JobStage.init({

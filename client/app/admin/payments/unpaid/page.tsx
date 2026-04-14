@@ -2,18 +2,20 @@
 
 import React from 'react';
 import { useApiQuery } from '@/lib/hooks';
+import Link from 'next/link';
+import { Payment } from '@/types/models';
 
 export default function UnpaidQueuePage() {
-    const { data: unpaid, isLoading } = useApiQuery<any>(['admin', 'payments', 'unpaid'], '/admin/payments/unpaid');
+    const { data: unpaid, isLoading } = useApiQuery<{ rows: Payment[], count: number }>(['admin', 'payments', 'unpaid'], '/admin/payments/unpaid');
 
-    const unpaidList = unpaid?.rows || unpaid || [];
-    const totalCount = unpaidList.length;
-    const totalOverdue = unpaidList.reduce((acc: number, p: any) => acc + (p.amount || 0), 0);
+    const unpaidList = unpaid?.rows || [];
+    const totalCount = unpaid?.count || 0;
+    const totalOverdue = unpaidList.reduce((acc: number, p: Payment) => acc + (p.amount || 0), 0);
 
     return (
         <div className="flex flex-col min-h-screen bg-surface selection:bg-error/10 selection:text-error">
             {/* Main Content Area */}
-            <div className="flex-1 p-12 space-y-12 max-w-7xl">
+            <div className="flex-1 p-12 space-y-12 max-w-[1280px]">
                 {/* Page Header & Stats */}
                 <section className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="space-y-4">
@@ -21,7 +23,7 @@ export default function UnpaidQueuePage() {
                         <h2 className="text-[4rem] font-black leading-tight tracking-tighter text-on-surface uppercase">
                             Unpaid<br />Payments
                         </h2>
-                        <p className="text-lg text-on-surface-variant max-w-xl font-light italic leading-relaxed">
+                        <p className="text-lg text-on-surface-variant max-w-[576px] font-light italic leading-relaxed">
                             Manage and track outstanding application stage fees across the curated talent pipeline. (SCR-ADM-PAY-003)
                         </p>
                     </div>
@@ -89,24 +91,24 @@ export default function UnpaidQueuePage() {
                                     ))
                                 ) : unpaidList.length === 0 ? (
                                     <tr><td colSpan={7} className="p-20 text-center font-bold text-slate-300 uppercase tracking-widest italic tracking-[0.3em]">Queue is clear • Zero outstanding debits</td></tr>
-                                ) : unpaidList.map((p: any) => (
+                                ) : unpaidList.map((p: Payment) => (
                                     <tr key={p.id} className="hover:bg-slate-50 transition-colors group">
                                         <td className="px-10 py-8">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-black text-xs shadow-sm">
-                                                    {(p.User?.fullName || 'U').charAt(0)}
+                                                    {(p.Application?.User?.fullName || 'U').charAt(0)}
                                                 </div>
                                                 <div>
-                                                    <div className="font-black text-xs uppercase tracking-tight text-on-surface">{p.User?.fullName || `User ID: ${p.userId}`}</div>
-                                                    <div className="text-[10px] text-slate-400 font-bold lowercase tracking-tight opacity-70">m.sterling@precision.io</div>
+                                                    <div className="font-black text-xs uppercase tracking-tight text-on-surface">{p.Application?.User?.fullName || `User ID: ${p.applicationId}`}</div>
+                                                    <div className="text-[10px] text-slate-400 font-bold lowercase tracking-tight opacity-70">{p.Application?.User?.email}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-10 py-8">
-                                            <span className="text-xs font-black text-on-surface uppercase tracking-tight">Lead UI Designer</span>
+                                            <span className="text-xs font-black text-on-surface uppercase tracking-tight">{p.Application?.JobListing?.title || 'Lead UI Designer'}</span>
                                         </td>
                                         <td className="px-10 py-8">
-                                            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-[9px] font-black text-primary uppercase tracking-widest bg-blue-50 border border-blue-100">Final Interview</span>
+                                            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-[9px] font-black text-primary uppercase tracking-widest bg-blue-50 border border-blue-100">{p.JobStage?.name || 'Final Interview'}</span>
                                         </td>
                                         <td className="px-10 py-8 text-right font-black text-on-surface text-base tracking-tighter italic">
                                             ${p.amount.toLocaleString()}
@@ -148,7 +150,7 @@ export default function UnpaidQueuePage() {
                 {/* Footer Summary Asymmetric Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4 pb-12">
                     <div className="lg:col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 p-12 rounded-[2.5rem] text-white shadow-2xl shadow-slate-300 relative overflow-hidden group border border-white/5">
-                        <div className="relative z-10 max-w-xl">
+                        <div className="relative z-10 max-w-[576px]">
                             <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter">Automate Collection Protocol?</h3>
                             <p className="opacity-60 mb-10 text-sm font-medium italic leading-relaxed">
                                 Enable automatic follow-ups for payments overdue by more than 5 days. Candidates will receive reminders via SMS and Email to maintain pipeline velocity.

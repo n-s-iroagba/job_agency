@@ -32,7 +32,7 @@ export default function AdminDashboardPage() {
                 </div>
             </header>
 
-            <div className="p-12 space-y-12 max-w-7xl">
+            <div className="p-12 space-y-12 max-w-[1280px]">
                 {/* Bento Stats Grid */}
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Summary Card 1: Applications */}
@@ -159,7 +159,7 @@ export default function AdminDashboardPage() {
                 <section className="bg-slate-900 overflow-hidden rounded-3xl relative min-h-[320px] flex items-center shadow-2xl shadow-slate-300">
                     <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1551288049-bbbda5366392?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"></div>
                     <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent"></div>
-                    <div className="relative z-10 px-16 py-12 max-w-2xl">
+                    <div className="relative z-10 px-16 py-12 max-w-[672px]">
                         <p className="text-primary font-black text-[10px] uppercase tracking-[0.3em] mb-4">Precision Insight</p>
                         <h2 className="text-4xl font-black text-white mb-6 leading-tight tracking-tighter">Placement Efficiency has reached a <span className="text-primary italic">New High</span>.</h2>
                         <p className="text-slate-400 text-sm mb-10 leading-relaxed font-medium italic">

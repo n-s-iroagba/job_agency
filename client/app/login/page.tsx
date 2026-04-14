@@ -45,14 +45,14 @@ export default function LoginPage() {
 
     return (
         <div className="bg-surface text-on-surface min-h-screen flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed antialiased">
-            <main className="flex-grow flex items-center justify-center px-4 py-12 relative overflow-hidden">
+            <main className="flex-grow w-full flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
                 {/* Abstract Background Elements */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden -z-10">
                     <div className="absolute -top-[10%] -right-[5%] w-[40%] h-[60%] bg-primary/5 rounded-full blur-[120px]"></div>
                     <div className="absolute -bottom-[10%] -left-[5%] w-[35%] h-[50%] bg-secondary-container/30 rounded-full blur-[100px]"></div>
                 </div>
 
-                <div className="w-full max-w-md">
+                <div className="w-full max-w-[448px]">
                     {/* Branding Header */}
                     <div className="text-center mb-10">
                         <Link href="/" className="inline-flex items-center justify-center gap-2 text-2xl font-bold tracking-tight text-on-surface hover:opacity-80 transition-opacity">
@@ -168,7 +168,7 @@ export default function LoginPage() {
 
             {/* Simple Footer */}
             <footer className="w-full py-10 px-8">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-[0.75rem] font-medium text-slate-500">© 2024 CareerCurator. Precision in Professionalism.</p>
                     <div className="flex gap-8">
                         <Link className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Privacy Policy</Link>

@@ -80,24 +80,24 @@ export class ApplicationService {
             if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
             const stages = await jobStageRepository.findByJobId(jobId, t);
-            const firstStageId = stages.length > 0 ? stages[0].id : null;
+            const firstStageId = stages.rows.length > 0 ? stages.rows[0].id : null;
 
             const newApp = await applicationRepository.create({
                 userId,
                 jobId,
                 currentStageId: firstStageId,
                 status: CONSTANTS.APPLICATION_STATUSES.DRAFT,
-                completionPercentage: stages.length === 0 ? 100 : 0,
+                completionPercentage: stages.rows.length === 0 ? 100 : 0,
             }, t);
 
             // If the first stage requires payment, create a pending payment record
-            if (stages.length > 0 && stages[0].requiresPayment && firstStageId) {
+            if (stages.rows.length > 0 && stages.rows[0].requiresPayment && firstStageId) {
                 await paymentRepository.create({
                     applicationId: newApp.id,
                     stageId: firstStageId,
                     status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
-                    amount: stages[0].amount,
-                    currency: stages[0].currency,
+                    amount: stages.rows[0].amount,
+                    currency: stages.rows[0].currency,
                 }, t);
             }
 
@@ -131,11 +131,11 @@ export class ApplicationService {
             let status = CONSTANTS.APPLICATION_STATUSES.COMPLETED;
 
             if (app.currentStageId) {
-                const currentStageIndex = stages.findIndex(s => s.id === app.currentStageId);
-                if (currentStageIndex >= 0 && currentStageIndex < stages.length - 1) {
-                    nextStageId = stages[currentStageIndex + 1].id;
+                const currentStageIndex = stages.rows.findIndex(s => s.id === app.currentStageId);
+                if (currentStageIndex >= 0 && currentStageIndex < stages.rows.length - 1) {
+                    nextStageId = stages.rows[currentStageIndex + 1].id;
                     // DM-001: exact completion percentage
-                    percentage = Math.round(((currentStageIndex + 1) / stages.length) * 100);
+                    percentage = Math.round(((currentStageIndex + 1) / stages.rows.length) * 100);
                     status = CONSTANTS.APPLICATION_STATUSES.ACTIVE;
                 }
             }
@@ -148,7 +148,7 @@ export class ApplicationService {
 
             // Create unpaid payment record when next stage requires payment
             if (nextStageId) {
-                const nextStage = stages.find(s => s.id === nextStageId);
+                const nextStage = stages.rows.find(s => s.id === nextStageId);
                 if (nextStage && nextStage.requiresPayment) {
                     await paymentRepository.create({
                         applicationId,
@@ -165,7 +165,7 @@ export class ApplicationService {
                 await notificationRepository.create({
                     userId: app.userId,
                     subject: 'Application Completed',
-                    message: `Congratulations! Your application has successfully completed all ${stages.length} stages.`,
+                    message: `Congratulations! Your application has successfully completed all ${stages.rows.length} stages.`,
                     type: 'SYSTEM',
                 }, t);
             }
