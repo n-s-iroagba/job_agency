@@ -59,7 +59,7 @@ function LoginContent() {
                             <span className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
                                 <span className="material-symbols-outlined text-sm text-fill">work</span>
                             </span>
-                            CareerCurator
+                            JobNexa
                         </Link>
                         <p className="text-on-surface-variant mt-2 font-medium tracking-tight">Precision in Professionalism.</p>
                     </div>
@@ -169,7 +169,7 @@ function LoginContent() {
             {/* Simple Footer */}
             <footer className="w-full py-10 px-8">
                 <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[0.75rem] font-medium text-slate-500">© 2024 CareerCurator. Precision in Professionalism.</p>
+                    <p className="text-[0.75rem] font-medium text-slate-500">© 2024 JobNexa. Precision in Professionalism.</p>
                     <div className="flex gap-8">
                         <Link className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Privacy Policy</Link>
                         <a className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors" href="#">Terms of Service</a>

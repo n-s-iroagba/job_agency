@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
                                 <p className="text-xs leading-relaxed text-on-surface-variant">
                                     Have questions regarding your personal data? Our data protection team is ready to assist.
                                 </p>
-                                <a className="inline-block mt-4 text-sm font-bold text-primary hover:underline" href="mailto:privacy@careercurator.com">privacy@careercurator.com</a>
+                                <a className="inline-block mt-4 text-sm font-bold text-primary hover:underline" href="mailto:privacy@JobNexa.com">privacy@JobNexa.com</a>
                             </div>
                         </div>
                     </aside>
@@ -64,7 +64,7 @@ export default function PrivacyPolicyPage() {
                         <section className="scroll-mt-32" id="introduction">
                             <h2 className="text-[1.75rem] font-semibold text-on-surface mb-6">1. Introduction</h2>
                             <div className="space-y-4 text-[1rem] leading-relaxed text-on-surface-variant">
-                                <p>At CareerCurator, we believe that professionalism is rooted in trust. This Privacy Policy describes how we collect, use, and handle your personal information when you use our editorial platform, website, and services.</p>
+                                <p>At JobNexa, we believe that professionalism is rooted in trust. This Privacy Policy describes how we collect, use, and handle your personal information when you use our editorial platform, website, and services.</p>
                                 <p>Our commitment to "Precision in Professionalism" extends to our data handling practices. We aim to be transparent about the data we collect and why we collect it, ensuring you remain in control of your digital identity.</p>
                             </div>
                         </section>

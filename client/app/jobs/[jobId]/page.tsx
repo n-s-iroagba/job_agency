@@ -102,7 +102,7 @@ export default function JobDetailPage() {
                         >
                             Apply Now
                         </Link>
-                        <p className="text-[10px] text-center text-slate-400 leading-tight">CareerCurator Verified Role. Your professional data is protected by end-to-end encryption.</p>
+                        <p className="text-[10px] text-center text-slate-400 leading-tight">JobNexa Verified Role. Your professional data is protected by end-to-end encryption.</p>
                     </div>
                 </header>
 

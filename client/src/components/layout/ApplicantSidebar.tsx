@@ -27,7 +27,7 @@ export function ApplicantSidebar() {
         <aside className="h-screen w-64 fixed left-0 top-0 bg-slate-50 flex flex-col py-6 transition-all duration-200 z-40 border-r border-slate-100">
             <div className="px-6 mb-10">
                 <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">
-                    CareerCurator
+                    JobNexa
                 </Link>
             </div>
 
@@ -39,8 +39,8 @@ export function ApplicantSidebar() {
                             key={item.href}
                             href={item.href}
                             className={`flex items-center gap-3 py-3 px-4 rounded-lg transition-all duration-200 mb-1 ${active
-                                    ? 'text-primary font-bold border-r-4 border-primary bg-slate-100'
-                                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                                ? 'text-primary font-bold border-r-4 border-primary bg-slate-100'
+                                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
                                 }`}
                         >
                             <span className={`material-symbols-outlined ${active ? 'text-fill' : ''}`} style={{ fontSize: '20px' }}>

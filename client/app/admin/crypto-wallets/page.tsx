@@ -17,7 +17,7 @@ export default function CryptoWalletsPage() {
             {/* TopNavBar Anchor */}
             <header className="sticky top-0 z-40 h-20 flex justify-between items-center px-8 bg-white/70 backdrop-blur-xl border-b border-slate-200/50 shadow-sm">
                 <div className="flex items-center gap-2">
-                    <span className="text-xl font-black tracking-tight text-slate-900 italic uppercase">CareerCurator</span>
+                    <span className="text-xl font-black tracking-tight text-slate-900 italic uppercase">JobNexa</span>
                     <span className="mx-2 text-outline-variant">/</span>
                     <span className="text-[10px] font-black tracking-[0.2em] uppercase text-on-surface-variant">Crypto Configuration</span>
                 </div>

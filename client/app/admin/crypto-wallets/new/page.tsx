@@ -27,7 +27,7 @@ export default function CryptoWalletFormPage() {
             {/* TopAppBar */}
             <header className="sticky top-0 z-40 h-20 flex justify-between items-center px-8 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
                 <div className="flex flex-col">
-                    <h2 className="text-xl font-black tracking-tight uppercase italic text-slate-900">CareerCurator</h2>
+                    <h2 className="text-xl font-black tracking-tight uppercase italic text-slate-900">JobNexa</h2>
                     <nav className="flex gap-2 mt-1 hidden md:flex items-center">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">System</span>
                         <span className="text-[10px] text-slate-300">/</span>

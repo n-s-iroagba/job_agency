@@ -164,7 +164,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <p className="text-slate-600 text-lg italic leading-relaxed mb-8">
-                    "CareerCurator didn't just find me a job; they curated a career path that aligned with my global ambitions. The precision of their placement is unmatched in the industry."
+                    "JobNexa didn't just find me a job; they curated a career path that aligned with my global ambitions. The precision of their placement is unmatched in the industry."
                   </p>
                   <div className="flex gap-4">
                     <div className="px-4 py-2 bg-slate-50 rounded-lg">

@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CareerCurator | Your Gateway to Global Opportunities",
+  title: "JobNexa | Your Gateway to Global Opportunities",
   description: "Secure and transparent job application platform with real-time tracking.",
 };
 

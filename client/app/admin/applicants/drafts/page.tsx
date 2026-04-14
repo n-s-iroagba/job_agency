@@ -17,7 +17,7 @@ export default function ApplicationDraftsPage() {
             {/* TopNavBar */}
             <header className="sticky top-0 z-40 h-20 flex justify-between items-center px-8 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
                 <div className="flex items-center gap-8">
-                    <span className="text-xl font-black tracking-tight uppercase italic text-blue-700">CareerCurator Admin</span>
+                    <span className="text-xl font-black tracking-tight uppercase italic text-blue-700">JobNexa Admin</span>
                     <nav className="hidden md:flex gap-6">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Opportunities</span>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 border-b-2 border-blue-600 pb-1">Talent</span>

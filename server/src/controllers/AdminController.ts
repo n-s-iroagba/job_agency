@@ -24,6 +24,26 @@ export class AdminController {
         res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllCryptoWallets());
     }
 
+    public async getBankAccountById(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getBankAccountById(id));
+        } catch (error: any) {
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
+    }
+
+    public async getCryptoWalletById(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getCryptoWalletById(id));
+        } catch (error: any) {
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
+    }
+
     // STK-ADM-BANK-003: get bank accounts filtered by payment amount
     public async getBankAccountsForAmount(req: Request, res: Response): Promise<void> {
         const amount = parseFloat(req.query.amount as string);
@@ -78,6 +98,36 @@ export class AdminController {
 
     public async getAllBenefits(req: Request, res: Response): Promise<void> {
         res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllBenefits());
+    }
+
+    public async getCategoryById(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getCategoryById(id));
+        } catch (error: any) {
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
+    }
+
+    public async getConditionById(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getConditionById(id));
+        } catch (error: any) {
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
+    }
+
+    public async getBenefitById(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getBenefitById(id));
+        } catch (error: any) {
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
     }
 
     // Categories — STK-ADM-CAT-001

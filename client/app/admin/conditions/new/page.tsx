@@ -29,7 +29,7 @@ export default function ConditionFormPage() {
         <div className="flex flex-col min-h-screen bg-surface selection:bg-primary/10 selection:text-primary pb-16">
             <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
                 <div className="flex items-center gap-2">
-                    <span className="text-xl font-black uppercase italic tracking-tighter text-slate-900">CareerCurator</span>
+                    <span className="text-xl font-black uppercase italic tracking-tighter text-slate-900">JobNexa</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] hidden md:block">SCR-ADM-CONDFORM-001</p>

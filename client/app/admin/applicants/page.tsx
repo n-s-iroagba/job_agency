@@ -147,7 +147,7 @@ export default function AdminApplicantsPage() {
                 </div>
 
                 <footer className="pt-24 pb-12 text-center">
-                    <p className="text-slate-300 text-[10px] font-black uppercase tracking-[0.5em] italic">© 2024 CareerCurator • Identity Shield • Global Oversight Node</p>
+                    <p className="text-slate-300 text-[10px] font-black uppercase tracking-[0.5em] italic">© 2024 JobNexa • Identity Shield • Global Oversight Node</p>
                 </footer>
             </main>
         </div>

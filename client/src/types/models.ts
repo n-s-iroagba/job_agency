@@ -7,7 +7,6 @@ export interface User {
     id: number;
     fullName: string;
     email: string;
-    passwordHash: string; // Typically excluded in response, but mapped here for completeness
     role: string;
     preferences: {
         pushNotifications?: boolean;

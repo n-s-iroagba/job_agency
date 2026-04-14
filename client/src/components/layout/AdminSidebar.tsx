@@ -30,7 +30,7 @@ export function AdminSidebar() {
             {/* Brand / Header */}
             <div className="px-8 py-10">
                 <Link href={CONSTANTS.ROUTES.ADMIN.DASHBOARD}>
-                    <h1 className="text-white font-black tracking-tighter text-2xl hover:text-blue-400 transition-colors">CareerCurator</h1>
+                    <h1 className="text-white font-black tracking-tighter text-2xl hover:text-blue-400 transition-colors">JobNexa</h1>
                 </Link>
                 <div className="mt-6 flex items-center space-x-3 bg-slate-800/50 p-3 rounded-xl border border-white/5">
                     <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-blue-500/20">
@@ -52,8 +52,8 @@ export function AdminSidebar() {
                             key={item.href}
                             href={item.href}
                             className={`flex items-center px-4 py-3.5 rounded-xl transition-all duration-300 group ${active
-                                    ? 'bg-blue-600/10 text-blue-400 shadow-inner'
-                                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                                ? 'bg-blue-600/10 text-blue-400 shadow-inner'
+                                : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                                 }`}
                         >
                             <span

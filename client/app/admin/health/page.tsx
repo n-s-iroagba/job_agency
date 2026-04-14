@@ -15,7 +15,7 @@ export default function SystemHealthDashboardPage() {
             {/* TopNavBar Shell */}
             <header className="sticky top-0 z-40 h-16 flex justify-between items-center w-full px-8 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
                 <div className="flex items-center gap-8">
-                    <span className="text-xl font-black text-blue-800 tracking-tight italic uppercase">CareerCurator Admin</span>
+                    <span className="text-xl font-black text-blue-800 tracking-tight italic uppercase">JobNexa Admin</span>
                     <nav className="hidden md:flex items-center gap-6">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 cursor-pointer hover:text-blue-600 transition-all">Overview</span>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 cursor-pointer hover:text-blue-600 transition-all">Reports</span>

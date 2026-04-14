@@ -225,7 +225,7 @@ function MailComposerContent() {
                                                 <div className={`transition-all duration-500 absolute top-4 left-2 right-2 bg-slate-50 border border-slate-100 p-2.5 rounded-xl shadow-lg z-10 ${subject ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
                                                     <div className="flex items-center gap-1.5 mb-1.5">
                                                         <div className="w-2 h-2 bg-blue-600 rounded-sm"></div>
-                                                        <span className="font-black text-[8px] uppercase tracking-widest text-slate-600">CareerCurator</span>
+                                                        <span className="font-black text-[8px] uppercase tracking-widest text-slate-600">JobNexa</span>
                                                     </div>
                                                     <p className="font-bold text-[9px] text-slate-800 line-clamp-2 leading-tight">{subject || 'New Message'}</p>
                                                 </div>

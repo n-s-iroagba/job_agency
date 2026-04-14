@@ -198,7 +198,7 @@ export default function JobDetailPage() {
                         </div>
                         <h4 className="text-sm font-bold uppercase tracking-widest text-primary mb-4 relative z-10">Our Commitment</h4>
                         <p className="text-xs text-on-surface-variant leading-relaxed relative z-10 font-medium italic">
-                            CareerCurator works exclusively with agencies that prioritize diversity. This role is open to all qualified applicants regardless of background.
+                            JobNexa works exclusively with agencies that prioritize diversity. This role is open to all qualified applicants regardless of background.
                         </p>
                     </div>
                 </div>

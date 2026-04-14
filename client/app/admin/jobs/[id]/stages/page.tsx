@@ -25,7 +25,7 @@ export default function StageBuilderPage({ params }: { params: { id: string } })
             {/* TopAppBar */}
             <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 bg-white/70 backdrop-blur-xl border-b border-slate-200/50 shadow-sm">
                 <div className="flex items-center gap-4">
-                    <h1 className="text-lg font-black text-blue-800 tracking-tight italic">CareerCurator Admin</h1>
+                    <h1 className="text-lg font-black text-blue-800 tracking-tight italic">JobNexa Admin</h1>
                     <div className="h-4 w-px bg-slate-200"></div>
                     <nav className="flex gap-6">
                         <span className="text-slate-600 text-[10px] font-black uppercase tracking-widest hidden md:block">Builder / Stage Architecture</span>

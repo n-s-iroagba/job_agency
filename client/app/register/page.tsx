@@ -69,7 +69,7 @@ export default function RegisterPage() {
             {/* Top Navigation */}
             <header className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] px-8 h-16 flex items-center">
                 <nav className="flex justify-between items-center w-full max-w-[1280px] mx-auto">
-                    <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">CareerCurator</Link>
+                    <Link href="/" className="text-xl font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">JobNexa</Link>
                     <div className="hidden md:flex items-center gap-8">
                         <Link href="/" className="text-slate-500 font-medium hover:text-primary transition-colors">Jobs</Link>
                         <a className="text-slate-500 font-medium hover:text-primary transition-colors" href="#">Companies</a>
@@ -253,7 +253,7 @@ export default function RegisterPage() {
             {/* Footer */}
             <footer className="bg-slate-50 py-12 px-8">
                 <div className="flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto gap-6 text-center lg:text-left">
-                    <div className="text-lg font-bold text-slate-900">CareerCurator</div>
+                    <div className="text-lg font-bold text-slate-900">JobNexa</div>
                     <div className="flex flex-wrap justify-center gap-8">
                         <Link className="text-slate-500 font-medium hover:text-primary transition-colors hover:underline underline-offset-4" href={CONSTANTS.ROUTES.PRIVACY}>Privacy Policy</Link>
                         <a className="text-slate-500 font-medium hover:text-primary transition-colors hover:underline underline-offset-4" href="#">Terms of Service</a>
@@ -261,7 +261,7 @@ export default function RegisterPage() {
                         <a className="text-slate-500 font-medium hover:text-primary transition-colors hover:underline underline-offset-4" href="#">Contact</a>
                     </div>
                     <div className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">
-                        © 2024 CareerCurator. Precision in Professionalism.
+                        © 2024 JobNexa. Precision in Professionalism.
                     </div>
                 </div>
             </footer>

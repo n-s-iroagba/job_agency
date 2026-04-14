@@ -28,7 +28,7 @@ export default function ConditionsManagementPage() {
             {/* TopAppBar */}
             <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
                 <div className="flex items-center gap-4">
-                    <span className="text-lg font-black text-blue-800 tracking-tight italic">CareerCurator</span>
+                    <span className="text-lg font-black text-blue-800 tracking-tight italic">JobNexa</span>
                     <span className="h-4 w-px bg-slate-200"></span>
                     <nav className="flex gap-6 items-center hidden md:flex">
                         <span className="text-[10px] font-black uppercase tracking-widest text-primary border-b-2 border-primary pb-1">Conditions</span>

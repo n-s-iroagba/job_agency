@@ -8,9 +8,9 @@ export function PublicFooter() {
         <footer className="bg-slate-50 dark:bg-slate-950 w-full py-12 px-4 sm:px-8 mt-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
                 <div className="space-y-4">
-                    <span className="font-bold text-slate-900 dark:text-white text-xl">CareerCurator</span>
+                    <span className="font-bold text-slate-900 dark:text-white text-xl">JobNexa</span>
                     <p className="text-xs font-normal text-slate-500 dark:text-slate-400 leading-relaxed">
-                        © 2024 CareerCurator. Precision in Professional Placement.
+                        © 2024 JobNexa. Precision in Professional Placement.
                     </p>
                     <div className="flex gap-4">
                         <a className="text-slate-400 hover:text-blue-600 transition-colors" href="#"><span className="material-symbols-outlined">public</span></a>
@@ -21,7 +21,7 @@ export function PublicFooter() {
                 <div>
                     <h6 className="font-bold text-slate-900 dark:text-white text-sm mb-4">Contact</h6>
                     <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-2">
-                        <li>support@careercurator.com</li>
+                        <li>support@JobNexa.com</li>
                         <li>+1 (555) 000-8888</li>
                         <li>Global HQ, New York</li>
                     </ul>

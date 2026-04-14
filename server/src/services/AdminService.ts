@@ -62,7 +62,17 @@ export class AdminService {
     }
 
     public async getAllBankAccounts() { return bankAccountRepository.findAll(); }
+    public async getBankAccountById(id: number) {
+        const account = await bankAccountRepository.findById(id);
+        if (!account) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return account;
+    }
     public async getAllCryptoWallets() { return cryptoWalletRepository.findAll(); }
+    public async getCryptoWalletById(id: number) {
+        const wallet = await cryptoWalletRepository.findById(id);
+        if (!wallet) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return wallet;
+    }
 
     // STK-ADM-BANK-003: get bank account by amount threshold
     public async getBankAccountForAmount(amount: number) {
@@ -112,8 +122,23 @@ export class AdminService {
     }
 
     public async getAllCategories() { return jobCategoryRepository.findAll(); }
+    public async getCategoryById(id: number) {
+        const category = await jobCategoryRepository.findById(id);
+        if (!category) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return category;
+    }
     public async getAllConditions() { return jobConditionRepository.findAll(); }
+    public async getConditionById(id: number) {
+        const condition = await jobConditionRepository.findById(id);
+        if (!condition) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return condition;
+    }
     public async getAllBenefits() { return jobBenefitRepository.findAll(); }
+    public async getBenefitById(id: number) {
+        const benefit = await jobBenefitRepository.findById(id);
+        if (!benefit) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return benefit;
+    }
 
     // Category CRUD — STK-ADM-CAT-001
     public async createCategory(data: any) { return jobCategoryRepository.create(data); }
