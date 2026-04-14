@@ -2,6 +2,7 @@
 
 import { Application } from '@/types/models';
 import { useApiQuery } from '@/lib/hooks';
+import Link from 'next/link';
 
 interface ApplicationsResponse {
     rows: Application[];
