@@ -20,10 +20,10 @@ export class PaymentService {
             : CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY;
 
         const allBankAccounts = await bankAccountRepository.findAll();
-        const relevantBankAccounts = (allBankAccounts as any[]).filter(a => a.accountType === bankType);
+        const relevantBankAccounts = allBankAccounts.rows.filter(a => a.accountType === bankType);
 
         const allWallets = await cryptoWalletRepository.findAll();
-        const activeCryptoWallets = (allWallets as any[]).filter(w => w.isActive);
+        const activeCryptoWallets = allWallets.rows.filter(w => w.isActive);
 
         return {
             payment,

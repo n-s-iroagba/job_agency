@@ -53,9 +53,11 @@ export class AdminService {
     // ==========================
     // STK-ADM-BANK-001, STK-ADM-CRYPTO-001 (Read)
     public async getFinancialConfigurations() {
+        const banks = await bankAccountRepository.findAll();
+        const wallets = await cryptoWalletRepository.findAll();
         return {
-            bankAccounts: await bankAccountRepository.findAll(),
-            cryptoWallets: await cryptoWalletRepository.findAll(),
+            bankAccounts: banks.rows,
+            cryptoWallets: wallets.rows,
         };
     }
 
@@ -64,11 +66,11 @@ export class AdminService {
 
     // STK-ADM-BANK-003: get bank account by amount threshold
     public async getBankAccountForAmount(amount: number) {
-        const allAccounts = await bankAccountRepository.findAll();
+        const result = await bankAccountRepository.findAll();
         const type = amount >= CONSTANTS.SEED_DEFAULTS.HIGH_VALUE_THRESHOLD
             ? CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL
             : CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY;
-        return (allAccounts as any[]).filter(a => a.accountType === type);
+        return result.rows.filter(a => a.accountType === type);
     }
 
     // Bank Account CRUD — STK-ADM-BANK-001
@@ -91,18 +93,21 @@ export class AdminService {
 
     // Active crypto wallets for display — STK-ADM-CRYPTO-003
     public async getActiveCryptoWallets() {
-        const all = await cryptoWalletRepository.findAll();
-        return (all as any[]).filter(w => w.isActive);
+        const result = await cryptoWalletRepository.findAll();
+        return result.rows.filter(w => w.isActive);
     }
 
     // ==========================
     // Job Configurations
     // ==========================
     public async getJobConfigurations() {
+        const cats = await jobCategoryRepository.findAll();
+        const conds = await jobConditionRepository.findAll();
+        const bens = await jobBenefitRepository.findAll();
         return {
-            categories: await jobCategoryRepository.findAll(),
-            conditions: await jobConditionRepository.findAll(),
-            benefits: await jobBenefitRepository.findAll(),
+            categories: cats.rows,
+            conditions: conds.rows,
+            benefits: bens.rows,
         };
     }
 
