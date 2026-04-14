@@ -1,13 +1,17 @@
 'use client';
 
-import React from 'react';
-import { useApiQuery } from '@/lib/hooks';
+import { Application } from '@/types/models';
+
+interface ApplicationsResponse {
+    rows: Application[];
+    count: number;
+}
 
 export default function AdminApplicationsPage() {
-    const { data: apps, isLoading } = useApiQuery<any>(['admin', 'applications', 'all'], '/admin/applications');
+    const { data: apps, isLoading } = useApiQuery<ApplicationsResponse>(['admin', 'applications', 'all'], '/admin/applications');
 
-    const appList = apps?.rows || apps || [];
-    const totalCount = apps?.count || appList.length;
+    const appList = apps?.rows || [];
+    const totalCount = apps?.count || 0;
 
     return (
         <div className="flex flex-col min-h-screen bg-surface selection:bg-blue-500/10 selection:text-blue-600">

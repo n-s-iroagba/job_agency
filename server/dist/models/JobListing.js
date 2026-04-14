@@ -1,0 +1,47 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.JobListing = void 0;
+const sequelize_1 = require("sequelize");
+const database_1 = require("../config/database");
+class JobListing extends sequelize_1.Model {
+}
+exports.JobListing = JobListing;
+JobListing.init({
+    id: {
+        type: sequelize_1.DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    title: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    description: {
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: false,
+    },
+    location: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    employmentType: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    requirements: {
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: false,
+    },
+    categoryId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+    },
+    isActive: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        defaultValue: true,
+    }
+}, {
+    sequelize: database_1.sequelize,
+    tableName: 'job_listings',
+    timestamps: true,
+});
