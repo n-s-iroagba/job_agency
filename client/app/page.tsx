@@ -20,18 +20,18 @@ export default function HomePage() {
 
       <main className="pt-16 flex-1">
         {/* Hero Section */}
-        <section className="relative min-h-[870px] flex items-center overflow-hidden bg-surface">
+        <section className="relative min-h-[600px] lg:min-h-[870px] flex items-center overflow-hidden bg-surface py-12 lg:py-0">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[80%] rounded-full bg-primary/5 blur-[120px]"></div>
             <div className="absolute bottom-[-5%] left-[-5%] w-[40%] h-[60%] rounded-full bg-secondary/5 blur-[100px]"></div>
           </div>
-          <div className="w-full max-w-[1280px] mx-auto px-8 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
+          <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-8 relative z-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/30 text-primary text-xs font-bold mb-6">
                 <span className="material-symbols-outlined text-sm text-fill">verified</span>
                 PRECISION IN PROFESSIONAL PLACEMENT
               </div>
-              <h1 className="text-slate-900 font-bold leading-[1.1] tracking-tight mb-6 text-[3.5rem] lg:text-[4.5rem]">
+              <h1 className="text-slate-900 font-bold leading-[1.1] tracking-tight mb-6 text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem]">
                 Your Gateway to <span className="text-primary">Global</span> Opportunities
               </h1>
               <p className="text-on-surface-variant text-lg lg:text-xl max-w-[576px] mb-10 leading-relaxed">
@@ -60,9 +60,9 @@ export default function HomePage() {
 
         {/* Trust Indicators */}
         <section className="py-16 bg-surface-container-low">
-          <div className="w-full max-w-[1280px] mx-auto px-8">
+          <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-8">
             <p className="text-center text-slate-500 text-xs font-bold tracking-[0.2em] mb-10 uppercase">TRUSTED BY GLOBAL INSTITUTIONS</p>
-            <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all">
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-12 lg:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-4xl">verified_user</span>
                 <span className="font-bold text-xl tracking-tighter">GLOBALCERT</span>
@@ -85,9 +85,9 @@ export default function HomePage() {
 
         {/* Job Listings Search & Filters */}
         <section id="jobs" className="py-24 bg-surface">
-          <div className="w-full max-w-[1280px] mx-auto px-8">
+          <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-8">
             <div className="mb-16">
-              <h2 className="text-3xl font-bold text-slate-900 mb-8">Curated Opportunities</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">Curated Opportunities</h2>
               <div className="bg-surface-container-low p-2 rounded-xl flex flex-col md:flex-row gap-2">
                 <div className="flex-grow flex items-center bg-white rounded-lg px-4 border-none shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
                   <span className="material-symbols-outlined text-slate-400">search</span>
@@ -152,10 +152,10 @@ export default function HomePage() {
 
         {/* Candidate Spotlight / Signature Component */}
         <section className="py-24 bg-surface-container-low overflow-hidden">
-          <div className="w-full max-w-[1280px] mx-auto px-8">
+          <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-8">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="relative">
-                <div className="bg-white p-10 rounded-[2rem] shadow-2xl relative z-10">
+                <div className="bg-white p-6 sm:p-10 rounded-[2rem] shadow-2xl relative z-10">
                   <div className="flex items-center gap-6 mb-8">
                     <img className="w-24 h-24 rounded-2xl object-cover grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC500VKOj6V4ZjscSKKMJkEPq-MxcNwtS6MQCB7oNSdKJyoWa5s_EFzu-AXHZ6o2L7PCKBtgRLijZKJNNap_325AQVpWiESclBVkPXeS0ZPX7_4RhJzbVLiRUNQcM-iA2LJJU_mmHOHJ8UIvt-X67hhZbD42hmewN905Z1N0HJYsvzG3GfIBU9ceRlX-gc5ULL8qS8BSvvpSU4t-gqus_bZBOWw4OfvbIISPIhGUsdGlEEfg1qJ56wXZQ75tWAVkTMyfeuEYYZygq3A" alt="Profile" />
                     <div>

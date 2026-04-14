@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export function PublicFooter() {
     return (
-        <footer className="bg-slate-50 dark:bg-slate-950 w-full py-12 px-8 mt-auto">
+        <footer className="bg-slate-50 dark:bg-slate-950 w-full py-12 px-4 sm:px-8 mt-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
                 <div className="space-y-4">
                     <span className="font-bold text-slate-900 dark:text-white text-xl">CareerCurator</span>

@@ -5,7 +5,7 @@ import { CONSTANTS } from '@/constants';
 
 export function PublicHeader() {
     return (
-        <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm shadow-slate-200/50 flex justify-between items-center px-8 h-16 max-w-full">
+        <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm shadow-slate-200/50 flex justify-between items-center px-4 sm:px-8 h-16 max-w-full">
             <div className="flex items-center gap-8">
                 <Link href={CONSTANTS.ROUTES.HOME} className="text-xl font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">
                     CareerCurator
