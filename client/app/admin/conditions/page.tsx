@@ -162,6 +162,11 @@ export default function ConditionsManagementPage() {
                                             </td>
                                             <td className="px-10 py-8 text-right">
                                                 <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <Link href={`/admin/conditions/${cond.id}`}>
+                                                        <button className="p-3 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-primary hover:shadow-md transition-all shadow-sm">
+                                                            <span className="material-symbols-outlined text-[16px] font-bold">visibility</span>
+                                                        </button>
+                                                    </Link>
                                                     <Link href={`/admin/conditions/${cond.id}/edit`}>
                                                         <button className="p-3 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-primary hover:shadow-md transition-all shadow-sm">
                                                             <span className="material-symbols-outlined text-[16px] font-bold">edit</span>

@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useApiQuery, useApiMutation } from '@/lib/hooks';
+
+import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
 
 export default function StageBuilderPage({ params }: { params: { id: string } }) {
     // Mock the job context since params unwrapping can be tricky in newer Next.js without React.use, assuming params.id is available
     const jobId = params.id;
     const { data: job, isLoading: jobLoading } = useApiQuery<any>(['admin', 'job', jobId], `/admin/jobs/${jobId}`);
-    const { data: stages, isLoading: stagesLoading, refetch } = useApiQuery<{ rows: any[], count: number }>(['admin', 'job', jobId, 'stages'], `/admin/jobs/${jobId}/stages`);
+    const { data: stages, isLoading: stagesLoading } = useApiQuery<{ rows: any[], count: number }>(['admin', 'job', jobId, 'stages'], `/admin/jobs/${jobId}/stages`);
 
     const stageList = (stages as any)?.rows || stages || [
         { id: 1, name: 'Initial Profile Evaluation', type: 'Screening', paymentRequired: false, description: 'Screening of CV, portfolio, and initial technical screening responses.' },

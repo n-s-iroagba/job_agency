@@ -33,10 +33,12 @@ export default function AdminJobsPage() {
                             type="text"
                         />
                     </div>
-                    <button className="bg-primary text-white px-8 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 shadow-2xl shadow-primary/20 hover:bg-blue-700 transition-all active:scale-95">
-                        <span className="material-symbols-outlined font-bold">add</span>
-                        Provision Job
-                    </button>
+                    <Link href="/admin/jobs/new">
+                        <button className="bg-primary text-white px-8 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 shadow-2xl shadow-primary/20 hover:bg-blue-700 transition-all active:scale-95">
+                            <span className="material-symbols-outlined font-bold">add</span>
+                            Provision Job
+                        </button>
+                    </Link>
                 </div>
             </header>
 
@@ -157,9 +159,23 @@ export default function AdminJobsPage() {
                                             </div>
                                         </td>
                                         <td className="px-10 py-8 text-right">
-                                            <button className="p-3 hover:bg-white hover:shadow-2xl rounded-xl transition-all text-slate-400 hover:text-primary opacity-0 group-hover:opacity-100">
-                                                <span className="material-symbols-outlined font-bold">more_vert</span>
-                                            </button>
+                                            <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <Link href={`/admin/jobs/${job.id}`}>
+                                                    <button className="p-2.5 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-primary hover:shadow-lg transition-all shadow-sm">
+                                                        <span className="material-symbols-outlined text-[16px] font-bold">visibility</span>
+                                                    </button>
+                                                </Link>
+                                                <Link href={`/admin/jobs/${job.id}/stages`}>
+                                                    <button className="p-2.5 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-primary hover:shadow-lg transition-all shadow-sm">
+                                                        <span className="material-symbols-outlined text-[16px] font-bold">account_tree</span>
+                                                    </button>
+                                                </Link>
+                                                <Link href={`/admin/jobs/${job.id}/edit`}>
+                                                    <button className="p-2.5 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-primary hover:shadow-lg transition-all shadow-sm">
+                                                        <span className="material-symbols-outlined text-[16px] font-bold">edit</span>
+                                                    </button>
+                                                </Link>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
