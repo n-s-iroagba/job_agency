@@ -1,6 +1,8 @@
 'use client';
 
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import { JobBenefit } from '@/types/models';
+import Link from 'next/link';
 
 export default function BenefitsManagementPage() {
     const { data: benefits, isLoading, refetch } = useApiQuery<{ rows: JobBenefit[], count: number }>(['admin', 'benefits'], '/admin/benefits');
