@@ -6,6 +6,7 @@ export class JobBenefit extends Model {
     declare benefitType: string;
     declare description: string;
     declare value: string | null;
+    declare categoryId: number | null;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 }
@@ -26,6 +27,10 @@ JobBenefit.init({
     },
     value: {
         type: DataTypes.STRING,
+        allowNull: true,
+    },
+    categoryId: {
+        type: DataTypes.INTEGER,
         allowNull: true,
     }
 }, {

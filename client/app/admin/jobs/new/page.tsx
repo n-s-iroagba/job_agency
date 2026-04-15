@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+
 import JobForm from '@/components/admin/forms/JobForm';
 
 export default function JobListingNewPage() {

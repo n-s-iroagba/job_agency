@@ -1,11 +1,22 @@
-'use client';
-
+'use client'
+import React, { useState } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
-import { JobBenefit } from '@/types/models';
+import { JobBenefit, JobCategory } from '@/types/models';
 import Link from 'next/link';
 
 export default function BenefitsManagementPage() {
-    const { data: benefits, isLoading, refetch } = useApiQuery<{ rows: JobBenefit[], count: number }>(['admin', 'benefits'], '/admin/benefits');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [categoryId, setCategoryId] = useState<string | number>('');
+    const [page, setPage] = useState(1);
+    const limit = 10;
+
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
+    const categories = categoriesResult?.rows || [];
+
+    const { data: benefits, isLoading, refetch } = useApiQuery<{ rows: JobBenefit[], count: number }>(
+        ['admin', 'benefits', 'list', page, searchQuery, categoryId],
+        `/admin/benefits?limit=${limit}&offset=${(page - 1) * limit}${searchQuery ? `&searchQuery=${encodeURIComponent(searchQuery)}` : ''}${categoryId ? `&categoryId=${categoryId}` : ''}`
+    );
 
     const deleteMutation = useApiMutation<number, any>('delete', '/admin/benefits', {
         onSuccess: () => refetch()
@@ -21,6 +32,8 @@ export default function BenefitsManagementPage() {
     if (isLoading) return <div className="p-12 animate-pulse flex flex-col gap-6"><div className="h-40 bg-surface-container-low rounded-xl"></div></div>;
 
     const benefitsList = benefits?.rows || [];
+    const totalCount = benefits?.count || 0;
+    const totalPages = Math.ceil(totalCount / limit);
 
     // Calculate distribution for Stats Bento Grid
     const typeDistribution = benefitsList.reduce((acc: any, b: JobBenefit) => {
@@ -33,208 +46,165 @@ export default function BenefitsManagementPage() {
     const sortedTypes = Object.entries(typeDistribution).sort((a: any, b: any) => b[1] - a[1]).slice(0, 3);
 
     return (
-        <div className="flex flex-col min-h-screen bg-surface selection:bg-primary/10 selection:text-primary pb-16">
-            {/* TopAppBar Shell */}
-            <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
-                <div className="flex items-center gap-2">
-                    <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                        <span>System</span>
-                        <span className="material-symbols-outlined text-[10px]">chevron_right</span>
-                        <span className="text-primary">Benefit Configuration</span>
-                    </nav>
+        <div className="flex flex-col min-h-screen bg-slate-50">
+            {/* Standard Admin Header */}
+            <header className="h-16 px-6 bg-white border-b border-slate-200 flex items-center justify-between sticky top-0 z-40">
+                <div className="flex items-center gap-4 ">
+                    <h1 className="text-lg font-bold text-slate-800 tracking-tight">Benefit Configuration</h1>
+                    <span className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px] font-medium border border-slate-200 uppercase tracking-wider">
+                        {totalCount} active
+                    </span>
+                    <br />
                 </div>
-                <div className="flex items-center gap-6 hidden md:flex">
-                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">SCR-ADM-BEN-001</p>
+
+                <div className="flex items-center gap-3">
+                    <div className="relative group hidden sm:block">
+                        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                        <input
+                            className="pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-1 focus:ring-blue-500/20 focus:border-blue-500 w-56 transition-all"
+                            placeholder="Find incentive..."
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                                setPage(1);
+                            }}
+                        />
+                    </div>
+                    <select
+                        className="pl-3 pr-8 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold uppercase tracking-wider outline-none focus:ring-1 focus:ring-blue-500/20 cursor-pointer"
+                        value={categoryId}
+                        onChange={(e) => {
+                            setCategoryId(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        <option value="">All Categories</option>
+                        {categories.map(cat => (
+                            <option key={cat.id} value={cat.id}>{cat.name}</option>
+                        ))}
+                    </select>
+                    <Link href="/admin/benefits/new">
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all shadow-sm">
+                            <span className="material-symbols-outlined text-lg">add</span>
+                            New Benefit
+                        </button>
+                    </Link>
                 </div>
             </header>
 
-            {/* Main Content Canvas */}
-            <main className="p-8 lg:p-12 max-w-[1400px] mx-auto w-full">
-
-                {/* Header Section */}
-                <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <div className="max-w-[672px]">
-                        <span className="text-[10px] font-black tracking-[0.2em] text-primary uppercase mb-3 block">Governance & Incentives</span>
-                        <h2 className="text-[3.5rem] font-black tracking-tighter text-on-surface mb-4 leading-none italic uppercase">Agency Benefits</h2>
-                        <p className="text-on-surface-variant text-lg font-light leading-relaxed">
-                            Design and manage the premium incentive structures offered across your portfolio. Curated benefits drive higher engagement and candidate retention.
-                        </p>
+            <div className="p-6 space-y-6">
+                {/* Simplified Metrics */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Total Incentives</p>
+                        <p className="text-3xl font-bold text-slate-900 tracking-tighter italic">{benefitsList.length.toString().padStart(2, '0')}</p>
                     </div>
-                    <Link href="/admin/benefits/new">
-                        <button className="px-8 py-4 bg-primary text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-primary/20 hover:bg-blue-700 active:scale-95 transition-all flex items-center gap-2">
-                            <span className="material-symbols-outlined font-bold text-[18px]">add</span>
-                            Add New Benefit
-                        </button>
-                    </Link>
-                </header>
-
-                {/* Stats Bento Grid (Precision Style) */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
-                    <div className="col-span-12 md:col-span-4 bg-white p-8 rounded-[2rem] shadow-xl shadow-slate-100/50 border border-slate-50 relative overflow-hidden group">
-                        <div className="flex items-center gap-4 mb-6 relative z-10">
-                            <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100/50 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                                <span className="material-symbols-outlined text-[32px] font-bold">verified_user</span>
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Active Benefits</p>
-                                <p className="text-5xl font-black italic text-on-surface">{benefitsList.length.toString().padStart(2, '0')}</p>
-                            </div>
-                        </div>
-                        <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden relative z-10">
-                            <div className="h-full bg-primary" style={{ width: '100%' }}></div>
-                        </div>
-                        <div className="absolute -right-6 -bottom-6 opacity-5">
-                            <span className="material-symbols-outlined text-[120px]">workspace_premium</span>
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm col-span-1 lg:col-span-2">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Category Distribution</p>
+                        <div className="flex gap-4">
+                            {sortedTypes.map(([type, count]: any) => (
+                                <div key={type} className="flex flex-col">
+                                    <span className="text-sm font-bold text-slate-900 leading-none">{Math.round((count / total) * 100)}%</span>
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{type || 'General'}</span>
+                                </div>
+                            ))}
+                            {sortedTypes.length === 0 && <span className="text-xs text-slate-400 italic">Analysis pending...</span>}
                         </div>
                     </div>
 
-                    <div className="col-span-12 md:col-span-8 bg-slate-900 p-8 rounded-[2rem] shadow-2xl flex flex-col justify-center relative overflow-hidden">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
-                            <div>
-                                <h3 className="text-2xl font-black italic text-white uppercase tracking-tighter mb-2">Benefit Distribution</h3>
-                                <p className="text-[11px] font-bold tracking-widest uppercase text-slate-400">Top-performing categories based on inventory.</p>
-                            </div>
-                            <div className="flex gap-8 items-center bg-slate-800/50 p-6 rounded-2xl border border-slate-800">
-                                {sortedTypes.map(([type, count]: any, idx) => (
-                                    <div key={type} className="text-center">
-                                        <span className={`block text-3xl font-black italic mb-1 ${idx === 0 ? 'text-primary' : idx === 1 ? 'text-secondary' : 'text-tertiary'}`}>
-                                            {Math.round((count / total) * 100)}%
-                                        </span>
-                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{type || 'General'}</span>
-                                    </div>
-                                ))}
-                                {sortedTypes.length === 0 && <div className="text-slate-400 text-sm font-bold">No data</div>}
-                            </div>
-                        </div>
-                        <div className="absolute -left-10 -top-10 opacity-10">
-                            <span className="material-symbols-outlined text-[200px] text-white">pie_chart</span>
-                        </div>
-                    </div>
                 </div>
 
-                {/* Data Canvas */}
-                <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200/50 border border-slate-50">
-
-                    {/* Table Controls */}
-                    <div className="px-10 py-8 bg-slate-50/50 flex flex-wrap items-center justify-between gap-4 border-b border-slate-100">
-                        <div className="flex items-center gap-4">
-                            <div className="bg-white px-5 py-3 rounded-xl flex items-center gap-3 border border-slate-200 shadow-sm">
-                                <span className="material-symbols-outlined text-slate-400 font-bold" style={{ fontSize: '18px' }}>filter_list</span>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">All Categories</span>
-                            </div>
-                            <div className="bg-white px-5 py-3 rounded-xl flex items-center gap-3 border border-slate-200 shadow-sm">
-                                <span className="material-symbols-outlined text-slate-400 font-bold" style={{ fontSize: '18px' }}>sort</span>
-                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">Recently Modified</span>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] bg-white px-4 py-2 rounded-lg border border-slate-100 shadow-sm">
-                                DISPLAYING {benefitsList.length} RECORD(S)
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Precision Table */}
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left">
+                {/* Benefits Inventory */}
+                <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                    <div className="overflow-x-auto w-full">
+                        <table className="w-full text-left border-collapse min-w-[800px]">
                             <thead>
-                                <tr className="bg-white">
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Benefit Type</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Description</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Value</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Actions</th>
+                                <tr className="border-b border-slate-100 italic bg-slate-50/50">
+                                    <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Incentive Identity</th>
+                                    <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Global Description</th>
+                                    <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Fiscal Value</th>
+                                    <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-slate-500 text-right pr-6">Manage</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-50">
-                                {benefitsList.map((b: JobBenefit, idx: number) => {
-                                    // Assign varied colors based on index for visual flair matching design
-                                    const uiClass = idx % 3 === 0 ? { bg: 'bg-primary/10', text: 'text-primary', icon: 'payments', badgeBg: 'bg-blue-50', border: 'hover:border-primary' } :
-                                        idx % 3 === 1 ? { bg: 'bg-secondary/10', text: 'text-secondary', icon: 'flight', badgeBg: 'bg-slate-100', border: 'hover:border-secondary' } :
-                                            { bg: 'bg-tertiary/10', text: 'text-tertiary', icon: 'medical_services', badgeBg: 'bg-orange-50', border: 'hover:border-tertiary' };
-
-                                    return (
-                                        <tr key={b.id} className={`hover:bg-slate-50/70 transition-colors group border-l-4 border-transparent ${uiClass.border}`}>
-                                            <td className="px-10 py-8">
-                                                <div className="flex items-center gap-5">
-                                                    <div className={`w-12 h-12 rounded-2xl ${uiClass.bg} flex items-center justify-center ${uiClass.text} group-hover:scale-110 transition-transform shadow-inner`}>
-                                                        <span className="material-symbols-outlined font-bold">{uiClass.icon}</span>
-                                                    </div>
-                                                    <div className="flex flex-col items-start gap-1">
-                                                        <p className="font-black text-on-surface uppercase tracking-tight text-xs">{b.benefitType}</p>
-                                                        <span className={`text-[8px] font-black ${uiClass.text} px-3 py-1 ${uiClass.badgeBg} rounded-full uppercase tracking-widest border border-slate-200/50`}>
-                                                            {b.benefitType.split(' ')[0]}
-                                                        </span>
-                                                    </div>
+                                {benefitsList.map((b: JobBenefit) => (
+                                    <tr key={b.id} className="hover:bg-slate-50/50 transition-all group">
+                                        <td className="px-5 py-5">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors shadow-sm">
+                                                    <span className="material-symbols-outlined text-lg">workspace_premium</span>
                                                 </div>
-                                            </td>
-                                            <td className="px-10 py-8">
-                                                <p className="text-xs font-bold text-slate-500 max-w-[384px] line-clamp-2 leading-relaxed tracking-wide">
-                                                    {b.description || 'Standard corporate package provision configured according to Tier 1 placement guidelines.'}
-                                                </p>
-                                            </td>
-                                            <td className="px-10 py-8">
-                                                <div className="flex flex-col items-start gap-1">
-                                                    <span className="text-sm font-black text-on-surface font-mono bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">{b.value || 'N/A'}</span>
+                                                <div>
+                                                    <p className="font-bold text-slate-900 text-sm tracking-tight leading-none mb-1">{b.benefitType}</p>
+                                                    <span className="text-[10px] font-bold text-blue-500/70 uppercase tracking-widest">{b.benefitType.split(' ')[0]} CONFIG</span>
                                                 </div>
-                                            </td>
-                                            <td className="px-10 py-8 text-right">
-                                                <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <Link href={`/admin/benefits/${b.id}`}>
-                                                        <button className="p-3 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-primary hover:shadow-lg transition-all shadow-sm">
-                                                            <span className="material-symbols-outlined text-[16px] font-bold">visibility</span>
-                                                        </button>
-                                                    </Link>
-                                                    <Link href={`/admin/benefits/${b.id}/edit`}>
-                                                        <button className="p-3 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-primary hover:shadow-lg transition-all shadow-sm">
-                                                            <span className="material-symbols-outlined text-[16px] font-bold">edit</span>
-                                                        </button>
-                                                    </Link>
-                                                    <button onClick={() => handleDelete(b.id)} className="p-3 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-error hover:shadow-lg transition-all shadow-sm">
-                                                        <span className="material-symbols-outlined text-[16px] font-bold">delete_outline</span>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
+                                            </div>
+                                        </td>
+                                        <td className="px-5 py-5">
+                                            <p className="text-xs font-medium text-slate-500 max-w-[400px] line-clamp-1 leading-relaxed italic opacity-80">
+                                                {b.description || 'Standard corporate package provision configured according to Tier 1 guidelines.'}
+                                            </p>
+                                        </td>
+                                        <td className="px-5 py-5">
+                                            <span className="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded text-xs font-mono font-bold text-slate-700 shadow-sm">
+                                                {b.value || 'N/A'}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-5 text-right pr-6">
+                                            <div className="flex justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <Link href={`/admin/benefits/${b.id}`} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                                    <span className="material-symbols-outlined text-lg">visibility</span>
+                                                </Link>
+                                                <Link href={`/admin/benefits/${b.id}/edit`} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                                    <span className="material-symbols-outlined text-lg">edit</span>
+                                                </Link>
+                                                <button onClick={() => handleDelete(b.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                                                    <span className="material-symbols-outlined text-lg">delete_outline</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
                                 {benefitsList.length === 0 && (
                                     <tr>
-                                        <td colSpan={4} className="px-10 py-16 text-center">
-                                            <p className="text-xs font-black uppercase tracking-widest text-slate-400 italic">No benefits configured</p>
+                                        <td colSpan={4} className="px-5 py-12 text-center">
+                                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 italic">No benefits configured in this cluster</p>
                                         </td>
                                     </tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
-                </div>
 
-                {/* Featured Benefit Highlight (Editorial Signature Component) */}
-                <section className="mt-16 relative h-[400px] rounded-[3rem] overflow-hidden group shadow-2xl">
-                    <div className="absolute inset-0 z-0 bg-slate-900">
-                        {/* Placeholder gradient mimicking image */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/90 to-blue-600/40 opacity-80 mix-blend-multiply group-hover:scale-105 transition-transform duration-1000"></div>
-                        <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 80% 20%, rgba(37,99,235,0.4) 0%, transparent 50%)" }}></div>
-                    </div>
-                    <div className="relative z-10 h-full flex flex-col justify-center p-16 max-w-[576px] text-white">
-                        <span className="text-[10px] font-black tracking-[0.3em] uppercase text-blue-300 mb-6 block border border-blue-400/30 w-fit px-3 py-1 rounded-full bg-blue-900/50 backdrop-blur-sm">Candidate Spotlight</span>
-                        <h3 className="text-4xl font-black mb-8 leading-tight italic tracking-tight drop-shadow-xl">"The premium health benefits package was the absolute deciding factor in my professional journey."</h3>
-                        <div className="flex items-center gap-5 bg-black/20 w-fit pr-6 rounded-full backdrop-blur-md border border-white/10">
-                            <div className="w-14 h-14 rounded-full border-2 border-primary/50 bg-slate-800 flex items-center justify-center -ml-1">
-                                <span className="material-symbols-outlined text-white">person</span>
-                            </div>
-                            <div>
-                                <p className="font-black text-xs uppercase tracking-widest text-white">Elena Vance</p>
-                                <p className="text-[10px] font-bold text-blue-300 uppercase tracking-widest mt-1">Senior Product Designer</p>
-                            </div>
+                    {/* Pagination Context */}
+                    <div className="px-5 py-4 border-t border-slate-100 bg-slate-50/30 flex items-center justify-between">
+                        <p className="text-xs font-medium text-slate-500">
+                            Listing <span className="text-slate-900 font-bold">{benefitsList.length}</span> incentive records
+                        </p>
+                        <div className="flex items-center gap-1.5">
+                            <button
+                                onClick={() => setPage(p => Math.max(1, p - 1))}
+                                disabled={page === 1}
+                                className="px-2 py-1 bg-white border border-slate-200 rounded text-slate-400 hover:bg-slate-50 disabled:opacity-30 transition-all font-bold"
+                            >
+                                <span className="material-symbols-outlined text-lg">chevron_left</span>
+                            </button>
+                            <span className="px-3 py-1 bg-slate-900 text-white rounded text-[11px] font-bold">
+                                {page}
+                            </span>
+                            <button
+                                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                                disabled={page === totalPages || totalPages === 0}
+                                className="px-2 py-1 bg-white border border-slate-200 rounded text-slate-400 hover:bg-slate-50 disabled:opacity-30 transition-all font-bold"
+                            >
+                                <span className="material-symbols-outlined text-lg">chevron_right</span>
+                            </button>
                         </div>
                     </div>
-                    <div className="absolute right-0 bottom-0 top-0 w-1/3 bg-gradient-to-l from-black/80 to-transparent flex items-end justify-end p-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                        <p className="text-[8px] font-black uppercase tracking-[0.5em] text-white/50 transform -rotate-90 origin-bottom-right translate-x-8 mb-20 italic">Curator Precision Standard</p>
-                    </div>
-                </section>
-
-            </main>
+                </div>
+            </div>
         </div>
     );
 }
+

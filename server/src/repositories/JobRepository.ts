@@ -7,6 +7,8 @@ export interface FindJobsOptions {
     categoryId?: number;
     employmentType?: string;
     searchQuery?: string;
+    sortBy?: string;
+    sortOrder?: 'ASC' | 'DESC';
 }
 
 export class JobRepository {
@@ -34,11 +36,30 @@ export class JobRepository {
 
     // Maps to STK-ADM-JOB-001, NFR-PERF-004
     public async findAllAdmin(options: FindJobsOptions = {}): Promise<{ rows: JobListing[]; count: number }> {
+        const whereClause: any = {};
+
+        if (options.categoryId) whereClause.categoryId = options.categoryId;
+        if (options.employmentType) whereClause.employmentType = options.employmentType;
+        if (options.searchQuery) {
+            whereClause[Op.or] = [
+                { title: { [Op.like]: `%${options.searchQuery}%` } },
+                { location: { [Op.like]: `%${options.searchQuery}%` } }
+            ];
+        }
+
+        const order: any[] = [];
+        if (options.sortBy) {
+            order.push([options.sortBy, options.sortOrder || 'DESC']);
+        } else {
+            order.push(['createdAt', 'DESC']);
+        }
+
         return JobListing.findAndCountAll({
+            where: whereClause,
             limit: options.limit || 20,
             offset: options.offset || 0,
             include: [JobCategory],
-            order: [['createdAt', 'DESC']]
+            order
         });
     }
 
@@ -60,7 +81,8 @@ export class JobRepository {
 
     // Maps to STK-ADM-JOB-001, STK-ADM-JOB-005
     public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number, JobListing[]]> {
-        return JobListing.update(updateData, { where: { id }, returning: true, transaction });
+        const [updatedCount] = await JobListing.update(updateData, { where: { id }, transaction });
+        return [updatedCount, []]; // Handled by Service layer fetching the record
     }
 
     // Maps to STK-ADM-JOB-001

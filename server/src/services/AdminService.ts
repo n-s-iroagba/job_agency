@@ -1,8 +1,8 @@
 import { bankAccountRepository } from '../repositories/BankAccountRepository';
 import { cryptoWalletRepository } from '../repositories/CryptoWalletRepository';
-import { jobCategoryRepository } from '../repositories/JobCategoryRepository';
-import { jobConditionRepository } from '../repositories/JobConditionRepository';
-import { jobBenefitRepository } from '../repositories/JobBenefitRepository';
+import { jobCategoryRepository, FindCategoryOptions } from '../repositories/JobCategoryRepository';
+import { jobConditionRepository, FindConditionOptions } from '../repositories/JobConditionRepository';
+import { jobBenefitRepository, FindBenefitOptions } from '../repositories/JobBenefitRepository';
 import { userRepository } from '../repositories/UserRepository';
 import { notificationRepository } from '../repositories/NotificationRepository';
 import { sendEmail } from '../utils/email';
@@ -111,9 +111,9 @@ export class AdminService {
     // Job Configurations
     // ==========================
     public async getJobConfigurations() {
-        const cats = await jobCategoryRepository.findAll();
-        const conds = await jobConditionRepository.findAll();
-        const bens = await jobBenefitRepository.findAll();
+        const cats = await jobCategoryRepository.findAll({ limit: 100 });
+        const conds = await jobConditionRepository.findAll({ limit: 100 });
+        const bens = await jobBenefitRepository.findAll({ limit: 100 });
         return {
             categories: cats.rows,
             conditions: conds.rows,
@@ -121,19 +121,19 @@ export class AdminService {
         };
     }
 
-    public async getAllCategories() { return jobCategoryRepository.findAll(); }
+    public async getAllCategories(options: FindCategoryOptions = {}) { return jobCategoryRepository.findAll(options); }
     public async getCategoryById(id: number) {
         const category = await jobCategoryRepository.findById(id);
         if (!category) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
         return category;
     }
-    public async getAllConditions() { return jobConditionRepository.findAll(); }
+    public async getAllConditions(options: FindConditionOptions = {}) { return jobConditionRepository.findAll(options); }
     public async getConditionById(id: number) {
         const condition = await jobConditionRepository.findById(id);
         if (!condition) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
         return condition;
     }
-    public async getAllBenefits() { return jobBenefitRepository.findAll(); }
+    public async getAllBenefits(options: FindBenefitOptions = {}) { return jobBenefitRepository.findAll(options); }
     public async getBenefitById(id: number) {
         const benefit = await jobBenefitRepository.findById(id);
         if (!benefit) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);

@@ -3,7 +3,7 @@ import { sequelize } from '../config/database';
 
 export class JobStage extends Model {
     declare id: number;
-    declare jobId: number;
+    declare applicationId: number;
     declare name: string;
     declare description: string;
     declare orderPosition: number;

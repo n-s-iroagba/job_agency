@@ -12,6 +12,7 @@ export class JobListing extends Model {
     declare isActive: boolean;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
+
 }
 
 JobListing.init({
@@ -19,6 +20,12 @@ JobListing.init({
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+    },
+    benefitIds: {
+        type: DataTypes.JSON
+    },
+    conditionIds: {
+        type: DataTypes.JSON
     },
     title: {
         type: DataTypes.STRING,

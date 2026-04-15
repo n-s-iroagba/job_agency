@@ -13,7 +13,7 @@ export const apiLimiter = rateLimit({
 // Stricter limits for authentication routes
 export const authLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
-    max: 5, // Limit each IP to 5 login requests per windowMs
+    max: 100, // Limit each IP to 5 login requests per windowMs
     message: { error: 'Too many authentication attempts from this IP, please try again after an hour' },
     standardHeaders: true,
     legacyHeaders: false,

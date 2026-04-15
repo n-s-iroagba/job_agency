@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { CONSTANTS } from '@/constants';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
     { label: 'Dashboard', href: CONSTANTS.ROUTES.DASHBOARD, icon: 'dashboard' },
@@ -15,12 +16,10 @@ const navItems = [
 
 export function ApplicantSidebar() {
     const pathname = usePathname();
-    const router = useRouter();
+    const { user, logout } = useAuth();
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        router.push(CONSTANTS.ROUTES.LOGIN);
+    const handleLogout = async () => {
+        await logout();
     };
 
     return (
@@ -58,8 +57,10 @@ export function ApplicantSidebar() {
                         <span className="material-symbols-outlined">person</span>
                     </div>
                     <div>
-                        <p className="text-sm font-semibold text-on-surface">Applicant</p>
-                        <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter font-bold">Precision Career Tracking</p>
+                        <p className="text-sm font-semibold text-on-surface truncate max-w-[120px]">
+                            {user?.fullName || 'Applicant'}
+                        </p>
+                        <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter font-bold">Precision Curation</p>
                     </div>
                 </div>
                 <button

@@ -1,10 +1,25 @@
-import { Transaction } from 'sequelize';
+import { Transaction, Op } from 'sequelize';
 import { JobCategory } from '../models';
+
+export interface FindCategoryOptions {
+    limit?: number;
+    offset?: number;
+    searchQuery?: string;
+}
 
 export class JobCategoryRepository {
     // Maps to STK-ADM-CAT-001, SCR-ADM-CAT-001
-    public async findAll(transaction?: Transaction): Promise<{ rows: JobCategory[], count: number }> {
+    public async findAll(options: FindCategoryOptions = {}, transaction?: Transaction): Promise<{ rows: JobCategory[], count: number }> {
+        const whereClause: any = {};
+        
+        if (options.searchQuery) {
+            whereClause.name = { [Op.like]: `%${options.searchQuery}%` };
+        }
+
         return JobCategory.findAndCountAll({
+            where: whereClause,
+            limit: options.limit || 20,
+            offset: options.offset || 0,
             order: [['name', 'ASC']],
             transaction
         });

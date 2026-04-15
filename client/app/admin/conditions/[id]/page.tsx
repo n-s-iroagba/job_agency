@@ -17,34 +17,56 @@ export default function ConditionViewPage() {
     if (error) return <div className="p-12 text-center text-red-500 font-black uppercase tracking-widest">Error Loading Record</div>;
 
     return (
-        <div className="flex flex-col min-h-screen bg-surface pb-16">
-            <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
-                <div className="flex items-center gap-2">
-                    <span className="text-xl font-black uppercase italic tracking-tighter text-slate-900">CareerCurator</span>
+        <div className="flex flex-col min-h-screen bg-slate-50">
+            {/* Standard Admin Header */}
+            <header className="h-16 px-6 bg-white border-b border-slate-200 flex items-center justify-between sticky top-0 z-40">
+                <div className="flex items-center gap-4">
+                    <Link href="/admin/conditions" className="p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
+                        <span className="material-symbols-outlined text-lg">arrow_back</span>
+                    </Link>
+                    <h1 className="text-lg font-bold text-slate-800 tracking-tight">Compliance Review</h1>
                 </div>
-                <Link href={`/admin/conditions/${id}/edit`}>
-                    <button className="px-6 py-2 bg-primary text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl shadow-lg shadow-primary/20 hover:scale-105 transition-all flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[16px]">edit</span> Edit Prerequisite
-                    </button>
-                </Link>
+
+                <div className="flex items-center gap-3">
+                    <Link href={`/admin/conditions/${id}/edit`}>
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all shadow-sm">
+                            <span className="material-symbols-outlined text-lg">edit</span>
+                            Edit Node
+                        </button>
+                    </Link>
+                </div>
             </header>
 
-            <main className="mt-8 p-8 lg:p-12 max-w-[1152px] mx-auto w-full">
-                <div className="mb-12">
-                    <nav className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-slate-400 mb-4">
-                        <span>System</span>
-                        <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-                        <Link href="/admin/conditions" className="hover:text-primary transition-colors">Conditions</Link>
+            <main className="p-6 lg:p-10 max-w-6xl mx-auto w-full text-slate-900">
+                <div className="mb-8">
+                    <nav className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                        <span>Governance</span>
+                        <span className="material-symbols-outlined text-xs">chevron_right</span>
+                        <span>Conditions</span>
                     </nav>
-                    <h1 className="text-[3.5rem] font-black text-on-surface leading-[1.1] tracking-tighter mb-4 italic uppercase text-slate-900">{condition?.name}</h1>
+                    <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none mb-4">{condition?.name}</h2>
+                    <div className="flex gap-2">
+                        <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[11px] font-bold uppercase tracking-widest rounded-lg border border-emerald-100 flex items-center gap-1.5 shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Active Standard
+                        </span>
+                    </div>
                 </div>
 
-                <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-6 flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[18px]">gavel</span>
-                        Legal & Operational Scope
-                    </h3>
-                    <p className="text-xl font-medium text-slate-600 leading-relaxed max-w-[768px] whitespace-pre-wrap">{condition?.description}</p>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <div className="lg:col-span-8 bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-6 pb-4 border-b border-slate-50">
+                            <span className="material-symbols-outlined text-lg">gavel</span>
+                            Legal & Operational Scope
+                        </div>
+                        <div className="prose prose-slate max-w-none">
+                            <p className="text-sm font-medium text-slate-600 leading-relaxed whitespace-pre-wrap italic opacity-90">
+                                {condition?.description || 'Standard requirement configured for operational recruitment.'}
+                            </p>
+                        </div>
+                    </div>
+
+
                 </div>
             </main>
         </div>

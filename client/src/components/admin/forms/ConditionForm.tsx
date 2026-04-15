@@ -1,10 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useApiMutation } from '@/lib/hooks';
-import Link from 'next/link';
-import { JobCondition } from '@/types/models';
+import { JobCondition, JobCategory } from '@/types/models';
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
 
 interface ConditionFormProps {
     initialData?: JobCondition;
@@ -13,13 +10,18 @@ interface ConditionFormProps {
 
 export default function ConditionForm({ initialData, isEdit = false }: ConditionFormProps) {
     const router = useRouter();
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
+    const categories = categoriesResult?.rows || [];
+
     const [name, setName] = useState(initialData?.name || '');
     const [description, setDescription] = useState(initialData?.description || '');
+    const [categoryId, setCategoryId] = useState<string | number>(initialData?.categoryId || '');
 
     useEffect(() => {
         if (initialData) {
             setName(initialData.name);
             setDescription(initialData.description);
+            setCategoryId(initialData.categoryId || '');
         }
     }, [initialData]);
 
@@ -37,7 +39,11 @@ export default function ConditionForm({ initialData, isEdit = false }: Condition
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await mutation.mutateAsync({ name, description });
+            await mutation.mutateAsync({ 
+                name, 
+                description,
+                categoryId: categoryId ? parseInt(categoryId.toString(), 10) : null
+            });
         } catch (err) {
             alert(`Failed to ${isEdit ? 'update' : 'create'} condition`);
         }
@@ -47,19 +53,40 @@ export default function ConditionForm({ initialData, isEdit = false }: Condition
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8 bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50">
                 <form onSubmit={handleSubmit} className="space-y-10">
-                    <div className="space-y-3">
-                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Prerequisite Name</label>
-                        <div className="relative">
-                            <input
-                                className="w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner placeholder-slate-300"
-                                placeholder="e.g., Minimum 5 Years Experience, or Valid Work Permit"
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                                <span className="material-symbols-outlined text-primary/40">gavel</span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-3">
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Prerequisite Name</label>
+                            <div className="relative">
+                                <input
+                                    className="w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner placeholder-slate-300"
+                                    placeholder="e.g., Minimum 5 Years Experience"
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                                    <span className="material-symbols-outlined text-primary/40">gavel</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Context Category</label>
+                            <div className="relative">
+                                <select
+                                    className="w-full h-14 pl-5 pr-10 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner cursor-pointer"
+                                    value={categoryId}
+                                    onChange={(e) => setCategoryId(e.target.value)}
+                                >
+                                    <option value="">Global (All Categories)</option>
+                                    {categories.map(cat => (
+                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">
+                                    <span className="material-symbols-outlined">layers</span>
+                                </div>
                             </div>
                         </div>
                     </div>

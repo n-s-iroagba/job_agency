@@ -42,6 +42,7 @@ export interface JobListing {
 
 export interface JobBenefit {
     id: number;
+    categoryId: number
     benefitType: string;
     description: string;
     value: string | null;

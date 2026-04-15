@@ -4,17 +4,23 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApiMutation, useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
-import { Job, JobCategory } from '@/types/models';
+import { JobListing, JobCategory, JobBenefit, JobCondition } from '@/types/models';
 
 interface JobFormProps {
-    initialData?: Job;
+    initialData?: JobListing & { JobBenefits?: JobBenefit[], JobConditions?: JobCondition[] };
     isEdit?: boolean;
 }
 
 export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     const router = useRouter();
-    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>('/admin/categories');
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
     const categories = categoriesResult?.rows || [];
+
+    const { data: benefitsResult } = useApiQuery<{ rows: JobBenefit[], count: number }>(['admin', 'benefits'], '/admin/benefits');
+    const { data: conditionsResult } = useApiQuery<{ rows: JobCondition[], count: number }>(['admin', 'conditions'], '/admin/conditions');
+
+    const allBenefits = benefitsResult?.rows || [];
+    const allConditions = conditionsResult?.rows || [];
 
     const [title, setTitle] = useState(initialData?.title || '');
     const [categoryId, setCategoryId] = useState(initialData?.categoryId || '');
@@ -24,15 +30,24 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     const [requirements, setRequirements] = useState(initialData?.requirements || '');
     const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
 
+    const [selectedBenefits, setSelectedBenefits] = useState<number[]>(
+        initialData?.JobBenefits?.map(b => b.id) || []
+    );
+    const [selectedConditions, setSelectedConditions] = useState<number[]>(
+        initialData?.JobConditions?.map(c => c.id) || []
+    );
+
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
             setCategoryId(initialData.categoryId);
             setEmploymentType(initialData.employmentType);
-            setLocation(initialData.location);
+            setLocation(initialData.location as string);
             setDescription(initialData.description);
             setRequirements(initialData.requirements || '');
             setIsActive(initialData.isActive);
+            setSelectedBenefits(initialData.JobBenefits?.map(b => b.id) || []);
+            setSelectedConditions(initialData.JobConditions?.map(c => c.id) || []);
         }
     }, [initialData]);
 
@@ -57,7 +72,9 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                 location,
                 description,
                 requirements,
-                isActive
+                isActive,
+                benefitsIds: selectedBenefits,
+                conditionsIds: selectedConditions
             });
         } catch (err) {
             alert(`Failed to ${isEdit ? 'update' : 'create'} job listing`);
@@ -65,7 +82,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-3">
             <div className="lg:col-span-8 space-y-8">
                 <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50 space-y-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -80,9 +97,11 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                 required
                             />
                         </div>
-                        <div className="space-y-3">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Category</label>
+                        <div className="space-y-8">
+                            <label className="text-[10px]  font-black text-slate-400 uppercase tracking-widest pl-1">Category</label>
+
                             <div className="relative">
+                                <br />
                                 <select
                                     className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-6 pr-10 text-sm font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer shadow-inner"
                                     value={categoryId}
@@ -143,10 +162,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     ></textarea>
                 </div>
 
-                <div className="bg-slate-900 text-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-slate-800 space-y-6">
-                    <label className="text-[10px] font-black text-blue-400 uppercase tracking-widest flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[16px]">fact_check</span> Candidate Requirements
-                    </label>
+                <div className="bg-slate-900 p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-slate-800 space-y-6">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Candidate Requirements</label>
                     <textarea
                         className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-5 px-6 text-sm font-medium focus:bg-slate-800 focus:ring-2 focus:ring-blue-500/30 transition-all resize-none shadow-inner text-white"
                         placeholder="List essential skills..."
@@ -155,6 +172,66 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                         onChange={(e) => setRequirements(e.target.value)}
                         required
                     ></textarea>
+                </div>
+
+                {/* Benefits & Conditions (Production Upgrade) */}
+                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50 space-y-10">
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Targeted Benefits</label>
+                            <Link href="/admin/benefits/new">
+                                <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] cursor-pointer hover:underline">+ Provision New</span>
+                            </Link>
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                            {allBenefits.map(benefit => {
+                                const isSelected = selectedBenefits.includes(benefit.id);
+                                return (
+                                    <button
+                                        key={benefit.id}
+                                        type="button"
+                                        onClick={() => setSelectedBenefits(prev => isSelected ? prev.filter(id => id !== benefit.id) : [...prev, benefit.id])}
+                                        className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${isSelected
+                                            ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                                            : 'bg-slate-50 text-slate-400 border-slate-100 hover:border-slate-300'
+                                            }`}
+                                    >
+                                        {benefit.benefitType}
+                                        <br />
+
+                                        {benefit.value}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Operational Conditions</label>
+                            <Link href="/admin/conditions/new">
+                                <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] cursor-pointer hover:underline">+ Provision New</span>
+                            </Link>
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                            {allConditions.map(condition => {
+                                const isSelected = selectedConditions.includes(condition.id);
+                                return (
+                                    <button
+                                        key={condition.id}
+                                        type="button"
+                                        onClick={() => setSelectedConditions(prev => isSelected ? prev.filter(id => id !== condition.id) : [...prev, condition.id])}
+                                        className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${isSelected
+                                            ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                                            : 'bg-slate-50 text-slate-400 border-slate-100 hover:border-slate-300'
+                                            }`}
+                                    >
+                                        {condition.name}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -89,15 +89,29 @@ export class AdminController {
     }
 
     public async getAllCategories(req: Request, res: Response): Promise<void> {
-        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllCategories());
+        const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
+        const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
+        const searchQuery = req.query.searchQuery as string;
+
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllCategories({ limit, offset, searchQuery }));
     }
 
     public async getAllConditions(req: Request, res: Response): Promise<void> {
-        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllConditions());
+        const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
+        const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
+        const searchQuery = req.query.searchQuery as string;
+        const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string, 10) : undefined;
+
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllConditions({ limit, offset, searchQuery, categoryId }));
     }
 
     public async getAllBenefits(req: Request, res: Response): Promise<void> {
-        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllBenefits());
+        const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
+        const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
+        const searchQuery = req.query.searchQuery as string;
+        const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string, 10) : undefined;
+
+        res.status(CONSTANTS.HTTP_STATUS.OK).json(await adminService.getAllBenefits({ limit, offset, searchQuery, categoryId }));
     }
 
     public async getCategoryById(req: Request, res: Response): Promise<void> {

@@ -89,6 +89,7 @@ router.get('/admin/payments/unverified', ...adminMW, paymentController.getUnveri
 router.post('/admin/payments/:id/verify', ...adminMW, paymentController.verifyPayment.bind(paymentController));
 
 // STK-ADM-JOB-001..005
+router.get('/admin/jobs/stats', ...adminMW, jobController.getJobStats.bind(jobController));
 router.get('/admin/jobs', ...adminMW, jobController.getAllJobsAdmin.bind(jobController));
 router.get('/admin/jobs/:id', ...adminMW, jobController.getJobDetails.bind(jobController));
 router.post('/admin/jobs', ...adminMW, jobController.createJob.bind(jobController));

@@ -17,20 +17,30 @@ export default function CryptoWalletEditPage() {
     if (error) return <div className="p-12 text-center text-red-500 font-black uppercase tracking-widest">Error Loading Wallet</div>;
 
     return (
-        <div className="flex flex-col min-h-screen bg-surface selection:bg-primary/10 selection:text-primary pb-16 overflow-x-hidden">
-            <header className="sticky top-0 z-40 h-20 flex justify-between items-center px-8 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
-                <div className="flex flex-col">
-                    <h2 className="text-xl font-black tracking-tight uppercase italic text-slate-900">CareerCurator</h2>
+        <div className="flex flex-col min-h-screen bg-slate-50">
+            {/* Standard Admin Header */}
+            <header className="h-16 px-6 bg-white border-b border-slate-200 flex items-center justify-between sticky top-0 z-40">
+                <div className="flex items-center gap-4">
+                    <Link href="/admin/crypto-wallets" className="p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
+                        <span className="material-symbols-outlined text-lg">arrow_back</span>
+                    </Link>
+                    <h1 className="text-lg font-bold text-slate-800 tracking-tight">Configure Settlement Node</h1>
                 </div>
             </header>
 
-            <main className="flex-1 w-full pt-12 pb-20 px-6 md:px-12 max-w-[896px] mx-auto">
-                <div className="mb-10">
-                    <h3 className="text-[3.5rem] font-black text-on-surface tracking-tighter leading-none mb-4 italic uppercase text-slate-900">Edit <span className="text-primary">Digital Asset</span></h3>
-                    <p className="text-on-surface-variant max-w-[576px] leading-relaxed font-medium text-lg">Modify secure digital settlement address for {wallet?.displayLabel}.</p>
+            <main className="p-6 md:p-10 max-w-4xl mx-auto w-full">
+                <div className="mb-8">
+                    <nav className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                        <span>Financials</span>
+                        <span className="material-symbols-outlined text-xs">chevron_right</span>
+                        <span>Crypto Wallets</span>
+                    </nav>
+                    <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none mb-2">Refining <span className="text-blue-600">{wallet?.displayLabel}</span></h2>
                 </div>
 
-                <CryptoWalletForm initialData={wallet} isEdit={true} />
+                <div className="bg-white p-6 md:p-10 rounded-xl border border-slate-200 shadow-sm">
+                    <CryptoWalletForm initialData={wallet} isEdit={true} />
+                </div>
             </main>
         </div>
     );

@@ -1,7 +1,8 @@
-import { jobRepository } from '../repositories/JobRepository';
+import { jobRepository, FindJobsOptions } from '../repositories/JobRepository';
 import { jobStageRepository } from '../repositories/JobStageRepository';
 import { CONSTANTS } from '../constants';
 import { sequelize } from '../config/database';
+import { JobListing, Application, JobCategory } from '../models';
 
 export class JobService {
     // Maps to STK-APP-DASH-001
@@ -10,8 +11,24 @@ export class JobService {
     }
 
     // Maps to STK-ADM-JOB-004
-    public async getAllJobsAdmin(limit?: number, offset?: number) {
-        return jobRepository.findAllAdmin({ limit, offset });
+    public async getAllJobsAdmin(options: FindJobsOptions = {}) {
+        return jobRepository.findAllAdmin(options);
+    }
+
+    public async getJobStats() {
+        const totalListing = await JobListing.count();
+        const activeRoles = await JobListing.count({ where: { isActive: true } });
+        const inReview = await JobListing.count({ where: { isActive: false } });
+        const appVolume = await Application.count();
+        const categoryCount = await JobCategory.count();
+
+        return {
+            totalListing,
+            activeRoles,
+            inReview,
+            appVolume,
+            categoryCount
+        };
     }
 
     // Maps to STK-APP-APPLY-001
@@ -40,9 +57,11 @@ export class JobService {
     public async updateJob(id: number, data: any, benefitsIds?: number[], conditionsIds?: number[]) {
         const t = await sequelize.transaction();
         try {
-            const [updatedCount, updatedJobs] = await jobRepository.update(id, data, t);
+            const [updatedCount] = await jobRepository.update(id, data, t);
             if (updatedCount === 0) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-            const job = updatedJobs[0];
+
+            const job = await jobRepository.findById(id, t);
+            if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
             if (benefitsIds) await (job as any).setJobBenefits(benefitsIds, { transaction: t });
             if (conditionsIds) await (job as any).setJobConditions(conditionsIds, { transaction: t });

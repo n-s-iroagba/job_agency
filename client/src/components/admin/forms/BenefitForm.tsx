@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { JobBenefit, JobCategory } from '@/types/models';
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
-import { useApiMutation } from '@/lib/hooks';
-import Link from 'next/link';
-import { JobBenefit } from '@/types/models';
+import { Link } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface BenefitFormProps {
     initialData?: JobBenefit;
@@ -13,15 +13,20 @@ interface BenefitFormProps {
 
 export default function BenefitForm({ initialData, isEdit = false }: BenefitFormProps) {
     const router = useRouter();
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
+    const categories = categoriesResult?.rows || [];
+
     const [type, setType] = useState(initialData?.benefitType || 'Salary & Wages');
     const [value, setValue] = useState(initialData?.value || '');
     const [description, setDescription] = useState(initialData?.description || '');
+    const [categoryId, setCategoryId] = useState<string | number>(initialData?.categoryId || '');
 
     useEffect(() => {
         if (initialData) {
             setType(initialData.benefitType);
             setValue(initialData.value || '');
             setDescription(initialData.description);
+            setCategoryId(initialData.categoryId || '');
         }
     }, [initialData]);
 
@@ -39,7 +44,12 @@ export default function BenefitForm({ initialData, isEdit = false }: BenefitForm
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await mutation.mutateAsync({ benefitType: type, value, description });
+            await mutation.mutateAsync({
+                benefitType: type,
+                value,
+                description,
+                categoryId: categoryId ? parseInt(categoryId.toString(), 10) : null
+            });
         } catch (err) {
             alert(`Failed to ${isEdit ? 'update' : 'create'} benefit`);
         }
@@ -49,12 +59,12 @@ export default function BenefitForm({ initialData, isEdit = false }: BenefitForm
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8 bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50">
                 <form onSubmit={handleSubmit} className="space-y-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="space-y-3">
                             <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Benefit Type</label>
                             <div className="relative">
                                 <select
-                                    className="w-full h-14 pl-5 pr-10 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner"
+                                    className="w-full h-14 pl-5 pr-10 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner cursor-pointer"
                                     value={type}
                                     onChange={(e) => setType(e.target.value)}
                                     required
@@ -69,6 +79,25 @@ export default function BenefitForm({ initialData, isEdit = false }: BenefitForm
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                                     <span className="material-symbols-outlined text-slate-400">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Context Category</label>
+                            <div className="relative">
+                                <select
+                                    className="w-full h-14 pl-5 pr-10 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner cursor-pointer"
+                                    value={categoryId}
+                                    onChange={(e) => setCategoryId(e.target.value)}
+                                >
+                                    <option value="">Global (All Categories)</option>
+                                    {categories.map(cat => (
+                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">
+                                    <span className="material-symbols-outlined">layers</span>
                                 </div>
                             </div>
                         </div>

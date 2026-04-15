@@ -15,6 +15,14 @@ import { Notification } from './Notification';
 JobCategory.hasMany(JobListing, { foreignKey: 'categoryId' });
 JobListing.belongsTo(JobCategory, { foreignKey: 'categoryId' });
 
+// Job Category <-> Job Benefit
+JobCategory.hasMany(JobBenefit, { foreignKey: 'categoryId' });
+JobBenefit.belongsTo(JobCategory, { foreignKey: 'categoryId' });
+
+// Job Category <-> Job Condition
+JobCategory.hasMany(JobCondition, { foreignKey: 'categoryId' });
+JobCondition.belongsTo(JobCategory, { foreignKey: 'categoryId' });
+
 // Job Listing <-> Job Stage
 JobListing.hasMany(JobStage, { foreignKey: 'jobId' });
 JobStage.belongsTo(JobListing, { foreignKey: 'jobId' });
@@ -42,7 +50,8 @@ Payment.belongsTo(Application, { foreignKey: 'applicationId' });
 // JobStage <-> Payment
 JobStage.hasMany(Payment, { foreignKey: 'stageId' });
 Payment.belongsTo(JobStage, { foreignKey: 'stageId' });
-
+Application.hasMany(JobStage, { foreignKey: 'applicationId' });
+JobStage.belongsTo(Application, { foreignKey: 'applicationId' });
 // User <-> Notification
 User.hasMany(Notification, { foreignKey: 'userId' });
 Notification.belongsTo(User, { foreignKey: 'userId' });

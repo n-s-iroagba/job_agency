@@ -1,10 +1,30 @@
-import { Transaction } from 'sequelize';
+import { Transaction, Op } from 'sequelize';
 import { JobCondition } from '../models';
 
+export interface FindConditionOptions {
+    limit?: number;
+    offset?: number;
+    searchQuery?: string;
+    categoryId?: number;
+}
+
 export class JobConditionRepository {
-    // Maps to STK-ADM-COND-001, STK-ADM-COND-003, SCR-ADM-COND-001
-    public async findAll(transaction?: Transaction): Promise<{ rows: JobCondition[], count: number }> {
+    // Maps to STK-ADM-COND-001, SCR-ADM-COND-001
+    public async findAll(options: FindConditionOptions = {}, transaction?: Transaction): Promise<{ rows: JobCondition[], count: number }> {
+        const whereClause: any = {};
+        
+        if (options.categoryId) whereClause.categoryId = options.categoryId;
+        if (options.searchQuery) {
+            whereClause[Op.or] = [
+                { name: { [Op.like]: `%${options.searchQuery}%` } },
+                { description: { [Op.like]: `%${options.searchQuery}%` } }
+            ];
+        }
+
         return JobCondition.findAndCountAll({
+            where: whereClause,
+            limit: options.limit || 20,
+            offset: options.offset || 0,
             order: [['name', 'ASC']],
             transaction
         });

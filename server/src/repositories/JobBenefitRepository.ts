@@ -1,10 +1,30 @@
-import { Transaction } from 'sequelize';
+import { Transaction, Op } from 'sequelize';
 import { JobBenefit } from '../models';
+
+export interface FindBenefitOptions {
+    limit?: number;
+    offset?: number;
+    searchQuery?: string;
+    categoryId?: number;
+}
 
 export class JobBenefitRepository {
     // Maps to STK-ADM-BEN-001, STK-ADM-BEN-004, SCR-ADM-BEN-001
-    public async findAll(transaction?: Transaction): Promise<{ rows: JobBenefit[], count: number }> {
+    public async findAll(options: FindBenefitOptions = {}, transaction?: Transaction): Promise<{ rows: JobBenefit[], count: number }> {
+        const whereClause: any = {};
+        
+        if (options.categoryId) whereClause.categoryId = options.categoryId;
+        if (options.searchQuery) {
+            whereClause[Op.or] = [
+                { benefitType: { [Op.like]: `%${options.searchQuery}%` } },
+                { description: { [Op.like]: `%${options.searchQuery}%` } }
+            ];
+        }
+
         return JobBenefit.findAndCountAll({
+            where: whereClause,
+            limit: options.limit || 20,
+            offset: options.offset || 0,
             order: [['benefitType', 'ASC']],
             transaction
         });

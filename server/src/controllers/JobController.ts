@@ -39,8 +39,22 @@ export class JobController {
         try {
             const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
             const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
-            const result = await jobService.getAllJobsAdmin(limit, offset);
+            const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string, 10) : undefined;
+            const searchQuery = req.query.searchQuery as string;
+            const sortBy = req.query.sortBy as string;
+            const sortOrder = req.query.sortOrder as 'ASC' | 'DESC';
+
+            const result = await jobService.getAllJobsAdmin({ limit, offset, categoryId, searchQuery, sortBy, sortOrder });
             res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
+        } catch (error) {
+            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+
+    public async getJobStats(req: Request, res: Response): Promise<void> {
+        try {
+            const stats = await jobService.getJobStats();
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(stats);
         } catch (error) {
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
@@ -65,6 +79,7 @@ export class JobController {
             const job = await jobService.updateJob(jobId, jobData, benefitsIds, conditionsIds);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(job);
         } catch (error: any) {
+            console.error(error)
             if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
