@@ -8,6 +8,7 @@ import { useApiMutation } from '@/lib/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CONSTANTS } from '@/constants';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 const loginSchema = z.object({
     email: z.string().email('Invalid email address'),
@@ -18,6 +19,7 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 function LoginContent() {
     const router = useRouter();
+    const { login } = useAuth();
     const searchParams = useSearchParams();
     const redirectPath = searchParams.get('redirect') || CONSTANTS.ROUTES.DASHBOARD;
     const [loginError, setLoginError] = useState<string | null>(null);
@@ -29,8 +31,7 @@ function LoginContent() {
 
     const loginMutation = useApiMutation<LoginForm, any>('post', '/auth/login', {
         onSuccess: (data: any) => {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            login(data.accessToken, data.user);
             router.push(redirectPath);
         },
         onError: (error: any) => {

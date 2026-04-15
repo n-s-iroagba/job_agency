@@ -8,6 +8,7 @@ import { useApiMutation } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
 import { CONSTANTS } from '@/constants';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 const registerSchema = z.object({
     fullName: z.string().min(2, 'Full name is required'),
@@ -28,6 +29,7 @@ type RegisterForm = z.infer<typeof registerSchema>;
 
 export default function AdminRegisterPage() {
     const router = useRouter();
+    const { login } = useAuth();
     const [regError, setRegError] = useState<string | null>(null);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterForm>({
@@ -36,8 +38,7 @@ export default function AdminRegisterPage() {
 
     const registerMutation = useApiMutation<RegisterForm, any>('post', '/auth/register-admin', {
         onSuccess: (data: any) => {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            login(data.accessToken, data.user);
             router.push(CONSTANTS.ROUTES.ADMIN.DASHBOARD);
         },
         onError: (error: any) => {

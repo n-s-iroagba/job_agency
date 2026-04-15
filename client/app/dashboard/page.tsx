@@ -5,6 +5,7 @@ import { useApiQuery } from '@/lib/hooks';
 import { ProgressTracker } from '@/components/ui/ProgressTracker';
 import { CONSTANTS } from '@/constants';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface DashboardSummary {
     pendingStages: Array<{
@@ -23,12 +24,13 @@ interface DashboardSummary {
 }
 
 export default function DashboardPage() {
-    const { data: summary, isLoading } = useApiQuery<DashboardSummary>(
+    const { user, isLoading: isAuthLoading } = useAuth();
+    const { data: summary, isLoading: isSummaryLoading } = useApiQuery<DashboardSummary>(
         ['dashboard', 'summary'],
         '/dashboard'
     );
 
-    const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user') || '{}') : { fullName: 'Applicant' };
+    const isLoading = isAuthLoading || isSummaryLoading;
 
     if (isLoading) return (
         <div className="space-y-10 animate-pulse">
@@ -39,13 +41,15 @@ export default function DashboardPage() {
         </div>
     );
 
+    if (!user) return null; // AuthContext handles redirect
+
     return (
         <div className="space-y-10">
             {/* Welcome Section */}
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 flex flex-col justify-center">
                     <h3 className="text-5xl font-bold tracking-tight text-on-surface mb-4">
-                        Welcome back, {user.fullName.split(' ')[0]}!
+                        Welcome back, {(user.fullName || 'Applicant').split(' ')[0]}!
                     </h3>
                     <p className="text-on-surface-variant text-lg max-w-[448px] leading-relaxed">
                         Your professional journey is gaining momentum. You have {summary?.applicationCount || 0} active applications in the pipeline.

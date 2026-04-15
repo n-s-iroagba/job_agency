@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { userRepository } from '../repositories/UserRepository';
-import { generateToken } from '../utils/token';
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/token';
 import { CONSTANTS } from '../constants';
 import { sendEmail } from '../utils/email';
 import crypto from 'crypto';
@@ -8,7 +8,7 @@ import crypto from 'crypto';
 
 export class AuthService {
     // Maps to STK-APP-AUTH-004, SCR-PUB-REGISTER-001
-    public async register(userData: any): Promise<{ user: any; token: string }> {
+    public async register(userData: any): Promise<{ user: any; accessToken: string; refreshToken: string }> {
         const existingUser = await userRepository.findByEmail(userData.email);
         if (existingUser) {
             throw new Error(CONSTANTS.ERROR_MESSAGES.EMAIL_EXISTS);
@@ -38,11 +38,12 @@ export class AuthService {
             )
         );
 
-        const token = generateToken({ id: newUser.id, role: newUser.role });
-        return { user: newUser, token };
+        const accessToken = generateAccessToken({ id: newUser.id, role: newUser.role });
+        const refreshToken = generateRefreshToken({ id: newUser.id, role: newUser.role });
+        return { user: newUser, accessToken, refreshToken };
     }
 
-    public async registerAdmin(userData: any): Promise<{ user: any; token: string }> {
+    public async registerAdmin(userData: any): Promise<{ user: any; accessToken: string; refreshToken: string }> {
         const existingUser = await userRepository.findByEmail(userData.email);
         if (existingUser) {
             throw new Error(CONSTANTS.ERROR_MESSAGES.EMAIL_EXISTS);
@@ -56,8 +57,9 @@ export class AuthService {
             isVerified: true, // Manual admin registration can be auto-verified or follow the same flow
         });
 
-        const token = generateToken({ id: newUser.id, role: newUser.role });
-        return { user: newUser, token };
+        const accessToken = generateAccessToken({ id: newUser.id, role: newUser.role });
+        const refreshToken = generateRefreshToken({ id: newUser.id, role: newUser.role });
+        return { user: newUser, accessToken, refreshToken };
     }
 
     public async verifyEmail(token: string): Promise<void> {
@@ -139,7 +141,7 @@ export class AuthService {
     }
 
     // Maps to STK-APP-AUTH-005, SCR-PUB-LOGIN-001, NFR-SEC-008
-    public async login(email: string, password: string): Promise<{ user: any; token: string }> {
+    public async login(email: string, password: string): Promise<{ user: any; accessToken: string; refreshToken: string }> {
         const user = await userRepository.findByEmail(email);
         if (!user) {
             throw new Error(CONSTANTS.ERROR_MESSAGES.INVALID_CREDENTIALS);
@@ -154,8 +156,35 @@ export class AuthService {
             throw new Error(CONSTANTS.ERROR_MESSAGES.EMAIL_NOT_VERIFIED);
         }
 
-        const token = generateToken({ id: user.id, role: user.role });
-        return { user, token };
+        const accessToken = generateAccessToken({ id: user.id, role: user.role });
+        const refreshToken = generateRefreshToken({ id: user.id, role: user.role });
+        return { user, accessToken, refreshToken };
+    }
+
+    public async refresh(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
+        try {
+            const payload = verifyRefreshToken(refreshToken);
+            const user = await userRepository.findById(payload.id);
+
+            if (!user) {
+                throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND);
+            }
+
+            const newAccessToken = generateAccessToken({ id: user.id, role: user.role });
+            const newRefreshToken = generateRefreshToken({ id: user.id, role: user.role });
+
+            return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+        } catch (error) {
+            throw new Error(CONSTANTS.ERROR_MESSAGES.INVALID_TOKEN);
+        }
+    }
+
+    public async getMe(userId: number): Promise<any> {
+        const user = await userRepository.findById(userId);
+        if (!user) {
+            throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND);
+        }
+        return user;
     }
 
     private getPremiumTemplate(title: string, message: string, buttonLabel: string, buttonUrl: string): string {
