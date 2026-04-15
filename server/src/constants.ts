@@ -1,4 +1,5 @@
 export const CONSTANTS = {
+    APP_NAME: 'Job Agency',
     // HTTP Methods
     HTTP_METHOD: {
         GET: 'GET',
@@ -27,6 +28,10 @@ export const CONSTANTS = {
         VALIDATION_ERROR: 'Validation failed.',
         INTERNAL_ERROR: 'An internal server error occurred.',
         RATE_LIMIT_EXCEEDED: 'Rate limit exceeded.',
+        EMAIL_EXISTS: 'User already exists',
+        INVALID_TOKEN: 'Invalid or expired token.',
+        USER_NOT_FOUND: 'User not found.',
+        EMAIL_NOT_VERIFIED: 'Please verify your email address before logging in.',
     },
 
     // Success Messages
@@ -35,7 +40,10 @@ export const CONSTANTS = {
         UPDATED: 'Resource updated successfully.',
         DELETED: 'Resource deleted successfully.',
         LOGIN_SUCCESS: 'Logged in successfully.',
-        REGISTER_SUCCESS: 'Registered successfully.',
+        REGISTER_SUCCESS: 'Registered successfully. Please check your email to verify your account.',
+        VERIFY_SUCCESS: 'Email verified successfully.',
+        FORGOT_PASSWORD_SUCCESS: 'Password reset link sent to your email.',
+        RESET_PASSWORD_SUCCESS: 'Password reset successfully.',
     },
 
     // Bank Account Types

@@ -19,7 +19,12 @@ const router = Router();
 // STK-APP-AUTH-004: email/password registration and login (NFR-SEC-008: rate limited)
 router.use('/auth', authLimiter);
 router.post('/auth/register', authController.register.bind(authController));
+router.post('/auth/register-admin', authController.registerAdmin.bind(authController));
 router.post('/auth/login', authController.login.bind(authController));
+router.get('/auth/verify-email', authController.verifyEmail.bind(authController));
+router.post('/auth/forgot-password', authController.forgotPassword.bind(authController));
+router.post('/auth/reset-password', authController.resetPassword.bind(authController));
+router.post('/auth/resend-verification', authController.resendVerification.bind(authController));
 
 // STK-APP-AUTH-001, STK-ADM-JOB-004: public job listings
 router.use('/jobs', apiLimiter);

@@ -10,6 +10,9 @@ export class User extends Model {
     declare role: string;
     declare preferences: object;
     declare isVerified: boolean;
+    declare verificationToken: string | null;
+    declare resetPasswordToken: string | null;
+    declare resetPasswordExpires: Date | null;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 }
@@ -45,6 +48,18 @@ User.init({
     isVerified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+    },
+    verificationToken: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    resetPasswordToken: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    resetPasswordExpires: {
+        type: DataTypes.DATE,
+        allowNull: true,
     }
 }, {
     sequelize,

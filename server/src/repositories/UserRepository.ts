@@ -24,6 +24,14 @@ export class UserRepository {
         return User.findByPk(id, { transaction });
     }
 
+    public async findByVerificationToken(token: string, transaction?: Transaction): Promise<User | null> {
+        return User.findOne({ where: { verificationToken: token }, transaction });
+    }
+
+    public async findByResetToken(token: string, transaction?: Transaction): Promise<User | null> {
+        return User.findOne({ where: { resetPasswordToken: token }, transaction });
+    }
+
     // Maps to STK-ADM-USERS-001 (Derived Admin View)
     public async findAndCountAll(options: FindUsersOptions = {}): Promise<{ rows: User[]; count: number }> {
         const whereClause: any = {};

@@ -11,6 +11,9 @@ export const CONSTANTS = {
         HOME: '/',
         LOGIN: '/login',
         REGISTER: '/register',
+        VERIFY_EMAIL: '/verify-email',
+        FORGOT_PASSWORD: '/forgot-password',
+        RESET_PASSWORD: '/reset-password',
         PRIVACY: '/privacy',
         DASHBOARD: '/dashboard',
         APPLICATIONS: '/dashboard/applications',
@@ -32,6 +35,7 @@ export const CONSTANTS = {
             UNPAID: '/admin/payments/unpaid',
             UNVERIFIED: '/admin/payments/unverified',
             MAIL: '/admin/mail',
+            REGISTER: '/register/admin',
         }
 
     },
