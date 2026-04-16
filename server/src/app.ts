@@ -7,6 +7,9 @@ import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
+// Set 'trust proxy' to correctly identify users behind Fly.io's proxy
+app.set('trust proxy', 1);
+
 // Security and utility middlewares
 app.use(helmet());
 app.use(cors({

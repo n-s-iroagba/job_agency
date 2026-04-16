@@ -177,7 +177,10 @@ export class AuthService {
             const newRefreshToken = generateRefreshToken({ id: user.id, role: user.role });
 
             return { accessToken: newAccessToken, refreshToken: newRefreshToken };
-        } catch (error) {
+        } catch (error: any) {
+            if (error.message === CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) {
+                throw error;
+            }
             throw new Error(CONSTANTS.ERROR_MESSAGES.INVALID_TOKEN);
         }
     }
