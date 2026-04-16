@@ -9,7 +9,7 @@ import { BankAccount } from '@/types/models';
 export default function BankAccountViewPage() {
     const params = useParams();
     const id = params?.id;
-    const { data: bankAccount, isLoading, error } = useApiQuery<BankAccount>(`/admin/bank-accounts/${id}`, {
+    const { data: bankAccount, isLoading, error } = useApiQuery<BankAccount>(['admin', 'bank-accounts', `${id}`], `/admin/bank-accounts/${id}`, {
         enabled: !!id
     });
 
@@ -62,12 +62,7 @@ export default function BankAccountViewPage() {
                             </div>
                         </div>
 
-                        <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100 space-y-6">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block px-1">Instructions / Constraints</label>
-                            <p className="text-sm font-medium text-slate-600 leading-relaxed px-1">
-                                {bankAccount?.instructions || 'No specific processing constraints defined for this record.'}
-                            </p>
-                        </div>
+
                     </div>
                 </div>
             </main>

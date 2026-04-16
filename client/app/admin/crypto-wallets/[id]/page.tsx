@@ -9,7 +9,7 @@ import { CryptoWallet } from '@/types/models';
 export default function CryptoWalletViewPage() {
     const params = useParams();
     const id = params?.id;
-    const { data: wallet, isLoading, error } = useApiQuery<CryptoWallet>(`/admin/crypto-wallets/${id}`, {
+    const { data: wallet, isLoading, error } = useApiQuery<CryptoWallet>(['admin', 'crypto-wallets', `${id}`], `/admin/crypto-wallets/${id}`, {
         enabled: !!id
     });
 
@@ -49,7 +49,7 @@ export default function CryptoWalletViewPage() {
                             <p className="text-lg font-mono font-bold text-slate-900 break-all leading-relaxed pr-12">
                                 {wallet?.walletAddress}
                             </p>
-                            <button 
+                            <button
                                 onClick={copyAddress}
                                 className="absolute right-6 text-slate-400 hover:text-slate-900 transition-colors"
                             >
