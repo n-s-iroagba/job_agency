@@ -20,7 +20,7 @@ export default function ConditionNewPage() {
                 <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Create Condition</h1>
             </div>
 
-            <ConditionForm jobId={jobId} />
+            <ConditionForm />
         </div>
     );
 }
