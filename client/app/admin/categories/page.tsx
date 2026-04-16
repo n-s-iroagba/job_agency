@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useApiQuery } from '@/lib/hooks';
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import Link from 'next/link';
 import { JobCategory } from '@/types/models';
 
@@ -10,10 +10,21 @@ export default function CategoryManagementPage() {
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    const { data: categoriesResult, isLoading } = useApiQuery<{ rows: JobCategory[], count: number }>(
+    const { data: categoriesResult, isLoading, refetch } = useApiQuery<{ rows: JobCategory[], count: number }>(
         ['admin', 'categories', 'list', page, searchQuery],
         `/admin/categories?limit=${limit}&offset=${(page - 1) * limit}${searchQuery ? `&searchQuery=${encodeURIComponent(searchQuery)}` : ''}`
     );
+
+    const deleteMutation = useApiMutation<number, any>('delete', '/admin/categories', {
+        onSuccess: () => refetch()
+    });
+
+    const handleDelete = async (id: number) => {
+        if (!confirm('Are you sure you want to delete this vertical? All associated metadata will be affected.')) return;
+        try {
+            await deleteMutation.mutateAsync(id);
+        } catch (err) { console.error(err); }
+    };
 
     const categoryList = categoriesResult?.rows || [];
     const totalCount = categoriesResult?.count || 0;
@@ -68,9 +79,17 @@ export default function CategoryManagementPage() {
                                         </div>
                                     </td>
                                     <td className="px-6 py-5 text-right">
-                                        <Link href={`/admin/categories/${category.id}/edit`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
-                                            Edit
-                                        </Link>
+                                        <div className="flex justify-end gap-3">
+                                            <Link href={`/admin/categories/${category.id}`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+                                                View
+                                            </Link>
+                                            <Link href={`/admin/categories/${category.id}/edit`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+                                                Edit
+                                            </Link>
+                                            <button onClick={() => handleDelete(category.id)} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-red-500 transition-colors">
+                                                Delete
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

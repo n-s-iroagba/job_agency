@@ -38,10 +38,12 @@ export class PaymentService {
         const payment = await paymentRepository.findById(paymentId);
         if (!payment) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-        const [, updatedPayments] = await paymentRepository.update(paymentId, {
+        await paymentRepository.update(paymentId, {
             proofUrl,
             status: CONSTANTS.PAYMENT_STATUSES.PENDING,
         });
+
+        const updatedPayment = await paymentRepository.findById(paymentId);
 
         // TRUST-007: Notify applicant that proof was received
         await notificationRepository.create({
@@ -51,7 +53,7 @@ export class PaymentService {
             type: 'SYSTEM',
         });
 
-        return updatedPayments[0];
+        return updatedPayment;
     }
 
     // Maps to STK-ADM-PAY-003 — unpaid payments view
@@ -73,11 +75,13 @@ export class PaymentService {
 
             const status = isApproved ? CONSTANTS.PAYMENT_STATUSES.PAID : CONSTANTS.PAYMENT_STATUSES.REJECTED;
 
-            const [, updatedPayments] = await paymentRepository.update(paymentId, {
+            await paymentRepository.update(paymentId, {
                 status,
                 verifiedById: adminId,
                 adminNote: note,
             }, t);
+
+            const updatedPayment = await paymentRepository.findById(paymentId, t);
 
             const applicantUserId = (payment as any).Application?.userId;
 
@@ -107,7 +111,7 @@ export class PaymentService {
             }
 
             await t.commit();
-            return updatedPayments[0];
+            return updatedPayment;
         } catch (error) {
             await t.rollback();
             throw error;

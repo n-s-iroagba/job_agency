@@ -86,18 +86,20 @@ export class AdminService {
     // Bank Account CRUD — STK-ADM-BANK-001
     public async createBankAccount(data: any) { return bankAccountRepository.create(data); }
     public async updateBankAccount(id: number, data: any) {
-        const [updatedCount, accounts] = await bankAccountRepository.update(id, data);
-        if (!updatedCount) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return accounts[0];
+        const account = await bankAccountRepository.findById(id);
+        if (!account) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        await bankAccountRepository.update(id, data);
+        return bankAccountRepository.findById(id);
     }
     public async deleteBankAccount(id: number) { await bankAccountRepository.delete(id); }
 
     // Crypto Wallet CRUD — STK-ADM-CRYPTO-001
     public async createCryptoWallet(data: any) { return cryptoWalletRepository.create(data); }
     public async updateCryptoWallet(id: number, data: any) {
-        const [updatedCount, wallets] = await cryptoWalletRepository.update(id, data);
-        if (!updatedCount) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return wallets[0];
+        const wallet = await cryptoWalletRepository.findById(id);
+        if (!wallet) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        await cryptoWalletRepository.update(id, data);
+        return cryptoWalletRepository.findById(id);
     }
     public async deleteCryptoWallet(id: number) { await cryptoWalletRepository.delete(id); }
 
@@ -143,27 +145,30 @@ export class AdminService {
     // Category CRUD — STK-ADM-CAT-001
     public async createCategory(data: any) { return jobCategoryRepository.create(data); }
     public async updateCategory(id: number, data: any) {
-        const [updatedCount, records] = await jobCategoryRepository.update(id, data);
-        if (!updatedCount) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return records[0];
+        const category = await jobCategoryRepository.findById(id);
+        if (!category) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        await jobCategoryRepository.update(id, data);
+        return jobCategoryRepository.findById(id);
     }
     public async deleteCategory(id: number) { await jobCategoryRepository.delete(id); }
 
     // Condition CRUD — STK-ADM-COND-001
     public async createCondition(data: any) { return jobConditionRepository.create(data); }
     public async updateCondition(id: number, data: any) {
-        const [updatedCount, records] = await jobConditionRepository.update(id, data);
-        if (!updatedCount) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return records[0];
+        const condition = await jobConditionRepository.findById(id);
+        if (!condition) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        await jobConditionRepository.update(id, data);
+        return jobConditionRepository.findById(id);
     }
     public async deleteCondition(id: number) { await jobConditionRepository.delete(id); }
 
     // Benefit CRUD — STK-ADM-BEN-001
     public async createBenefit(data: any) { return jobBenefitRepository.create(data); }
     public async updateBenefit(id: number, data: any) {
-        const [updatedCount, records] = await jobBenefitRepository.update(id, data);
-        if (!updatedCount) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return records[0];
+        const benefit = await jobBenefitRepository.findById(id);
+        if (!benefit) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        await jobBenefitRepository.update(id, data);
+        return jobBenefitRepository.findById(id);
     }
     public async deleteBenefit(id: number) { await jobBenefitRepository.delete(id); }
 

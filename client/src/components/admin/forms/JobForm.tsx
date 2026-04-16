@@ -146,12 +146,12 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     <div className="space-y-2">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Visa Sponsorship</label>
                         <input
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            className=" py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
                             placeholder="Visa Sponsorship"
                             type="checkbox"
                             checked={visaSponsorship}
                             onChange={(e) => setVisaSponsorship(e.target.checked)}
-                            required
+
                         />
                     </div>
 
@@ -218,6 +218,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                             }`}
                                     >
                                         {benefit.benefitType}
+                                        <br />
+                                        {benefit.value}
                                     </button>
                                 );
                             })}
@@ -245,6 +247,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                             }`}
                                     >
                                         {condition.name}
+
+
                                     </button>
                                 );
                             })}

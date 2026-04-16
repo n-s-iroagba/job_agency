@@ -72,6 +72,9 @@ export default function BankAccountsPage() {
                                     </td>
                                     <td className="px-6 py-5 text-right">
                                         <div className="flex justify-end gap-3">
+                                            <Link href={`/admin/bank-accounts/${acc.id}`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+                                                View
+                                            </Link>
                                             <Link href={`/admin/bank-accounts/${acc.id}/edit`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900">
                                                 Edit
                                             </Link>

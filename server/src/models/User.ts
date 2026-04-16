@@ -49,6 +49,10 @@ User.init({
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
+    cvUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     verificationToken: {
         type: DataTypes.STRING,
         allowNull: true,

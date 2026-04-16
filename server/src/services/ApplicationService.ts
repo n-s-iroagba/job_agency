@@ -168,11 +168,13 @@ export class ApplicationService {
                 }
             }
 
-            const [, updatedApps] = await applicationRepository.update(applicationId, {
+            await applicationRepository.update(applicationId, {
                 currentStageId: nextStageId,
                 completionPercentage: percentage,
                 status,
             }, t);
+            
+            const updatedApp = await applicationRepository.findById(applicationId, t);
 
             // Create unpaid payment record when next stage requires payment
             if (nextStageId) {
@@ -199,7 +201,7 @@ export class ApplicationService {
             }
 
             await t.commit();
-            return updatedApps[0];
+            return updatedApp;
         } catch (e) {
             await t.rollback();
             throw e;
@@ -239,8 +241,9 @@ export class ApplicationService {
     }
 
     public async updateApplicationStage(stageId: number, data: any) {
-        const [updatedCount] = await jobStageRepository.update(stageId, data);
-        if (updatedCount === 0) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        const stage = await jobStageRepository.findById(stageId);
+        if (!stage) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        await jobStageRepository.update(stageId, data);
         return jobStageRepository.findById(stageId);
     }
 

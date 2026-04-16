@@ -50,7 +50,7 @@ export default function ApplicationsListPage() {
                 {data?.rows.length === 0 ? (
                     <div className="p-16 text-center bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">No history found</p>
-                        <Link href="/" className="inline-block mt-4 text-[10px] font-bold text-slate-900 uppercase tracking-widest hover:underline">Start New Application</Link>
+                        <Link href="/dashboard/jobs" className="inline-block mt-4 text-[10px] font-bold text-slate-900 uppercase tracking-widest hover:underline">Start New Application</Link>
                     </div>
                 ) : (
                     <div className="space-y-3">
@@ -58,15 +58,14 @@ export default function ApplicationsListPage() {
                             <div key={app.id} className="group bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center gap-6 hover:shadow-md transition-all">
                                 <div className="flex-grow">
                                     <div className="flex items-center gap-2 mb-2">
-                                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest ${
-                                            app.status === 'Active' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500'
-                                        }`}>
+                                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest ${app.status === 'Active' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500'
+                                            }`}>
                                             {app.status}
                                         </span>
                                         <span className="text-slate-400 text-[9px] font-bold uppercase tracking-widest">• Updated {new Date(app.updatedAt).toLocaleDateString()}</span>
                                     </div>
                                     <h3 className="text-lg font-bold text-slate-900 tracking-tight group-hover:text-slate-600 transition-colors uppercase">{app.JobListing.title}</h3>
-                                    
+
                                     <div className="mt-4 flex items-center gap-4">
                                         <div className="w-full max-w-[200px] h-1 bg-slate-50 rounded-full overflow-hidden">
                                             <div className="h-full bg-slate-900" style={{ width: `${app.completionPercentage}%` }} />
@@ -74,7 +73,7 @@ export default function ApplicationsListPage() {
                                         <span className="text-[10px] font-bold text-slate-900 uppercase tracking-widest">{app.completionPercentage}%</span>
                                     </div>
                                 </div>
-                                
+
                                 <div className="flex md:flex-col items-end gap-2 shrink-0">
                                     <Link
                                         href={`/dashboard/applications/${app.id}`}

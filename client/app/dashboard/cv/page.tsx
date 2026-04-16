@@ -7,10 +7,10 @@ import api from '@/lib/api';
 
 interface Cv {
     id: number;
-    fileName: string;
+    fileName?: string;
     fileUrl: string;
-    fileSize: number;
-    createdAt: string;
+    fileSize?: number;
+    createdAt?: string;
 }
 
 export default function CvManagementPage() {
@@ -97,15 +97,15 @@ export default function CvManagementPage() {
                                 <div className="flex items-center gap-6">
                                     <div className="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center">
                                         <span className="material-symbols-outlined text-3xl">
-                                            {cv.fileName.endsWith('.pdf') ? 'picture_as_pdf' : 'description'}
+                                            {cv.fileName?.endsWith('.pdf') ? 'picture_as_pdf' : 'description'}
                                         </span>
                                     </div>
                                     <div className="flex flex-col">
-                                        <h4 className="font-bold text-lg text-slate-900 truncate max-w-[300px]">{cv.fileName}</h4>
+                                        <h4 className="font-bold text-lg text-slate-900 truncate max-w-[300px]">{cv.fileName || 'Document.pdf'}</h4>
                                         <div className="flex items-center gap-4 text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">
-                                            <span>{(cv.fileSize / 1024 / 1024).toFixed(2)} MB</span>
+                                            <span>{cv.fileSize ? (cv.fileSize / 1024 / 1024).toFixed(2) : '0.00'} MB</span>
                                             <span>•</span>
-                                            <span>Uploaded {new Date(cv.createdAt).toLocaleDateString()}</span>
+                                            <span>Uploaded {cv.createdAt ? new Date(cv.createdAt).toLocaleDateString() : 'Unknown Date'}</span>
                                         </div>
                                     </div>
                                 </div>

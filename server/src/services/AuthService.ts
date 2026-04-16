@@ -24,6 +24,7 @@ export class AuthService {
             verificationToken,
             isVerified: false,
         });
+        console.log(verificationToken);
 
         // Send Verification Email
         const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`;
@@ -63,6 +64,7 @@ export class AuthService {
     }
 
     public async verifyEmail(token: string): Promise<void> {
+
         const user = await userRepository.findByVerificationToken(token);
         if (!user) {
             throw new Error(CONSTANTS.ERROR_MESSAGES.INVALID_TOKEN);
@@ -125,6 +127,7 @@ export class AuthService {
         }
 
         const verificationToken = crypto.randomBytes(32).toString('hex');
+
         await userRepository.update(user.id, { verificationToken });
 
         const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`;
@@ -218,7 +221,7 @@ export class AuthService {
                     <div class="content">
                         <h2>${title}</h2>
                         <p>${message}</p>
-                        <a href="${buttonUrl}" class="button">${buttonLabel}</a>
+                        <a href="${buttonUrl}" target="_blank" class="button">${buttonLabel}</a>
                     </div>
                     <div class="footer">
                         <p>© 2024 JobNexa · Secure Identity Management</p>

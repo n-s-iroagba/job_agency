@@ -6,71 +6,92 @@ import { PublicFooter } from '@/components/layout/PublicFooter';
 
 export default function PrivacyPolicyPage() {
     return (
-        <div className="bg-white text-slate-900 antialiased flex flex-col min-h-screen font-sans">
+        <div className="bg-white text-on-surface antialiased flex flex-col min-h-screen font-sans">
             <PublicHeader />
 
-            <main className="pt-32 pb-32 flex-1 px-8">
-                <div className="max-w-[800px] mx-auto">
-                    <header className="mb-20">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] block mb-4">Compliance Protocol</span>
-                        <h1 className="text-4xl lg:text-6xl font-black italic tracking-tight text-slate-900 mb-8 uppercase">Privacy Policy</h1>
-                        <div className="flex items-center gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                            <span>Revision 2.1 • 2024</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-slate-900"></span>
-                            <span>Standard Operational Procedure</span>
+            <main className="pt-32 pb-32 flex-1 px-8 lg:px-16">
+                <div className="max-w-[1200px] mx-auto">
+                    <header className="mb-24 lg:mb-32">
+                        <div className="flex items-center gap-3 mb-6">
+                            <span className="w-12 h-1 bg-primary rounded-full"></span>
+                            <span className="text-[10px] font-bold text-primary uppercase tracking-[0.4em]">Privacy Excellence</span>
                         </div>
+                        <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-on-surface mb-8">Data Protection <br /><span className="text-primary">& Transparency</span></h1>
+                        <p className="text-on-surface-variant text-base lg:text-lg max-w-[640px] leading-relaxed font-light">
+                            At JobNexa, we prioritize your professional privacy. Our practices are designed to ensure your data is handled with clarity, security, and absolute integrity.
+                        </p>
                     </header>
 
-                    <div className="space-y-20">
-                        <section>
-                            <h2 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.4em] mb-8 border-b border-slate-100 pb-4">01. Data Sovereignty</h2>
-                            <div className="text-slate-500 font-medium leading-[2] text-sm space-y-6">
-                                <p>At JobNexa, we implement advanced data protection protocols to ensure your professional identity remains secure. This document establishes our commitment to transparency in information handling.</p>
-                                <p>We operate under the principle of minimal data retention, collecting only the necessary vectors required to facilitate high-impact professional placement.</p>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-32">
+                        {/* Section 01 */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-primary/5 rounded-xl text-primary">
+                                    <span className="material-symbols-outlined text-3xl">fingerprint</span>
+                                </div>
+                                <h2 className="text-[10px] font-bold text-on-surface uppercase tracking-[0.4em]">01. Data Collection</h2>
+                            </div>
+                            <div className="space-y-6 text-on-surface-variant leading-[1.8] text-sm font-medium">
+                                <p>We collect essential professional identifiers including your name, email, and verified career history. This information is utilized solely to facilitate high-fidelity job matches within our curated network.</p>
+                                <ul className="space-y-3 list-none p-0">
+                                    <li className="flex gap-3 items-center">
+                                        <span className="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                        <span>Encrypted Profile Intelligence</span>
+                                    </li>
+                                    <li className="flex gap-3 items-center">
+                                        <span className="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                        <span>Verified Career Artifacts</span>
+                                    </li>
+                                </ul>
                             </div>
                         </section>
 
-                        <section className="bg-slate-50 p-12 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-900/5">
-                            <h2 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.4em] mb-10">02. Information Vectors</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                <div>
-                                    <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-4">Identity Data</h4>
-                                    <p className="text-slate-500 text-xs font-medium leading-relaxed uppercase tracking-tight">Personal identifiers, encrypted CV content, and verified professional history stored within our secure registry.</p>
+                        {/* Section 02 */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-secondary-container/30 rounded-xl text-primary">
+                                    <span className="material-symbols-outlined text-3xl">hub</span>
                                 </div>
-                                <div>
-                                    <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-4">System Telemetry</h4>
-                                    <p className="text-slate-500 text-xs font-medium leading-relaxed uppercase tracking-tight">Operational logs, device fingerprints, and interaction metrics analyzed to optimize matching algorithms.</p>
+                                <h2 className="text-[10px] font-bold text-on-surface uppercase tracking-[0.4em]">02. Information Usage</h2>
+                            </div>
+                            <div className="space-y-6 text-on-surface-variant leading-[1.8] text-sm font-medium">
+                                <p>Your data is processed to optimize recruitment outcomes. We analyze skill matrices and interaction patterns to ensure you are only presented with roles that align with your professional trajectory.</p>
+                                <div className="p-6 bg-surface-container-low rounded-2xl border border-slate-100 italic text-xs">
+                                    "We do not sell your data. We curate opportunities based on your explicit professional goals."
                                 </div>
                             </div>
                         </section>
 
-                        <section>
-                            <h2 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.4em] mb-8 border-b border-slate-100 pb-4">03. Protocol Execution</h2>
-                            <div className="space-y-10">
-                                <div className="flex gap-6">
-                                    <span className="text-[10px] font-black text-slate-900 opacity-20 mt-1">03.1</span>
-                                    <div>
-                                        <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-2">Matching Intelligence</h4>
-                                        <p className="text-slate-500 text-xs font-medium uppercase tracking-tight leading-relaxed">Cross-referencing your profile with institutional role requirements via proprietary logic engines.</p>
-                                    </div>
+                        {/* Section 03 */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-primary/5 rounded-xl text-primary">
+                                    <span className="material-symbols-outlined text-3xl">encrypted</span>
                                 </div>
-                                <div className="flex gap-6">
-                                    <span className="text-[10px] font-black text-slate-900 opacity-20 mt-1">03.2</span>
-                                    <div>
-                                        <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-2">Network Security</h4>
-                                        <p className="text-slate-500 text-xs font-medium uppercase tracking-tight leading-relaxed">Preventing unauthorized access to the talent registry through continuous threat monitoring.</p>
-                                    </div>
-                                </div>
+                                <h2 className="text-[10px] font-bold text-on-surface uppercase tracking-[0.4em]">03. Security Integrity</h2>
+                            </div>
+                            <div className="space-y-6 text-on-surface-variant leading-[1.8] text-sm font-medium">
+                                <p>We implement bank-grade encryption and multi-factor authentication protocols. Your professional assets are stored in isolated, access-controlled cloud infrastructure monitored 24/7/365.</p>
+                                <p>Continuous threat detection (NFR-SEC-006) ensures that your registry profile remains invulnerable to unauthorized access attempts.</p>
                             </div>
                         </section>
 
-                        <section className="pt-12 border-t border-slate-100">
-                            <h2 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.4em] mb-8">04. Data Authority</h2>
-                            <p className="text-slate-500 text-sm font-medium leading-[2] mb-10">You retain ultimate authority over your digital presence. You may request identity erasure or vector rectification through our compliance channel.</p>
-                            <div className="flex">
-                                <a href="mailto:privacy@curator.io" className="bg-slate-900 text-white px-10 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-[0.98]">
-                                    Request Data Erasure
-                                </a>
+                        {/* Section 04 */}
+                        <section className="space-y-8">
+                            <div className="flex items-center gap-4">
+                                <div className="p-3 bg-secondary-container/30 rounded-xl text-primary">
+                                    <span className="material-symbols-outlined text-3xl">verified_user</span>
+                                </div>
+                                <h2 className="text-[10px] font-bold text-on-surface uppercase tracking-[0.4em]">04. User Empowerment</h2>
+                            </div>
+                            <div className="space-y-6 text-on-surface-variant leading-[1.8] text-sm font-medium">
+                                <p>You retain full sovereignty over your professional profile. You may request data erasure or rectification at any moment through our centralized compliance portal.</p>
+                                <div className="pt-8">
+                                    <a href="mailto:privacy@jobnexa.com" className="inline-flex items-center gap-3 bg-on-surface text-surface px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-slate-800 transition-all active:scale-[0.98]">
+                                        <span className="material-symbols-outlined text-lg">mail</span>
+                                        Request Data Erasure
+                                    </a>
+                                </div>
                             </div>
                         </section>
                     </div>

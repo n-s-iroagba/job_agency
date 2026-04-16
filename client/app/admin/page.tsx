@@ -1,18 +1,20 @@
 'use client';
 
-import React from 'react';
+
 import { useApiQuery } from '@/lib/hooks';
-import Link from 'next/link';
-import { CONSTANTS } from '@/constants';
+
 
 export default function AdminDashboardPage() {
-    const { data: apps } = useApiQuery<any>(['admin', 'apps', 'summary'], '/admin/applications?limit=5');
+    const { data: apps, isLoading: appsLoading } = useApiQuery<any>(['admin', 'apps', 'summary'], '/admin/applications?limit=5');
     const { data: unverified } = useApiQuery<any>(['admin', 'payments', 'unverified'], '/admin/payments/unverified');
     const { data: unpaid } = useApiQuery<any>(['admin', 'payments', 'unpaid'], '/admin/payments/unpaid');
+    const { data: health } = useApiQuery<any>(['admin', 'health'], '/admin/health');
+    const { data: users } = useApiQuery<any>(['admin', 'users', 'total'], '/admin/users?limit=1');
 
     const appCount = apps?.count || 0;
     const unpaidCount = unpaid?.count || 0;
     const unverifiedCount = unverified?.rows?.length || unverified?.length || 0;
+    const totalUsers = users?.count || 0;
 
     return (
         <div className="flex flex-col min-h-screen bg-surface selection:bg-blue-500/10 selection:text-blue-600">
@@ -24,11 +26,11 @@ export default function AdminDashboardPage() {
                 </div>
                 <div className="flex items-center space-x-6">
                     <div className="flex items-center space-x-2 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100">
-                        <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-lg shadow-emerald-500/50"></span>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700">System Live</span>
+                        <span className={`w-2 h-2 rounded-full animate-pulse shadow-lg ${health?.database?.status === 'Connected' ? 'bg-emerald-500 shadow-emerald-500/50' : 'bg-red-500 shadow-red-500/50'}`}></span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700">
+                            {health?.database?.status === 'Connected' ? 'System Live' : 'Service Disrupted'}
+                        </span>
                     </div>
-                    <button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors font-bold" style={{ fontSize: '20px' }}>notifications</button>
-                    <button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors font-bold" style={{ fontSize: '20px' }}>settings</button>
                 </div>
             </header>
 
@@ -41,12 +43,12 @@ export default function AdminDashboardPage() {
                             <span className="material-symbols-outlined text-[12rem] font-bold">assignment</span>
                         </div>
                         <div className="relative z-10">
-                            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4">New Applications</p>
+                            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Total Applications</p>
                             <h3 className="text-6xl font-black tracking-tighter text-primary">{appCount.toString().padStart(2, '0')}</h3>
                         </div>
-                        <div className="flex items-center text-emerald-600 font-bold text-[10px] uppercase tracking-widest bg-emerald-50 w-fit px-3 py-1 rounded-full border border-emerald-100">
-                            <span className="material-symbols-outlined text-sm mr-1 font-bold">trending_up</span>
-                            +12% Activity
+                        <div className="flex items-center text-slate-400 font-bold text-[10px] uppercase tracking-widest bg-slate-50 w-fit px-3 py-1 rounded-full border border-slate-100">
+                            <span className="material-symbols-outlined text-sm mr-1 font-bold">groups</span>
+                            {totalUsers} Registered Users
                         </div>
                     </div>
 
@@ -61,7 +63,7 @@ export default function AdminDashboardPage() {
                         </div>
                         <div className="flex items-center text-error font-bold text-[10px] uppercase tracking-widest bg-error/5 w-fit px-3 py-1 rounded-full border border-error/10">
                             <span className="material-symbols-outlined text-sm mr-1 font-bold">warning</span>
-                            Action Required
+                            {unpaidCount > 0 ? 'Pending Collection' : 'Settled'}
                         </div>
                     </div>
 
@@ -76,7 +78,7 @@ export default function AdminDashboardPage() {
                         </div>
                         <div className="flex items-center text-slate-500 font-bold text-[10px] uppercase tracking-widest bg-slate-50 w-fit px-3 py-1 rounded-full border border-slate-100">
                             <span className="material-symbols-outlined text-sm mr-1 font-bold">hourglass_empty</span>
-                            Processing Queue
+                            Audit Queue
                         </div>
                     </div>
                 </section>
@@ -93,34 +95,43 @@ export default function AdminDashboardPage() {
                             System Health Core
                         </h4>
                         <div className="space-y-10 relative z-10">
-                            {/* CPU */}
+                            {/* CPU/Latency */}
                             <div className="space-y-3">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Logic Load</span>
-                                    <span className="text-xs font-black text-emerald-400 uppercase tracking-tighter">24% Optimal</span>
+                                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Database Sync</span>
+                                    <span className={`text-xs font-black uppercase tracking-tighter ${health?.database?.status === 'Connected' ? 'text-emerald-400' : 'text-red-400'}`}>
+                                        {health?.database?.status === 'Connected' ? 'Stable' : 'Offline'}
+                                    </span>
                                 </div>
                                 <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-500 w-[24%] shadow-lg shadow-emerald-500/50"></div>
+                                    <div className={`h-full bg-emerald-500 shadow-lg shadow-emerald-500/50 ${health?.database?.status === 'Connected' ? 'w-full' : 'w-0'}`}></div>
                                 </div>
                             </div>
                             {/* Memory */}
                             <div className="space-y-3">
                                 <div className="flex justify-between items-end">
                                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Memory Matrix</span>
-                                    <span className="text-xs font-black text-amber-400 uppercase tracking-tighter">68% Elevated</span>
+                                    <span className="text-xs font-black text-amber-400 uppercase tracking-tighter">
+                                        {health?.memoryUsage ? `${health.memoryUsage.heapUsedMb}/${health.memoryUsage.heapTotalMb} MB` : 'Scanning...'}
+                                    </span>
                                 </div>
                                 <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-amber-500 w-[68%] shadow-lg shadow-amber-500/50"></div>
+                                    <div
+                                        className="h-full bg-amber-500 shadow-lg shadow-amber-500/50 transition-all duration-1000"
+                                        style={{ width: health?.memoryUsage ? `${(health.memoryUsage.heapUsedMb / health.memoryUsage.heapTotalMb * 100).toFixed(0)}%` : '0%' }}
+                                    ></div>
                                 </div>
                             </div>
-                            {/* DB */}
+                            {/* Uptime */}
                             <div className="space-y-3">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Data Latency</span>
-                                    <span className="text-xs font-black text-emerald-400 uppercase tracking-tighter">12ms Healthy</span>
+                                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Logic Availability</span>
+                                    <span className="text-xs font-black text-emerald-400 uppercase tracking-tighter">
+                                        {health?.serverUptime ? `${(health.serverUptime / 3600).toFixed(1)} Hours` : 'Online'}
+                                    </span>
                                 </div>
                                 <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-500 w-[12%] shadow-lg shadow-emerald-500/50"></div>
+                                    <div className="h-full bg-emerald-500 w-full shadow-lg shadow-emerald-500/50"></div>
                                 </div>
                             </div>
                         </div>
@@ -133,24 +144,32 @@ export default function AdminDashboardPage() {
                                 <span className="material-symbols-outlined mr-3 text-primary font-bold">history</span>
                                 Real-time Operational Logs
                             </h4>
-                            <button className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] hover:underline">Full Audit Log</button>
                         </div>
-                        <div className="space-y-0 relative">
-                            <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-slate-100"></div>
-                            {[
-                                { title: 'Payment Verification', desc: 'Admin Sarah J. verified batch #PV-992.', time: '2 mins ago', color: 'bg-primary' },
-                                { title: 'Protocol Advance', desc: '8 applications moved to "Interviewing".', time: '14 mins ago', color: 'bg-tertiary' },
-                                { title: 'Batch Settlement', desc: 'Finance core successfully settled 14 partners.', time: '42 mins ago', color: 'bg-emerald-500' }
-                            ].map((entry, i) => (
-                                <div key={i} className="relative pl-12 pb-10 last:pb-0">
-                                    <div className={`absolute left-1.5 top-0 w-3.5 h-3.5 ${entry.color} rounded-full border-4 border-white z-10 shadow-sm`}></div>
-                                    <div className="flex items-center justify-between mb-1">
-                                        <p className="text-xs font-black text-on-surface uppercase tracking-tight">{entry.title}</p>
-                                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{entry.time}</span>
-                                    </div>
-                                    <p className="text-xs text-on-surface-variant font-medium leading-relaxed italic opacity-80">{entry.desc}</p>
+                        <div className="space-y-0 relative min-h-[200px]">
+                            {apps?.rows?.length > 0 ? (
+                                <>
+                                    <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-slate-100"></div>
+                                    {apps.rows.map((app: any, i: number) => (
+                                        <div key={app.id} className="relative pl-12 pb-10 last:pb-0">
+                                            <div className={`absolute left-1.5 top-0 w-3.5 h-3.5 ${i === 0 ? 'bg-primary' : 'bg-slate-200'} rounded-full border-4 border-white z-10 shadow-sm`}></div>
+                                            <div className="flex items-center justify-between mb-1">
+                                                <p className="text-xs font-black text-on-surface uppercase tracking-tight">Application Protocol</p>
+                                                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                                                    {new Date(app.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </span>
+                                            </div>
+                                            <p className="text-xs text-on-surface-variant font-medium leading-relaxed italic opacity-80">
+                                                Subscriber <span className="text-primary font-bold not-italic font-sans text-[10px]">{app.User?.fullName}</span> initiated placement sequence for {app.JobListing?.title}.
+                                            </p>
+                                        </div>
+                                    ))}
+                                </>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center p-12 text-center">
+                                    <span className="material-symbols-outlined text-4xl text-slate-200 mb-4 font-bold">inbox</span>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">No Recent Log Entries</p>
                                 </div>
-                            ))}
+                            )}
                         </div>
                     </div>
                 </section>
@@ -160,15 +179,10 @@ export default function AdminDashboardPage() {
                     <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1551288049-bbbda5366392?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"></div>
                     <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent"></div>
                     <div className="relative z-10 px-16 py-12 max-w-[672px]">
-                        <p className="text-primary font-black text-[10px] uppercase tracking-[0.3em] mb-4">Precision Insight</p>
-                        <h2 className="text-4xl font-black text-white mb-6 leading-tight tracking-tighter">Placement Efficiency has reached a <span className="text-primary italic">New High</span>.</h2>
+
                         <p className="text-slate-400 text-sm mb-10 leading-relaxed font-medium italic">
-                            Operational efficiency in placement matching is up 22%. Your proactive management of payment verifications has reduced average cycle time by 1.2 days.
+                            There are currently {appCount} applications in the pipeline across {totalUsers} registered candidates. {unverifiedCount > 0 ? `Attention required for ${unverifiedCount} pending verifications.` : 'All payment queues are currently clear.'}
                         </p>
-                        <div className="flex space-x-6">
-                            <button className="bg-white text-slate-900 px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-white transition-all shadow-xl shadow-white/5 active:scale-95">Generate Report</button>
-                            <button className="bg-white/5 text-white border border-white/10 px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/10 transition-all active:scale-95">Dismiss</button>
-                        </div>
                     </div>
                 </section>
             </div>

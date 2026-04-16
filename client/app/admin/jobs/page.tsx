@@ -150,6 +150,9 @@ export default function AdminJobsPage() {
                                     </td>
                                     <td className="px-6 py-5 text-right">
                                         <div className="flex justify-end gap-3">
+                                            <Link href={`/admin/jobs/${job.id}`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+                                                View
+                                            </Link>
                                             <Link href={`/admin/jobs/${job.id}/edit`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900">
                                                 Edit
                                             </Link>

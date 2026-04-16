@@ -57,10 +57,12 @@ export class JobService {
     public async updateJob(id: number, data: any, benefitsIds?: number[], conditionsIds?: number[]) {
         const t = await sequelize.transaction();
         try {
-            const [updatedCount] = await jobRepository.update(id, data, t);
-            if (updatedCount === 0) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+            let job = await jobRepository.findById(id, t);
+            if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+            
+            await jobRepository.update(id, data, t);
 
-            const job = await jobRepository.findById(id, t);
+            job = await jobRepository.findById(id, t);
             if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
             if (benefitsIds) await (job as any).setJobBenefits(benefitsIds, { transaction: t });
@@ -92,9 +94,10 @@ export class JobService {
     }
 
     public async updateStage(stageId: number, data: any) {
-        const [updatedCount, stages] = await jobStageRepository.update(stageId, data);
-        if (!updatedCount) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return stages[0];
+        const stage = await jobStageRepository.findById(stageId);
+        if (!stage) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        await jobStageRepository.update(stageId, data);
+        return jobStageRepository.findById(stageId);
     }
 
     public async deleteStage(stageId: number) {

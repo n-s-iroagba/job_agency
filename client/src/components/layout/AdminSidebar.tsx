@@ -20,7 +20,17 @@ const navItems = [
     { label: 'Wallets', href: CONSTANTS.ROUTES.ADMIN.CRYPTO_WALLETS, icon: 'account_balance_wallet' },
 ];
 
-export function AdminSidebar({ isCollapsed, onToggle }: { isCollapsed: boolean; onToggle: () => void }) {
+export function AdminSidebar({
+    isCollapsed,
+    isMobileOpen,
+    onToggle,
+    onMobileClose
+}: {
+    isCollapsed: boolean;
+    isMobileOpen: boolean;
+    onToggle: () => void;
+    onMobileClose: () => void;
+}) {
     const pathname = usePathname();
     const { user, logout } = useAuth();
 
@@ -31,81 +41,111 @@ export function AdminSidebar({ isCollapsed, onToggle }: { isCollapsed: boolean; 
     const initials = user?.fullName ? user.fullName.split(' ').map((n: any) => n[0]).join('').toUpperCase() : 'AU';
 
     return (
-        <aside className={`h-screen fixed left-0 top-0 bg-slate-900 flex flex-col transition-all duration-300 z-50 ${isCollapsed ? 'w-20' : 'w-64'}`}>
-            {/* Toggle Button */}
-            <button
-                onClick={onToggle}
-                className="absolute -right-3 top-10 w-6 h-6 bg-slate-800 rounded-full flex items-center justify-center text-white shadow-lg cursor-pointer hover:bg-slate-700 transition-colors z-[60]"
+        <>
+            {/* Mobile Overlay */}
+            {isMobileOpen && (
+                <div
+                    className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] lg:hidden transition-opacity"
+                    onClick={onMobileClose}
+                />
+            )}
+
+            <aside
+                className={`h-screen fixed left-0 top-0 bg-slate-900 flex flex-col transition-all duration-300 z-[70] font-sans text-white overflow-hidden
+                    ${isMobileOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0'}
+                    ${isCollapsed ? 'lg:w-28' : 'lg:w-64'}
+                `}
             >
-                <span className="material-symbols-outlined text-[14px] font-bold">
-                    {isCollapsed ? 'chevron_right' : 'chevron_left'}
-                </span>
-            </button>
-
-            {/* Brand / Header */}
-            <div className={`py-8 transition-all duration-300 ${isCollapsed ? 'px-4 flex justify-center' : 'px-8'}`}>
-                <Link href={CONSTANTS.ROUTES.ADMIN.DASHBOARD}>
-                    {isCollapsed ? (
-                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/20">J</div>
-                    ) : (
-                        <h1 className="text-white font-bold tracking-tight text-xl">JobNexa</h1>
-                    )}
-                </Link>
-                {!isCollapsed && (
-                    <div className="mt-6 flex items-center space-x-3 bg-slate-800/40 p-3 rounded-xl border border-white/5">
-                        <div className="w-8 h-8 rounded bg-slate-700 flex items-center justify-center text-white font-bold text-xs uppercase">
-                            {initials}
+                {/* Brand / Toggle Integration */}
+                {/* Brand / Toggle Integration */}
+                <div className={`py-10 border-b border-white/5 relative flex flex-col items-center ${isCollapsed ? 'px-0' : 'px-8 items-start'}`}>
+                    <Link href="/admin" className="flex flex-col items-center lg:items-start group">
+                        <div className={`flex items-center gap-3 transition-all ${isCollapsed ? 'flex-col gap-1' : 'flex-row'}`}>
+                            <div className="w-10 h-10 bg-white text-slate-900 rounded-xl flex items-center justify-center font-black text-xl italic shadow-lg shadow-white/10 group-hover:scale-105 transition-transform">J</div>
+                            <div className={`flex flex-col transition-all duration-300 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+                                <span className={`font-black italic uppercase tracking-[0.1em] text-white transition-all ${isCollapsed ? 'text-[8px]' : 'text-xl'}`}>JobNexa</span>
+                                <span className={`font-bold text-slate-500 uppercase tracking-widest transition-all ${isCollapsed ? 'text-[6px] mt-0' : 'text-[9px] mt-1'}`}>Infrastructure</span>
+                            </div>
                         </div>
-                        <div className="min-w-0">
-                            <p className="text-white text-[11px] font-bold truncate">
-                                {user?.fullName || 'Admin'}
-                            </p>
-                            <p className="text-slate-500 text-[9px] uppercase font-bold tracking-widest">Administrator</p>
-                        </div>
-                    </div>
-                )}
-            </div>
+                    </Link>
 
-            {/* Nav Items */}
-            <nav className={`flex-1 space-y-1 transition-all duration-300 py-4 ${isCollapsed ? 'px-2' : 'px-4'}`}>
-                {navItems.map((item) => {
-                    const active = pathname === item.href;
-                    return (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            title={isCollapsed ? item.label : ''}
-                            className={`flex items-center transition-all duration-200 group rounded-lg ${isCollapsed ? 'justify-center w-12 h-12 mx-auto' : 'px-4 py-2.5'} ${active
-                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                                : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-                                }`}
-                        >
-                            <span
-                                className={`material-symbols-outlined transition-transform group-hover:scale-110 ${isCollapsed ? 'm-0' : 'mr-3'}`}
-                                style={{ fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0", fontSize: '20px' }}
+                    {/* Desktop Toggle Button */}
+                    <button
+                        onClick={onToggle}
+                        className="hidden lg:flex absolute -right-3 top-10 w-6 h-6 bg-slate-800 rounded-full items-center justify-center text-slate-400 hover:text-white border border-white/10 shadow-xl transition-all z-20"
+                    >
+                        <span className="material-symbols-outlined text-[14px]">
+                            {isCollapsed ? 'chevron_right' : 'chevron_left'}
+                        </span>
+                    </button>
+
+                    {/* Mobile Close Button */}
+                    <button
+                        onClick={onMobileClose}
+                        className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                    >
+                        <span className="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                {/* Navigation */}
+                <nav className={`flex-1 flex flex-col py-8 space-y-1 overflow-y-auto ${isCollapsed ? 'px-2' : 'px-4'}`}>
+                    {navItems.map((item) => {
+                        const active = pathname === item.href;
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={() => isMobileOpen && onMobileClose()}
+                                className={`flex transition-all duration-200 group rounded-xl ${isCollapsed 
+                                    ? 'flex-col justify-center items-center py-3 px-1 mx-auto w-24 mb-1' 
+                                    : 'flex-row items-center gap-4 py-3 px-6 mb-1'} ${active
+                                    ? 'bg-white text-slate-900 shadow-xl shadow-white/10'
+                                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                    }`}
                             >
-                                {item.icon}
-                            </span>
-                            {!isCollapsed && (
-                                <span className="font-bold text-[11px] uppercase tracking-wider">
+                                <span
+                                    className={`material-symbols-outlined transition-transform group-hover:scale-110 ${active ? 'font-bold' : ''}`}
+                                    style={{ fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0", fontSize: '20px' }}
+                                >
+                                    {item.icon}
+                                </span>
+                                <span className={`font-bold uppercase tracking-[0.05em] transition-all duration-300 text-center ${isCollapsed 
+                                    ? 'text-[10px] mt-2 opacity-100 leading-tight w-full px-1' 
+                                    : 'text-[10px] tracking-[0.2em]'}`}>
                                     {item.label}
                                 </span>
-                            )}
-                        </Link>
-                    );
-                })}
-            </nav>
+                            </Link>
+                        );
+                    })}
+                </nav>
 
-            {/* Footer / Logout */}
-            <div className={`p-4 transition-all duration-300 ${isCollapsed ? 'px-2 flex justify-center' : 'p-4'}`}>
-                <button
-                    onClick={handleLogout}
-                    className={`flex items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:bg-red-900 hover:text-white transition-all duration-200 group ${isCollapsed ? 'w-12 h-12 p-0' : 'w-full py-3'}`}
-                >
-                    <span className={`material-symbols-outlined text-sm ${isCollapsed ? 'm-0' : 'mr-2'}`}>logout</span>
-                    {!isCollapsed && <span className="text-[10px] font-bold uppercase tracking-widest">Sign Out</span>}
-                </button>
-            </div>
-        </aside>
+                {/* Profile & Logout */}
+                <div className={`p-4 border-t border-white/5 flex flex-col gap-3 ${isCollapsed ? 'items-center' : ''}`}>
+                    <div className={`flex items-center bg-white/5 rounded-2xl border border-white/5 transition-all ${isCollapsed ? 'w-14 h-14 justify-center p-0 flex-col' : 'gap-4 p-4'}`}>
+                        <div className={`rounded-xl bg-white text-slate-900 flex items-center justify-center font-bold overflow-hidden shadow-sm ${isCollapsed ? 'w-8 h-8 text-[10px]' : 'w-10 h-10 text-sm'}`}>
+                            {initials}
+                        </div>
+                        {!isCollapsed && (
+                            <div className="min-w-0">
+                                <p className="text-[11px] font-bold text-white truncate">
+                                    {user?.fullName || 'Admin'}
+                                </p>
+                                <p className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mt-0.5">Operator</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <button
+                        onClick={handleLogout}
+                        className={`flex items-center justify-center bg-transparent border border-white/10 text-slate-500 hover:text-red-400 hover:border-red-900/30 hover:bg-red-900/10 rounded-xl transition-all duration-200 group ${isCollapsed ? 'w-20 h-12 flex-col' : 'w-full py-4 px-4 gap-2'}`}
+                        title={isCollapsed ? 'Sign Out' : ''}
+                    >
+                        <span className={`material-symbols-outlined transition-transform group-hover:translate-x-1 ${isCollapsed ? 'text-base' : 'text-lg'}`}>logout</span>
+                        <span className={`font-bold uppercase tracking-widest ${isCollapsed ? 'text-[8px] mt-0.5' : 'text-[10px]'}`}>Sign Out</span>
+                    </button>
+                </div>
+            </aside>
+        </>
     );
 }

@@ -1,12 +1,23 @@
 'use client';
 
 import React from 'react';
-import { useApiQuery } from '@/lib/hooks';
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import Link from 'next/link';
 import { CryptoWallet } from '@/types/models';
 
 export default function CryptoWalletsPage() {
-    const { data: wallets, isLoading } = useApiQuery<{ rows: CryptoWallet[], count: number }>(['admin', 'crypto-wallets'], '/admin/crypto-wallets');
+    const { data: wallets, isLoading, refetch } = useApiQuery<{ rows: CryptoWallet[], count: number }>(['admin', 'crypto-wallets'], '/admin/crypto-wallets');
+
+    const deleteMutation = useApiMutation<number, any>('delete', '/admin/crypto-wallets', {
+        onSuccess: () => refetch()
+    });
+
+    const handleDelete = async (id: number) => {
+        if (!confirm('Are you sure you want to delete this crypto wallet?')) return;
+        try {
+            await deleteMutation.mutateAsync(id);
+        } catch (err) { console.error(err); }
+    };
 
     const walletList = wallets?.rows || [];
 
@@ -64,13 +75,16 @@ export default function CryptoWalletsPage() {
                                     </td>
                                     <td className="px-6 py-5 text-right">
                                         <div className="flex justify-end gap-3">
-                                            <Link href={`/admin/crypto-wallets/${wallet.id}`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900">
+                                            <Link href={`/admin/crypto-wallets/${wallet.id}`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
                                                 View
                                             </Link>
-                                            <Link href={`/admin/crypto-wallets/${wallet.id}/edit`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-blue-600">
+                                            <Link href={`/admin/crypto-wallets/${wallet.id}/edit`} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-blue-600 transition-colors">
                                                 Edit
                                             </Link>
-                                            <button className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-red-500 transition-colors">
+                                            <button 
+                                                onClick={() => handleDelete(wallet.id)}
+                                                className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-red-500 transition-colors"
+                                            >
                                                 Delete
                                             </button>
                                         </div>
