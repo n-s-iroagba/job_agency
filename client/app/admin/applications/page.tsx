@@ -30,7 +30,6 @@ export default function AdminApplicationsPage() {
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Personnel</th>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Project / Role</th>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Protocol Status</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Fiscal Audit</th>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-right">Operations</th>
                             </tr>
                         </thead>
@@ -60,15 +59,10 @@ export default function AdminApplicationsPage() {
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-8 py-6">
-                                        <div className="flex items-center gap-3">
-                                            <div className={`w-2 h-2 rounded-full ${app.isPaid ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]' : 'bg-slate-200'}`}></div>
-                                            <span className={`text-[10px] font-black uppercase tracking-widest ${app.isPaid ? 'text-slate-900' : 'text-slate-400'}`}>{app.isPaid ? 'Cleared' : 'Pending'}</span>
-                                        </div>
-                                    </td>
+
                                     <td className="px-8 py-6 text-right">
-                                        <Link 
-                                            href={`/admin/applications/${app.id}`} 
+                                        <Link
+                                            href={`/admin/applications/${app.id}`}
                                             className="inline-flex items-center gap-2 bg-white border border-slate-100 px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 hover:border-slate-900 transition-all shadow-sm active:scale-95"
                                         >
                                             Inspect Pipeline
@@ -81,15 +75,12 @@ export default function AdminApplicationsPage() {
                 </div>
             </div>
 
-             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="bg-slate-900 p-8 rounded-[2rem] text-white shadow-2xl shadow-slate-900/10">
                     <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-4">Pipeline Load</h3>
                     <p className="text-3xl font-black italic uppercase tracking-tighter">{appList.length} Active Protocols</p>
                 </div>
-                <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-2xl shadow-slate-900/5">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Financial Clearance</h3>
-                    <p className="text-3xl font-black italic uppercase tracking-tighter">{appList.filter(a => a.isPaid).length} Verified Deposits</p>
-                </div>
+
                 <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-2xl shadow-slate-900/5">
                     <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Real-Time Sync</h3>
                     <p className="text-3xl font-black italic uppercase tracking-tighter">Operational</p>
