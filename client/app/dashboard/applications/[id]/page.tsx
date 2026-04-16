@@ -69,9 +69,8 @@ export default function ApplicationDetailPage() {
                     <h1 className="text-3xl font-bold text-slate-900 tracking-tight">{app.JobListing.title}</h1>
                 </div>
                 <div className="flex gap-4">
-                     <span className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest ${
-                        app.status === 'Active' ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/10' : 'bg-slate-50 text-slate-500 border border-slate-100'
-                    }`}>
+                    <span className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest ${app.status === 'Active' ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/10' : 'bg-slate-50 text-slate-500 border border-slate-100'
+                        }`}>
                         Status: {app.status}
                     </span>
                 </div>
@@ -80,13 +79,13 @@ export default function ApplicationDetailPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-8">
                     {/* Settlement Node (If active) */}
-                    {currentStage?.requiresPayment && (!currentPayment || currentPayment.status !== CONSTANTS.PAYMENT_STATUSES.VERIFIED) && (
+                    {currentStage?.requiresPayment && (!currentPayment || currentPayment.status !== CONSTANTS.STATUSES.PAYMENT.VERIFIED) && (
                         <section className="bg-slate-50 rounded-2xl p-8 border border-slate-100 relative overflow-hidden">
                             <div className="relative z-10">
                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-4">Required Action</span>
                                 <h3 className="text-xl font-bold text-slate-900 tracking-tight mb-2 uppercase">Strategy Contribution Phase</h3>
                                 <p className="text-sm text-slate-600 mb-8 max-w-[500px]">A processing fee of <span className="font-bold text-slate-900">${currentStage.amount}</span> is required to proceed to the next stage.</p>
-                                
+
                                 <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
                                     <PaymentUpload
                                         paymentId={currentPayment?.id}
@@ -102,20 +101,18 @@ export default function ApplicationDetailPage() {
                         <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pipeline Nodes</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {stages.map((stage: any, index: number) => (
-                                <div key={stage.id} className={`p-6 rounded-2xl border transition-all ${
-                                    index <= currentStageIndex ? 'bg-white border-slate-100 shadow-sm' : 'bg-slate-50 border-transparent opacity-50'
-                                }`}>
+                                <div key={stage.id} className={`p-6 rounded-2xl border transition-all ${index <= currentStageIndex ? 'bg-white border-slate-100 shadow-sm' : 'bg-slate-50 border-transparent opacity-50'
+                                    }`}>
                                     <div className="flex justify-between items-start mb-6">
-                                        <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded ${
-                                            index < currentStageIndex ? 'bg-emerald-50 text-emerald-600' :
-                                            index === currentStageIndex ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-400'
-                                        }`}>
+                                        <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded ${index < currentStageIndex ? 'bg-emerald-50 text-emerald-600' :
+                                                index === currentStageIndex ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-400'
+                                            }`}>
                                             {index < currentStageIndex ? 'Completed' : index === currentStageIndex ? 'Active' : 'Locked'}
                                         </span>
                                     </div>
                                     <h4 className="font-bold text-slate-900 uppercase tracking-tight text-sm mb-1">{stage.name}</h4>
                                     <p className="text-[10px] text-slate-400 font-medium line-clamp-2">{stage.description.replace(/<[^>]*>?/gm, '')}</p>
-                                    
+
                                     <div className="mt-6 pt-4 border-t border-slate-50 flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
                                         <span className="text-slate-400">Node Fee</span>
                                         <span className={stage.requiresPayment ? 'text-slate-900' : 'text-slate-400'}>{stage.requiresPayment ? `$${stage.amount}` : 'Zero'}</span>

@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function CategoryEditPage() {
     const params = useParams();
     const id = params?.id;
-    const { data: category, isLoading, error } = useApiQuery<any>(`/admin/categories/${id}`, {
+    const { data: category, isLoading, error } = useApiQuery<any>(['admin', 'categories', id], `/admin/categories/${id}`, {
         enabled: !!id
     });
 
