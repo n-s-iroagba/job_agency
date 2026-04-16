@@ -5,8 +5,11 @@ import { AdminSidebar } from '@/components/layout/AdminSidebar';
 import { useRouter } from 'next/navigation';
 import { CONSTANTS } from '@/constants';
 
+import { useAuth } from '@/contexts/AuthContext';
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
+    const { user, isLoading } = useAuth();
     const [authorized, setAuthorized] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -16,28 +19,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         if (savedState !== null) {
             setIsCollapsed(JSON.parse(savedState));
         }
+    }, []);
 
-        const userStr = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
+    useEffect(() => {
+        if (!isLoading) {
+            if (!user) {
+                router.push(CONSTANTS.ROUTES.LOGIN);
+                return;
+            }
 
-        if (!userStr || !token) {
-            router.push(CONSTANTS.ROUTES.LOGIN);
-            return;
-        }
-
-        try {
-            const user = JSON.parse(userStr);
             if (user.role !== CONSTANTS.ROLES.ADMIN) {
                 router.push(CONSTANTS.ROUTES.DASHBOARD);
                 return;
             }
-        } catch (e) {
-            router.push(CONSTANTS.ROUTES.LOGIN);
-            return;
-        }
 
-        setAuthorized(true);
-    }, [router]);
+            setAuthorized(true);
+        }
+    }, [user, isLoading, router]);
 
     const toggleDesktop = () => {
         const newState = !isCollapsed;
