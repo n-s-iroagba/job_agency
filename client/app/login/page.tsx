@@ -62,7 +62,7 @@ function LoginContent() {
                             href="/"
                             className="group inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-all"
                         >
-                            <span className="material-symbols-outlined text-[14px] transition-transform group-hover:-tranblue-x-1">arrow_back</span>
+                            <span className="material-symbols-outlined text-[14px] transition-transform group-hover:-translate-x-1">arrow_back</span>
                             Back to Home
                         </Link>
                     </div>
@@ -112,7 +112,7 @@ function LoginContent() {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -tranblue-y-1/2 text-blue-400 hover:text-blue-900 transition-colors"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-900 transition-colors"
                                 >
                                     <span className="material-symbols-outlined text-[18px]">{showPassword ? 'visibility_off' : 'visibility'}</span>
                                 </button>

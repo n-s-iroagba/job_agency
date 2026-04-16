@@ -156,7 +156,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-12 flex items-center justify-between pt-6 border-t border-blue-50 relative z-10">
                     <span className="text-[8px] font-black text-blue-900 uppercase tracking-widest px-3 py-1 bg-blue-50 rounded-full">{job.employmentType}</span>
-                    <span className="material-symbols-outlined text-blue-900 group-hover:tranblue-x-2 transition-transform font-black">east</span>
+                    <span className="material-symbols-outlined text-blue-900 group-hover:translate-x-2 transition-transform font-black">east</span>
                   </div>
                 </Link>
               ))
@@ -244,13 +244,13 @@ export default function HomePage() {
 
             <button
               onClick={() => setCurrentSlide((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
-              className="absolute left-8 top-1/2 -tranblue-y-1/2 w-14 h-14 rounded-full border border-blue-100 bg-white flex items-center justify-center text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all z-20 hidden lg:flex shadow-xl shadow-blue-900/5"
+              className="absolute left-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full border border-blue-100 bg-white flex items-center justify-center text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all z-20 hidden lg:flex shadow-xl shadow-blue-900/5"
             >
               <span className="material-symbols-outlined font-black">west</span>
             </button>
             <button
               onClick={() => setCurrentSlide((prev) => (prev + 1) % TESTIMONIALS.length)}
-              className="absolute right-8 top-1/2 -tranblue-y-1/2 w-14 h-14 rounded-full border border-blue-100 bg-white flex items-center justify-center text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all z-20 hidden lg:flex shadow-xl shadow-blue-900/5"
+              className="absolute right-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full border border-blue-100 bg-white flex items-center justify-center text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all z-20 hidden lg:flex shadow-xl shadow-blue-900/5"
             >
               <span className="material-symbols-outlined font-black">east</span>
             </button>

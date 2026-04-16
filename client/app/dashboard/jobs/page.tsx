@@ -34,7 +34,7 @@ export default function BrowseJobsPage() {
                                 placeholder="Title, keyword, company"
                                 type="text"
                             />
-                            <span className="material-symbols-outlined absolute left-3 top-1/2 -tranblue-y-1/2 text-blue-400">search</span>
+                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-blue-400">search</span>
                         </div>
                     </div>
                     <div>
@@ -45,7 +45,7 @@ export default function BrowseJobsPage() {
                                 placeholder="City or remote"
                                 type="text"
                             />
-                            <span className="material-symbols-outlined absolute left-3 top-1/2 -tranblue-y-1/2 text-blue-400">location_on</span>
+                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-blue-400">location_on</span>
                         </div>
                     </div>
                     <div>

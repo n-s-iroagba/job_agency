@@ -46,7 +46,7 @@ export function ApplicantSidebar({
 
             <aside
                 className={`h-screen fixed left-0 top-0 bg-white flex flex-col transition-all duration-300 z-[70] border-r border-blue-100 font-sans text-blue-900 overflow-hidden
-                    ${isMobileOpen ? 'tranblue-x-0 w-64' : '-tranblue-x-full lg:tranblue-x-0'}
+                    ${isMobileOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0'}
                     ${isCollapsed ? 'lg:w-28' : 'lg:w-64'}
                 `}
             >
@@ -63,7 +63,7 @@ export function ApplicantSidebar({
                     {/* Desktop Toggle Button */}
                     <button
                         onClick={onToggle}
-                        className="hidden lg:flex absolute -right-3 top-1/2 -tranblue-y-1/2 w-6 h-6 bg-white border border-blue-200 rounded-full items-center justify-center text-blue-400 hover:text-blue-900 shadow-sm transition-all"
+                        className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-white border border-blue-200 rounded-full items-center justify-center text-blue-400 hover:text-blue-900 shadow-sm transition-all"
                     >
                         <span className="material-symbols-outlined text-[14px]">
                             {isCollapsed ? 'chevron_right' : 'chevron_left'}
@@ -73,7 +73,7 @@ export function ApplicantSidebar({
                     {/* Mobile Close Button */}
                     <button
                         onClick={onMobileClose}
-                        className="lg:hidden absolute right-4 top-1/2 -tranblue-y-1/2 text-blue-400"
+                        className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 text-blue-400"
                     >
                         <span className="material-symbols-outlined">close</span>
                     </button>
@@ -130,7 +130,7 @@ export function ApplicantSidebar({
                         className={`flex items-center justify-center bg-white border border-blue-200 text-blue-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 rounded-xl transition-all duration-200 group ${isCollapsed ? 'w-12 h-12' : 'w-full py-4 px-4 gap-2'}`}
                         title={isCollapsed ? 'Sign Out' : ''}
                     >
-                        <span className="material-symbols-outlined text-lg transition-transform group-hover:tranblue-x-1" style={{ fontSize: '18px' }}>logout</span>
+                        <span className="material-symbols-outlined text-lg transition-transform group-hover:translate-x-1" style={{ fontSize: '18px' }}>logout</span>
                         {!isCollapsed && <span className="text-[10px] font-bold uppercase tracking-widest">Sign Out</span>}
                     </button>
                 </div>

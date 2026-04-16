@@ -96,7 +96,7 @@ export default function ApplicationStageDetailPage() {
                                         <p className="text-[10px] text-blue-400 font-bold uppercase tracking-[0.2em] mb-2">Requirement Active</p>
                                         <p className="text-3xl font-bold tracking-tight">{stage.amount?.toLocaleString()} <span className="text-sm font-medium text-blue-400">{stage.currency}</span></p>
                                     </div>
-                                    <span className="material-symbols-outlined text-6xl text-white/5 absolute -right-2 top-1/2 -tranblue-y-1/2">payments</span>
+                                    <span className="material-symbols-outlined text-6xl text-white/5 absolute -right-2 top-1/2 -translate-y-1/2">payments</span>
                                 </div>
                             </div>
                         )}

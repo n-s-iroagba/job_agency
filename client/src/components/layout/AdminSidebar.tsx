@@ -52,7 +52,7 @@ export function AdminSidebar({
 
             <aside
                 className={`h-screen fixed left-0 top-0 bg-blue-900 flex flex-col transition-all duration-300 z-[70] font-sans text-white overflow-hidden
-                    ${isMobileOpen ? 'tranblue-x-0 w-64' : '-tranblue-x-full lg:tranblue-x-0'}
+                    ${isMobileOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0'}
                     ${isCollapsed ? 'lg:w-28' : 'lg:w-64'}
                 `}
             >
@@ -82,7 +82,7 @@ export function AdminSidebar({
                     {/* Mobile Close Button */}
                     <button
                         onClick={onMobileClose}
-                        className="lg:hidden absolute right-4 top-1/2 -tranblue-y-1/2 text-blue-400 hover:text-white"
+                        className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 text-blue-400 hover:text-white"
                     >
                         <span className="material-symbols-outlined">close</span>
                     </button>
@@ -141,7 +141,7 @@ export function AdminSidebar({
                         className={`flex items-center justify-center bg-transparent border border-white/10 text-blue-500 hover:text-red-400 hover:border-red-900/30 hover:bg-red-900/10 rounded-xl transition-all duration-200 group ${isCollapsed ? 'w-20 h-12 flex-col' : 'w-full py-4 px-4 gap-2'}`}
                         title={isCollapsed ? 'Sign Out' : ''}
                     >
-                        <span className={`material-symbols-outlined transition-transform group-hover:tranblue-x-1 ${isCollapsed ? 'text-base' : 'text-lg'}`}>logout</span>
+                        <span className={`material-symbols-outlined transition-transform group-hover:translate-x-1 ${isCollapsed ? 'text-base' : 'text-lg'}`}>logout</span>
                         <span className={`font-bold uppercase tracking-widest ${isCollapsed ? 'text-[8px] mt-0.5' : 'text-[10px]'}`}>Sign Out</span>
                     </button>
                 </div>

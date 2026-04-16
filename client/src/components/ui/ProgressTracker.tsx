@@ -12,9 +12,9 @@ export function ProgressTracker({ stages, currentPercent }: { stages: Stage[], c
         <div className="w-full py-4">
             <div className="relative flex justify-between">
                 {/* Connecting Line */}
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-blue-200 -tranblue-y-1/2 z-0" />
+                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-blue-200 -translate-y-1/2 z-0" />
                 <div
-                    className="absolute top-1/2 left-0 h-0.5 bg-success -tranblue-y-1/2 z-0 transition-all duration-500"
+                    className="absolute top-1/2 left-0 h-0.5 bg-success -translate-y-1/2 z-0 transition-all duration-500"
                     style={{ width: `${currentPercent}%` }}
                 />
 
