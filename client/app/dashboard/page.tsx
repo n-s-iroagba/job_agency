@@ -12,7 +12,7 @@ export default function ApplicantDashboard() {
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Dashboard...</div>;
 
     const pendingStages = summary?.pendingStages || [];
-    const activeJobs = summary?.activeJobs || [];
+    const activeJobs = summary?.activeJobs?.rows || [];
 
     const getPaymentForApp = (app: any) => {
         return summary?.unpaidPayments?.find(
