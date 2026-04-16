@@ -1,7 +1,8 @@
-'use client';
-
-import { JobCondition, JobCategory } from '@/types/models';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
+import { JobCondition, JobCategory } from '@/types/models';
 
 interface ConditionFormProps {
     initialData?: JobCondition;
@@ -39,8 +40,8 @@ export default function ConditionForm({ initialData, isEdit = false }: Condition
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await mutation.mutateAsync({ 
-                name, 
+            await mutation.mutateAsync({
+                name,
                 description,
                 categoryId: categoryId ? parseInt(categoryId.toString(), 10) : null
             });
@@ -50,86 +51,64 @@ export default function ConditionForm({ initialData, isEdit = false }: Condition
     };
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-8 bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50">
-                <form onSubmit={handleSubmit} className="space-y-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Prerequisite Name</label>
-                            <div className="relative">
+        <div className="font-sans">
+            <div className="max-w-[800px]">
+                <form onSubmit={handleSubmit} className="space-y-8">
+                    <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-2">
+                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Prerequisite Name</label>
                                 <input
-                                    className="w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner placeholder-slate-300"
-                                    placeholder="e.g., Minimum 5 Years Experience"
+                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                                    placeholder="e.g. Bachelor's Degree"
                                     type="text"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
                                 />
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                                    <span className="material-symbols-outlined text-primary/40">gavel</span>
-                                </div>
                             </div>
-                        </div>
 
-                        <div className="space-y-3">
-                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Context Category</label>
-                            <div className="relative">
+                            <div className="space-y-2">
+                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Category (Optional)</label>
                                 <select
-                                    className="w-full h-14 pl-5 pr-10 bg-slate-50 border border-slate-200 rounded-xl appearance-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all text-sm font-bold shadow-inner cursor-pointer"
+                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
                                     value={categoryId}
                                     onChange={(e) => setCategoryId(e.target.value)}
                                 >
-                                    <option value="">Global (All Categories)</option>
+                                    <option value="">Global</option>
                                     {categories.map(cat => (
                                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                                     ))}
                                 </select>
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">
-                                    <span className="material-symbols-outlined">layers</span>
-                                </div>
                             </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Description</label>
+                            <textarea
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none resize-none leading-relaxed"
+                                placeholder="Describe this prerequisite..."
+                                rows={8}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                required
+                            ></textarea>
                         </div>
                     </div>
 
-                    <div className="space-y-3">
-                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Legal & Operational Description</label>
-                        <textarea
-                            className="w-full p-5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all resize-none text-sm font-medium leading-relaxed shadow-inner placeholder-slate-300"
-                            placeholder="Provide the exact compliance wording used for verification processes..."
-                            rows={8}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                        ></textarea>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row items-center justify-end gap-4 pt-8 border-t border-slate-100">
-                        <Link href="/admin/conditions">
-                            <button className="px-8 h-12 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 transition-colors bg-white hover:bg-slate-50 rounded-xl" type="button">Discard</button>
+                    <div className="pt-4 flex items-center justify-end gap-4">
+                        <Link href="/admin/conditions" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all px-4">
+                            Cancel
                         </Link>
                         <button
-                            className="px-10 h-14 bg-primary text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-primary/20 hover:bg-blue-700 active:scale-95 transition-all w-full sm:w-auto flex justify-center items-center gap-2"
+                            className="px-10 py-3 bg-slate-900 text-white font-bold text-[10px] uppercase tracking-widest rounded-lg shadow-lg shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-95 disabled:opacity-50"
                             type="submit"
                             disabled={mutation.isPending}
                         >
-                            <span className="material-symbols-outlined font-bold text-[18px]">gavel</span>
-                            {mutation.isPending ? 'Enforcing...' : isEdit ? 'Update Prerequisite' : 'Enforce Prerequisite'}
+                            {mutation.isPending ? 'Saving...' : 'Save Condition'}
                         </button>
                     </div>
                 </form>
-            </div>
-
-            <div className="lg:col-span-4 space-y-8">
-                <div className="bg-orange-50/50 p-8 rounded-[2rem] border border-orange-100/50 shadow-inner">
-                    <div className="flex items-center gap-3 mb-8 text-orange-600">
-                        <span className="material-symbols-outlined p-2 bg-orange-100 rounded-lg">warning</span>
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em]">Compliance Guidance</h3>
-                    </div>
-                    <ul className="space-y-6 text-xs font-bold text-slate-500 uppercase tracking-wide">
-                        <li>Prerequisites are strict fail conditions.</li>
-                        <li>Compliance requirements are tracked under STK-ADM-COND-001.</li>
-                    </ul>
-                </div>
             </div>
         </div>
     );

@@ -43,6 +43,14 @@ Application.init({
     completionPercentage: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+    },
+    isPaid: {
+        type: DataTypes.VIRTUAL,
+        get() {
+            const payments = (this as any).Payments;
+            if (!payments || !Array.isArray(payments)) return false;
+            return payments.some((p: any) => p.status === CONSTANTS.PAYMENT_STATUSES.VERIFIED);
+        }
     }
 }, {
     sequelize,

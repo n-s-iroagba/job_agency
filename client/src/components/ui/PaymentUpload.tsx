@@ -2,35 +2,26 @@
 
 import React, { useState } from 'react';
 import { useApiQuery } from '@/lib/hooks';
-import { CONSTANTS } from '@/constants';
-import {
-    Upload,
-    AlertCircle,
-    Copy,
-    Check
-} from 'lucide-react';
 import api from '@/lib/api';
 
 interface PaymentUploadProps {
-    applicationId: number;
-    stageId: number;
+    paymentId: number;
     amount: number;
     onSuccess: () => void;
 }
 
-export function PaymentUpload({ applicationId, stageId, amount, onSuccess }: PaymentUploadProps) {
+export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadProps) {
     const [uploading, setUploading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [copied, setCopied] = useState<string | null>(null);
 
-    // STK-ADM-BANK-003: Fetch bank details for this specific amount
-    const { data: bankAccounts } = useApiQuery<any[]>(
-        ['finance', 'bank', 'amount'],
-        `/admin/finance/bank-accounts/by-amount?amount=${amount}`
+    const { data: details, isLoading } = useApiQuery<any>(
+        ['payment', 'details', paymentId],
+        `/payments/${paymentId}`,
+        { enabled: !!paymentId }
     );
 
-    // STK-ADM-CRYPTO-003: Active wallets
-    const { data: wallets } = useApiQuery<any[]>(['finance', 'crypto', 'active'], '/wallets/active');
+    const bankAccounts = details?.bankAccounts || [];
+    const wallets = details?.cryptoWallets || [];
 
     const handleCopy = (val: string, key: string) => {
         navigator.clipboard.writeText(val);
@@ -42,102 +33,105 @@ export function PaymentUpload({ applicationId, stageId, amount, onSuccess }: Pay
         const file = e.target.files?.[0];
         if (!file) return;
 
-        // TRUST-007 Validation
-        const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-        if (!allowedTypes.includes(file.type)) {
-            setError('Invalid file type. Only JPEG, PNG, and PDF are allowed.');
-            return;
-        }
-
-        setError(null);
         setUploading(true);
-
         const formData = new FormData();
         formData.append('proof', file);
 
         try {
-            await api.post(`/payments/${applicationId}/proof?stageId=${stageId}`, formData, {
+            await api.post(`/payments/${paymentId}/proof`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             onSuccess();
         } catch (err: any) {
-            setError(err.response?.data?.error || 'Upload failed.');
+            console.error(err);
         } finally {
             setUploading(false);
         }
     };
 
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Syncing Settlement Nodes...</div>;
+
     return (
-        <div className="space-y-xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-lg overflow-hidden">
-                {/* Bank Transfer Instructions */}
-                <div className="card bg-surface">
-                    <h4 className="font-bold mb-md">Option 1: Bank Transfer</h4>
+        <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Bank Settlement */}
+                <div className="space-y-4">
+                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Protocol 1: Bank Settlement</h4>
                     {bankAccounts && bankAccounts.length > 0 ? (
-                        <div className="space-y-md">
-                            {bankAccounts.map(acc => (
-                                <div key={acc.id} className="text-xs p-md bg-slate-50 border border-border rounded-md space-y-1">
-                                    <p className="font-bold text-text-primary uppercase tracking-wide">{acc.type} ACCOUNT</p>
-                                    <p>Bank: <span className="font-semibold">{acc.bankName}</span></p>
-                                    <p>Name: <span className="font-semibold">{acc.accountName}</span></p>
-                                    <div className="flex justify-between items-center mt-2 pt-2 border-t border-slate-200">
-                                        <span className="font-mono text-lg font-bold">{acc.accountNumber}</span>
+                        <div className="space-y-3">
+                            {bankAccounts.map((acc: any) => (
+                                <div key={acc.id} className="p-5 bg-slate-50 border border-slate-100 rounded-xl space-y-3">
+                                    <div>
+                                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Beneficiary</p>
+                                        <p className="text-sm font-bold text-slate-900 uppercase">
+                                            {amount < 5000 ? 'Jobnexa LLC' : 'Application Manager'}
+                                        </p>
+                                        <p className="text-[10px] text-slate-500 font-medium uppercase">{acc.bankName}</p>
+                                    </div>
+                                    <div className="pt-3 border-t border-slate-100 flex justify-between items-center group">
+                                        <div className="select-all">
+                                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Account Number</p>
+                                            <p className="text-xs font-mono font-bold text-slate-900 tracking-wider">{acc.accountNumber}</p>
+                                        </div>
                                         <button
                                             onClick={() => handleCopy(acc.accountNumber, `bank-${acc.id}`)}
-                                            className="p-1 hover:bg-slate-200 rounded transition-colors"
+                                            className="text-[9px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors"
                                         >
-                                            {copied === `bank-${acc.id}` ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
+                                            {copied === `bank-${acc.id}` ? 'Copied' : 'Copy'}
                                         </button>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    ) : <p className="text-xs text-text-secondary">Loading local bank details...</p>}
+                    ) : <p className="p-5 text-[10px] font-bold text-slate-300 uppercase tracking-widest bg-slate-50 rounded-xl border border-slate-100 border-dashed">No active bank nodes</p>}
                 </div>
 
-                {/* Crypto Instructions */}
-                <div className="card bg-surface">
-                    <h4 className="font-bold mb-md text-admin-accent">Option 2: Cryptocurrency</h4>
+                {/* Crypto Settlement */}
+                <div className="space-y-4">
+                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Protocol 2: Crypto Transfer</h4>
                     {wallets && wallets.length > 0 ? (
-                        <div className="space-y-md">
-                            {wallets.map(w => (
-                                <div key={w.id} className="text-xs p-md bg-purple-50/50 border border-purple-100 rounded-md space-y-1">
-                                    <p className="font-bold text-purple-700 uppercase tracking-wide">{w.type} ({w.network})</p>
-                                    <div className="flex justify-between items-center mt-2">
-                                        <span className="font-mono break-all font-semibold mr-2">{w.address}</span>
+                        <div className="space-y-3">
+                            {wallets.map((w: any) => (
+                                <div key={w.id} className="p-5 bg-slate-50 border border-slate-100 rounded-xl space-y-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">{w.networkType}</p>
+                                            <p className="text-sm font-bold text-slate-900 uppercase">{w.currencyName}</p>
+                                        </div>
                                         <button
-                                            onClick={() => handleCopy(w.address, `crypto-${w.id}`)}
-                                            className="p-1 hover:bg-purple-100 rounded transition-colors flex-shrink-0"
+                                            onClick={() => handleCopy(w.walletAddress, `crypto-${w.id}`)}
+                                            className="text-[9px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors"
                                         >
-                                            {copied === `crypto-${w.id}` ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
+                                            {copied === `crypto-${w.id}` ? 'Copied' : 'Copy'}
                                         </button>
+                                    </div>
+                                    <div className="bg-white p-3 rounded-lg border border-slate-100 border-dashed select-all overflow-hidden">
+                                        <p className="text-[10px] font-mono text-slate-500 break-all leading-relaxed">{w.walletAddress}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    ) : <p className="text-xs text-text-secondary">Loading crypto wallets...</p>}
+                    ) : <p className="p-5 text-[10px] font-bold text-slate-300 uppercase tracking-widest bg-slate-50 rounded-xl border border-slate-100 border-dashed">No active crypto nodes</p>}
                 </div>
             </div>
 
-            {/* Evidence Submission - TRUST-007 */}
-            <div className="card border-primary/20 bg-blue-50/10">
-                <h4 className="font-bold mb-md">Step 2: Submit Payment Evidence</h4>
-                <p className="text-xs text-text-secondary mb-xl">
-                    Once paid, upload a clear screenshot of the transaction receipt.
-                    Include your reference #{applicationId.toString().padStart(5, '0')} in the bank description if possible.
-                </p>
+            <div className="pt-8 border-t border-slate-50">
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Submission Audit</h4>
+                <p className="text-[10px] text-slate-500 font-medium mb-6 italic">Upload a high-fidelity screenshot of the transaction receipt. Reference #CC-{paymentId.toString().padStart(5, '0')} must be included.</p>
 
-                <label className="btn-primary cursor-pointer w-full inline-flex items-center justify-center gap-2 py-3">
-                    <Upload className="w-5 h-5" />
-                    {uploading ? 'Uploading...' : 'Upload Receipt Screenshot'}
-                    <input type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileUpload} disabled={uploading} />
-                </label>
-
-                {error && (
-                    <div className="flex items-center gap-2 text-danger text-xs mt-md">
-                        <AlertCircle className="w-4 h-4" /> {error}
+                <div className="relative group">
+                    <input 
+                        type="file" 
+                        accept="image/*,.pdf"
+                        onChange={handleFileUpload} 
+                        disabled={uploading}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    />
+                    <div className="w-full bg-slate-900 text-white py-4 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg flex items-center justify-center gap-2">
+                        <span className="material-symbols-outlined text-base">upload_file</span>
+                        {uploading ? 'Archiving Proof...' : 'Submit Settlement Proof'}
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );

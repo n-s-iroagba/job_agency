@@ -1,29 +1,26 @@
 'use client';
 
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import ConditionForm from '@/components/admin/forms/ConditionForm';
 
 export default function ConditionNewPage() {
+    const params = useParams();
+    const jobId = params?.jobId ? Number(params.jobId) : undefined;
+
     return (
-        <div className="flex flex-col min-h-screen bg-surface selection:bg-primary/10 selection:text-primary pb-16">
-            <header className="sticky top-0 z-40 flex justify-between items-center w-full px-8 py-4 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
-                <div className="flex items-center gap-2">
-                    <span className="text-xl font-black uppercase italic tracking-tighter text-slate-900">CareerCurator</span>
+        <div className="font-sans">
+            <div className="mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                    <Link href="/admin/conditions" className="text-slate-400 hover:text-slate-900 transition-colors">
+                        <span className="material-symbols-outlined text-lg">arrow_back</span>
+                    </Link>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Conditions / New</span>
                 </div>
-            </header>
+                <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Create Condition</h1>
+            </div>
 
-            <main className="mt-8 p-8 lg:p-12 max-w-[1152px] mx-auto w-full">
-                <div className="mb-12">
-                    <nav className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-slate-400 mb-4">
-                        <span>System</span>
-                        <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-                        <Link href="/admin/conditions" className="hover:text-primary transition-colors">Conditions</Link>
-                    </nav>
-                    <h1 className="text-[3.5rem] font-black leading-none tracking-tighter text-on-surface mb-2 uppercase italic">New Condition</h1>
-                </div>
-
-                <ConditionForm />
-            </main>
+            <ConditionForm jobId={jobId} />
         </div>
     );
 }

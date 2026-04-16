@@ -24,7 +24,7 @@ JobStage.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    jobId: {
+    applicationId: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },

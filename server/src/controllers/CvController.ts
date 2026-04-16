@@ -14,6 +14,7 @@ export class CvController {
                 data: updated,
             });
         } catch (error: any) {
+            console.error('[CvController.uploadCv]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.VALIDATION_ERROR) {
                 res.status(CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
                 return;
@@ -29,6 +30,7 @@ export class CvController {
             const cv = await cvService.getCv(userId);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(cv);
         } catch (error: any) {
+            console.error('[CvController.getCv]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -48,6 +50,7 @@ export class CvController {
                 data: updated,
             });
         } catch (error: any) {
+            console.error('[CvController.updateCv]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.VALIDATION_ERROR) {
                 res.status(CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
                 return;
@@ -63,6 +66,7 @@ export class CvController {
             await cvService.deleteCv(userId);
             res.status(CONSTANTS.HTTP_STATUS.OK).json({ message: CONSTANTS.SUCCESS_MESSAGES.DELETED });
         } catch (error: any) {
+            console.error('[CvController.deleteCv]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;

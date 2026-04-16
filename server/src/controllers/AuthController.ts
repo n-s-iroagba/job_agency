@@ -13,6 +13,7 @@ export class AuthController {
                 accessToken
             });
         } catch (error: any) {
+            console.error('[AuthController.register]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.EMAIL_EXISTS) {
                 res.status(CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
                 return;
@@ -31,6 +32,7 @@ export class AuthController {
                 accessToken
             });
         } catch (error: any) {
+            console.error('[AuthController.registerAdmin]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.EMAIL_EXISTS) {
                 res.status(CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
                 return;
@@ -47,6 +49,7 @@ export class AuthController {
                 message: CONSTANTS.SUCCESS_MESSAGES.VERIFY_SUCCESS
             });
         } catch (error: any) {
+            console.error('[AuthController.verifyEmail]', error);
             res.status(CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
         }
     }
@@ -59,6 +62,7 @@ export class AuthController {
                 message: CONSTANTS.SUCCESS_MESSAGES.FORGOT_PASSWORD_SUCCESS
             });
         } catch (error: any) {
+            console.error('[AuthController.forgotPassword]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -71,6 +75,7 @@ export class AuthController {
                 message: CONSTANTS.SUCCESS_MESSAGES.RESET_PASSWORD_SUCCESS
             });
         } catch (error: any) {
+            console.error('[AuthController.resetPassword]', error);
             res.status(CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
         }
     }
@@ -83,6 +88,7 @@ export class AuthController {
                 message: 'Verification link resent successfully.'
             });
         } catch (error: any) {
+            console.error('[AuthController.resendVerification]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -99,6 +105,7 @@ export class AuthController {
                 accessToken
             });
         } catch (error: any) {
+            console.error('[AuthController.login]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.INVALID_CREDENTIALS) {
                 res.status(CONSTANTS.HTTP_STATUS.UNAUTHORIZED).json({ error: error.message });
                 return;
@@ -123,6 +130,7 @@ export class AuthController {
             this.setRefreshTokenCookie(res, newRefreshToken);
             res.status(CONSTANTS.HTTP_STATUS.OK).json({ accessToken });
         } catch (error: any) {
+            console.error('[AuthController.refresh]', error);
             res.status(CONSTANTS.HTTP_STATUS.UNAUTHORIZED).json({ error: error.message });
         }
     }
@@ -141,7 +149,27 @@ export class AuthController {
                 }
             });
         } catch (error: any) {
+            console.error('[AuthController.getMe]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: error.message });
+        }
+    }
+
+    public async updateProfile(req: Request, res: Response): Promise<void> {
+        try {
+            const userId = (req as any).user.id;
+            const user = await authService.updateProfile(userId, req.body);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json({
+                message: CONSTANTS.SUCCESS_MESSAGES.UPDATED,
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    role: user.role,
+                    fullName: user.fullName
+                }
+            });
+        } catch (error: any) {
+            console.error('[AuthController.updateProfile]', error);
+            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
 

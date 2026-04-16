@@ -34,6 +34,8 @@ export interface JobListing {
     employmentType: string;
     requirements: string;
     categoryId: number;
+    company: string;
+    visaSponsorship: boolean;
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
@@ -53,6 +55,7 @@ export interface JobBenefit {
 export interface JobCondition {
     id: number;
     name: string;
+    categoryId: number
     description: string;
     createdAt: string;
     updatedAt: string;
@@ -60,7 +63,7 @@ export interface JobCondition {
 
 export interface JobStage {
     id: number;
-    jobId: number;
+    applicationId: number;
     name: string;
     description: string;
     orderPosition: number;
@@ -86,6 +89,7 @@ export interface Application {
     updatedAt: string;
     User?: User;
     JobListing?: JobListing;
+    JobStages?: JobStage[];
 }
 
 export interface BankAccount {

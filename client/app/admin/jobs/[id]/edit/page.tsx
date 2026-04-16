@@ -13,36 +13,22 @@ export default function JobEditPage() {
         enabled: !!id
     });
 
-    if (isLoading) return <div className="p-12 text-center font-black uppercase tracking-widest text-slate-400">Loading Listing Narrative...</div>;
-    if (error) return <div className="p-12 text-center text-red-500 font-black uppercase tracking-widest">Error Loading Job</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Job Details...</div>;
+    if (error) return <div className="p-12 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest">Error Loading Job</div>;
 
     return (
-        <div className="flex flex-col min-h-screen bg-slate-50">
-            {/* Standard Admin Header */}
-            <header className="h-16 px-6 bg-white border-b border-slate-200 flex items-center justify-between sticky top-0 z-40">
-                <div className="flex items-center gap-4">
-                    <Link href="/admin/jobs" className="p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
+        <div className="font-sans">
+            <div className="mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                    <Link href="/admin/jobs" className="text-slate-400 hover:text-slate-900 transition-colors">
                         <span className="material-symbols-outlined text-lg">arrow_back</span>
                     </Link>
-
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Job Registry / {id} / Edit</span>
                 </div>
-                <div className="hidden sm:flex items-center gap-2">
-                    <span className="px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-[10px] font-bold border border-slate-200 uppercase tracking-widest italic">
-                        JOBID-{id}
-                    </span>
-                </div>
-            </header>
+                <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Edit Job</h1>
+            </div>
 
-            <main className="p-6 md:p-10 max-w-5xl mx-auto w-full">
-                <div className="mb-8">
-
-                    <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none mb-2">Update <span className="text-blue-600">{job?.title}</span></h2>
-                </div>
-
-                <div className="bg-white p-6 md:p-10 rounded-xl border border-slate-200 shadow-sm">
-                    <JobForm initialData={job} isEdit={true} />
-                </div>
-            </main>
+            <JobForm initialData={job} isEdit={true} />
         </div>
     );
 }

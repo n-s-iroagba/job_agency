@@ -1,28 +1,37 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ApplicantSidebar } from '@/components/layout/ApplicantSidebar';
 
 export default function ApplicantLayout({ children }: { children: React.ReactNode }) {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     return (
-        <div className="flex min-h-screen bg-surface">
-            <ApplicantSidebar />
-            <div className="flex-1 ml-64 flex flex-col">
-                <header className="sticky top-0 z-30 h-16 bg-white/70 backdrop-blur-xl flex items-center justify-between px-10 border-b border-slate-100/50">
-                    <h2 className="text-xl font-bold tracking-tight text-slate-900">Applicant Console</h2>
-                    <div className="flex items-center gap-4">
-                        <button className="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
-                            <span className="material-symbols-outlined">search</span>
-                        </button>
-                        <button className="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-md shadow-primary/20 hover:bg-primary-container transition-colors">
-                            Search New Jobs
-                        </button>
-                    </div>
-                </header>
-                <main className="p-10 max-w-[1280px] mx-auto w-full">
-                    {children}
-                </main>
+        <div className="flex min-h-screen bg-white overflow-x-hidden font-sans">
+            {/* Mobile Header */}
+            <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6 z-[60]">
+                <h1 className="text-slate-900 font-bold tracking-tight text-lg">JobNexa</h1>
+                <button 
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="w-10 h-10 flex items-center justify-center text-slate-900"
+                >
+                    <span className="material-symbols-outlined">{isSidebarOpen ? 'close' : 'menu'}</span>
+                </button>
+            </header>
+
+            {/* Sidebar with mobile overlay */}
+            <div className={`fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 transition-opacity lg:hidden ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsSidebarOpen(false)} />
+            
+            <div className={`fixed inset-y-0 left-0 z-50 transform transition-transform lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <ApplicantSidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
             </div>
+
+            {/* Main Content */}
+            <main className="flex-1 transition-all duration-300 min-w-0 pt-16 lg:pt-0 lg:ml-64">
+                <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-8 lg:py-12">
+                    {children}
+                </div>
+            </main>
         </div>
     );
 }

@@ -5,29 +5,29 @@ import { CONSTANTS } from '@/constants';
 
 export function PublicHeader() {
     return (
-        <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm shadow-slate-200/50 flex justify-between items-center px-4 sm:px-8 h-16 max-w-full">
-            <div className="flex items-center gap-8">
-                <Link href={CONSTANTS.ROUTES.HOME} className="text-xl font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">
-                    JobNexa
+        <nav className="fixed top-0 w-full z-50 bg-white border-b border-slate-100 flex justify-between items-center px-8 lg:px-16 h-20 max-w-full font-sans antialiased text-slate-900">
+            <div className="flex items-center gap-12">
+                <Link href={CONSTANTS.ROUTES.HOME} className="flex flex-col">
+                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">CareerCurator</span>
                 </Link>
-                <div className="hidden md:flex gap-6 items-center">
-                    <Link href={CONSTANTS.ROUTES.HOME} className="text-blue-600 font-semibold font-sans antialiased text-sm transition-colors duration-300">
-                        Home
+                <div className="hidden md:flex gap-10 items-center">
+                    <Link href={CONSTANTS.ROUTES.HOME} className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em] transition-all">
+                        Index
                     </Link>
-                    <Link href={CONSTANTS.ROUTES.JOBS} className="text-slate-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300">
-                        Jobs
+                    <Link href={CONSTANTS.ROUTES.JOBS} className="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-[0.2em] transition-all">
+                        Opportunities
                     </Link>
-                    <Link href={CONSTANTS.ROUTES.PRIVACY} className="text-slate-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300">
+                    <Link href={CONSTANTS.ROUTES.PRIVACY} className="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-[0.2em] transition-all">
                         Privacy
                     </Link>
                 </div>
             </div>
-            <div className="flex items-center gap-4">
-                <Link href={CONSTANTS.ROUTES.LOGIN} className="text-slate-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300">
+            <div className="flex items-center gap-8">
+                <Link href={CONSTANTS.ROUTES.LOGIN} className="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-[0.2em] transition-all">
                     Login
                 </Link>
-                <Link href={CONSTANTS.ROUTES.REGISTER} className="bg-primary text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-md shadow-primary/20 hover:bg-primary-container transition-all duration-300">
-                    Signup
+                <Link href={CONSTANTS.ROUTES.REGISTER} className="bg-slate-900 text-white px-8 py-3 rounded-lg text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10 active:scale-95">
+                    Sign Up
                 </Link>
             </div>
         </nav>

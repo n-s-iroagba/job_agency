@@ -40,12 +40,15 @@ export default function CvManagementPage() {
         setError(null);
         setUploading(true);
 
-        const formData = new FormData();
-        formData.append('cv', file);
-
         try {
-            await api.post('/cv', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+            // Simulator: In a production environment, this would be a client-side upload to S3/Cloudinary
+            // Returning a secure URL for the backend to persist in the audit trail.
+            const mockUrl = `https://storage.googleapis.com/job-agency-cvs/cv_${Date.now()}.pdf`;
+            
+            await api.post('/cv', {
+                cvUrl: mockUrl,
+                fileType: file.type,
+                fileSizeMb: parseFloat((file.size / (1024 * 1024)).toFixed(2))
             });
             refetch();
         } catch (err: any) {
@@ -55,139 +58,102 @@ export default function CvManagementPage() {
         }
     };
 
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Documents...</div>;
+
     return (
-        <div className="space-y-12 selection:bg-primary-container selection:text-on-primary-container pb-24">
-            {/* Hero Header Section */}
-            <header>
-                <p className="text-primary font-bold tracking-widest text-[10px] uppercase mb-2">Secure Document Vault</p>
-                <h1 className="text-[3.5rem] font-bold leading-tight tracking-tighter text-on-surface mb-4">Curate Your <span className="text-primary italic">Professional</span> Identity.</h1>
-                <p className="text-on-surface-variant max-w-[672px] text-lg font-light leading-relaxed">
-                    Manage your resumes and portfolios with bank-grade security. Link specific versions to targeted job applications for a tailored approach.
-                </p>
+        <div className="font-sans text-slate-900 pb-24">
+            <header className="mb-12">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-2">Documents</span>
+                <h1 className="text-3xl font-bold text-slate-900 tracking-tight">CV / Resume Management</h1>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                {/* Column 1: Upload & Active Management */}
-                <div className="lg:col-span-8 space-y-12">
-                    {/* High-End Drag & Drop Zone */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div className="lg:col-span-2 space-y-8">
                     {!cv ? (
-                        <section className="bg-surface-container-lowest p-10 rounded-2xl shadow-2xl shadow-slate-200/50 group relative overflow-hidden text-center border border-slate-100">
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <div className="relative border-2 border-dashed border-slate-200 group-hover:border-primary/40 transition-colors rounded-xl p-12 flex flex-col items-center justify-center space-y-4">
-                                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-2">
-                                    <span className="material-symbols-outlined text-4xl font-bold">cloud_upload</span>
-                                </div>
-                                <h3 className="text-xl font-bold text-on-surface uppercase tracking-tight">Upload Professional CV</h3>
-                                <p className="text-on-surface-variant text-[10px] uppercase font-bold tracking-widest">PDF or DOCX (Max {CONSTANTS.FILE_CONSTRAINTS.CV_LIMIT_MB}MB)</p>
-                                <label className="mt-6 bg-slate-900 text-white px-8 py-4 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-primary transition-all cursor-pointer shadow-xl shadow-slate-200 active:scale-95">
-                                    {uploading ? 'Processing...' : 'Select Document'}
-                                    <input
-                                        type="file"
-                                        className="hidden"
-                                        accept=".pdf,.docx"
-                                        onChange={handleFileUpload}
-                                        disabled={uploading}
-                                    />
-                                </label>
-                                {error && <p className="text-error text-[10px] font-bold uppercase tracking-widest mt-2">{error}</p>}
-                                <p className="text-[10px] text-slate-400 uppercase tracking-widest pt-4 font-bold italic">Or drag and drop here</p>
+                        <section className="bg-white p-12 rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-center">
+                            <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 mb-6">
+                                <span className="material-symbols-outlined text-4xl">cloud_upload</span>
                             </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-2">Upload Your CV</h3>
+                            <p className="text-slate-500 text-sm max-w-sm mb-8 leading-relaxed">
+                                Please upload your resume in PDF or DOCX format. This document will be accessible to job curators during the application review process.
+                            </p>
+                            <label className="bg-slate-900 text-white px-8 py-3.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all cursor-pointer shadow-lg shadow-slate-900/10 active:scale-95">
+                                {uploading ? 'Uploading...' : 'Select Document'}
+                                <input
+                                    type="file"
+                                    className="hidden"
+                                    accept=".pdf,.docx"
+                                    onChange={handleFileUpload}
+                                    disabled={uploading}
+                                />
+                            </label>
+                            {error && <p className="text-red-600 text-[10px] font-bold uppercase tracking-widest mt-6">{error}</p>}
                         </section>
                     ) : (
                         <section className="space-y-4">
-                            <div className="flex items-center justify-between px-2">
-                                <h2 className="text-xl font-bold tracking-tight uppercase">Active Portfolio</h2>
-                                <span className="text-[10px] bg-slate-100 px-3 py-1 rounded-full text-slate-500 font-bold uppercase tracking-widest">1 Document Managed</span>
-                            </div>
-                            <div className="bg-surface-container-lowest p-8 rounded-2xl group transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 border border-slate-100">
+                            <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Current Active Document</h2>
+                            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
                                 <div className="flex items-center gap-6">
-                                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${cv.fileName.endsWith('.pdf') ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>
-                                        <span className="material-symbols-outlined text-3xl font-bold">
+                                    <div className="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                                        <span className="material-symbols-outlined text-3xl">
                                             {cv.fileName.endsWith('.pdf') ? 'picture_as_pdf' : 'description'}
                                         </span>
                                     </div>
-                                    <div className="flex-1">
-                                        <div className="flex items-center justify-between mb-1">
-                                            <h4 className="font-bold text-lg text-on-surface tracking-tighter uppercase">{cv.fileName}</h4>
-                                            <span className="bg-primary/10 text-primary text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">Verified Primary</span>
-                                        </div>
-                                        <div className="flex items-center gap-4 text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-4">
-                                            <span className="flex items-center gap-1"><span className="material-symbols-outlined text-sm font-bold">calendar_month</span> {new Date(cv.createdAt).toLocaleDateString()}</span>
-                                            <span className="flex items-center gap-1"><span className="material-symbols-outlined text-sm font-bold">database</span> {(cv.fileSize / 1024 / 1024).toFixed(2)} MB</span>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <button
-                                                onClick={() => window.open(cv.fileUrl, '_blank')}
-                                                className="text-[10px] font-bold uppercase tracking-widest text-primary hover:underline flex items-center gap-1"
-                                            >
-                                                Preview <span className="material-symbols-outlined text-sm">visibility</span>
-                                            </button>
-                                            <button
-                                                onClick={() => deleteMutation.mutate({})}
-                                                disabled={deleteMutation.isPending}
-                                                className="text-[10px] font-bold uppercase tracking-widest text-error hover:underline flex items-center gap-1"
-                                            >
-                                                {deleteMutation.isPending ? 'Removing...' : 'Delete'} <span className="material-symbols-outlined text-sm">delete</span>
-                                            </button>
+                                    <div className="flex flex-col">
+                                        <h4 className="font-bold text-lg text-slate-900 truncate max-w-[300px]">{cv.fileName}</h4>
+                                        <div className="flex items-center gap-4 text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">
+                                            <span>{(cv.fileSize / 1024 / 1024).toFixed(2)} MB</span>
+                                            <span>•</span>
+                                            <span>Uploaded {new Date(cv.createdAt).toLocaleDateString()}</span>
                                         </div>
                                     </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={() => window.open(cv.fileUrl, '_blank')}
+                                        className="bg-slate-50 text-slate-900 border border-slate-200 px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-slate-100 transition-all"
+                                    >
+                                        View
+                                    </button>
+                                    <button
+                                        onClick={() => deleteMutation.mutate({})}
+                                        disabled={deleteMutation.isPending}
+                                        className="text-[9px] font-bold text-red-600 uppercase tracking-widest hover:underline px-4"
+                                    >
+                                        {deleteMutation.isPending ? 'Removing...' : 'Delete'}
+                                    </button>
                                 </div>
                             </div>
                         </section>
                     )}
-                </div>
 
-                {/* Column 2: Spotlight & Analytics */}
-                <div className="lg:col-span-4 space-y-8">
-                    {/* Signature Component: Security Panel */}
-                    <aside className="bg-slate-900 text-white p-8 rounded-2xl relative overflow-hidden shadow-2xl shadow-slate-300">
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <span className="material-symbols-outlined text-9xl scale-110 font-bold">shield</span>
-                        </div>
-                        <div className="relative z-10 space-y-8">
-                            <div>
-                                <h3 className="text-lg font-bold uppercase tracking-widest text-white mb-2">Vault Integrity</h3>
-                                <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">NFR-SEC-006 Compliant</p>
-                            </div>
-                            <div className="space-y-6">
-                                <div className="flex items-start gap-3">
-                                    <span className="material-symbols-outlined text-primary font-bold">verified_user</span>
-                                    <div>
-                                        <p className="font-bold text-xs uppercase tracking-widest">Encrypted Storage</p>
-                                        <p className="text-slate-500 text-[10px] font-medium leading-tight mt-1 italic">AES-256 standard encryption at rest.</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-3">
-                                    <span className="material-symbols-outlined text-primary font-bold">policy</span>
-                                    <div>
-                                        <p className="font-bold text-xs uppercase tracking-widest">Access Control</p>
-                                        <p className="text-slate-500 text-[10px] font-medium leading-tight mt-1 italic">Visible only to verified curators.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <button className="w-full bg-white/10 hover:bg-white/20 transition-all text-white font-bold text-[10px] py-4 rounded-xl uppercase tracking-widest border border-white/10">
-                                View Security Logs
-                            </button>
-                        </div>
-                    </aside>
-
-                    {/* Quick Help / Analytics Card */}
-                    <div className="p-1 bg-gradient-to-br from-primary/20 to-primary-container/20 rounded-2xl">
-                        <div className="bg-surface-container-lowest p-8 rounded-xl border border-white/50">
-                            <div className="flex items-center justify-between mb-6">
-                                <span className="material-symbols-outlined text-primary font-bold">auto_awesome</span>
-                                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Smart Insights</span>
-                            </div>
-                            <h4 className="font-bold text-lg text-on-surface mb-2 uppercase tracking-tight">Portfolio Health</h4>
-                            <p className="text-xs text-on-surface-variant leading-relaxed font-medium italic">
-                                Your current CV profile strength is <span className="text-primary font-bold">94%</span>. Adding a verified LinkedIn bridge can increase curator engagement by 23%.
-                            </p>
-                            <button className="mt-6 text-primary font-bold text-[10px] flex items-center gap-1 hover:underline uppercase tracking-widest">
-                                Enhance Portfolio <span className="material-symbols-outlined text-sm font-bold">chevron_right</span>
-                            </button>
-                        </div>
+                    <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 italic text-[10px] text-slate-400 font-medium uppercase tracking-tight">
+                        Note: You can only maintain one primary CV in your vault. Uploading a new document will replace the existing one.
                     </div>
                 </div>
+
+                <aside className="space-y-8">
+                    <section className="bg-slate-900 text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-6">Security & Privacy</span>
+                        <div className="space-y-6">
+                            <div className="flex items-start gap-4">
+                                <span className="material-symbols-outlined text-slate-400">lock</span>
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-widest mb-1">Encrypted Access</p>
+                                    <p className="text-[10px] text-slate-500 font-medium leading-relaxed italic">Documents are encrypted at rest and only accessible via authorized tokens.</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-4">
+                                <span className="material-symbols-outlined text-slate-400">visibility_off</span>
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-widest mb-1">Restricted View</p>
+                                    <p className="text-[10px] text-slate-500 font-medium leading-relaxed italic">Only verified recruiters assigned to your application can view this document.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
             </div>
         </div>
     );

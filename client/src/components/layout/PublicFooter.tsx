@@ -5,41 +5,35 @@ import Link from 'next/link';
 
 export function PublicFooter() {
     return (
-        <footer className="bg-slate-50 dark:bg-slate-950 w-full py-12 px-4 sm:px-8 mt-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-                <div className="space-y-4">
-                    <span className="font-bold text-slate-900 dark:text-white text-xl">JobNexa</span>
-                    <p className="text-xs font-normal text-slate-500 dark:text-slate-400 leading-relaxed">
-                        © 2024 JobNexa. Precision in Professional Placement.
+        <footer className="bg-white w-full py-24 px-8 lg:px-16 border-t border-slate-100 mt-auto font-sans antialiased text-slate-900">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-16 max-w-[1440px] mx-auto">
+                <div className="space-y-8">
+                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">CareerCurator</span>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] leading-loose max-w-[200px]">
+                        © 2024 CareerCurator Enterprise. Global placement & recruitment infrastructure.
                     </p>
-                    <div className="flex gap-4">
-                        <a className="text-slate-400 hover:text-blue-600 transition-colors" href="#"><span className="material-symbols-outlined">public</span></a>
-                        <a className="text-slate-400 hover:text-blue-600 transition-colors" href="#"><span className="material-symbols-outlined">chat</span></a>
-                        <a className="text-slate-400 hover:text-blue-600 transition-colors" href="#"><span className="material-symbols-outlined">mail</span></a>
-                    </div>
                 </div>
                 <div>
-                    <h6 className="font-bold text-slate-900 dark:text-white text-sm mb-4">Contact</h6>
-                    <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-2">
-                        <li>support@JobNexa.com</li>
-                        <li>+1 (555) 000-8888</li>
-                        <li>Global HQ, New York</li>
+                    <h6 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.3em] mb-8">Channel Information</h6>
+                    <ul className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] space-y-4">
+                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Inquiries: general@curator.io</li>
+                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Support: help@curator.io</li>
                     </ul>
                 </div>
                 <div>
-                    <h6 className="font-bold text-slate-900 dark:text-white text-sm mb-4">Legal</h6>
-                    <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-2">
-                        <li><Link href={CONSTANTS.ROUTES.PRIVACY} className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-                        <li><a className="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
-                        <li><a className="hover:text-primary transition-colors" href="#">Cookie Policy</a></li>
+                    <h6 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.3em] mb-8">Registry & Terms</h6>
+                    <ul className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] space-y-4">
+                        <li><Link href={CONSTANTS.ROUTES.PRIVACY} className="hover:text-slate-900 transition-colors">Data Privacy Policy</Link></li>
+                        <li><Link href="#" className="hover:text-slate-900 transition-colors">Service Agreement</Link></li>
+                        <li><Link href="#" className="hover:text-slate-900 transition-colors">Compliance Standards</Link></li>
                     </ul>
                 </div>
                 <div>
-                    <h6 className="font-bold text-slate-900 dark:text-white text-sm mb-4">Subscribe</h6>
-                    <p className="text-[10px] text-slate-500 mb-4">Get curated job alerts directly.</p>
-                    <div className="flex">
-                        <input className="bg-white border border-outline-variant/30 rounded-l-lg text-xs w-full focus:ring-1 ring-primary px-3" placeholder="Email" type="text" />
-                        <button className="bg-primary text-white px-3 py-2 rounded-r-lg"><span className="material-symbols-outlined text-sm">send</span></button>
+                    <h6 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.3em] mb-8">Verified Protocols</h6>
+                    <div className="flex gap-8">
+                        <a className="text-slate-400 hover:text-slate-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">language</span></a>
+                        <a className="text-slate-400 hover:text-slate-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">shield</span></a>
+                        <a className="text-slate-400 hover:text-slate-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">alternate_email</span></a>
                     </div>
                 </div>
             </div>

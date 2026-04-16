@@ -9,6 +9,8 @@ export class JobListing extends Model {
     declare employmentType: string;
     declare requirements: string;
     declare categoryId: number;
+    declare company: string;
+    declare visaSponsorship: boolean;
     declare isActive: boolean;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
@@ -26,6 +28,14 @@ JobListing.init({
     },
     conditionIds: {
         type: DataTypes.JSON
+    },
+    company: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    visaSponsorship: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
     },
     title: {
         type: DataTypes.STRING,

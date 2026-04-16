@@ -171,13 +171,22 @@ export class AdminService {
     // Admin Communication — STK-ADM-APP-003, STK-ADM-APP-004
     // ==========================
     public async sendMailToApplicant(
-        applicantId: number,
+        applicantId?: number,
         subject: string,
         message: string,
-        sendPushNotification: boolean = false
+        sendPushNotification: boolean = false,
+        email?: string
     ) {
-        const user = await userRepository.findById(applicantId);
+        let user;
+        if (applicantId) {
+            user = await userRepository.findById(applicantId);
+        } else if (email) {
+            user = await userRepository.findByEmail(email);
+        }
+
         if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+
+        const targetId = (user as any).id;
 
         // Send email — STK-ADM-APP-003
         await sendEmail((user as any).email, subject, `<p>${message}</p>`);
@@ -185,7 +194,7 @@ export class AdminService {
         // Optionally create push notification — STK-ADM-APP-004, TRUST-008
         if (sendPushNotification) {
             await notificationRepository.create({
-                userId: applicantId,
+                userId: targetId,
                 subject,
                 message,
                 type: 'ADMIN',

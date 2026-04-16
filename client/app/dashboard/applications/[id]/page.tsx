@@ -5,6 +5,7 @@ import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import { useParams } from 'next/navigation';
 import { CONSTANTS } from '@/constants';
 import { PaymentUpload } from '@/components/ui/PaymentUpload';
+import Link from 'next/link';
 
 interface JobStage {
     id: number;
@@ -47,17 +48,8 @@ export default function ApplicationDetailPage() {
         onSuccess: () => refetch()
     });
 
-    if (isLoading) return (
-        <div className="space-y-12 animate-pulse">
-            <div className="h-40 bg-slate-100 rounded-2xl" />
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div className="lg:col-span-8 h-96 bg-slate-100 rounded-2xl" />
-                <div className="lg:col-span-4 h-96 bg-slate-100 rounded-2xl" />
-            </div>
-        </div>
-    );
-
-    if (!app) return <div>Application not found</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Journey Audit...</div>;
+    if (!app) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-red-500">Node not found</div>;
 
     const stages = job?.JobStages?.sort((a: any, b: any) => a.orderPosition - b.orderPosition) || [];
     const currentStageIndex = stages.findIndex((s: any) => s.id === app.currentStageId);
@@ -65,48 +57,39 @@ export default function ApplicationDetailPage() {
     const currentPayment = app.Payments?.find(p => p.stageId === app.currentStageId);
 
     return (
-        <div className="space-y-12 selection:bg-primary-container selection:text-on-primary-container pb-24">
-            {/* Header Section */}
-            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="max-w-[672px]">
-                    <div className="flex items-center gap-2 mb-4">
-                        <span className={`px-3 py-1 text-[10px] font-bold tracking-widest uppercase rounded-full ${app.status === 'Active' ? 'bg-primary/10 text-primary' : 'bg-green-100 text-green-700'
-                            }`}>
-                            {app.status} Application
-                        </span>
-                        <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">• Ref: #CC-{app.id.toString().padStart(5, '0')}</span>
+        <div className="font-sans">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <div className="flex items-center gap-2 mb-2">
+                        <Link href="/dashboard/applications" className="text-slate-400 hover:text-slate-900 transition-colors">
+                            <span className="material-symbols-outlined text-lg">arrow_back</span>
+                        </Link>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Application Portal / #CC-{id.padStart(5, '0')}</span>
                     </div>
-                    <h1 className="text-5xl font-bold tracking-tighter text-on-surface mb-4">{app.JobListing.title}</h1>
-                    <p className="text-lg text-on-surface-variant leading-relaxed font-light">
-                        Visualizing the future of global infrastructure. Currently in the <span className="font-bold text-primary italic uppercase tracking-tighter">{currentStage?.name || 'Processing'}</span> stage.
-                    </p>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">{app.JobListing.title}</h1>
                 </div>
-                <div className="flex gap-3">
-                    <button className="px-6 py-3 bg-surface-container-high text-on-surface-variant rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">
-                        Withdraw
-                    </button>
-                    <button className="px-6 py-3 bg-slate-900 text-white rounded-lg font-bold text-xs uppercase tracking-widest shadow-xl shadow-slate-200 hover:bg-primary transition-all active:scale-95">
-                        Send Message
-                    </button>
+                <div className="flex gap-4">
+                     <span className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest ${
+                        app.status === 'Active' ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/10' : 'bg-slate-50 text-slate-500 border border-slate-100'
+                    }`}>
+                        Status: {app.status}
+                    </span>
                 </div>
-            </header>
+            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Left Column: Stages & Payments */}
-                <div className="lg:col-span-8 space-y-8">
-                    {/* Action Required Card */}
-                    {currentStage?.requiresPayment && (!currentPayment || currentPayment.status !== CONSTANTS.STATUSES.PAYMENT.VERIFIED) && (
-                        <section className="bg-primary/5 rounded-2xl p-8 flex items-start gap-4 border-l-4 border-primary">
-                            <div className="bg-primary/10 p-3 rounded-lg text-primary">
-                                <span className="material-symbols-outlined font-bold">assignment_late</span>
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="text-lg font-bold text-on-surface mb-1 uppercase tracking-tight">Action Required: Strategy Contribution</h3>
-                                <p className="text-on-surface-variant text-sm mb-6 font-medium">To proceed to the next stage, a nominal processing fee of <span className="font-bold text-primary">${currentStage.amount}</span> is required as per the recruitment protocol.</p>
-                                <div className="bg-white/50 p-6 rounded-xl border border-primary/20">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 space-y-8">
+                    {/* Settlement Node (If active) */}
+                    {currentStage?.requiresPayment && (!currentPayment || currentPayment.status !== CONSTANTS.PAYMENT_STATUSES.VERIFIED) && (
+                        <section className="bg-slate-50 rounded-2xl p-8 border border-slate-100 relative overflow-hidden">
+                            <div className="relative z-10">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-4">Required Action</span>
+                                <h3 className="text-xl font-bold text-slate-900 tracking-tight mb-2 uppercase">Strategy Contribution Phase</h3>
+                                <p className="text-sm text-slate-600 mb-8 max-w-[500px]">A processing fee of <span className="font-bold text-slate-900">${currentStage.amount}</span> is required to proceed to the next stage.</p>
+                                
+                                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
                                     <PaymentUpload
-                                        applicationId={app.id}
-                                        stageId={currentStage.id}
+                                        paymentId={currentPayment?.id}
                                         amount={currentStage.amount || 0}
                                         onSuccess={refetch}
                                     />
@@ -115,111 +98,72 @@ export default function ApplicationDetailPage() {
                         </section>
                     )}
 
-                    {/* Stages Grid */}
-                    <section>
-                        <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-xl font-bold tracking-tight uppercase">Application Path</h2>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{currentStageIndex + 1} of {stages.length} Stages</span>
-                        </div>
+                    <section className="space-y-4">
+                        <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pipeline Nodes</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {stages.map((stage: any, index: number) => {
-                                const isPassed = index < currentStageIndex;
-                                const isCurrent = index === currentStageIndex;
-                                const isLocked = index > currentStageIndex;
-
-                                return (
-                                    <div
-                                        key={stage.id}
-                                        className={`p-6 rounded-2xl transition-all border ${isPassed ? 'bg-surface-container-lowest border-slate-100 grayscale-[0.5]' :
-                                                isCurrent ? 'bg-white shadow-2xl shadow-primary/10 border-primary/20 ring-4 ring-primary/5' :
-                                                    'bg-surface-container-low border-transparent opacity-60'
-                                            }`}
-                                    >
-                                        <div className="flex justify-between items-start mb-6">
-                                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isPassed ? 'bg-green-100 text-green-600' :
-                                                    isCurrent ? 'bg-primary text-white shadow-lg shadow-primary/30' :
-                                                        'bg-slate-200 text-slate-400'
-                                                }`}>
-                                                <span className="material-symbols-outlined font-bold" style={{ fontVariationSettings: "'FILL' 1" }}>
-                                                    {isPassed ? 'check_circle' : isCurrent ? 'pending' : 'lock'}
-                                                </span>
-                                            </div>
-                                            <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded ${isPassed ? 'bg-green-50 text-green-600' :
-                                                    isCurrent ? 'bg-primary/10 text-primary' :
-                                                        'bg-slate-100 text-slate-400'
-                                                }`}>
-                                                {isPassed ? 'Passed' : isCurrent ? 'Active' : 'Locked'}
-                                            </span>
-                                        </div>
-                                        <h4 className="font-bold text-on-surface mb-1">{stage.name}</h4>
-                                        <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-tight line-clamp-2">{stage.description.replace(/<[^>]*>?/gm, '')}</p>
-                                        <div className="mt-6 pt-6 border-t border-slate-100 flex justify-between items-center">
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Protocol</span>
-                                            <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
-                                                {stage.requiresPayment ? `Fee: $${stage.amount}` : 'No Fee'}
-                                            </span>
-                                        </div>
-                                        {isCurrent && !stage.requiresPayment && (
-                                            <button
-                                                onClick={() => advanceMutation.mutate({})}
-                                                disabled={advanceMutation.isPending}
-                                                className="w-full mt-6 bg-slate-900 text-white py-3 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-primary transition-all active:scale-95"
-                                            >
-                                                {advanceMutation.isPending ? 'Advancing...' : 'Mark as Complete'}
-                                            </button>
-                                        )}
+                            {stages.map((stage: any, index: number) => (
+                                <div key={stage.id} className={`p-6 rounded-2xl border transition-all ${
+                                    index <= currentStageIndex ? 'bg-white border-slate-100 shadow-sm' : 'bg-slate-50 border-transparent opacity-50'
+                                }`}>
+                                    <div className="flex justify-between items-start mb-6">
+                                        <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded ${
+                                            index < currentStageIndex ? 'bg-emerald-50 text-emerald-600' :
+                                            index === currentStageIndex ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-400'
+                                        }`}>
+                                            {index < currentStageIndex ? 'Completed' : index === currentStageIndex ? 'Active' : 'Locked'}
+                                        </span>
                                     </div>
-                                );
-                            })}
+                                    <h4 className="font-bold text-slate-900 uppercase tracking-tight text-sm mb-1">{stage.name}</h4>
+                                    <p className="text-[10px] text-slate-400 font-medium line-clamp-2">{stage.description.replace(/<[^>]*>?/gm, '')}</p>
+                                    
+                                    <div className="mt-6 pt-4 border-t border-slate-50 flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
+                                        <span className="text-slate-400">Node Fee</span>
+                                        <span className={stage.requiresPayment ? 'text-slate-900' : 'text-slate-400'}>{stage.requiresPayment ? `$${stage.amount}` : 'Zero'}</span>
+                                    </div>
+
+                                    {index === currentStageIndex && !stage.requiresPayment && (
+                                        <button
+                                            onClick={() => advanceMutation.mutate({})}
+                                            className="w-full mt-6 bg-slate-900 text-white py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg"
+                                        >
+                                            {advanceMutation.isPending ? 'Processing...' : 'Advance Node'}
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </section>
                 </div>
 
-                {/* Right Column: Audit Trail & Stats */}
-                <div className="lg:col-span-4 space-y-8">
-                    <section className="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-slate-100/50">
-                        <h2 className="text-xl font-bold tracking-tight mb-8 uppercase text-slate-800">Activity History</h2>
-                        <div className="space-y-8 relative">
-                            <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>
+                <div className="space-y-8">
+                    <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                        <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 pb-4 border-b border-slate-50">Audit Trace</h2>
+                        <div className="space-y-6 relative ml-1">
+                            <div className="absolute left-1 top-2 bottom-2 w-px bg-slate-100" />
                             {[
-                                { title: 'Strategy Contribution', desc: 'Proof of payment submitted.', time: 'Today, 09:12 AM', color: 'bg-primary' },
-                                { title: 'Initial Screening', desc: 'System check passed successfully.', time: 'Oct 15, 02:30 PM', color: 'bg-slate-300' },
-                                { title: 'Application Initiated', desc: 'Package Ref #CC-88294 created.', time: 'Oct 12, 09:00 AM', color: 'bg-slate-300' }
+                                { title: 'Current Node', action: currentStage?.name || 'Processing', time: 'Active' },
+                                { title: 'Security Pass', action: 'Verified', time: 'Stage Start' },
                             ].map((item, i) => (
-                                <div key={i} className="relative pl-10">
-                                    <div className={`absolute left-2 top-1.5 w-3 h-3 rounded-full ${item.color} border-4 border-white z-10 shadow-sm`}></div>
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{item.time}</span>
-                                        <p className="text-xs font-bold text-on-surface uppercase tracking-tight">{item.title}</p>
-                                        <p className="text-[10px] text-on-surface-variant font-medium">{item.desc}</p>
-                                    </div>
+                                <div key={i} className="relative pl-6">
+                                    <div className="absolute left-[-2.5px] top-1.5 w-1.5 h-1.5 rounded-full bg-slate-900" />
+                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">{item.title}</p>
+                                    <p className="text-[11px] font-bold text-slate-900 uppercase">{item.action}</p>
                                 </div>
                             ))}
                         </div>
-                        <button className="w-full mt-8 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest border border-slate-100 rounded-xl hover:bg-slate-50 transition-colors">
-                            View Full Audit Logs
-                        </button>
                     </section>
 
-                    <section className="bg-slate-900 text-white rounded-2xl p-8 shadow-2xl shadow-slate-200">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-2xl font-bold italic tracking-tighter">N</div>
-                            <div>
-                                <h3 className="font-bold text-sm uppercase tracking-widest text-white">Global Partner</h3>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">San Francisco • Technology</p>
-                            </div>
-                        </div>
+                    <section className="bg-slate-900 text-white p-8 rounded-2xl">
+                        <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-6">Pipeline Health</h3>
                         <div className="space-y-4">
-                            {[
-                                { label: 'Completion', value: `${app.completionPercentage}%` },
-                                { label: 'Integrity', value: 'High' },
-                                { label: 'Est. Offer', value: '$180k' }
-                            ].map((stat, i) => (
-                                <div key={i} className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
-                                    <span className="text-slate-500">{stat.label}</span>
-                                    <span>{stat.value}</span>
-                                </div>
-                            ))}
+                            <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
+                                <span className="text-slate-500">Integrity Score</span>
+                                <span>High</span>
+                            </div>
+                            <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
+                                <span className="text-slate-500">Progress</span>
+                                <span>{app.completionPercentage}%</span>
+                            </div>
                         </div>
                     </section>
                 </div>

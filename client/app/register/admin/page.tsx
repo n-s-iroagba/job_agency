@@ -32,7 +32,7 @@ export default function AdminRegisterPage() {
     const { login } = useAuth();
     const [regError, setRegError] = useState<string | null>(null);
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterForm>({
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
         resolver: zodResolver(registerSchema),
     });
 
@@ -42,7 +42,8 @@ export default function AdminRegisterPage() {
             router.push(CONSTANTS.ROUTES.ADMIN.DASHBOARD);
         },
         onError: (error: any) => {
-            setRegError(error.response?.data?.error || 'Admin Provisioning failed.');
+            setRegError(error.response?.data?.error || 'Registration failed.');
+            console.error(error);
         }
     });
 
@@ -51,153 +52,126 @@ export default function AdminRegisterPage() {
         registerMutation.mutate(data);
     };
 
-    const password = watch('password', '');
-
-    const strength = [
-        password.length >= 8,
-        /[A-Z]/.test(password),
-        /[a-z]/.test(password),
-        /[0-9]/.test(password),
-        /[^A-Za-z0-9]/.test(password),
-    ].filter(Boolean).length;
-
-    const strengthLabel = strength <= 2 ? 'Security Low' : strength <= 4 ? 'Optimal' : 'Fortified';
-    const strengthColor = strength <= 2 ? 'bg-error' : strength <= 4 ? 'bg-tertiary' : 'bg-primary';
-
     return (
-        <div className="bg-surface text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary/10 selection:text-primary">
-            {/* Minimal Header */}
-            <header className="h-20 px-12 flex items-center border-b border-slate-100 bg-white/70 backdrop-blur-xl sticky top-0 z-50">
-                <Link href="/" className="text-xl font-black text-blue-800 uppercase tracking-tighter italic">JobNexa Admin</Link>
+        <div className="bg-white text-slate-900 antialiased min-h-screen flex flex-col font-sans">
+            {/* Header */}
+            <header className="h-20 px-8 lg:px-16 flex items-center border-b border-slate-100 sticky top-0 bg-white z-50 justify-between">
+                <Link href="/" className="flex items-center gap-1">
+                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">CareerCurator</span>
+                </Link>
+                <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 rounded-full bg-slate-900"></span>
+                    <span className="text-[10px] font-bold text-slate-900 uppercase tracking-widest">Administrative Portal</span>
+                </div>
             </header>
 
-            <main className="flex-grow flex items-center justify-center p-12">
-                <div className="max-w-[1100px] w-full grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                    {/* Visual Side */}
+            <main className="flex-grow flex items-center justify-center p-8 lg:p-24 bg-slate-50/50">
+                <div className="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                    {/* Brand Messaging */}
                     <div className="hidden lg:block space-y-8">
-                        <div className="inline-flex items-center px-4 py-1.5 bg-slate-900 text-white text-[9px] font-black rounded-full uppercase tracking-[0.3em] italic">
-                            Administrative Provisioning
+                        <div>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] block mb-4">Governance & Operations</span>
+                            <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                                Orchestrate human capital at <span className="italic">scale.</span>
+                            </h1>
                         </div>
-                        <h1 className="text-6xl font-black tracking-tighter text-on-surface leading-[1.1] uppercase italic">
-                            Initialize <span className="text-primary italic">Command</span> Control.
-                        </h1>
-
+                        <p className="text-slate-500 text-lg font-medium leading-relaxed max-w-[440px]">
+                            Join the CareerCurator control plane to manage institutional grade talent acquisitions and automated pipeline logistics.
+                        </p>
+                        <div className="flex items-center gap-4 pt-10 border-t border-slate-200">
+                            <div className="flex -space-x-3">
+                                {[1,2,3].map(i => <div key={i} className="w-10 h-10 rounded-full bg-slate-200 border-2 border-white shadow-sm"></div>)}
+                            </div>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Verified Controller Network</span>
+                        </div>
                     </div>
 
-                    {/* Form Side */}
-                    <div className="bg-white rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] border border-slate-50 p-12 space-y-10">
-                        <div className="space-y-2">
-                            <h2 className="text-2xl font-black tracking-tight text-on-surface uppercase italic">Provision Node</h2>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic opacity-70">REG-004 SECURITY PROTOCOL ACTIVE</p>
+                    {/* Registry Form */}
+                    <div className="w-full max-w-[480px] mx-auto lg:mx-0 bg-white p-10 md:p-14 rounded-[2.5rem] shadow-2xl shadow-slate-900/5 border border-slate-100">
+                        <div className="mb-12">
+                            <h2 className="text-3xl font-bold text-slate-900 tracking-tight mb-2 uppercase">Create Admin</h2>
+                            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed">System Operator Registration & Identity Provision</p>
                         </div>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                             {regError && (
-                                <div className="bg-error/5 text-error text-[10px] p-4 rounded-xl border border-error/10 font-bold italic flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-sm font-bold">warning</span>
+                                <div className="bg-red-50 text-red-600 text-[10px] p-4 rounded-xl border border-red-100 font-bold uppercase tracking-widest flex items-center gap-3">
+                                    <span className="material-symbols-outlined text-base">error</span>
                                     {regError}
                                 </div>
                             )}
 
-                            <div className="grid grid-cols-1 gap-6">
-                                {/* Full Name */}
+                            <div className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic ml-1" htmlFor="fullName">Full Identity</label>
-                                    <div className="relative group">
-                                        <input
-                                            {...register('fullName')}
-                                            className={`w-full bg-slate-50 border-none rounded-xl px-5 py-4 focus:ring-2 transition-all outline-none text-on-surface font-bold text-sm ${errors.fullName ? 'ring-2 ring-error/40' : 'focus:ring-primary/20 focus:bg-white'}`}
-                                            id="fullName"
-                                            placeholder="John Doe"
-                                            type="text"
-                                        />
-                                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 material-symbols-outlined font-bold group-focus-within:text-primary transition-colors">badge</span>
-                                    </div>
-                                    {errors.fullName && <p className="text-error text-[10px] mt-1 font-bold italic ml-1">{errors.fullName.message}</p>}
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="fullName">Full Name</label>
+                                    <input
+                                        {...register('fullName')}
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                        id="fullName"
+                                        placeholder="Identity Label"
+                                        type="text"
+                                    />
+                                    {errors.fullName && <p className="text-red-600 text-[10px] font-bold px-1 tracking-tight">{errors.fullName.message}</p>}
                                 </div>
 
-                                {/* Email */}
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic ml-1" htmlFor="email">Admin Relay Hub</label>
-                                    <div className="relative group">
-                                        <input
-                                            {...register('email')}
-                                            className={`w-full bg-slate-50 border-none rounded-xl px-5 py-4 focus:ring-2 transition-all outline-none text-on-surface font-bold text-sm ${errors.email ? 'ring-2 ring-error/40' : 'focus:ring-primary/20 focus:bg-white'}`}
-                                            id="email"
-                                            placeholder="admin@jobnexa.com"
-                                            type="email"
-                                        />
-                                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 material-symbols-outlined font-bold group-focus-within:text-primary transition-colors">alternate_email</span>
-                                    </div>
-                                    {errors.email && <p className="text-error text-[10px] mt-1 font-bold italic ml-1">{errors.email.message}</p>}
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="email">System Email</label>
+                                    <input
+                                        {...register('email')}
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                        id="email"
+                                        placeholder="operator@curator.io"
+                                        type="email"
+                                    />
+                                    {errors.email && <p className="text-red-600 text-[10px] font-bold px-1 tracking-tight">{errors.email.message}</p>}
                                 </div>
 
-                                {/* Password Cluster */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic ml-1" htmlFor="password">Passphrase</label>
-                                        <div className="relative group">
-                                            <input
-                                                {...register('password')}
-                                                className={`w-full bg-slate-50 border-none rounded-xl px-5 py-4 focus:ring-2 transition-all outline-none text-on-surface font-bold text-sm ${errors.password ? 'ring-2 ring-error/40' : 'focus:ring-primary/20 focus:bg-white'}`}
-                                                id="password"
-                                                placeholder="••••••••"
-                                                type="password"
-                                            />
-                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 material-symbols-outlined font-bold group-focus-within:text-primary transition-colors">lock</span>
-                                        </div>
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="password">Security Case</label>
+                                        <input
+                                            {...register('password')}
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                            id="password"
+                                            placeholder="••••••••"
+                                            type="password"
+                                        />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic ml-1" htmlFor="confirmPassword">Verify Code</label>
-                                        <div className="relative group">
-                                            <input
-                                                {...register('confirmPassword')}
-                                                className={`w-full bg-slate-50 border-none rounded-xl px-5 py-4 focus:ring-2 transition-all outline-none text-on-surface font-bold text-sm ${errors.confirmPassword ? 'ring-2 ring-error/40' : 'focus:ring-primary/20 focus:bg-white'}`}
-                                                id="confirmPassword"
-                                                placeholder="••••••••"
-                                                type="password"
-                                            />
-                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 material-symbols-outlined font-bold group-focus-within:text-primary transition-colors">verified_user</span>
-                                        </div>
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="confirmPassword">Verify Case</label>
+                                        <input
+                                            {...register('confirmPassword')}
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                            id="confirmPassword"
+                                            placeholder="••••••••"
+                                            type="password"
+                                        />
                                     </div>
                                 </div>
-
-                                {/* Strength Visualization */}
-                                <div className="space-y-2 pt-2">
-                                    <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest italic">
-                                        <span className="text-slate-400">Security Entropy</span>
-                                        <span className={strength >= 4 ? 'text-primary' : strength >= 2 ? 'text-tertiary' : 'text-error'}>{strengthLabel}</span>
-                                    </div>
-                                    <div className="flex gap-1.5 h-1.5">
-                                        {[1, 2, 3, 4, 5].map(i => (
-                                            <div key={i} className={`flex-1 rounded-full transition-all duration-500 ${strength >= i ? strengthColor : 'bg-slate-100'}`} />
-                                        ))}
-                                    </div>
-                                    {errors.password && <p className="text-error text-[10px] mt-1 font-bold italic">{errors.password.message}</p>}
-                                    {errors.confirmPassword && <p className="text-error text-[10px] mt-1 font-bold italic">{errors.confirmPassword.message}</p>}
-                                </div>
+                                {errors.password && <p className="text-red-600 text-[10px] font-bold px-1 tracking-tight">{errors.password.message}</p>}
+                                {errors.confirmPassword && <p className="text-red-600 text-[10px] font-bold px-1 tracking-tight">{errors.confirmPassword.message}</p>}
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={registerMutation.isPending}
-                                className="w-full py-6 bg-slate-900 text-white rounded-2xl font-black text-[12px] uppercase tracking-[0.4em] hover:bg-primary transition-all shadow-2xl shadow-slate-200 active:scale-[0.98] disabled:opacity-50 mt-4"
+                                className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/20 hover:bg-slate-800 transition-all active:scale-[0.98] disabled:opacity-50 mt-4"
                             >
-                                {registerMutation.isPending ? 'CONFIGURING NODE...' : 'INITIALIZE ADMIN NODE'}
+                                {registerMutation.isPending ? 'Provisioning Identity...' : 'Initialize Controller Registry'}
                             </button>
                         </form>
 
-                        <div className="text-center pt-4">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic opacity-80">
-                                Existing Authorized Entity? <Link className="text-primary hover:underline ml-2" href={CONSTANTS.ROUTES.LOGIN}>Authenticate Here</Link>
+                        <div className="text-center pt-10 border-t border-slate-50 mt-10">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                Authorized Operator? <Link className="text-slate-900 hover:underline ml-1" href={CONSTANTS.ROUTES.LOGIN}>Authenticate</Link>
                             </p>
                         </div>
                     </div>
                 </div>
             </main>
 
-            <footer className="h-24 flex items-center justify-center border-t border-slate-50 bg-slate-50 relative overflow-hidden">
-                <p className="text-slate-300 text-[9px] font-black uppercase tracking-[0.5em] italic z-10">© 2024 JobNexa • Executive Management Layer • Global Command Center</p>
+            <footer className="py-12 flex items-center justify-center border-t border-slate-100 bg-white">
+                <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.3em]">© 2024 CAREERCURATOR ENTERPRISE • ADMINISTRATIVE ZONE</p>
             </footer>
         </div>
     );

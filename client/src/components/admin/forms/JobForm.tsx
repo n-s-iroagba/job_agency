@@ -37,6 +37,9 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
         initialData?.JobConditions?.map(c => c.id) || []
     );
 
+    const [company, setCompany] = useState(initialData?.company || '');
+    const [visaSponsorship, setVisaSponsorship] = useState(initialData?.visaSponsorship || false);
+
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
@@ -77,113 +80,131 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                 conditionsIds: selectedConditions
             });
         } catch (err) {
-            alert(`Failed to ${isEdit ? 'update' : 'create'} job listing`);
+            console.error(err);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-3">
-            <div className="lg:col-span-8 space-y-8">
-                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50 space-y-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        <div className="sm:col-span-2 space-y-3">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Job Title</label>
-                            <input
-                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-6 text-sm font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all shadow-inner"
-                                placeholder="e.g. Senior Experience Designer"
-                                type="text"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="space-y-8">
-                            <label className="text-[10px]  font-black text-slate-400 uppercase tracking-widest pl-1">Category</label>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6 font-sans">
+            <div className="lg:col-span-8 space-y-6">
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-8">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Job Title</label>
+                        <input
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            placeholder="e.g. Senior Software Engineer"
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                            <div className="relative">
-                                <br />
-                                <select
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-6 pr-10 text-sm font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer shadow-inner"
-                                    value={categoryId}
-                                    onChange={(e) => setCategoryId(e.target.value)}
-                                    required
-                                >
-                                    <option value="">Select Category</option>
-                                    {categories.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                    ))}
-                                </select>
-                                <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
-                            </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Category</label>
+                            <select
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                value={categoryId}
+                                onChange={(e) => setCategoryId(e.target.value)}
+                                required
+                            >
+                                <option value="">Select Category</option>
+                                {categories.map(cat => (
+                                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                ))}
+                            </select>
                         </div>
-                        <div className="space-y-3">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Employment Type</label>
-                            <div className="relative">
-                                <select
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-6 pr-10 text-sm font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer shadow-inner"
-                                    value={employmentType}
-                                    onChange={(e) => setEmploymentType(e.target.value)}
-                                    required
-                                >
-                                    <option value="Full-time">Full-time</option>
-                                    <option value="Contract / Freelance">Contract / Freelance</option>
-                                    <option value="Part-time">Part-time</option>
-                                    <option value="Internship">Internship</option>
-                                </select>
-                                <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
-                            </div>
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Employment Type</label>
+                            <select
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                value={employmentType}
+                                onChange={(e) => setEmploymentType(e.target.value)}
+                                required
+                            >
+                                <option value="Full-time">Full-time</option>
+                                <option value="Contract">Contract</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Internship">Internship</option>
+                            </select>
                         </div>
-                        <div className="sm:col-span-2 space-y-3">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Location</label>
-                            <div className="relative">
-                                <span className="material-symbols-outlined absolute left-6 top-1/2 -translate-y-1/2 text-primary font-bold">location_on</span>
-                                <input
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-14 pr-6 text-sm font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all shadow-inner"
-                                    placeholder="London, UK or Remote"
-                                    type="text"
-                                    value={location}
-                                    onChange={(e) => setLocation(e.target.value)}
-                                    required
-                                />
-                            </div>
-                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Company</label>
+                        <input
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            placeholder="Company"
+                            type="text"
+                            value={company}
+                            onChange={(e) => setCompany(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Visa Sponsorship</label>
+                        <input
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            placeholder="Visa Sponsorship"
+                            type="checkbox"
+                            checked={visaSponsorship}
+                            onChange={(e) => setVisaSponsorship(e.target.checked)}
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Location</label>
+                        <input
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            placeholder="City, Country or Remote"
+                            type="text"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            required
+                        />
                     </div>
                 </div>
 
-                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50 space-y-6">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Job Description</label>
-                    <textarea
-                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-5 px-6 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all resize-none shadow-inner"
-                        placeholder="Describe the mission..."
-                        rows={10}
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    ></textarea>
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-6">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Job Description</label>
+                        <textarea
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none resize-none leading-relaxed"
+                            placeholder="Enter the job description..."
+                            rows={10}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        ></textarea>
+                    </div>
                 </div>
 
-                <div className="bg-slate-900 p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-slate-800 space-y-6">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Candidate Requirements</label>
-                    <textarea
-                        className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-5 px-6 text-sm font-medium focus:bg-slate-800 focus:ring-2 focus:ring-blue-500/30 transition-all resize-none shadow-inner text-white"
-                        placeholder="List essential skills..."
-                        rows={8}
-                        value={requirements}
-                        onChange={(e) => setRequirements(e.target.value)}
-                        required
-                    ></textarea>
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-6">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Requirements</label>
+                        <textarea
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none resize-none leading-relaxed"
+                            placeholder="List requirements..."
+                            rows={8}
+                            value={requirements}
+                            onChange={(e) => setRequirements(e.target.value)}
+                            required
+                        ></textarea>
+                    </div>
                 </div>
 
-                {/* Benefits & Conditions (Production Upgrade) */}
-                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50 space-y-10">
-                    <div className="space-y-6">
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-10">
+                    <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Targeted Benefits</label>
-                            <Link href="/admin/benefits/new">
-                                <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] cursor-pointer hover:underline">+ Provision New</span>
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Benefits</label>
+                            <Link href="/admin/benefits/new" className="text-[9px] font-bold text-slate-900 uppercase tracking-widest hover:underline">
+                                + Add New
                             </Link>
                         </div>
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-2">
                             {allBenefits.map(benefit => {
                                 const isSelected = selectedBenefits.includes(benefit.id);
                                 return (
@@ -191,29 +212,26 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                         key={benefit.id}
                                         type="button"
                                         onClick={() => setSelectedBenefits(prev => isSelected ? prev.filter(id => id !== benefit.id) : [...prev, benefit.id])}
-                                        className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${isSelected
-                                            ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                                        className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
+                                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/10'
                                             : 'bg-slate-50 text-slate-400 border-slate-100 hover:border-slate-300'
                                             }`}
                                     >
                                         {benefit.benefitType}
-                                        <br />
-
-                                        {benefit.value}
                                     </button>
                                 );
                             })}
                         </div>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Operational Conditions</label>
-                            <Link href="/admin/conditions/new">
-                                <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] cursor-pointer hover:underline">+ Provision New</span>
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Conditions</label>
+                            <Link href="/admin/conditions/new" className="text-[9px] font-bold text-slate-900 uppercase tracking-widest hover:underline">
+                                + Add New
                             </Link>
                         </div>
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-2">
                             {allConditions.map(condition => {
                                 const isSelected = selectedConditions.includes(condition.id);
                                 return (
@@ -221,8 +239,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                         key={condition.id}
                                         type="button"
                                         onClick={() => setSelectedConditions(prev => isSelected ? prev.filter(id => id !== condition.id) : [...prev, condition.id])}
-                                        className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${isSelected
-                                            ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                                        className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
+                                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/10'
                                             : 'bg-slate-50 text-slate-400 border-slate-100 hover:border-slate-300'
                                             }`}
                                     >
@@ -235,14 +253,12 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                 </div>
             </div>
 
-            <div className="lg:col-span-4 space-y-8">
-                <div className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-200/50 shadow-inner space-y-8">
-                    <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[16px]">settings</span> Controls
-                    </h3>
-                    <div className="flex items-center justify-between p-6 bg-white rounded-2xl shadow-xl shadow-slate-200/30 border border-slate-100">
-                        <div className="space-y-1">
-                            <p className="text-xs font-black uppercase tracking-tight text-slate-800 border-l-2 border-emerald-500 pl-2">Active</p>
+            <div className="lg:col-span-4 space-y-6">
+                <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 space-y-8 sticky top-24">
+                    <div className="flex items-center justify-between p-4 bg-white rounded-xl border border-slate-100">
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-900">Active Status</h4>
+                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Accepting applications</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input
@@ -251,20 +267,20 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                 checked={isActive}
                                 onChange={() => setIsActive(!isActive)}
                             />
-                            <div className="w-14 h-7 bg-slate-300 rounded-full peer peer-checked:bg-primary transition-all after:content-[''] after:absolute after:top-[2px] after:left-[3px] after:bg-white after:rounded-full after:h-6 after:w-6 shadow-inner"></div>
+                            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-slate-900 transition-all after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                         </label>
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
                         <button
-                            className="w-full py-4 bg-primary bg-gradient-to-r from-primary to-blue-700 text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                            className="w-full py-4 bg-slate-900 text-white rounded-lg font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-[0.98] disabled:opacity-50"
                             type="submit"
                             disabled={mutation.isPending}
                         >
-                            {mutation.isPending ? 'Processing...' : isEdit ? 'Update Listing' : 'Publish Listing'}
+                            {mutation.isPending ? 'Saving...' : isEdit ? 'Update Listing' : 'Publish Listing'}
                         </button>
-                        <Link href="/admin/jobs">
-                            <button className="w-full py-4 bg-white text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] border border-slate-200 rounded-xl hover:bg-slate-50 transition-all" type="button">Discard</button>
+                        <Link href="/admin/jobs" className="w-full text-center py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all">
+                            Cancel
                         </Link>
                     </div>
                 </div>

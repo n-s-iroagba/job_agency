@@ -13,56 +13,74 @@ export default function CryptoWalletViewPage() {
         enabled: !!id
     });
 
-    if (isLoading) return <div className="p-12 text-center font-black uppercase tracking-widest text-slate-400">Verifying Ledger Record...</div>;
-    if (error) return <div className="p-12 text-center text-red-500 font-black uppercase tracking-widest">Error Loading Ledger</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Wallet Details...</div>;
+    if (error) return <div className="p-12 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest">Error Loading Record</div>;
+
+    const copyAddress = () => {
+        navigator.clipboard.writeText(wallet?.walletAddress || '');
+        // Silent success or console log instead of alert
+    };
 
     return (
-        <div className="flex flex-col min-h-screen bg-surface pb-16 overflow-x-hidden">
-            <header className="sticky top-0 z-40 h-20 flex justify-between items-center px-8 bg-white/70 backdrop-blur-xl border-b border-surface-container-high/50 shadow-sm">
-                <div className="flex flex-col">
-                    <h2 className="text-xl font-black tracking-tight uppercase italic text-slate-900">CareerCurator</h2>
+        <div className="font-sans">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <div className="flex items-center gap-2 mb-2">
+                        <Link href="/admin/crypto-wallets" className="text-slate-400 hover:text-slate-900 transition-colors">
+                            <span className="material-symbols-outlined text-lg">arrow_back</span>
+                        </Link>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Finance / Crypto Wallets / {id}</span>
+                    </div>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">{wallet?.displayLabel || wallet?.currencyName}</h1>
                 </div>
                 <Link href={`/admin/crypto-wallets/${id}/edit`}>
-                    <button className="px-6 py-2 bg-primary text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl shadow-lg shadow-primary/20 hover:scale-105 transition-all flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[16px]">edit</span> Update Wallet
+                    <button className="bg-slate-900 text-white px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 flex items-center gap-2">
+                        <span className="material-symbols-outlined text-base">edit</span>
+                        Edit Wallet
                     </button>
                 </Link>
-            </header>
+            </div>
 
-            <main className="flex-1 w-full pt-16 pb-16 px-6 md:px-12 max-w-[896px] mx-auto">
-                <Link href="/admin/crypto-wallets" className="group flex items-center gap-2 text-slate-500 hover:text-primary transition-colors mb-8 w-fit">
-                    <span className="material-symbols-outlined text-[18px] transition-transform group-hover:-translate-x-1">arrow_back</span>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Back to Finance Hub</span>
-                </Link>
-
-                <div className="mb-12">
-                    <h1 className="text-[3.5rem] font-black text-on-surface leading-[1.1] tracking-tighter mb-4 italic uppercase text-slate-900">{wallet?.displayLabel}</h1>
-                    <div className="flex gap-4">
-                        <span className="px-3 py-1 bg-blue-100 text-primary text-[9px] font-black uppercase tracking-widest rounded-lg border border-blue-200">
-                            {wallet?.currencyName} / {wallet?.networkType}
-                        </span>
-                        <span className={`px-3 py-1 text-[9px] font-black uppercase tracking-widest rounded-lg border ${wallet?.isActive ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-red-100 text-red-700 border-red-200'}`}>
-                            {wallet?.isActive ? 'Active' : 'Inactive'}
-                        </span>
-                    </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-slate-900">
+                <div className="lg:col-span-2 space-y-8">
+                    <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 pb-4 border-b border-slate-50">Wallet Address</h3>
+                        <div className="flex items-center gap-4 bg-slate-50 p-6 rounded-xl border border-slate-100 group relative">
+                            <p className="text-lg font-mono font-bold text-slate-900 break-all leading-relaxed pr-12">
+                                {wallet?.walletAddress}
+                            </p>
+                            <button 
+                                onClick={copyAddress}
+                                className="absolute right-6 text-slate-400 hover:text-slate-900 transition-colors"
+                            >
+                                <span className="material-symbols-outlined">content_copy</span>
+                            </button>
+                        </div>
+                    </section>
                 </div>
 
-                <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-50">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-6">Settlement Address</h3>
-                    <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-inner group relative">
-                        <p className="text-lg font-mono font-bold text-slate-900 break-all leading-relaxed pr-12">{wallet?.walletAddress}</p>
-                        <button 
-                            className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors"
-                            onClick={() => {
-                                navigator.clipboard.writeText(wallet?.walletAddress || '');
-                                alert('Address copied to clipboard');
-                            }}
-                        >
-                            <span className="material-symbols-outlined">content_copy</span>
-                        </button>
-                    </div>
+                <div className="space-y-8">
+                    <section className="bg-slate-900 text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10">
+                        <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-6 pb-4 border-b border-slate-800">Wallet Metadata</h3>
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Currency</span>
+                                <span className="text-sm font-medium">{wallet?.currencyName}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Network</span>
+                                <span className="text-sm font-medium">{wallet?.networkType}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status</span>
+                                <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${wallet?.isActive ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
+                                    {wallet?.isActive ? 'Active' : 'Inactive'}
+                                </span>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </main>
+            </div>
         </div>
     );
 }

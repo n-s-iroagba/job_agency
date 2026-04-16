@@ -44,7 +44,12 @@ export class ApplicationRepository {
     // Maps to STK-APP-APPLY-002, SCR-APP-JOBAPPLY-001
     public async findById(id: number, transaction?: Transaction): Promise<Application | null> {
         return Application.findByPk(id, {
-            include: [JobListing, Payment, { model: User, attributes: ['id', 'fullName', 'email'] }],
+            include: [
+                JobListing, 
+                Payment, 
+                { model: User, attributes: ['id', 'fullName', 'email'] },
+                { model: JobStage, as: 'JobStages' }
+            ],
             transaction
         });
     }

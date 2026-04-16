@@ -18,7 +18,7 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
     const [accountType, setAccountType] = useState(initialData?.accountType || 'normal');
     const [routingCode, setRoutingCode] = useState(initialData?.routingCode || '');
     const [currency, setCurrency] = useState(initialData?.currency || 'USD');
-    const [instructions, setInstructions] = useState(initialData?.instructions || '');
+
 
     useEffect(() => {
         if (initialData) {
@@ -27,7 +27,7 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
             setAccountType(initialData.accountType);
             setRoutingCode(initialData.routingCode || '');
             setCurrency(initialData.currency);
-            setInstructions(initialData.instructions || '');
+
         }
     }, [initialData]);
 
@@ -51,134 +51,101 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
                 accountType,
                 routingCode,
                 currency,
-                instructions,
             });
         } catch (err) {
-            alert(`Failed to ${isEdit ? 'update' : 'create'} bank account`);
+            console.error(err);
         }
     };
 
     return (
-        <div className="bg-white rounded-[2.5rem] border border-slate-50 shadow-2xl shadow-slate-200/50 overflow-hidden text-slate-900 selection:bg-primary/10 selection:text-primary">
-            <div className="p-8 md:p-12">
+        <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden text-slate-900 font-sans">
+            <div className="p-6 md:p-10">
                 <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="space-y-3">
-                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest" htmlFor="bank_name">Institutional Name</label>
-                        <div className="relative">
-                            <span className="absolute left-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">account_balance</span>
+                    <div className="space-y-2">
+                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="bank_name">Bank Name</label>
+                        <input
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            id="bank_name"
+                            placeholder="e.g. JPMorgan Chase"
+                            type="text"
+                            value={bankName}
+                            onChange={(e) => setBankName(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="account_number">Account Number</label>
                             <input
-                                className="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 placeholder:text-slate-400 shadow-inner focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300"
-                                id="bank_name"
-                                placeholder="e.g. International Finance Corp"
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                                id="account_number"
+                                placeholder="..."
                                 type="text"
-                                value={bankName}
-                                onChange={(e) => setBankName(e.target.value)}
+                                value={accountNumber}
+                                onChange={(e) => setAccountNumber(e.target.value)}
                                 required
                             />
                         </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest" htmlFor="account_number">Account Number</label>
-                            <div className="relative">
-                                <span className="absolute left-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">payments</span>
-                                <input
-                                    className="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 placeholder:text-slate-400 shadow-inner focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300"
-                                    id="account_number"
-                                    placeholder="0000 0000 0000"
-                                    type="text"
-                                    value={accountNumber}
-                                    onChange={(e) => setAccountNumber(e.target.value)}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="space-y-3">
-                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest" htmlFor="account_type">Account Type</label>
-                            <div className="relative">
-                                <span className="absolute left-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">category</span>
-                                <select
-                                    className="w-full pl-14 pr-10 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 appearance-none shadow-inner"
-                                    id="account_type"
-                                    value={accountType}
-                                    onChange={(e) => setAccountType(e.target.value)}
-                                >
-                                    <option value="normal">Normal</option>
-                                    <option value="open_beneficiary">Open Beneficiary</option>
-                                </select>
-                                <span className="absolute right-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none text-slate-400">expand_more</span>
-                            </div>
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="account_type">Account Type</label>
+                            <select
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                id="account_type"
+                                value={accountType}
+                                onChange={(e) => setAccountType(e.target.value)}
+                            >
+                                <option value="normal">Normal</option>
+                                <option value="open_beneficiary">Open Beneficiary</option>
+                            </select>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest" htmlFor="routing_code">Routing / Sort Code</label>
-                            <div className="relative">
-                                <span className="absolute left-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">pin</span>
-                                <input
-                                    className="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 placeholder:text-slate-400 shadow-inner focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300"
-                                    id="routing_code"
-                                    placeholder="XY-12345"
-                                    type="text"
-                                    value={routingCode}
-                                    onChange={(e) => setRoutingCode(e.target.value)}
-                                    required
-                                />
-                            </div>
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="routing_code">Routing / Sort Code</label>
+                            <input
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                                id="routing_code"
+                                placeholder="..."
+                                type="text"
+                                value={routingCode}
+                                onChange={(e) => setRoutingCode(e.target.value)}
+                                required
+                            />
                         </div>
-                        <div className="space-y-3">
-                            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest" htmlFor="currency">Currency Code</label>
-                            <div className="relative">
-                                <span className="absolute left-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">currency_exchange</span>
-                                <select
-                                    className="w-full pl-14 pr-10 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 appearance-none shadow-inner"
-                                    id="currency"
-                                    value={currency}
-                                    onChange={(e) => setCurrency(e.target.value)}
-                                >
-                                    <option value="USD">USD - United States Dollar</option>
-                                    <option value="EUR">EUR - Euro</option>
-                                    <option value="GBP">GBP - British Pound</option>
-                                    <option value="SGD">SGD - Singapore Dollar</option>
-                                    <option value="NGN">NGN - Nigerian Naira</option>
-                                </select>
-                                <span className="absolute right-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none text-slate-400">expand_more</span>
-                            </div>
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="currency">Currency Code</label>
+                            <select
+                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                id="currency"
+                                value={currency}
+                                onChange={(e) => setCurrency(e.target.value)}
+                            >
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="SGD">SGD</option>
+
+                            </select>
                         </div>
                     </div>
 
-                    <div className="space-y-3">
-                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest" htmlFor="instructions">Processing Constraints</label>
-                        <textarea
-                            className="w-full pl-14 pr-6 py-5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-900 placeholder:text-slate-400 shadow-inner focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all duration-300 resize-none leading-relaxed"
-                            id="instructions"
-                            placeholder="Mention any specific processing requirements..."
-                            rows={4}
-                            value={instructions}
-                            onChange={(e) => setInstructions(e.target.value)}
-                        ></textarea>
-                    </div>
 
-                    <div className="pt-8 flex flex-col sm:flex-row items-center justify-end gap-4 border-t border-slate-100">
-                        <Link href="/admin/bank-accounts" className="w-full sm:w-auto">
-                            <button className="w-full sm:w-auto px-10 py-4 text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-50 rounded-xl transition-all" type="button">Discard</button>
+
+                    <div className="pt-8 flex items-center justify-end gap-4 border-t border-slate-50">
+                        <Link href="/admin/bank-accounts" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all px-4">
+                            Cancel
                         </Link>
                         <button
-                            className="w-full sm:w-auto px-12 py-4 bg-primary bg-gradient-to-r from-primary to-blue-700 text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
+                            className="px-8 py-3 bg-slate-900 text-white font-bold text-[10px] uppercase tracking-widest rounded-lg shadow-lg shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-95 disabled:opacity-50"
                             type="submit"
                             disabled={mutation.isPending}
                         >
-                            <span className="material-symbols-outlined text-[16px] font-bold">verified_user</span>
-                            {mutation.isPending ? 'Validating...' : isEdit ? 'Update Account' : 'Secure Account'}
+                            {mutation.isPending ? 'Saving...' : isEdit ? 'Update Account' : 'Save Account'}
                         </button>
                     </div>
                 </form>
-            </div>
-            <div className="bg-slate-50 px-8 py-5 flex items-center justify-center gap-3 text-emerald-600 border-t border-slate-200/50">
-                <span className="material-symbols-outlined text-[20px]">shield</span>
-                <span className="text-[9px] font-black uppercase tracking-[0.2em]">AES-256 Encrypted Infrastructure</span>
             </div>
         </div>
     );

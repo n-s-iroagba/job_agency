@@ -187,6 +187,10 @@ export class AuthService {
         return user;
     }
 
+    public async updateProfile(userId: number, data: { fullName?: string }): Promise<any> {
+        return userRepository.update(userId, data);
+    }
+
     private getPremiumTemplate(title: string, message: string, buttonLabel: string, buttonUrl: string): string {
         return `
             <!DOCTYPE html>

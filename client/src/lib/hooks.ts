@@ -8,7 +8,7 @@ import {
 import api from './api';
 
 export function useApiQuery<T>(
-    key: string[],
+    key: any[],
     url: string,
     options?: Omit<UseQueryOptions<T, Error>, 'queryKey' | 'queryFn'>
 ) {
@@ -22,20 +22,30 @@ export function useApiQuery<T>(
     });
 }
 
-export function useApiMutation<TVariables, TData>(
+export function useApiMutation<TVariables = any, TData = any>(
     method: 'post' | 'put' | 'delete' | 'patch',
     baseUrl: string,
     options?: UseMutationOptions<TData, Error, TVariables>
 ) {
-    const queryClient = useQueryClient();
     return useMutation<TData, Error, TVariables>({
         mutationFn: async (variables: any) => {
-            // If delete, variables might be an ID to append to URL or not
-            const url = method === 'delete' && typeof variables === 'number'
-                ? `${baseUrl}/${variables}`
-                : baseUrl;
+            let url = baseUrl;
+            let payload = variables;
 
-            const { data } = await api[method]<TData>(url, variables);
+            // Handle dynamic segments if variables has a params object
+            if (variables && typeof variables === 'object' && ('params' in variables || 'data' in variables)) {
+                if (variables.params) {
+                    Object.keys(variables.params).forEach(key => {
+                        url = url.replace(`:${key}`, variables.params[key]);
+                    });
+                }
+                payload = variables.data;
+            } else if (method === 'delete' && (typeof variables === 'number' || typeof variables === 'string')) {
+                url = `${baseUrl}/${variables}`;
+                payload = undefined;
+            }
+
+            const { data } = await api[method]<TData>(url, payload);
             return data;
         },
         ...options,

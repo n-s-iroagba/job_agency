@@ -23,11 +23,16 @@ export class ApplicationService {
         for (const app of appsList) {
             // Collect pending stages (active apps with a current stage)
             if (app.status === CONSTANTS.APPLICATION_STATUSES.ACTIVE && app.currentStageId) {
+                const currentStage = await jobStageRepository.findById(app.currentStageId);
                 pendingStages.push({
                     applicationId: app.id,
                     jobTitle: app.JobListing?.title,
                     stageId: app.currentStageId,
                     completionPercentage: app.completionPercentage,
+                    requiresPayment: currentStage?.requiresPayment || false,
+                    amount: currentStage?.amount,
+                    currency: currentStage?.currency,
+                    stageName: currentStage?.name,
                 });
             }
 
@@ -72,33 +77,56 @@ export class ApplicationService {
         return app;
     }
 
-    // Maps to STK-APP-APPLY-001, TRUST-009 — disclose all stages upfront before applicant commits
+    // Maps to STK-APP-APPLY-001, TRUST-009 — Duplicate stages from JobTemplate to Application instance upfront
     public async startApplication(userId: number, jobId: number) {
         const t = await sequelize.transaction();
         try {
             const job = await jobRepository.findById(jobId, t);
             if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-            const stages = await jobStageRepository.findByJobId(jobId, t);
-            const firstStageId = stages.rows.length > 0 ? stages.rows[0].id : null;
+            const templateStages = await jobStageRepository.findByJobId(jobId, t);
 
             const newApp = await applicationRepository.create({
                 userId,
                 jobId,
-                currentStageId: firstStageId,
                 status: CONSTANTS.APPLICATION_STATUSES.DRAFT,
-                completionPercentage: stages.rows.length === 0 ? 100 : 0,
+                completionPercentage: templateStages.rows.length === 0 ? 100 : 0,
             }, t);
 
-            // If the first stage requires payment, create a pending payment record
-            if (stages.rows.length > 0 && stages.rows[0].requiresPayment && firstStageId) {
-                await paymentRepository.create({
+            // Duplicate stages into this application
+            const appStages: any[] = [];
+            for (const ts of templateStages.rows) {
+                const ns = await jobStageRepository.create({
                     applicationId: newApp.id,
-                    stageId: firstStageId,
-                    status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
-                    amount: stages.rows[0].amount,
-                    currency: stages.rows[0].currency,
+
+                    name: ts.name,
+                    description: ts.description,
+                    orderPosition: ts.orderPosition,
+                    requiresPayment: ts.requiresPayment,
+                    amount: ts.amount,
+                    currency: ts.currency,
+                    instructions: ts.instructions,
+                    deadlineDays: ts.deadlineDays,
+                    notifyEmail: ts.notifyEmail,
+                    notifyPush: ts.notifyPush
                 }, t);
+                appStages.push(ns);
+            }
+
+            const firstStageId = appStages.length > 0 ? appStages[0].id : null;
+            if (firstStageId) {
+                await applicationRepository.update(newApp.id, { currentStageId: firstStageId }, t);
+
+                // If the first stage requires payment, create a pending payment record
+                if (appStages[0].requiresPayment) {
+                    await paymentRepository.create({
+                        applicationId: newApp.id,
+                        stageId: firstStageId,
+                        status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
+                        amount: appStages[0].amount,
+                        currency: appStages[0].currency,
+                    }, t);
+                }
             }
 
             // DM-003: Immediate feedback on application start
@@ -124,7 +152,7 @@ export class ApplicationService {
             const app = await applicationRepository.findById(applicationId, t);
             if (!app) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-            const stages = await jobStageRepository.findByJobId(app.jobId, t);
+            const stages = await jobStageRepository.findByApplicationId(applicationId, t);
 
             let nextStageId: number | null = null;
             let percentage = 100;
@@ -176,6 +204,48 @@ export class ApplicationService {
             await t.rollback();
             throw e;
         }
+    }
+
+    // New: Admin can inject ad-hoc stages into an application
+    public async addStageToApplication(applicationId: number, stageData: any) {
+        const t = await sequelize.transaction();
+        try {
+            const app = await applicationRepository.findById(applicationId, t);
+            if (!app) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+
+            const existingStages = await jobStageRepository.findByApplicationId(applicationId, t);
+            const nextPosition = existingStages.rows.length > 0
+                ? Math.max(...existingStages.rows.map(s => s.orderPosition)) + 1
+                : 1;
+
+            const newStage = await jobStageRepository.create({
+                ...stageData,
+                applicationId,
+                orderPosition: stageData.orderPosition || nextPosition
+            }, t);
+
+            await t.commit();
+            return newStage;
+        } catch (e) {
+            await t.rollback();
+            throw e;
+        }
+    }
+
+    public async getApplicationStage(stageId: number) {
+        const stage = await jobStageRepository.findById(stageId);
+        if (!stage) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return stage;
+    }
+
+    public async updateApplicationStage(stageId: number, data: any) {
+        const [updatedCount] = await jobStageRepository.update(stageId, data);
+        if (updatedCount === 0) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return jobStageRepository.findById(stageId);
+    }
+
+    public async deleteApplicationStage(stageId: number) {
+        await jobStageRepository.delete(stageId);
     }
 }
 

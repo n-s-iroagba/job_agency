@@ -8,8 +8,12 @@ export class NotificationController {
         try {
             const userId = (req as any).user.id;
             const notifications = await notificationService.getUserNotifications(userId);
-            res.status(CONSTANTS.HTTP_STATUS.OK).json(notifications);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json({
+                rows: notifications,
+                count: notifications.length
+            });
         } catch (error) {
+            console.error('[NotificationController.getUserNotifications]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -20,6 +24,7 @@ export class NotificationController {
             const notification = await notificationService.markAsRead(id);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(notification);
         } catch (error) {
+            console.error('[NotificationController.markAsRead]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }

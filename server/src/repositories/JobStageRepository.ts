@@ -5,7 +5,15 @@ export class JobStageRepository {
     // Maps to STK-ADM-STAGE-001, STK-ADM-STAGE-005, SCR-ADM-STAGE-001
     public async findByJobId(jobId: number, transaction?: Transaction): Promise<{ rows: JobStage[], count: number }> {
         return JobStage.findAndCountAll({
-            where: { jobId },
+            where: { jobId, applicationId: null },
+            order: [['orderPosition', 'ASC']],
+            transaction
+        });
+    }
+
+    public async findByApplicationId(applicationId: number, transaction?: Transaction): Promise<{ rows: JobStage[], count: number }> {
+        return JobStage.findAndCountAll({
+            where: { applicationId },
             order: [['orderPosition', 'ASC']],
             transaction
         });
@@ -22,7 +30,8 @@ export class JobStageRepository {
 
     // Maps to STK-ADM-STAGE-001, STK-ADM-STAGE-003, STK-ADM-STAGE-004
     public async update(id: number, data: any, transaction?: Transaction): Promise<[number, JobStage[]]> {
-        return JobStage.update(data, { where: { id }, returning: true, transaction });
+        const [updatedCount] = await JobStage.update(data, { where: { id }, transaction });
+        return [updatedCount, []];
     }
 
     // Maps to STK-ADM-STAGE-001

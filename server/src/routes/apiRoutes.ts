@@ -24,6 +24,7 @@ router.post('/auth/login', authController.login.bind(authController));
 router.post('/auth/refresh', authController.refresh.bind(authController));
 router.post('/auth/logout', authController.logout.bind(authController));
 router.get('/auth/me', requireAuth, authController.getMe.bind(authController));
+router.put('/auth/profile', requireAuth, authController.updateProfile.bind(authController));
 router.get('/auth/verify-email', authController.verifyEmail.bind(authController));
 router.post('/auth/forgot-password', authController.forgotPassword.bind(authController));
 router.post('/auth/reset-password', authController.resetPassword.bind(authController));
@@ -80,6 +81,13 @@ router.get('/admin/applications', ...adminMW, applicationController.getAdminAppl
 router.get('/admin/applications/drafts', ...adminMW, applicationController.getDraftApplications.bind(applicationController));
 // STK-ADM-APP-003, STK-ADM-APP-004: send mail/push to applicant
 router.post('/admin/mail', ...adminMW, adminController.sendMailToApplicant.bind(adminController));
+
+// New: manage ad-hoc stages for specific applications
+router.post('/admin/applications/:id/stages', ...adminMW, applicationController.addStage.bind(applicationController));
+router.get('/admin/applications/:id/stages/:stageId', ...adminMW, applicationController.getStageDetails.bind(applicationController));
+router.put('/admin/applications/:id/stages/:stageId', ...adminMW, applicationController.updateStage.bind(applicationController));
+router.delete('/admin/applications/:id/stages/:stageId', ...adminMW, applicationController.deleteStage.bind(applicationController));
+router.get('/admin/applications/:id', ...adminMW, applicationController.getApplicationDetails.bind(applicationController));
 
 // STK-ADM-PAY-003: unpaid payments view
 router.get('/admin/payments/unpaid', ...adminMW, paymentController.getPendingPaymentsAdmin.bind(paymentController));

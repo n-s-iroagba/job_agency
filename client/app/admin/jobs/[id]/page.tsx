@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+
 import { useParams } from 'next/navigation';
 import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
@@ -13,157 +13,112 @@ export default function JobViewPage() {
         enabled: !!id
     });
 
-    if (isLoading) return <div className="p-12 text-center font-black uppercase tracking-widest text-slate-400">Contextualizing Opportunity...</div>;
-    if (error) return <div className="p-12 text-center text-red-500 font-black uppercase tracking-widest">Error Loading Listing</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Job Details...</div>;
+    if (error) return <div className="p-12 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest">Error Loading Listing</div>;
 
     return (
-        <div className="flex flex-col min-h-screen bg-slate-50">
-            {/* Standard Admin Header */}
-            <header className="h-16 px-6 bg-white border-b border-slate-200 flex items-center justify-between sticky top-0 z-40">
-                <div className="flex items-center gap-4">
-                    <Link href="/admin/jobs" className="p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
-                        <span className="material-symbols-outlined text-lg">arrow_back</span>
-                    </Link>
-                    <h1 className="text-lg font-bold text-slate-800 tracking-tight">Listing Review</h1>
-                </div>
-
-
-            </header>
-
-            <main className="p-6 md:p-10 max-w-6xl mx-auto w-full">
-
-                <div className=" gap-2 sm:gap-3">
-                    <Link href={`/admin/jobs/${id}/stages`}>
-                        <button className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-slate-600 font-bold text-xs hover:bg-slate-100 rounded-lg transition-all border border-slate-200">
-                            <span className="material-symbols-outlined text-lg">account_tree</span>
-                            Stages
-                        </button>
-                    </Link>
-                    <Link href={`/admin/jobs/${id}/edit`}>
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all shadow-sm">
-                            <span className="material-symbols-outlined text-lg">edit</span>
-                            <span className="hidden sm:inline">Modify</span>
-                        </button>
-                    </Link>
-                </div>
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none mb-4">{job?.title}</h2>
-
-                <div className="flex flex-wrap gap-2">
-                    <span className="px-2.5 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-blue-100">
-                        {job?.JobCategory?.name || 'Uncategorized'}
-                    </span>
-                    <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-slate-200">
-                        {job?.employmentType}
-                    </span>
-                    <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-lg border border-slate-200 flex items-center gap-1">
-                        <span className="material-symbols-outlined text-sm">location_on</span>
-                        {job?.location}
-                    </span>
-                </div>
-
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    <div className="lg:col-span-8 space-y-6">
-                        {/* Core Mission */}
-                        <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
-                            <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-6 pb-4 border-b border-slate-50">
-                                <span className="material-symbols-outlined text-lg">description</span>
-                                Role Narrative
-                            </div>
-                            <div className="prose prose-slate max-w-none">
-                                <p className="text-sm font-medium text-slate-600 leading-relaxed whitespace-pre-wrap italic">
-                                    {job?.description}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Skill Requirements */}
-                        <div className="bg-slate-900 text-white p-8 rounded-xl border border-slate-800 shadow-lg">
-                            <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-blue-400 mb-6 pb-4 border-b border-slate-800">
-                                <span className="material-symbols-outlined text-lg">verified</span>
-                                Pre-requisite Skillset
-                            </div>
-                            <div className="text-sm font-medium text-slate-300 leading-relaxed whitespace-pre-wrap">
-                                {job?.requirements}
-                            </div>
-                        </div>
-
-                        {/* Provisions & Compliance (Dynamic) */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
-                                    <span className="material-symbols-outlined text-base">redeem</span>
-                                    Active Benefits
-                                </h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {job?.JobBenefits?.length > 0 ? (
-                                        job.JobBenefits.map((b: any) => (
-                                            <span key={b.id} className="text-[10px] font-bold bg-slate-50 text-slate-600 px-2 py-1 rounded border border-slate-100 uppercase tracking-tighter">
-                                                {b.benefitType}
-                                            </span>
-                                        ))
-                                    ) : (
-                                        <span className="text-xs text-slate-400 italic">No specific incentives configured.</span>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-1.5">
-                                    <span className="material-symbols-outlined text-base">policy</span>
-                                    Active Conditions
-                                </h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {job?.JobConditions?.length > 0 ? (
-                                        job.JobConditions.map((c: any) => (
-                                            <span key={c.id} className="text-[10px] font-bold bg-slate-50 text-slate-600 px-2 py-1 rounded border border-slate-100 uppercase tracking-tighter">
-                                                {c.name}
-                                            </span>
-                                        ))
-                                    ) : (
-                                        <span className="text-xs text-slate-400 italic">No specific conditions configured.</span>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+        <div className="font-sans pb-20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <div className="flex items-center gap-2 mb-2">
+                        <Link href="/admin/jobs" className="text-slate-400 hover:text-slate-900 transition-colors">
+                            <span className="material-symbols-outlined text-lg">arrow_back</span>
+                        </Link>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Job Registry / {id}</span>
                     </div>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">{job?.title}</h1>
+                </div>
+                <Link href={`/admin/jobs/${id}/edit`}>
+                    <button className="bg-slate-900 text-white px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 flex items-center gap-2">
+                        <span className="material-symbols-outlined text-base">edit</span>
+                        Edit Job
+                    </button>
+                </Link>
+            </div>
 
-                    {/* Metadata Sidebar */}
-                    <div className="lg:col-span-4 space-y-6">
-                        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-lg text-slate-600">dataset</span>
-                                Registry Trace
-                            </div>
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-center py-2.5 border-b border-slate-100">
-                                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Internal ID</span>
-                                    <span className="text-[11px] font-mono text-slate-900 bg-slate-100 px-2 py-0.5 rounded">JOB-{id}</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2.5 border-b border-slate-100">
-                                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">System Status</span>
-                                    <span className={`flex items-center gap-1.5 text-[10px] font-black uppercase ${job?.isActive ? 'text-emerald-500' : 'text-amber-500'}`}>
-                                        <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${job?.isActive ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
-                                        {job?.isActive ? 'Active' : 'Archived'}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between items-center py-2.5">
-                                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Pipeline Nodes</span>
-                                    <span className="text-[11px] font-bold text-slate-900">{job?.JobStages?.length || 0} stages</span>
-                                </div>
-                            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 space-y-8">
+                    <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 pb-4 border-b border-slate-50">Description</h3>
+                        <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                            {job?.description}
                         </div>
+                    </section>
 
-                        <div className="bg-slate-900 text-white p-6 rounded-xl border border-slate-800 shadow-lg italic">
-                            <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] mb-4 text-center">Governance Audit</p>
-                            <div className="flex justify-between text-[10px] text-slate-400">
-                                <span>Created: {new Date(job?.createdAt).toLocaleDateString()}</span>
-                                <span>Updated: {new Date(job?.updatedAt).toLocaleDateString()}</span>
-                            </div>
+                    <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 pb-4 border-b border-slate-50">Requirements</h3>
+                        <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                            {job?.requirements}
                         </div>
+                    </section>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <section className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Benefits</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {job?.JobBenefits?.length > 0 ? (
+                                    job.JobBenefits.map((b: any) => (
+                                        <span key={b.id} className="text-[9px] font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg uppercase tracking-widest">
+                                            {b.benefitType}
+                                        </span>
+                                    ))
+                                ) : (
+                                    <span className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">None</span>
+                                )}
+                            </div>
+                        </section>
+
+                        <section className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Conditions</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {job?.JobConditions?.length > 0 ? (
+                                    job.JobConditions.map((c: any) => (
+                                        <span key={c.id} className="text-[9px] font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg uppercase tracking-widest">
+                                            {c.name}
+                                        </span>
+                                    ))
+                                ) : (
+                                    <span className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">None</span>
+                                )}
+                            </div>
+                        </section>
                     </div>
                 </div>
-            </main>
+
+                <div className="space-y-8">
+                    <section className="bg-slate-900 text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10">
+                        <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-6 pb-4 border-b border-slate-800">Job Metadata</h3>
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Category</span>
+                                <span className="text-sm font-medium">{job?.JobCategory?.name || 'Uncategorized'}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Type</span>
+                                <span className="text-sm font-medium">{job?.employmentType}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Location</span>
+                                <span className="text-sm font-medium">{job?.location}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status</span>
+                                <span className={`text-[10px] font-bold uppercase tracking-widest ${job?.isActive ? 'text-emerald-400' : 'text-amber-400'}`}>
+                                    {job?.isActive ? 'Active' : 'Archived'}
+                                </span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Timeline</h3>
+                        <div className="space-y-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            <p>Created: {new Date(job?.createdAt).toLocaleDateString()}</p>
+                            <p>Updated: {new Date(job?.updatedAt).toLocaleDateString()}</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     );
 }

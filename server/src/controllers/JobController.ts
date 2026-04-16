@@ -15,6 +15,7 @@ export class JobController {
             const result = await jobService.getActiveJobs(limit, offset, categoryId, employmentType, searchQuery);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
         } catch (error) {
+            console.error('[JobController.getActiveJobs]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -26,6 +27,7 @@ export class JobController {
             const job = await jobService.getJobDetails(jobId);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(job);
         } catch (error: any) {
+            console.error('[JobController.getJobDetails]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -47,6 +49,7 @@ export class JobController {
             const result = await jobService.getAllJobsAdmin({ limit, offset, categoryId, searchQuery, sortBy, sortOrder });
             res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
         } catch (error) {
+            console.error('[JobController.getAllJobsAdmin]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -56,6 +59,7 @@ export class JobController {
             const stats = await jobService.getJobStats();
             res.status(CONSTANTS.HTTP_STATUS.OK).json(stats);
         } catch (error) {
+            console.error('[JobController.getJobStats]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -67,6 +71,7 @@ export class JobController {
             const job = await jobService.createJob(jobData, benefitsIds || [], conditionsIds || []);
             res.status(CONSTANTS.HTTP_STATUS.CREATED).json(job);
         } catch (error) {
+            console.error('[JobController.createJob]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -79,7 +84,7 @@ export class JobController {
             const job = await jobService.updateJob(jobId, jobData, benefitsIds, conditionsIds);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(job);
         } catch (error: any) {
-            console.error(error)
+            console.error('[JobController.updateJob]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -95,6 +100,7 @@ export class JobController {
             await jobService.deleteJob(jobId);
             res.status(CONSTANTS.HTTP_STATUS.OK).json({ message: CONSTANTS.SUCCESS_MESSAGES.DELETED });
         } catch (error) {
+            console.error('[JobController.deleteJob]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -106,6 +112,7 @@ export class JobController {
             const stages = await jobService.getStagesByJob(jobId);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(stages);
         } catch (error) {
+            console.error('[JobController.getJobStages]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -116,6 +123,7 @@ export class JobController {
             const stage = await jobService.createStage(jobId, req.body);
             res.status(CONSTANTS.HTTP_STATUS.CREATED).json(stage);
         } catch (error) {
+            console.error('[JobController.createJobStage]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -126,6 +134,7 @@ export class JobController {
             const stage = await jobService.updateStage(stageId, req.body);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(stage);
         } catch (error: any) {
+            console.error('[JobController.updateJobStage]', error);
             if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -140,6 +149,7 @@ export class JobController {
             await jobService.deleteStage(stageId);
             res.status(CONSTANTS.HTTP_STATUS.OK).json({ message: CONSTANTS.SUCCESS_MESSAGES.DELETED });
         } catch (error) {
+            console.error('[JobController.deleteJobStage]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }

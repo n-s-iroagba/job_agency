@@ -23,9 +23,9 @@ JobBenefit.belongsTo(JobCategory, { foreignKey: 'categoryId' });
 JobCategory.hasMany(JobCondition, { foreignKey: 'categoryId' });
 JobCondition.belongsTo(JobCategory, { foreignKey: 'categoryId' });
 
-// Job Listing <-> Job Stage
-JobListing.hasMany(JobStage, { foreignKey: 'jobId' });
-JobStage.belongsTo(JobListing, { foreignKey: 'jobId' });
+// Application <-> Job Stage
+Application.hasMany(JobStage, { foreignKey: 'applicationId', as: 'JobStages' });
+JobStage.belongsTo(Application, { foreignKey: 'applicationId' });
 
 // JobListing <-> JobBenefit (M:N)
 JobListing.belongsToMany(JobBenefit, { through: 'ListingBenefits', foreignKey: 'jobId', otherKey: 'benefitId' });
@@ -50,8 +50,6 @@ Payment.belongsTo(Application, { foreignKey: 'applicationId' });
 // JobStage <-> Payment
 JobStage.hasMany(Payment, { foreignKey: 'stageId' });
 Payment.belongsTo(JobStage, { foreignKey: 'stageId' });
-Application.hasMany(JobStage, { foreignKey: 'applicationId' });
-JobStage.belongsTo(Application, { foreignKey: 'applicationId' });
 // User <-> Notification
 User.hasMany(Notification, { foreignKey: 'userId' });
 Notification.belongsTo(User, { foreignKey: 'userId' });
