@@ -29,7 +29,7 @@ export class JobRepository {
             where: whereClause,
             limit: options.limit || 10,
             offset: options.offset || 0,
-            include: [JobCategory, JobBenefit, JobCondition, JobStage],
+            include: [JobCategory, JobBenefit, JobCondition],
             order: [['createdAt', 'DESC']]
         });
     }
@@ -66,10 +66,7 @@ export class JobRepository {
     // Maps to STK-APP-APPLY-001, STK-APP-PAY-001
     public async findById(id: number, transaction?: Transaction): Promise<JobListing | null> {
         return JobListing.findByPk(id, {
-            include: [JobCategory, JobBenefit, JobCondition, {
-                model: JobStage,
-                order: [['orderPosition', 'ASC']]
-            }],
+            include: [JobCategory, JobBenefit, JobCondition],
             transaction
         });
     }

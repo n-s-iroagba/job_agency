@@ -84,50 +84,12 @@ export class ApplicationService {
             const job = await jobRepository.findById(jobId, t);
             if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-            const templateStages = await jobStageRepository.findByJobId(jobId, t);
-
             const newApp = await applicationRepository.create({
                 userId,
                 jobId,
                 status: CONSTANTS.APPLICATION_STATUSES.DRAFT,
-                completionPercentage: templateStages.rows.length === 0 ? 100 : 0,
+                completionPercentage: 0,
             }, t);
-
-            // Duplicate stages into this application
-            const appStages: any[] = [];
-            for (const ts of templateStages.rows) {
-                const ns = await jobStageRepository.create({
-                    applicationId: newApp.id,
-
-                    name: ts.name,
-                    description: ts.description,
-                    orderPosition: ts.orderPosition,
-                    requiresPayment: ts.requiresPayment,
-                    amount: ts.amount,
-                    currency: ts.currency,
-                    instructions: ts.instructions,
-                    deadlineDays: ts.deadlineDays,
-                    notifyEmail: ts.notifyEmail,
-                    notifyPush: ts.notifyPush
-                }, t);
-                appStages.push(ns);
-            }
-
-            const firstStageId = appStages.length > 0 ? appStages[0].id : null;
-            if (firstStageId) {
-                await applicationRepository.update(newApp.id, { currentStageId: firstStageId }, t);
-
-                // If the first stage requires payment, create a pending payment record
-                if (appStages[0].requiresPayment) {
-                    await paymentRepository.create({
-                        applicationId: newApp.id,
-                        stageId: firstStageId,
-                        status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
-                        amount: appStages[0].amount,
-                        currency: appStages[0].currency,
-                    }, t);
-                }
-            }
 
             // DM-003: Immediate feedback on application start
             await notificationRepository.create({
