@@ -105,54 +105,6 @@ export class JobController {
         }
     }
 
-    // Stage Management (STK-ADM-STAGE-001..005)
-    public async getJobStages(req: Request, res: Response): Promise<void> {
-        try {
-            const jobId = parseInt(req.params.id as string, 10);
-            const stages = await jobService.getStagesByJob(jobId);
-            res.status(CONSTANTS.HTTP_STATUS.OK).json(stages);
-        } catch (error) {
-            console.error('[JobController.getJobStages]', error);
-            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
-
-    public async createJobStage(req: Request, res: Response): Promise<void> {
-        try {
-            const jobId = parseInt(req.params.id as string, 10);
-            const stage = await jobService.createStage(jobId, req.body);
-            res.status(CONSTANTS.HTTP_STATUS.CREATED).json(stage);
-        } catch (error) {
-            console.error('[JobController.createJobStage]', error);
-            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
-
-    public async updateJobStage(req: Request, res: Response): Promise<void> {
-        try {
-            const stageId = parseInt(req.params.stageId as string, 10);
-            const stage = await jobService.updateStage(stageId, req.body);
-            res.status(CONSTANTS.HTTP_STATUS.OK).json(stage);
-        } catch (error: any) {
-            console.error('[JobController.updateJobStage]', error);
-            if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
-                res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
-                return;
-            }
-            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
-
-    public async deleteJobStage(req: Request, res: Response): Promise<void> {
-        try {
-            const stageId = parseInt(req.params.stageId as string, 10);
-            await jobService.deleteStage(stageId);
-            res.status(CONSTANTS.HTTP_STATUS.OK).json({ message: CONSTANTS.SUCCESS_MESSAGES.DELETED });
-        } catch (error) {
-            console.error('[JobController.deleteJobStage]', error);
-            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
 }
 
 export const jobController = new JobController();

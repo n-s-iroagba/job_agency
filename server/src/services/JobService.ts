@@ -84,25 +84,6 @@ export class JobService {
     // Stage Configuration Sub-logic
     // ==========================
 
-    // Maps to STK-ADM-STAGE-002, SCR-ADM-STAGEFORM-001
-    public async createStage(jobId: number, data: any) {
-        return jobStageRepository.create({ ...data, jobId });
-    }
-
-    public async getStagesByJob(jobId: number) {
-        return jobStageRepository.findByJobId(jobId);
-    }
-
-    public async updateStage(stageId: number, data: any) {
-        const stage = await jobStageRepository.findById(stageId);
-        if (!stage) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        await jobStageRepository.update(stageId, data);
-        return jobStageRepository.findById(stageId);
-    }
-
-    public async deleteStage(stageId: number) {
-        await jobStageRepository.delete(stageId);
-    }
 }
 
 export const jobService = new JobService();
