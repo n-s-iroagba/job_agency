@@ -10,6 +10,7 @@ export class User extends Model {
     declare role: string;
     declare preferences: object;
     declare isVerified: boolean;
+    declare cvUrl: string | null;
     declare verificationToken: string | null;
     declare resetPasswordToken: string | null;
     declare resetPasswordExpires: Date | null;

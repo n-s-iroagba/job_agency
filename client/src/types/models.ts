@@ -14,6 +14,16 @@ export interface User {
         [key: string]: any;
     };
     isVerified: boolean;
+    cvUrl?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: string | null;
+    gender?: string | null;
+    nationality?: string | null;
+    address?: string | null;
+    city?: string | null;
+    state?: string | null;
+    country?: string | null;
+    zipCode?: string | null;
     createdAt: string;
     updatedAt: string;
 }

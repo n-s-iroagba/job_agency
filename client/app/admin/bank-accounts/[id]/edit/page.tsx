@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function BankAccountEditPage() {
     const params = useParams();
     const id = params?.id;
-    const { data: bankAccount, isLoading, error } = useApiQuery<any>(['admin', 'bank-accounts'], `/admin/bank-accounts/${id}`, {
+    const { data: bankAccount, isLoading, error } = useApiQuery<any>(['admin', 'bank-account', id], `/admin/bank-accounts/${id}`, {
         enabled: !!id
     });
 
