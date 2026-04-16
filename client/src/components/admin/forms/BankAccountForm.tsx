@@ -58,13 +58,13 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
     };
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden text-slate-900 font-sans">
+        <div className="bg-white rounded-2xl border border-blue-100 overflow-hidden text-blue-900 font-sans">
             <div className="p-6 md:p-10">
                 <form onSubmit={handleSubmit} className="space-y-8">
                     <div className="space-y-2">
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="bank_name">Bank Name</label>
+                        <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="bank_name">Bank Name</label>
                         <input
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                             id="bank_name"
                             placeholder="e.g. JPMorgan Chase"
                             type="text"
@@ -76,9 +76,9 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="account_number">Account Number</label>
+                            <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="account_number">Account Number</label>
                             <input
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                                 id="account_number"
                                 placeholder="..."
                                 type="text"
@@ -88,9 +88,9 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="account_type">Account Type</label>
+                            <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="account_type">Account Type</label>
                             <select
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
                                 id="account_type"
                                 value={accountType}
                                 onChange={(e) => setAccountType(e.target.value)}
@@ -103,9 +103,9 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="routing_code">Routing / Sort Code</label>
+                            <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="routing_code">Routing / Sort Code</label>
                             <input
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                                 id="routing_code"
                                 placeholder="..."
                                 type="text"
@@ -115,9 +115,9 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="currency">Currency Code</label>
+                            <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="currency">Currency Code</label>
                             <select
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
                                 id="currency"
                                 value={currency}
                                 onChange={(e) => setCurrency(e.target.value)}
@@ -133,12 +133,12 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
 
 
 
-                    <div className="pt-8 flex items-center justify-end gap-4 border-t border-slate-50">
-                        <Link href="/admin/bank-accounts" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all px-4">
+                    <div className="pt-8 flex items-center justify-end gap-4 border-t border-blue-50">
+                        <Link href="/admin/bank-accounts" className="text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-all px-4">
                             Cancel
                         </Link>
                         <button
-                            className="px-8 py-3 bg-slate-900 text-white font-bold text-[10px] uppercase tracking-widest rounded-lg shadow-lg shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-95 disabled:opacity-50"
+                            className="px-8 py-3 bg-blue-900 text-white font-bold text-[10px] uppercase tracking-widest rounded-lg shadow-lg shadow-blue-900/10 hover:bg-blue-800 transition-all active:scale-95 disabled:opacity-50"
                             type="submit"
                             disabled={mutation.isPending}
                         >

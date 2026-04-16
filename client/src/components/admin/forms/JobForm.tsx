@@ -91,11 +91,11 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     return (
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6 font-sans">
             <div className="lg:col-span-8 space-y-6">
-                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-8">
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-8">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Job Title</label>
+                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Job Title</label>
                         <input
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                             placeholder="e.g. Senior Software Engineer"
                             type="text"
                             value={title}
@@ -106,9 +106,9 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Category</label>
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Category</label>
                             <select
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
                                 value={categoryId}
                                 onChange={(e) => setCategoryId(e.target.value)}
                                 required
@@ -120,9 +120,9 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Employment Type</label>
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Employment Type</label>
                             <select
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
                                 value={employmentType}
                                 onChange={(e) => setEmploymentType(e.target.value)}
                                 required
@@ -136,9 +136,9 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Company</label>
+                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Company</label>
                         <input
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                             placeholder="Company"
                             type="text"
                             value={company}
@@ -147,13 +147,13 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                         />
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-200">
                         <div>
-                            <label className="text-[10px] font-bold text-slate-900 uppercase tracking-widest block">Visa Sponsorship</label>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Offered for this position</p>
+                            <label className="text-[10px] font-bold text-blue-900 uppercase tracking-widest block">Visa Sponsorship</label>
+                            <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-0.5">Offered for this position</p>
                         </div>
                         <input
-                            className="w-5 h-5 accent-slate-900 cursor-pointer"
+                            className="w-5 h-5 accent-blue-900 cursor-pointer"
                             type="checkbox"
                             checked={visaSponsorship}
                             onChange={(e) => setVisaSponsorship(e.target.checked)}
@@ -161,9 +161,9 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Location</label>
+                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Location</label>
                         <input
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                             placeholder="City, Country or Remote"
                             type="text"
                             value={location}
@@ -173,11 +173,11 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     </div>
                 </div>
 
-                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-6">
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Job Description</label>
+                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Job Description</label>
                         <textarea
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none resize-none leading-relaxed"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none resize-none leading-relaxed"
                             placeholder="Enter the job description..."
                             rows={10}
                             value={description}
@@ -187,11 +187,11 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     </div>
                 </div>
 
-                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-6">
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Requirements</label>
+                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Requirements</label>
                         <textarea
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none resize-none leading-relaxed"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none resize-none leading-relaxed"
                             placeholder="List requirements..."
                             rows={8}
                             value={requirements}
@@ -201,11 +201,11 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     </div>
                 </div>
 
-                <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-10">
+                <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-10">
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Benefits</label>
-                            <Link href="/admin/benefits/new" className="text-[9px] font-bold text-slate-900 uppercase tracking-widest hover:underline">
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Benefits</label>
+                            <Link href="/admin/benefits/new" className="text-[9px] font-bold text-blue-900 uppercase tracking-widest hover:underline">
                                 + Add New
                             </Link>
                         </div>
@@ -218,8 +218,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                         type="button"
                                         onClick={() => setSelectedBenefits(prev => isSelected ? prev.filter(id => id !== benefit.id) : [...prev, benefit.id])}
                                         className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
-                                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/10'
-                                            : 'bg-slate-50 text-slate-400 border-slate-100 hover:border-slate-300'
+                                            ? 'bg-blue-900 text-white border-blue-900 shadow-lg shadow-blue-900/10'
+                                            : 'bg-blue-50 text-blue-400 border-blue-100 hover:border-blue-300'
                                             }`}
                                     >
                                         {benefit.benefitType}
@@ -233,8 +233,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
 
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Conditions</label>
-                            <Link href="/admin/conditions/new" className="text-[9px] font-bold text-slate-900 uppercase tracking-widest hover:underline">
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Conditions</label>
+                            <Link href="/admin/conditions/new" className="text-[9px] font-bold text-blue-900 uppercase tracking-widest hover:underline">
                                 + Add New
                             </Link>
                         </div>
@@ -247,8 +247,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                         type="button"
                                         onClick={() => setSelectedConditions(prev => isSelected ? prev.filter(id => id !== condition.id) : [...prev, condition.id])}
                                         className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
-                                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/10'
-                                            : 'bg-slate-50 text-slate-400 border-slate-100 hover:border-slate-300'
+                                            ? 'bg-blue-900 text-white border-blue-900 shadow-lg shadow-blue-900/10'
+                                            : 'bg-blue-50 text-blue-400 border-blue-100 hover:border-blue-300'
                                             }`}
                                     >
                                         {condition.name}
@@ -263,11 +263,11 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
             </div>
 
             <div className="lg:col-span-4 space-y-6">
-                <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 space-y-8 sticky top-24">
-                    <div className="flex items-center justify-between p-4 bg-white rounded-xl border border-slate-100">
+                <div className="bg-blue-50 p-6 md:p-8 rounded-2xl border border-blue-100 space-y-8 sticky top-24">
+                    <div className="flex items-center justify-between p-4 bg-white rounded-xl border border-blue-100">
                         <div>
-                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-900">Active Status</h4>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Accepting applications</p>
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-900">Active Status</h4>
+                            <p className="text-[9px] font-bold text-blue-400 uppercase tracking-[0.2em] mt-1">Accepting applications</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input
@@ -276,19 +276,19 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                 checked={isActive}
                                 onChange={() => setIsActive(!isActive)}
                             />
-                            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-slate-900 transition-all after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                            <div className="w-11 h-6 bg-blue-200 peer-focus:outline-none rounded-full peer peer-checked:after:tranblue-x-full peer-checked:bg-blue-900 transition-all after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                         </label>
                     </div>
 
                     <div className="flex flex-col gap-3">
                         <button
-                            className="w-full py-4 bg-slate-900 text-white rounded-lg font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-[0.98] disabled:opacity-50"
+                            className="w-full py-4 bg-blue-900 text-white rounded-lg font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-blue-900/10 hover:bg-blue-800 transition-all active:scale-[0.98] disabled:opacity-50"
                             type="submit"
                             disabled={mutation.isPending}
                         >
                             {mutation.isPending ? 'Saving...' : isEdit ? 'Update Listing' : 'Publish Listing'}
                         </button>
-                        <Link href="/admin/jobs" className="w-full text-center py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all">
+                        <Link href="/admin/jobs" className="w-full text-center py-4 text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-all">
                             Cancel
                         </Link>
                     </div>

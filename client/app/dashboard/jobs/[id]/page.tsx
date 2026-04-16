@@ -25,10 +25,10 @@ export default function JobDetailPage() {
 
     if (isLoading) return (
         <div className="space-y-12 animate-pulse">
-            <div className="h-64 bg-slate-100 rounded-2xl" />
+            <div className="h-64 bg-blue-100 rounded-2xl" />
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                <div className="lg:col-span-8 h-96 bg-slate-100 rounded-2xl" />
-                <div className="lg:col-span-4 h-96 bg-slate-100 rounded-2xl" />
+                <div className="lg:col-span-8 h-96 bg-blue-100 rounded-2xl" />
+                <div className="lg:col-span-4 h-96 bg-blue-100 rounded-2xl" />
             </div>
         </div>
     );
@@ -42,7 +42,7 @@ export default function JobDetailPage() {
                 <div className="flex-1 space-y-6">
                     <div className="flex items-center gap-3">
                         <span className="bg-primary/10 text-primary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">Premium Partner</span>
-                        <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Posted 2 days ago</span>
+                        <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Posted 2 days ago</span>
                     </div>
                     <h1 className="text-[3.5rem] font-bold leading-tight tracking-tight text-on-surface">{job.title}</h1>
                     <div className="flex flex-wrap gap-4 text-on-surface-variant font-medium">
@@ -60,7 +60,7 @@ export default function JobDetailPage() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full md:w-80 bg-surface-container-lowest p-8 rounded-xl shadow-xl shadow-slate-200/50 border border-slate-100/50">
+                <div className="w-full md:w-80 bg-surface-container-lowest p-8 rounded-xl shadow-xl shadow-blue-200/50 border border-blue-100/50">
                     <button
                         onClick={handleApply}
                         disabled={applyMutation.isPending}
@@ -68,7 +68,7 @@ export default function JobDetailPage() {
                     >
                         {applyMutation.isPending ? 'Initializing...' : 'Start Application'}
                     </button>
-                    <button className="w-full bg-surface-container-high text-on-surface py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:bg-slate-200 transition-all flex items-center justify-center gap-2">
+                    <button className="w-full bg-surface-container-high text-on-surface py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:bg-blue-200 transition-all flex items-center justify-center gap-2">
                         <span className="material-symbols-outlined">bookmark</span>
                         Save for Later
                     </button>
@@ -131,7 +131,7 @@ export default function JobDetailPage() {
                                 </li>
                             </ul>
                         </div>
-                        <div className="bg-surface-container-lowest p-8 rounded-xl border border-slate-100">
+                        <div className="bg-surface-container-lowest p-8 rounded-xl border border-blue-100">
                             <h2 className="text-2xl font-bold mb-6">Benefits & Conditions</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="flex gap-4">
@@ -164,7 +164,7 @@ export default function JobDetailPage() {
                         <div className="relative space-y-12">
                             {/* Step 1 */}
                             <div className="relative flex gap-6">
-                                <div className="absolute left-4 top-10 h-14 border-l-2 border-dashed border-slate-200"></div>
+                                <div className="absolute left-4 top-10 h-14 border-l-2 border-dashed border-blue-200"></div>
                                 <div className="z-10 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs uppercase shadow-lg shadow-primary/20">01</div>
                                 <div>
                                     <h4 className="font-bold text-sm">Profile Screening</h4>
@@ -174,8 +174,8 @@ export default function JobDetailPage() {
                             </div>
                             {/* Step 2 */}
                             <div className="relative flex gap-6">
-                                <div className="absolute left-4 top-10 h-14 border-l-2 border-dashed border-slate-200"></div>
-                                <div className="z-10 w-8 h-8 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center text-slate-400 font-bold text-xs uppercase">02</div>
+                                <div className="absolute left-4 top-10 h-14 border-l-2 border-dashed border-blue-200"></div>
+                                <div className="z-10 w-8 h-8 rounded-full bg-white border-2 border-blue-200 flex items-center justify-center text-blue-400 font-bold text-xs uppercase">02</div>
                                 <div>
                                     <h4 className="font-bold text-sm">Discovery Call</h4>
                                     <p className="text-xs text-on-surface-variant font-medium">30-minute chat with the Creative Director about vision and culture.</p>
@@ -183,7 +183,7 @@ export default function JobDetailPage() {
                             </div>
                             {/* Step 3 */}
                             <div className="relative flex gap-6">
-                                <div className="z-10 w-8 h-8 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center text-slate-400 font-bold text-xs uppercase">03</div>
+                                <div className="z-10 w-8 h-8 rounded-full bg-white border-2 border-blue-200 flex items-center justify-center text-blue-400 font-bold text-xs uppercase">03</div>
                                 <div>
                                     <h4 className="font-bold text-sm">Strategic Workshop</h4>
                                     <p className="text-xs text-on-surface-variant font-medium">A paid 3-hour deep dive into a real-world business challenge.</p>

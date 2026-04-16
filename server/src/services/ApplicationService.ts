@@ -87,7 +87,7 @@ export class ApplicationService {
             const newApp = await applicationRepository.create({
                 userId,
                 jobId,
-                status: CONSTANTS.APPLICATION_STATUSES.DRAFT,
+                status: CONSTANTS.APPLICATION_STATUSES.ACTIVE,
                 completionPercentage: 0,
             }, t);
 

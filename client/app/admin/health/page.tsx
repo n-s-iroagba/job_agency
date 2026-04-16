@@ -14,9 +14,9 @@ export default function SystemHealthDashboardPage() {
 
     const metrics = healthVars ? {
         cpu: { usage: 0 }, // Backend doesn't provide real-time CPU yet
-        ram: { 
-            usage: (healthVars.memoryUsage?.heapUsedMb / 1024).toFixed(2), 
-            total: (healthVars.memoryUsage?.heapTotalMb / 1024).toFixed(2) 
+        ram: {
+            usage: (healthVars.memoryUsage?.heapUsedMb / 1024).toFixed(2),
+            total: (healthVars.memoryUsage?.heapTotalMb / 1024).toFixed(2)
         },
         uptime: formatUptime(healthVars.serverUptime || 0),
         requests: { active: 0, rate: 0 },
@@ -29,47 +29,47 @@ export default function SystemHealthDashboardPage() {
         db: 'Searching...'
     };
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading System Metrics...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading System Metrics...</div>;
 
     return (
-        <div className="font-sans text-slate-900">
+        <div className="font-sans text-blue-900">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-2">Operations Center</span>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">System Health</h1>
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-2">Operations Center</span>
+                    <h1 className="text-3xl font-bold text-blue-900 tracking-tight">System Health</h1>
                 </div>
-                <div className="flex items-center gap-3 px-6 py-2 bg-slate-50 border border-slate-100 rounded-lg">
+                <div className="flex items-center gap-3 px-6 py-2 bg-blue-50 border border-blue-100 rounded-lg">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span className="text-[10px] font-bold text-slate-900 uppercase tracking-widest">Active</span>
+                    <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">Active</span>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-6">CPU Performance</span>
+                <div className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-6">CPU Performance</span>
                     <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-bold text-slate-900 tracking-tight">{metrics.cpu.usage}%</span>
+                        <span className="text-4xl font-bold text-blue-900 tracking-tight">{metrics.cpu.usage}%</span>
                     </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-6">Memory Allocation</span>
+                <div className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-6">Memory Allocation</span>
                     <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-bold text-slate-900 tracking-tight">{metrics.ram.usage}GB</span>
-                        <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">/ {metrics.ram.total}GB</span>
+                        <span className="text-4xl font-bold text-blue-900 tracking-tight">{metrics.ram.usage}GB</span>
+                        <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">/ {metrics.ram.total}GB</span>
                     </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-6">System Uptime</span>
+                <div className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-6">System Uptime</span>
                     <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-bold text-slate-900 tracking-tight">{metrics.uptime.days}D</span>
-                        <span className="text-slate-400 text-xl font-bold tracking-tight">{metrics.uptime.hours}H</span>
+                        <span className="text-4xl font-bold text-blue-900 tracking-tight">{metrics.uptime.days}D</span>
+                        <span className="text-blue-400 text-xl font-bold tracking-tight">{metrics.uptime.hours}H</span>
                     </div>
                 </div>
 
-                <div className="bg-slate-900 text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-6">API Throughput</span>
+                <div className="bg-blue-900 text-white p-8 rounded-2xl shadow-xl shadow-blue-900/10">
+                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-6">API Throughput</span>
                     <div className="flex flex-col">
                         <span className="text-4xl font-bold tracking-tight">{metrics.requests.active}</span>
                         <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mt-2">{metrics.requests.rate} REQ/S</span>
@@ -78,33 +78,33 @@ export default function SystemHealthDashboardPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <section className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm lg:col-span-2">
-                    <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-8 pb-4 border-b border-slate-50">Infrastructure Status</h3>
+                <section className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm lg:col-span-2">
+                    <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-8 pb-4 border-b border-blue-50">Infrastructure Status</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {[
                             { name: 'Primary DB', role: 'Storage', status: metrics.db === 'Connected' ? 'Healthy' : 'Disconnected' },
                             { name: 'Worker Layer', role: 'Node.js', status: 'Healthy' },
                             { name: 'CDN Gateway', role: 'Edge', status: 'Optimized' }
                         ].map((node, i) => (
-                            <div key={i} className="p-6 rounded-xl bg-slate-50 border border-slate-100">
+                            <div key={i} className="p-6 rounded-xl bg-blue-50 border border-blue-100">
                                 <span className={`w-2 h-2 rounded-full inline-block mb-3 ${node.status === 'Healthy' || node.status === 'Optimized' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-red-400'}`}></span>
-                                <h4 className="text-sm font-bold text-slate-900 mb-1">{node.name}</h4>
-                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{node.role}</p>
+                                <h4 className="text-sm font-bold text-blue-900 mb-1">{node.name}</h4>
+                                <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">{node.role}</p>
                             </div>
                         ))}
                     </div>
                 </section>
 
-                <section className="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-8 pb-4 border-b border-slate-200">System Information</h3>
+                <section className="bg-blue-50 p-8 rounded-2xl border border-blue-100 shadow-sm">
+                    <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-8 pb-4 border-b border-blue-200">System Information</h3>
                     <div className="space-y-6">
                         <div>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Architecture</span>
-                            <span className="text-xs font-bold text-slate-900 uppercase">x64 Node v20.10</span>
+                            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-1">Architecture</span>
+                            <span className="text-xs font-bold text-blue-900 uppercase">x64 Node v20.10</span>
                         </div>
                         <div>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Environment</span>
-                            <span className="text-xs font-bold text-slate-900 uppercase">Production Gateway</span>
+                            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-1">Environment</span>
+                            <span className="text-xs font-bold text-blue-900 uppercase">Production Gateway</span>
                         </div>
                     </div>
                 </section>

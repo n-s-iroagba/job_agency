@@ -56,7 +56,7 @@ export default function PrivacyPolicyPage() {
                             </div>
                             <div className="space-y-6 text-on-surface-variant leading-[1.8] text-sm font-medium">
                                 <p>Your data is processed to optimize recruitment outcomes. We analyze skill matrices and interaction patterns to ensure you are only presented with roles that align with your professional trajectory.</p>
-                                <div className="p-6 bg-surface-container-low rounded-2xl border border-slate-100 italic text-xs">
+                                <div className="p-6 bg-surface-container-low rounded-2xl border border-blue-100 italic text-xs">
                                     "We do not sell your data. We curate opportunities based on your explicit professional goals."
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ export default function PrivacyPolicyPage() {
                             <div className="space-y-6 text-on-surface-variant leading-[1.8] text-sm font-medium">
                                 <p>You retain full sovereignty over your professional profile. You may request data erasure or rectification at any moment through our centralized compliance portal.</p>
                                 <div className="pt-8">
-                                    <a href="mailto:privacy@jobnexa.com" className="inline-flex items-center gap-3 bg-on-surface text-surface px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-slate-800 transition-all active:scale-[0.98]">
+                                    <a href="mailto:privacy@jobnexa.com" className="inline-flex items-center gap-3 bg-on-surface text-surface px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-blue-800 transition-all active:scale-[0.98]">
                                         <span className="material-symbols-outlined text-lg">mail</span>
                                         Request Data Erasure
                                     </a>

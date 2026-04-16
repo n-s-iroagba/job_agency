@@ -145,7 +145,16 @@ export class AuthController {
                     id: user.id,
                     email: user.email,
                     role: user.role,
-                    fullName: user.fullName
+                    fullName: user.fullName,
+                    phoneNumber: user.phoneNumber,
+                    dateOfBirth: user.dateOfBirth,
+                    gender: user.gender,
+                    nationality: user.nationality,
+                    address: user.address,
+                    city: user.city,
+                    state: user.state,
+                    country: user.country,
+                    zipCode: user.zipCode
                 }
             });
         } catch (error: any) {
@@ -164,7 +173,16 @@ export class AuthController {
                     id: user.id,
                     email: user.email,
                     role: user.role,
-                    fullName: user.fullName
+                    fullName: user.fullName,
+                    phoneNumber: user.phoneNumber,
+                    dateOfBirth: user.dateOfBirth,
+                    gender: user.gender,
+                    nationality: user.nationality,
+                    address: user.address,
+                    city: user.city,
+                    state: user.state,
+                    country: user.country,
+                    zipCode: user.zipCode
                 }
             });
         } catch (error: any) {

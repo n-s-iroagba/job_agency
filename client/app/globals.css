@@ -49,10 +49,13 @@
 }
 
 @layer base {
-  html, body {
+
+  html,
+  body {
     @apply overflow-x-hidden;
     max-width: 100vw;
   }
+
   body {
     @apply bg-surface text-on-surface font-sans antialiased;
     font-size: 14px;
@@ -68,7 +71,7 @@
   }
 
   .card {
-    @apply bg-surface-container-lowest p-6 rounded-lg shadow-sm shadow-slate-200/50 transition-all duration-200;
+    @apply bg-surface-container-lowest p-6 rounded-lg shadow-sm shadow-blue-200/50 transition-all duration-200;
   }
 
   .input {

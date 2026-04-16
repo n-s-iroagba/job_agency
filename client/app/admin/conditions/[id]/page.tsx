@@ -13,18 +13,18 @@ export default function ConditionViewPage() {
         enabled: !!id
     });
 
-    if (isLoading) return <div className="p-12 text-center font-black uppercase tracking-widest text-slate-400">Analyzing Compliance Logic...</div>;
+    if (isLoading) return <div className="p-12 text-center font-black uppercase tracking-widest text-blue-400">Analyzing Compliance Logic...</div>;
     if (error) return <div className="p-12 text-center text-red-500 font-black uppercase tracking-widest">Error Loading Record</div>;
 
     return (
-        <div className="flex flex-col min-h-screen bg-slate-50">
+        <div className="flex flex-col min-h-screen bg-blue-50">
             {/* Standard Admin Header */}
-            <header className="h-16 px-6 bg-white border-b border-slate-200 flex items-center justify-between sticky top-0 z-40">
+            <header className="h-16 px-6 bg-white border-b border-blue-200 flex items-center justify-between sticky top-0 z-40">
                 <div className="flex items-center gap-4">
-                    <Link href="/admin/conditions" className="p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all">
+                    <Link href="/admin/conditions" className="p-1.5 text-blue-400 hover:text-blue-900 hover:bg-blue-100 rounded-lg transition-all">
                         <span className="material-symbols-outlined text-lg">arrow_back</span>
                     </Link>
-                    <h1 className="text-lg font-bold text-slate-800 tracking-tight">Compliance Review</h1>
+                    <h1 className="text-lg font-bold text-blue-800 tracking-tight">Compliance Review</h1>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -37,14 +37,14 @@ export default function ConditionViewPage() {
                 </div>
             </header>
 
-            <main className="p-6 lg:p-10 max-w-6xl mx-auto w-full text-slate-900">
+            <main className="p-6 lg:p-10 max-w-6xl mx-auto w-full text-blue-900">
                 <div className="mb-8">
-                    <nav className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                    <nav className="flex items-center gap-1.5 text-[11px] font-bold text-blue-400 uppercase tracking-wider mb-2">
                         <span>Governance</span>
                         <span className="material-symbols-outlined text-xs">chevron_right</span>
                         <span>Conditions</span>
                     </nav>
-                    <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none mb-4">{condition?.name}</h2>
+                    <h2 className="text-2xl font-black text-blue-900 tracking-tight leading-none mb-4">{condition?.name}</h2>
                     <div className="flex gap-2">
                         <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[11px] font-bold uppercase tracking-widest rounded-lg border border-emerald-100 flex items-center gap-1.5 shadow-sm">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -54,13 +54,13 @@ export default function ConditionViewPage() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    <div className="lg:col-span-8 bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
-                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-6 pb-4 border-b border-slate-50">
+                    <div className="lg:col-span-8 bg-white p-8 rounded-xl border border-blue-200 shadow-sm">
+                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-blue-400 mb-6 pb-4 border-b border-blue-50">
                             <span className="material-symbols-outlined text-lg">gavel</span>
                             Legal & Operational Scope
                         </div>
-                        <div className="prose prose-slate max-w-none">
-                            <p className="text-sm font-medium text-slate-600 leading-relaxed whitespace-pre-wrap italic opacity-90">
+                        <div className="prose prose-blue max-w-none">
+                            <p className="text-sm font-medium text-blue-600 leading-relaxed whitespace-pre-wrap italic opacity-90">
                                 {condition?.description || 'Standard requirement configured for operational recruitment.'}
                             </p>
                         </div>

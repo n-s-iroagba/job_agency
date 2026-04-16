@@ -39,25 +39,25 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white text-slate-900 antialiased flex flex-col items-center justify-center p-8 font-sans">
+        <div className="min-h-screen bg-white text-blue-900 antialiased flex flex-col items-center justify-center p-8 font-sans">
             <main className="max-w-[448px] w-full space-y-12">
                 <div className="space-y-4 text-center lg:text-left">
-                    <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900 block mb-12">
+                    <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-blue-900 block mb-12">
                         JobNexa
                     </Link>
-                    <h1 className="text-4xl font-bold text-slate-900 tracking-tight uppercase">Recover Access</h1>
-                    <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
+                    <h1 className="text-4xl font-bold text-blue-900 tracking-tight uppercase">Recover Access</h1>
+                    <p className="text-blue-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
                         Enter your registered email address to receive a secure recovery bridge.
                     </p>
                 </div>
 
                 {status === 'success' ? (
                     <div className="space-y-10 py-8">
-                        <div className="p-8 bg-slate-50 border border-slate-100 rounded-2xl text-slate-600 text-[10px] font-bold uppercase tracking-widest leading-relaxed italic text-center">
+                        <div className="p-8 bg-blue-50 border border-blue-100 rounded-2xl text-blue-600 text-[10px] font-bold uppercase tracking-widest leading-relaxed italic text-center">
                             {message}
                         </div>
                         <Link href={CONSTANTS.ROUTES.LOGIN} className="block w-full">
-                            <button className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-[0.98]">
+                            <button className="w-full py-4 bg-blue-900 text-white rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-blue-800 transition-all active:scale-[0.98]">
                                 Proceed to Login
                             </button>
                         </Link>
@@ -72,10 +72,10 @@ export default function ForgotPasswordPage() {
                         )}
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="email">Email Bridge</label>
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1" htmlFor="email">Email Bridge</label>
                             <input
                                 {...register('email')}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
                                 id="email"
                                 placeholder="operator@domain.com"
                                 type="email"
@@ -87,13 +87,13 @@ export default function ForgotPasswordPage() {
                         <button
                             type="submit"
                             disabled={mutation.isPending}
-                            className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-[0.98] disabled:opacity-50"
+                            className="w-full py-4 bg-blue-900 text-white rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-blue-800 transition-all active:scale-[0.98] disabled:opacity-50"
                         >
                             {mutation.isPending ? 'Processing...' : 'Request Recovery Link'}
                         </button>
 
                         <div className="text-center pt-4">
-                            <Link href={CONSTANTS.ROUTES.LOGIN} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+                            <Link href={CONSTANTS.ROUTES.LOGIN} className="text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-colors">
                                 Back to Authentication
                             </Link>
                         </div>
@@ -101,8 +101,8 @@ export default function ForgotPasswordPage() {
                 )}
             </main>
 
-            <footer className="mt-20 py-12 px-8 border-t border-slate-50 w-full max-w-[1440px]">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+            <footer className="mt-20 py-12 px-8 border-t border-blue-50 w-full max-w-[1440px]">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] font-bold text-blue-400 uppercase tracking-widest">
                     <p>© 2024 JOBNEXA ENTERPRISE</p>
                     <p>System Security Protocol Enabled</p>
                 </div>

@@ -5,35 +5,35 @@ import Link from 'next/link';
 
 export function PublicFooter() {
     return (
-        <footer className="bg-white w-full py-24 px-8 lg:px-16 border-t border-slate-100 mt-auto font-sans antialiased text-slate-900">
+        <footer className="bg-white w-full py-24 px-8 lg:px-16 border-t border-blue-100 mt-auto font-sans antialiased text-blue-900">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-16 max-w-[1440px] mx-auto">
                 <div className="space-y-8">
-                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">JobNexa</span>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] leading-loose max-w-[200px]">
+                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-blue-900">JobNexa</span>
+                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] leading-loose max-w-[200px]">
                         © 2024 JobNexa Enterprise. Global placement & recruitment infrastructure.
                     </p>
                 </div>
                 <div>
-                    <h6 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.3em] mb-8">Channel Information</h6>
-                    <ul className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] space-y-4">
-                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Inquiries: info@jobnexe.com</li>
-                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Support: help@jobnexe.com</li>
+                    <h6 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.3em] mb-8">Channel Information</h6>
+                    <ul className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] space-y-4">
+                        <li className="hover:text-blue-900 transition-colors cursor-pointer">Inquiries: info@jobnexe.com</li>
+                        <li className="hover:text-blue-900 transition-colors cursor-pointer">Support: help@jobnexe.com</li>
                     </ul>
                 </div>
                 <div>
-                    <h6 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.3em] mb-8">Registry & Terms</h6>
-                    <ul className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] space-y-4">
-                        <li><Link href={CONSTANTS.ROUTES.PRIVACY} className="hover:text-slate-900 transition-colors">Data Privacy Policy</Link></li>
-                        <li><Link href="#" className="hover:text-slate-900 transition-colors">Service Agreement</Link></li>
-                        <li><Link href="#" className="hover:text-slate-900 transition-colors">Compliance Standards</Link></li>
+                    <h6 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.3em] mb-8">Registry & Terms</h6>
+                    <ul className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] space-y-4">
+                        <li><Link href={CONSTANTS.ROUTES.PRIVACY} className="hover:text-blue-900 transition-colors">Data Privacy Policy</Link></li>
+                        <li><Link href="#" className="hover:text-blue-900 transition-colors">Service Agreement</Link></li>
+                        <li><Link href="#" className="hover:text-blue-900 transition-colors">Compliance Standards</Link></li>
                     </ul>
                 </div>
                 <div>
-                    <h6 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.3em] mb-8">Verified Protocols</h6>
+                    <h6 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.3em] mb-8">Verified Protocols</h6>
                     <div className="flex gap-8">
-                        <a className="text-slate-400 hover:text-slate-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">language</span></a>
-                        <a className="text-slate-400 hover:text-slate-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">shield</span></a>
-                        <a className="text-slate-400 hover:text-slate-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">alternate_email</span></a>
+                        <a className="text-blue-400 hover:text-blue-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">language</span></a>
+                        <a className="text-blue-400 hover:text-blue-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">shield</span></a>
+                        <a className="text-blue-400 hover:text-blue-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">alternate_email</span></a>
                     </div>
                 </div>
             </div>

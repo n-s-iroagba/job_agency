@@ -21,7 +21,7 @@ function LoginContent() {
     const router = useRouter();
     const { login } = useAuth();
     const searchParams = useSearchParams();
-    const redirectPath = searchParams.get('redirect') || CONSTANTS.ROUTES.DASHBOARD;
+    const requestedRedirect = searchParams.get('redirect');
     const [loginError, setLoginError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -32,7 +32,15 @@ function LoginContent() {
     const loginMutation = useApiMutation<LoginForm, any>('post', '/auth/login', {
         onSuccess: (data: any) => {
             login(data.accessToken, data.user);
-            router.push(redirectPath);
+
+            if (requestedRedirect) {
+                router.push(requestedRedirect);
+            } else {
+                const targetPath = data.user.role === CONSTANTS.ROLES.ADMIN
+                    ? CONSTANTS.ROUTES.ADMIN.DASHBOARD
+                    : CONSTANTS.ROUTES.DASHBOARD;
+                router.push(targetPath);
+            }
         },
         onError: (error: any) => {
             setLoginError(error.response?.data?.error || 'Invalid credentials provided.');
@@ -45,15 +53,26 @@ function LoginContent() {
     };
 
     return (
-        <div className="bg-white text-slate-900 min-h-screen flex flex-col antialiased font-sans">
+        <div className="bg-white text-blue-900 min-h-screen flex flex-col antialiased font-sans">
             <main className="flex-grow w-full flex flex-col items-center justify-center px-6 py-12">
                 <div className="w-full max-w-[400px]">
+                    {/* Navigation Back */}
+                    <div className="mb-8">
+                        <Link
+                            href="/"
+                            className="group inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-all"
+                        >
+                            <span className="material-symbols-outlined text-[14px] transition-transform group-hover:-tranblue-x-1">arrow_back</span>
+                            Back to Home
+                        </Link>
+                    </div>
+
                     {/* Branding Header */}
                     <div className="mb-10">
-                        <Link href="/" className="inline-flex items-center gap-2 text-xl font-bold tracking-tight text-slate-900">
+                        <Link href="/" className="inline-flex items-center gap-2 text-xl font-bold tracking-tight text-blue-900">
                             JobNexa
                         </Link>
-                        <p className="text-slate-500 mt-1 text-sm">Sign in to your account</p>
+                        <p className="text-blue-500 mt-1 text-sm">Sign in to your account</p>
                     </div>
 
                     {/* Form Section */}
@@ -66,10 +85,10 @@ function LoginContent() {
                         )}
 
                         <div className="space-y-2">
-                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1" htmlFor="email">Email</label>
+                            <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="email">Email</label>
                             <input
                                 {...register('email')}
-                                className={`w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-medium ${errors.email ? 'border-red-300' : 'focus:border-slate-900'}`}
+                                className={`w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-medium ${errors.email ? 'border-red-300' : 'focus:border-blue-900'}`}
                                 id="email"
                                 placeholder="name@email.com"
                                 type="email"
@@ -79,13 +98,13 @@ function LoginContent() {
 
                         <div className="space-y-2">
                             <div className="flex justify-between items-center px-1">
-                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest" htmlFor="password">Password</label>
-                                <Link className="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors" href="/forgot-password">Forgot password?</Link>
+                                <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest" htmlFor="password">Password</label>
+                                <Link className="text-[10px] font-bold text-blue-400 hover:text-blue-900 uppercase tracking-widest transition-colors" href="/forgot-password">Forgot password?</Link>
                             </div>
                             <div className="relative">
                                 <input
                                     {...register('password')}
-                                    className={`w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-medium ${errors.password ? 'border-red-300' : 'focus:border-slate-900'}`}
+                                    className={`w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-medium ${errors.password ? 'border-red-300' : 'focus:border-blue-900'}`}
                                     id="password"
                                     placeholder="••••••••"
                                     type={showPassword ? 'text' : 'password'}
@@ -93,7 +112,7 @@ function LoginContent() {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors"
+                                    className="absolute right-3 top-1/2 -tranblue-y-1/2 text-blue-400 hover:text-blue-900 transition-colors"
                                 >
                                     <span className="material-symbols-outlined text-[18px]">{showPassword ? 'visibility_off' : 'visibility'}</span>
                                 </button>
@@ -104,27 +123,27 @@ function LoginContent() {
                         <button
                             type="submit"
                             disabled={loginMutation.isPending}
-                            className="w-full py-4 bg-slate-900 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-lg hover:bg-slate-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 shadow-lg shadow-slate-900/10"
+                            className="w-full py-4 bg-blue-900 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-lg hover:bg-blue-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 shadow-lg shadow-blue-900/10"
                         >
                             {loginMutation.isPending ? 'Processing...' : 'Sign In'}
                         </button>
                     </form>
 
-                    <div className="mt-10 pt-6 text-center border-t border-slate-50">
-                        <p className="text-xs text-slate-500">
+                    <div className="mt-10 pt-6 text-center border-t border-blue-50">
+                        <p className="text-xs text-blue-500">
                             Don't have an account?
-                            <Link href={CONSTANTS.ROUTES.REGISTER} className="font-bold text-slate-900 hover:underline ml-1 uppercase tracking-wider text-[11px]">Create Account</Link>
+                            <Link href={CONSTANTS.ROUTES.REGISTER} className="font-bold text-blue-900 hover:underline ml-1 uppercase tracking-wider text-[11px]">Create Account</Link>
                         </p>
                     </div>
                 </div>
             </main>
 
-            <footer className="py-8 px-6 border-t border-slate-50">
-                <div className="max-w-[1280px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            <footer className="py-8 px-6 border-t border-blue-50">
+                <div className="max-w-[1280px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-bold text-blue-400 uppercase tracking-widest">
                     <p>© 2024 JobNexa</p>
                     <div className="flex gap-6">
-                        <Link className="hover:text-slate-900 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Privacy</Link>
-                        <a className="hover:text-slate-900 transition-colors" href="#">Terms</a>
+                        <Link className="hover:text-blue-900 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Privacy</Link>
+                        <a className="hover:text-blue-900 transition-colors" href="#">Terms</a>
                     </div>
                 </div>
             </footer>

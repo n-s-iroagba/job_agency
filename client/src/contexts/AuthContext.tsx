@@ -10,6 +10,15 @@ interface User {
     email: string;
     role: string;
     fullName: string;
+    phoneNumber?: string;
+    dateOfBirth?: string;
+    gender?: string;
+    nationality?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    zipCode?: string;
 }
 
 interface AuthContextType {

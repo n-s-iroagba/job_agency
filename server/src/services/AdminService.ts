@@ -212,6 +212,14 @@ export class AdminService {
     // ==========================
     // User Management — REG-004 (right to data deletion)
     // ==========================
+    public async getApplicantById(id: number) {
+        const user = await userRepository.findById(id);
+        if (!user || user.role !== CONSTANTS.ROLES.APPLICANT) {
+            throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        }
+        return user;
+    }
+
     public async getAllApplicants(limit?: number, offset?: number) {
         return userRepository.findAndCountAll({ role: CONSTANTS.ROLES.APPLICANT, limit, offset });
     }

@@ -13,6 +13,15 @@ export class User extends Model {
     declare verificationToken: string | null;
     declare resetPasswordToken: string | null;
     declare resetPasswordExpires: Date | null;
+    declare phoneNumber: string | null;
+    declare dateOfBirth: Date | null;
+    declare gender: string | null;
+    declare nationality: string | null;
+    declare address: string | null;
+    declare city: string | null;
+    declare state: string | null;
+    declare country: string | null;
+    declare zipCode: string | null;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 }
@@ -63,6 +72,42 @@ User.init({
     },
     resetPasswordExpires: {
         type: DataTypes.DATE,
+        allowNull: true,
+    },
+    phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    dateOfBirth: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    gender: {
+        type: DataTypes.ENUM('Male', 'Female', 'Other'),
+        allowNull: true,
+    },
+    nationality: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    address: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    city: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    state: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    country: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    zipCode: {
+        type: DataTypes.STRING,
         allowNull: true,
     }
 }, {

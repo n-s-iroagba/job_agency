@@ -190,7 +190,7 @@ export class AuthService {
         return user;
     }
 
-    public async updateProfile(userId: number, data: { fullName?: string }): Promise<any> {
+    public async updateProfile(userId: number, data: any): Promise<any> {
         return userRepository.update(userId, data);
     }
 

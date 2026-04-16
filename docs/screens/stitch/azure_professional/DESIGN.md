@@ -11,7 +11,7 @@ By utilizing a "Smooth Tech" approach, we break the template look through **inte
 
 ## 2. Colors & Surface Philosophy
 
-The palette is anchored in a refined Royal Blue, supported by a sophisticated range of slates and cool greys. 
+The palette is anchored in a refined Royal Blue, supported by a sophisticated range of blues and cool greys. 
 
 ### The "No-Line" Rule
 **Borders are forbidden for sectioning.** To achieve a high-end feel, boundaries must be defined solely through background color shifts. For example, a `surface-container-low` section should sit directly on a `surface` background to denote a change in context. 

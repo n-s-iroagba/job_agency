@@ -68,11 +68,11 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="bg-white text-slate-900 antialiased min-h-screen flex flex-col font-sans">
+        <div className="bg-white text-blue-900 antialiased min-h-screen flex flex-col font-sans">
             {/* Top Navigation */}
-            <header className="fixed top-0 w-full z-50 bg-white border-b border-slate-100 px-8 h-20 flex items-center justify-between">
-                <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">JobNexa</Link>
-                <Link href="/login" className="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Sign In</Link>
+            <header className="fixed top-0 w-full z-50 bg-white border-b border-blue-100 px-8 h-20 flex items-center justify-between">
+                <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-blue-900">JobNexa</Link>
+                <Link href="/login" className="text-[10px] font-bold text-blue-400 hover:text-blue-900 uppercase tracking-widest transition-colors">Sign In</Link>
             </header>
 
             <main className="flex-grow w-full flex flex-col items-center justify-center pt-32 pb-24 px-6">
@@ -80,26 +80,26 @@ export default function RegisterPage() {
                     {isRegistered ? (
                         <div className="text-center space-y-10 py-12">
                             <div className="flex justify-center">
-                                <div className="w-20 h-20 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-900/10">
+                                <div className="w-20 h-20 rounded-2xl bg-blue-900 text-white flex items-center justify-center shadow-xl shadow-blue-900/10">
                                     <span className="material-symbols-outlined text-4xl">mail</span>
                                 </div>
                             </div>
                             <div className="space-y-4">
-                                <h2 className="text-3xl font-bold text-slate-900 tracking-tight uppercase">Verify Identity</h2>
-                                <p className="text-slate-500 text-sm leading-relaxed max-w-[320px] mx-auto">
-                                    We've dispatched a secure verification bridge to <span className="text-slate-900 font-bold">{registeredEmail}</span>. Please authorize your access to continue.
+                                <h2 className="text-3xl font-bold text-blue-900 tracking-tight uppercase">Verify Identity</h2>
+                                <p className="text-blue-500 text-sm leading-relaxed max-w-[320px] mx-auto">
+                                    We've dispatched a secure verification bridge to <span className="text-blue-900 font-bold">{registeredEmail}</span>. Please authorize your access to continue.
                                 </p>
                             </div>
                             <Link href="/login" className="block w-full">
-                                <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-[0.98]">
+                                <button className="w-full bg-blue-900 text-white py-4 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-blue-800 transition-all active:scale-[0.98]">
                                     Proceed to Login
                                 </button>
                             </Link>
-                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-loose text-center pt-4">
+                            <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest leading-loose text-center pt-4">
                                 No receipt? <button
                                     onClick={handleResend}
                                     disabled={resendMutation.isPending}
-                                    className="text-slate-900 underline disabled:opacity-50 hover:text-slate-700 ml-1"
+                                    className="text-blue-900 underline disabled:opacity-50 hover:text-blue-700 ml-1"
                                 >
                                     {resendMutation.isPending ? 'Propagating...' : 'Trigger Resend'}
                                 </button>
@@ -108,8 +108,8 @@ export default function RegisterPage() {
                     ) : (
                         <div className="space-y-12">
                             <div>
-                                <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Access Registry</h1>
-                                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-2">Initialize your professional presence</p>
+                                <h1 className="text-4xl font-bold text-blue-900 tracking-tight">Access Registry</h1>
+                                <p className="text-blue-400 text-[10px] font-bold uppercase tracking-widest mt-2">Initialize your professional presence</p>
                             </div>
 
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
@@ -122,10 +122,10 @@ export default function RegisterPage() {
 
                                 <div className="space-y-6">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="fullName">Legal Full Name</label>
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1" htmlFor="fullName">Legal Full Name</label>
                                         <input
                                             {...register('fullName')}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                            className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
                                             id="fullName"
                                             placeholder="e.g. Elena Rodriguez"
                                             type="text"
@@ -134,10 +134,10 @@ export default function RegisterPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="email">Email Bridge</label>
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1" htmlFor="email">Email Address</label>
                                         <input
                                             {...register('email')}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                            className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
                                             id="email"
                                             placeholder="name@domain.com"
                                             type="email"
@@ -147,10 +147,10 @@ export default function RegisterPage() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="password">Security Key</label>
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1" htmlFor="password">Password</label>
                                             <input
                                                 {...register('password')}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                                className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
                                                 id="password"
                                                 placeholder="••••••••"
                                                 type="password"
@@ -159,10 +159,10 @@ export default function RegisterPage() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1" htmlFor="confirmPassword">Verify Key</label>
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1" htmlFor="confirmPassword">Confirm Password</label>
                                             <input
                                                 {...register('confirmPassword')}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all outline-none text-sm font-bold text-slate-900 placeholder:text-slate-300"
+                                                className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
                                                 id="confirmPassword"
                                                 placeholder="••••••••"
                                                 type="password"
@@ -175,12 +175,12 @@ export default function RegisterPage() {
                                         <div className="flex items-start gap-4">
                                             <input
                                                 {...register('agreeTerms')}
-                                                className="mt-1 rounded border-slate-300 text-slate-900 focus:ring-slate-900 h-5 w-5 bg-slate-50 transition-all cursor-pointer"
+                                                className="mt-1 rounded border-blue-300 text-blue-900 focus:ring-blue-900 h-5 w-5 bg-blue-50 transition-all cursor-pointer"
                                                 id="privacy"
                                                 type="checkbox"
                                             />
-                                            <label className="text-[11px] text-slate-500 font-medium leading-relaxed" htmlFor="privacy">
-                                                By registering, you authorize access and agree to the <Link className="text-slate-900 font-bold hover:underline" href={CONSTANTS.ROUTES.PRIVACY}>Privacy Protocol</Link> and Terms of Service.
+                                            <label className="text-[11px] text-blue-500 font-medium leading-relaxed" htmlFor="privacy">
+                                                By registering, you authorize access and agree to the <Link className="text-blue-900 font-bold hover:underline" href={CONSTANTS.ROUTES.PRIVACY}>Privacy Protocol</Link> and Terms of Service.
                                             </label>
                                         </div>
                                         {errors.agreeTerms && <p className="text-red-600 text-[10px] font-bold mt-2 px-1">{errors.agreeTerms.message}</p>}
@@ -190,15 +190,15 @@ export default function RegisterPage() {
                                 <button
                                     type="submit"
                                     disabled={registerMutation.isPending}
-                                    className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all duration-300 active:scale-[0.98] disabled:opacity-50"
+                                    className="w-full bg-blue-900 text-white py-4 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-blue-800 transition-all duration-300 active:scale-[0.98] disabled:opacity-50"
                                 >
                                     {registerMutation.isPending ? 'Authorizing...' : 'Initialize Registry'}
                                 </button>
                             </form>
 
-                            <div className="pt-8 border-t border-slate-50 text-center">
-                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                    Already part of the network? <Link className="text-slate-900 hover:underline ml-1" href={CONSTANTS.ROUTES.LOGIN}>Sign In</Link>
+                            <div className="pt-8 border-t border-blue-50 text-center">
+                                <p className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">
+                                    Already part of the network? <Link className="text-blue-900 hover:underline ml-1" href={CONSTANTS.ROUTES.LOGIN}>Sign In</Link>
                                 </p>
                             </div>
                         </div>
@@ -206,12 +206,12 @@ export default function RegisterPage() {
                 </div>
             </main>
 
-            <footer className="py-12 px-8 border-t border-slate-50 mt-auto">
-                <div className="flex flex-col md:flex-row justify-between items-center max-w-[1440px] mx-auto gap-6 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+            <footer className="py-12 px-8 border-t border-blue-50 mt-auto">
+                <div className="flex flex-col md:flex-row justify-between items-center max-w-[1440px] mx-auto gap-6 text-[9px] font-bold text-blue-400 uppercase tracking-widest">
                     <p>© 2024 JOBNEXA ENTERPRISE</p>
                     <div className="flex gap-10">
-                        <Link className="hover:text-slate-900 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Data Protection</Link>
-                        <a className="hover:text-slate-900 transition-colors" href="#">Support</a>
+                        <Link className="hover:text-blue-900 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Data Protection</Link>
+                        <a className="hover:text-blue-900 transition-colors" href="#">Support</a>
                     </div>
                 </div>
             </footer>

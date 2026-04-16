@@ -334,6 +334,35 @@ export class AdminController {
         }
     }
 
+    public async getApplicantById(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            const user = await adminService.getApplicantById(id);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json({
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    role: user.role,
+                    fullName: user.fullName,
+                    phoneNumber: user.phoneNumber,
+                    dateOfBirth: user.dateOfBirth,
+                    gender: user.gender,
+                    nationality: user.nationality,
+                    address: user.address,
+                    city: user.city,
+                    state: user.state,
+                    country: user.country,
+                    zipCode: user.zipCode,
+                    cvUrl: user.cvUrl
+                }
+            });
+        } catch (error: any) {
+            console.error('[AdminController.getApplicantById]', error);
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
+    }
+
     // ==========================
     // User Views — REG-004
     // ==========================

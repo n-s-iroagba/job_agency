@@ -25,31 +25,31 @@ export default function BrowseJobsPage() {
         <div className="flex gap-8 selection:bg-primary-container selection:text-on-primary-container">
             {/* Filters Sidebar */}
             <aside className="hidden lg:block w-72 space-y-8 flex-shrink-0">
-                <section className="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-6 border border-slate-50">
+                <section className="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-6 border border-blue-50">
                     <div>
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Search Jobs</h3>
+                        <h3 className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4">Search Jobs</h3>
                         <div className="relative">
                             <input
                                 className="w-full bg-surface-container-low border-none rounded-lg py-3 px-10 text-sm focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none"
                                 placeholder="Title, keyword, company"
                                 type="text"
                             />
-                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                            <span className="material-symbols-outlined absolute left-3 top-1/2 -tranblue-y-1/2 text-blue-400">search</span>
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Location</h3>
+                        <h3 className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4">Location</h3>
                         <div className="relative">
                             <input
                                 className="w-full bg-surface-container-low border-none rounded-lg py-3 px-10 text-sm focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all outline-none"
                                 placeholder="City or remote"
                                 type="text"
                             />
-                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">location_on</span>
+                            <span className="material-symbols-outlined absolute left-3 top-1/2 -tranblue-y-1/2 text-blue-400">location_on</span>
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Job Type</h3>
+                        <h3 className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4">Job Type</h3>
                         <div className="space-y-3">
                             {['Full-time', 'Contract', 'Freelance'].map(type => (
                                 <label key={type} className="flex items-center gap-3 cursor-pointer group">
@@ -80,14 +80,14 @@ export default function BrowseJobsPage() {
                 {/* Job Grid */}
                 {isLoading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse">
-                        {[1, 2, 3, 4].map(i => <div key={i} className="h-64 bg-slate-100 rounded-xl" />)}
+                        {[1, 2, 3, 4].map(i => <div key={i} className="h-64 bg-blue-100 rounded-xl" />)}
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {(jobs as any)?.rows?.map((job: Job, index: number) => (
                             <article
                                 key={job.id}
-                                className={`${index === 0 ? 'md:col-span-2 flex-row p-8' : 'flex-col p-6'} group bg-surface-container-lowest rounded-2xl flex gap-8 transition-all hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] border border-slate-100`}
+                                className={`${index === 0 ? 'md:col-span-2 flex-row p-8' : 'flex-col p-6'} group bg-surface-container-lowest rounded-2xl flex gap-8 transition-all hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] border border-blue-100`}
                             >
                                 <div className={`${index === 0 ? 'w-20 h-20' : 'w-14 h-14'} bg-surface rounded-xl flex items-center justify-center flex-shrink-0`}>
                                     <span className={`${index === 0 ? 'text-4xl' : 'text-2xl'} material-symbols-outlined text-primary`} style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -97,11 +97,11 @@ export default function BrowseJobsPage() {
                                 <div className="flex-1 space-y-4">
                                     <div className="flex items-center gap-3">
                                         <span className="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest rounded-full">Exclusive</span>
-                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">New Opportunity</span>
+                                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">New Opportunity</span>
                                     </div>
                                     <div>
                                         <h3 className={`${index === 0 ? 'text-2xl' : 'text-lg'} font-bold text-on-surface group-hover:text-primary transition-colors`}>{job.title}</h3>
-                                        <p className="text-sm font-bold text-slate-500 uppercase tracking-tight">{job.location} • {job.type}</p>
+                                        <p className="text-sm font-bold text-blue-500 uppercase tracking-tight">{job.location} • {job.type}</p>
                                     </div>
                                     {index === 0 && (
                                         <p className="text-on-surface-variant line-clamp-2 max-w-[672px] font-light">
@@ -109,15 +109,15 @@ export default function BrowseJobsPage() {
                                         </p>
                                     )}
                                     <div className="flex flex-wrap gap-2 pt-2">
-                                        <span className="px-4 py-1.5 bg-slate-50 rounded-lg text-[10px] font-bold text-slate-500 uppercase">Strategic Impact</span>
-                                        <span className="px-4 py-1.5 bg-slate-50 rounded-lg text-[10px] font-bold text-slate-500 uppercase">Curated Role</span>
+                                        <span className="px-4 py-1.5 bg-blue-50 rounded-lg text-[10px] font-bold text-blue-500 uppercase">Strategic Impact</span>
+                                        <span className="px-4 py-1.5 bg-blue-50 rounded-lg text-[10px] font-bold text-blue-500 uppercase">Curated Role</span>
                                     </div>
                                 </div>
-                                <div className="flex flex-col justify-end items-end gap-3 min-w-[140px] md:border-l border-slate-50 md:pl-6">
+                                <div className="flex flex-col justify-end items-end gap-3 min-w-[140px] md:border-l border-blue-50 md:pl-6">
                                     <span className="text-xl font-bold text-on-surface">{job.salaryRange || '$120k - $160k'}</span>
                                     <Link
                                         href={`/jobs/${job.id}`}
-                                        className="w-full px-8 py-3 bg-slate-900 text-white rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-primary transition-all text-center"
+                                        className="w-full px-8 py-3 bg-blue-900 text-white rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-primary transition-all text-center"
                                     >
                                         View Detail
                                     </Link>

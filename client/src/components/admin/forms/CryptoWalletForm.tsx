@@ -58,24 +58,24 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
     return (
         <form onSubmit={handleSubmit} className="font-sans">
             <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                <h1 className="text-2xl font-bold tracking-tight text-blue-900">
                     {isEdit ? 'Edit Wallet' : 'New Crypto Wallet'}
                 </h1>
                 <div className="flex gap-3 w-full sm:w-auto">
-                    <Link href="/admin/crypto-wallets" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-all px-4 py-3">
+                    <Link href="/admin/crypto-wallets" className="text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-all px-4 py-3">
                         Cancel
                     </Link>
-                    <button className="px-8 py-3 bg-slate-900 text-white rounded-lg font-bold text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 disabled:opacity-50" type="submit" disabled={mutation.isPending}>
+                    <button className="px-8 py-3 bg-blue-900 text-white rounded-lg font-bold text-[10px] uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10 disabled:opacity-50" type="submit" disabled={mutation.isPending}>
                         {mutation.isPending ? 'Saving...' : 'Save Wallet'}
                     </button>
                 </div>
             </div>
 
-            <div className="bg-white p-6 md:p-10 rounded-2xl border border-slate-100 space-y-8">
+            <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-8">
                 <div className="space-y-2">
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Display Label</label>
+                    <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Display Label</label>
                     <input
-                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                        className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                         placeholder="e.g. Primary Wallet"
                         type="text"
                         value={label}
@@ -86,9 +86,9 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Currency</label>
+                        <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Currency</label>
                         <select
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
                             value={cryptoType}
                             onChange={(e) => setCryptoType(e.target.value)}
                         >
@@ -101,9 +101,9 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
                     </div>
 
                     <div className="space-y-2">
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Network</label>
+                        <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Network</label>
                         <select
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none appearance-none"
+                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
                             value={network}
                             onChange={(e) => setNetwork(e.target.value)}
                         >
@@ -116,9 +116,9 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
                 </div>
 
                 <div className="space-y-2">
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Wallet Address</label>
+                    <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Wallet Address</label>
                     <input
-                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-mono text-slate-600 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
+                        className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-mono text-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
                         placeholder="0x..."
                         type="text"
                         value={address}
@@ -127,10 +127,10 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
                     />
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-100">
                     <div>
-                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-900">Active Status</h4>
-                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Enable for public transactions</p>
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-900">Active Status</h4>
+                        <p className="text-[9px] font-bold text-blue-400 uppercase tracking-[0.2em] mt-1">Enable for public transactions</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                         <input
@@ -139,7 +139,7 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
                             checked={isActive}
                             onChange={() => setIsActive(!isActive)}
                         />
-                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-slate-900 transition-all after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                        <div className="w-11 h-6 bg-blue-200 peer-focus:outline-none rounded-full peer peer-checked:after:tranblue-x-full peer-checked:bg-blue-900 transition-all after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                     </label>
                 </div>
             </div>

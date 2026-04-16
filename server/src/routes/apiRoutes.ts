@@ -143,7 +143,8 @@ router.post('/admin/benefits', ...adminMW, adminController.createBenefit.bind(ad
 router.put('/admin/benefits/:id', ...adminMW, adminController.updateBenefit.bind(adminController));
 router.delete('/admin/benefits/:id', ...adminMW, adminController.deleteBenefit.bind(adminController));
 
-// REG-004: admin user listing
+// REG-004: admin user management
+router.get('/admin/users/:id', ...adminMW, adminController.getApplicantById.bind(adminController));
 router.get('/admin/users', ...adminMW, adminController.getAllApplicants.bind(adminController));
 
 export default router;

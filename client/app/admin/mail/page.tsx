@@ -14,7 +14,7 @@ function MailComposerContent() {
     const [error, setError] = useState<string | null>(null);
 
     const { mutateAsync: sendMail, isPending: sending } = useApiMutation<{ email: string, subject: string, message: string }, any>('post', '/admin/mail');
-    
+
     // Disable activity query as backend doesn't support it yet
     const recentActivity: any[] = [];
     // const { data: recentActivity = [] } = useApiQuery<any[]>(['admin', 'mail-activity'], '/admin/mail/activity');
@@ -47,8 +47,8 @@ function MailComposerContent() {
         <div className="font-sans">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Mail Composer</h1>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Communicate with applicants and segments</p>
+                    <h1 className="text-2xl font-bold text-blue-900 tracking-tight">Mail Composer</h1>
+                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Communicate with applicants and segments</p>
                 </div>
             </div>
 
@@ -65,11 +65,11 @@ function MailComposerContent() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2">
-                    <form onSubmit={handleSend} className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm space-y-6">
+                    <form onSubmit={handleSend} className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm space-y-6">
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Recipients</label>
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Recipients</label>
                             <input
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium focus:bg-white outline-none focus:ring-2 focus:ring-slate-900/5 transition-all"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium focus:bg-white outline-none focus:ring-2 focus:ring-blue-900/5 transition-all"
                                 placeholder="applicant@example.com..."
                                 type="text"
                                 value={to}
@@ -79,9 +79,9 @@ function MailComposerContent() {
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Subject</label>
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Subject</label>
                             <input
-                                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium focus:bg-white outline-none focus:ring-2 focus:ring-slate-900/5 transition-all"
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium focus:bg-white outline-none focus:ring-2 focus:ring-blue-900/5 transition-all"
                                 placeholder="Message subject..."
                                 type="text"
                                 value={subject}
@@ -91,9 +91,9 @@ function MailComposerContent() {
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Message Body</label>
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Message Body</label>
                             <textarea
-                                className="w-full px-4 py-4 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium focus:bg-white outline-none focus:ring-2 focus:ring-slate-900/5 transition-all min-h-[300px] resize-none leading-relaxed"
+                                className="w-full px-4 py-4 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium focus:bg-white outline-none focus:ring-2 focus:ring-blue-900/5 transition-all min-h-[300px] resize-none leading-relaxed"
                                 placeholder="Write your message here..."
                                 value={body}
                                 onChange={(e) => setBody(e.target.value)}
@@ -105,7 +105,7 @@ function MailComposerContent() {
                             <button
                                 type="submit"
                                 disabled={sending}
-                                className="bg-slate-900 text-white px-8 py-3 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 disabled:opacity-50"
+                                className="bg-blue-900 text-white px-8 py-3 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10 disabled:opacity-50"
                             >
                                 {sending ? 'Sending...' : 'Send Message'}
                             </button>
@@ -114,8 +114,8 @@ function MailComposerContent() {
                 </div>
 
                 <div className="space-y-8">
-                    <section className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 pb-3 border-b border-slate-50">Quick Templates</h3>
+                    <section className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm">
+                        <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-4 pb-3 border-b border-blue-50">Quick Templates</h3>
                         <div className="space-y-2">
                             {[
                                 { title: 'Interview Invite', subject: 'Next Steps: Interview Scheduling', body: 'Dear Applicant,\n\nWe\'d love to schedule a time to speak with you regarding your application. Please follow the link below to select a time slot.' },
@@ -126,30 +126,30 @@ function MailComposerContent() {
                                     key={i}
                                     type="button"
                                     onClick={() => applyTemplate(tmpl.subject, tmpl.body)}
-                                    className="w-full text-left p-4 rounded-xl border border-slate-100 hover:border-slate-900 hover:bg-slate-50 transition-all group"
+                                    className="w-full text-left p-4 rounded-xl border border-blue-100 hover:border-blue-900 hover:bg-blue-50 transition-all group"
                                 >
-                                    <p className="text-[10px] font-bold text-slate-900 uppercase tracking-widest">{tmpl.title}</p>
-                                    <p className="text-[10px] text-slate-400 line-clamp-1 mt-1 font-medium">{tmpl.subject}</p>
+                                    <p className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">{tmpl.title}</p>
+                                    <p className="text-[10px] text-blue-400 line-clamp-1 mt-1 font-medium">{tmpl.subject}</p>
                                 </button>
                             ))}
                         </div>
                     </section>
 
-                    <section className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 pb-3 border-b border-slate-50">Recent Communication</h3>
+                    <section className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm">
+                        <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-4 pb-3 border-b border-blue-50">Recent Communication</h3>
                         <div className="space-y-4">
                             {recentActivity.map((activity, i) => (
                                 <div key={i} className="flex gap-3">
-                                    <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
+                                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-400">
                                         <span className="material-symbols-outlined text-base">mail</span>
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[11px] font-bold text-slate-900 uppercase tracking-tight leading-tight">{activity.title}</span>
-                                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{activity.desc}</span>
+                                        <span className="text-[11px] font-bold text-blue-900 uppercase tracking-tight leading-tight">{activity.title}</span>
+                                        <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-0.5">{activity.desc}</span>
                                     </div>
                                 </div>
                             ))}
-                            {recentActivity.length === 0 && <p className="text-[9px] font-bold text-slate-300 uppercase tracking-widest text-center">No recent activity</p>}
+                            {recentActivity.length === 0 && <p className="text-[9px] font-bold text-blue-300 uppercase tracking-widest text-center">No recent activity</p>}
                         </div>
                     </section>
                 </div>
@@ -160,7 +160,7 @@ function MailComposerContent() {
 
 export default function MailComposerPage() {
     return (
-        <Suspense fallback={<div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Mail System...</div>}>
+        <Suspense fallback={<div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Mail System...</div>}>
             <MailComposerContent />
         </Suspense>
     );

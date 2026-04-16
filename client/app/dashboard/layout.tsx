@@ -21,13 +21,13 @@ export default function ApplicantLayout({ children }: { children: React.ReactNod
     };
 
     return (
-        <div className="flex min-h-screen bg-white overflow-x-hidden font-sans antialiased text-slate-900">
+        <div className="flex min-h-screen bg-white overflow-x-hidden font-sans antialiased text-blue-900">
             {/* Mobile Header Trigger */}
-            <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6 z-[60]">
+            <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-blue-100 flex items-center justify-between px-6 z-[60]">
                 <span className="text-lg font-black italic uppercase tracking-widest">JobNexa</span>
                 <button
                     onClick={() => setIsMobileOpen(true)}
-                    className="w-10 h-10 flex items-center justify-center text-slate-400"
+                    className="w-10 h-10 flex items-center justify-center text-blue-400"
                 >
                     <span className="material-symbols-outlined">menu</span>
                 </button>
