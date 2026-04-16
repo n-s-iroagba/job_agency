@@ -1,243 +1,285 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>JobNexa - Category Management</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-container-lowest": "#ffffff",
-                    "on-secondary": "#ffffff",
-                    "on-primary-container": "#eeefff",
-                    "primary-fixed": "#dbe1ff",
-                    "on-error-container": "#93000a",
-                    "tertiary-fixed": "#ffdbcd",
-                    "background": "#f7f9fb",
-                    "secondary-container": "#d0e1fb",
-                    "surface": "#f7f9fb",
-                    "inverse-surface": "#2d3133",
-                    "tertiary-container": "#bc4800",
-                    "surface-tint": "#0053db",
-                    "on-tertiary-container": "#ffede6",
-                    "secondary-fixed-dim": "#b7c8e1",
-                    "tertiary-fixed-dim": "#ffb596",
-                    "primary": "#004ac6",
-                    "surface-dim": "#d8dadc",
-                    "surface-container-low": "#f2f4f6",
-                    "surface-bright": "#f7f9fb",
-                    "outline-variant": "#c3c6d7",
-                    "surface-container-high": "#e6e8ea",
-                    "on-background": "#191c1e",
-                    "on-primary-fixed-variant": "#003ea8",
-                    "error-container": "#ffdad6",
-                    "on-error": "#ffffff",
-                    "inverse-primary": "#b4c5ff",
-                    "inverse-on-surface": "#eff1f3",
-                    "error": "#ba1a1a",
-                    "surface-variant": "#e0e3e5",
-                    "outline": "#737686",
-                    "on-primary-fixed": "#00174b",
-                    "secondary": "#505f76",
-                    "on-surface": "#191c1e",
-                    "on-surface-variant": "#434655",
-                    "primary-container": "#2563eb",
-                    "on-secondary-fixed-variant": "#38485d",
-                    "on-tertiary-fixed": "#360f00",
-                    "on-tertiary": "#ffffff",
-                    "primary-fixed-dim": "#b4c5ff",
-                    "surface-container-highest": "#e0e3e5",
-                    "on-secondary-container": "#54647a",
-                    "on-secondary-fixed": "#0b1c30",
-                    "surface-container": "#eceef0"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>JobNexe - Category Management</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#eeefff",
+            "primary-fixed": "#dbe1ff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#ffdbcd",
+            "background": "#f7f9fb",
+            "secondary-container": "#d0e1fb",
+            "surface": "#f7f9fb",
+            "inverse-surface": "#2d3133",
+            "tertiary-container": "#bc4800",
+            "surface-tint": "#0053db",
+            "on-tertiary-container": "#ffede6",
+            "secondary-fixed-dim": "#b7c8e1",
+            "tertiary-fixed-dim": "#ffb596",
+            "primary": "#004ac6",
+            "surface-dim": "#d8dadc",
+            "surface-container-low": "#f2f4f6",
+            "surface-bright": "#f7f9fb",
+            "outline-variant": "#c3c6d7",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "on-primary-fixed-variant": "#003ea8",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "inverse-primary": "#b4c5ff",
+            "inverse-on-surface": "#eff1f3",
+            "error": "#ba1a1a",
+            "surface-variant": "#e0e3e5",
+            "outline": "#737686",
+            "on-primary-fixed": "#00174b",
+            "secondary": "#505f76",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#434655",
+            "primary-container": "#2563eb",
+            "on-secondary-fixed-variant": "#38485d",
+            "on-tertiary-fixed": "#360f00",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "surface-container-highest": "#e0e3e5",
+            "on-secondary-container": "#54647a",
+            "on-secondary-fixed": "#0b1c30",
+            "surface-container": "#eceef0"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
         },
-      }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
 </head>
+
 <body class="bg-surface text-on-surface antialiased">
-<!-- TopNavBar Navigation Shell -->
-<header class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] h-20 flex justify-between items-center px-8 max-w-full mx-auto">
-<div class="flex items-center gap-8">
-<span class="text-xl font-bold tracking-tight text-blue-900">JobNexa</span>
-<nav class="hidden md:flex gap-6">
-<a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Opportunities</a>
-<a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Talent</a>
-<a class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1" href="#">Categories</a>
-<a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Analytics</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-</button>
-<div class="h-10 w-10 rounded-full bg-surface-container-high overflow-hidden">
-<img alt="Recruiter Profile" data-alt="professional portrait of a confident male executive in a sleek modern office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3xRzpC-52WQlvsY8yVpGQsr2on2KEFI6VdY5ncMNlOCvYCS8AlpTjm5oSXT_DF7RmSTbeOO5nLvk6IaAnIDiKSCNR3XBnERENa2KJFiO-UbkERpea7E8mILByhz4P3KBV41OUqAtM9A3-on5pdZLEcJ7vk7eqPCfjJIgYfCMniH03aeIDb85bpW3XA18PqFZG3UBoTBCnV4q4eFCQc9uzxwiBo18_nFXtld3SC5TzsOwA0OETL8vVoxm0e5afIIKd-y4FXGNbfqpv"/>
-</div>
-</div>
-</header>
-<div class="flex pt-20 h-screen">
-<!-- SideNavBar Navigation Shell -->
-<aside class="hidden md:flex flex-col py-6 px-4 gap-4 h-full w-64 border-r border-blue-200/20 bg-blue-50">
-<div class="flex items-center gap-3 px-2 mb-6">
-<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
-<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
-</div>
-<div>
-<h2 class="text-lg font-bold text-blue-900">Agency Portal</h2>
-<p class="text-[10px] text-blue-500 uppercase tracking-widest">Precision Management</p>
-</div>
-</div>
-<nav class="flex flex-col gap-1 flex-grow">
-<a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
-<span class="font-medium text-sm">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="work">work</span>
-<span class="font-medium text-sm">Postings</span>
-</a>
-<a class="flex items-center gap-3 py-2.5 px-3 bg-white text-blue-600 shadow-sm rounded-lg hover:tranblue-x-1 transition-all" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
-<span class="font-medium text-sm">Candidates</span>
-</a>
-<a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
-<span class="font-medium text-sm">Wallets</span>
-</a>
-<a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="settings_input_component">settings_input_component</span>
-<span class="font-medium text-sm">System</span>
-</a>
-</nav>
-<div class="mt-auto flex flex-col gap-1 border-t border-blue-200/50 pt-4">
-<a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
-<span class="font-medium text-sm">Help</span>
-</a>
-<a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
-<span class="font-medium text-sm">Logout</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Canvas -->
-<main class="flex-1 overflow-y-auto bg-surface p-8 md:p-12 lg:p-16">
-<div class="max-w-4xl mx-auto">
-<!-- Back Action -->
-<button class="group flex items-center gap-2 text-blue-500 hover:text-primary transition-colors mb-8">
-<span class="material-symbols-outlined text-sm transition-transform group-hover:-tranblue-x-1" data-icon="arrow_back">arrow_back</span>
-<span class="text-sm font-medium">Back to Categories</span>
-</button>
-<!-- Page Header -->
-<div class="mb-12">
-<h1 class="text-5xl font-bold tracking-tight text-blue-900 mb-4">Edit Category</h1>
-<p class="text-lg text-on-surface-variant max-w-xl">Refine the taxonomies of your platform. Maintain precise descriptions to help candidates find their perfect match.</p>
-</div>
-<!-- Bento Style Form Layout -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-<!-- Form Section -->
-<section class="lg:col-span-8 bg-white rounded-xl p-10 shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
-<form class="space-y-10">
-<!-- Category Name Input -->
-<div class="space-y-3">
-<label class="block text-xs font-bold uppercase tracking-widest text-blue-400" for="category-name">Category Name</label>
-<div class="relative">
-<input class="w-full bg-surface-container-low border-none rounded-lg py-4 px-5 text-lg font-medium text-blue-900 focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none" id="category-name" name="category-name" placeholder="e.g. Creative Arts" type="text" value="Software Engineering"/>
-<div class="absolute right-4 top-1/2 -tranblue-y-1/2 text-primary/40">
-<span class="material-symbols-outlined" data-icon="category">category</span>
-</div>
-</div>
-<p class="text-xs text-on-surface-variant">Traceability ID: SCR-ADM-CATFORM-001</p>
-</div>
-<!-- Description Input -->
-<div class="space-y-3">
-<label class="block text-xs font-bold uppercase tracking-widest text-blue-400" for="description">Description</label>
-<textarea class="w-full bg-surface-container-low border-none rounded-lg py-4 px-5 text-base text-blue-700 focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none resize-none" id="description" name="description" placeholder="Describe the scope of this category..." rows="6">Includes roles specializing in the design, development, and maintenance of software systems. This spans across Full-Stack, Backend, Frontend, and DevOps engineering disciplines.</textarea>
-</div>
-<!-- Form Actions -->
-<div class="flex items-center gap-4 pt-6">
-<button class="px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-white font-semibold rounded-lg shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all" type="submit">
-                                    Update Category
-                                </button>
-<button class="px-8 py-4 bg-surface-container-high text-on-secondary-container font-semibold rounded-lg hover:bg-surface-container-highest transition-all" type="button">
-                                    Discard Changes
-                                </button>
-</div>
-</form>
-</section>
-<!-- Sidebar Info / Visual Anchor -->
-<aside class="lg:col-span-4 space-y-8">
-<!-- Preview Card -->
-<div class="bg-surface-container-low rounded-xl p-8 border border-white/40">
-<h3 class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-6">Live Preview</h3>
-<div class="bg-white p-6 rounded-lg shadow-sm">
-<div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
-<span class="material-symbols-outlined" data-icon="developer_mode">developer_mode</span>
-</div>
-<h4 class="text-lg font-bold text-blue-900 mb-2">Software Engineering</h4>
-<p class="text-sm text-blue-500 line-clamp-3">Includes roles specializing in the design, development, and maintenance of software systems.</p>
-<div class="mt-4 flex items-center gap-2 text-xs font-semibold text-blue-600">
-<span>24 Active Openings</span>
-<span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span>
-</div>
-</div>
-</div>
-<!-- Metadata Info -->
-<div class="bg-blue-900 text-white rounded-xl p-8 overflow-hidden relative">
-<div class="relative z-10">
-<h3 class="text-xs font-bold uppercase tracking-widest text-white/50 mb-4">Traceability Data</h3>
-<div class="space-y-4">
-<div class="flex justify-between items-center border-b border-white/10 pb-2">
-<span class="text-xs text-white/60">Stakeholder Ref</span>
-<span class="text-xs font-mono font-medium">STK-ADM-CAT-001</span>
-</div>
-<div class="flex justify-between items-center border-b border-white/10 pb-2">
-<span class="text-xs text-white/60">Compliance Status</span>
-<span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">STK-ADM-CAT-002</span>
-</div>
-<div class="flex justify-between items-center border-b border-white/10 pb-2">
-<span class="text-xs text-white/60">Last Edited</span>
-<span class="text-xs">Oct 24, 2023</span>
-</div>
-</div>
-</div>
-<!-- Aesthetic Gradient Background -->
-<div class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-primary rounded-full blur-[80px] opacity-30"></div>
-</div>
-</aside>
-</div>
-</div>
-</main>
-</div>
-<!-- Floating Action for Quick Access (Only for Home/Dashboard context usually, but placed here as requested by system rules) -->
-<!-- Not rendered as this is a focused sub-page based on suppression rules -->
-</body></html>
+  <!-- TopNavBar Navigation Shell -->
+  <header
+    class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] h-20 flex justify-between items-center px-8 max-w-full mx-auto">
+    <div class="flex items-center gap-8">
+      <span class="text-xl font-bold tracking-tight text-blue-900">JobNexe</span>
+      <nav class="hidden md:flex gap-6">
+        <a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Opportunities</a>
+        <a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Talent</a>
+        <a class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1" href="#">Categories</a>
+        <a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Analytics</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
+        <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+      </button>
+      <button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
+        <span class="material-symbols-outlined" data-icon="settings">settings</span>
+      </button>
+      <div class="h-10 w-10 rounded-full bg-surface-container-high overflow-hidden">
+        <img alt="Recruiter Profile"
+          data-alt="professional portrait of a confident male executive in a sleek modern office setting with soft natural light"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3xRzpC-52WQlvsY8yVpGQsr2on2KEFI6VdY5ncMNlOCvYCS8AlpTjm5oSXT_DF7RmSTbeOO5nLvk6IaAnIDiKSCNR3XBnERENa2KJFiO-UbkERpea7E8mILByhz4P3KBV41OUqAtM9A3-on5pdZLEcJ7vk7eqPCfjJIgYfCMniH03aeIDb85bpW3XA18PqFZG3UBoTBCnV4q4eFCQc9uzxwiBo18_nFXtld3SC5TzsOwA0OETL8vVoxm0e5afIIKd-y4FXGNbfqpv" />
+      </div>
+    </div>
+  </header>
+  <div class="flex pt-20 h-screen">
+    <!-- SideNavBar Navigation Shell -->
+    <aside class="hidden md:flex flex-col py-6 px-4 gap-4 h-full w-64 border-r border-blue-200/20 bg-blue-50">
+      <div class="flex items-center gap-3 px-2 mb-6">
+        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+          <span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-blue-900">Agency Portal</h2>
+          <p class="text-[10px] text-blue-500 uppercase tracking-widest">Precision Management</p>
+        </div>
+      </div>
+      <nav class="flex flex-col gap-1 flex-grow">
+        <a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg"
+          href="#">
+          <span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+          <span class="font-medium text-sm">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg"
+          href="#">
+          <span class="material-symbols-outlined text-[20px]" data-icon="work">work</span>
+          <span class="font-medium text-sm">Postings</span>
+        </a>
+        <a class="flex items-center gap-3 py-2.5 px-3 bg-white text-blue-600 shadow-sm rounded-lg hover:tranblue-x-1 transition-all"
+          href="#">
+          <span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+          <span class="font-medium text-sm">Candidates</span>
+        </a>
+        <a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg"
+          href="#">
+          <span class="material-symbols-outlined text-[20px]"
+            data-icon="account_balance_wallet">account_balance_wallet</span>
+          <span class="font-medium text-sm">Wallets</span>
+        </a>
+        <a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 hover:tranblue-x-1 transition-all rounded-lg"
+          href="#">
+          <span class="material-symbols-outlined text-[20px]"
+            data-icon="settings_input_component">settings_input_component</span>
+          <span class="font-medium text-sm">System</span>
+        </a>
+      </nav>
+      <div class="mt-auto flex flex-col gap-1 border-t border-blue-200/50 pt-4">
+        <a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 transition-all rounded-lg"
+          href="#">
+          <span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+          <span class="font-medium text-sm">Help</span>
+        </a>
+        <a class="flex items-center gap-3 py-2.5 px-3 text-blue-500 hover:bg-blue-100 transition-all rounded-lg"
+          href="#">
+          <span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+          <span class="font-medium text-sm">Logout</span>
+        </a>
+      </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main class="flex-1 overflow-y-auto bg-surface p-8 md:p-12 lg:p-16">
+      <div class="max-w-4xl mx-auto">
+        <!-- Back Action -->
+        <button class="group flex items-center gap-2 text-blue-500 hover:text-primary transition-colors mb-8">
+          <span class="material-symbols-outlined text-sm transition-transform group-hover:-tranblue-x-1"
+            data-icon="arrow_back">arrow_back</span>
+          <span class="text-sm font-medium">Back to Categories</span>
+        </button>
+        <!-- Page Header -->
+        <div class="mb-12">
+          <h1 class="text-5xl font-bold tracking-tight text-blue-900 mb-4">Edit Category</h1>
+          <p class="text-lg text-on-surface-variant max-w-xl">Refine the taxonomies of your platform. Maintain precise
+            descriptions to help candidates find their perfect match.</p>
+        </div>
+        <!-- Bento Style Form Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Form Section -->
+          <section class="lg:col-span-8 bg-white rounded-xl p-10 shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
+            <form class="space-y-10">
+              <!-- Category Name Input -->
+              <div class="space-y-3">
+                <label class="block text-xs font-bold uppercase tracking-widest text-blue-400"
+                  for="category-name">Category Name</label>
+                <div class="relative">
+                  <input
+                    class="w-full bg-surface-container-low border-none rounded-lg py-4 px-5 text-lg font-medium text-blue-900 focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none"
+                    id="category-name" name="category-name" placeholder="e.g. Creative Arts" type="text"
+                    value="Software Engineering" />
+                  <div class="absolute right-4 top-1/2 -tranblue-y-1/2 text-primary/40">
+                    <span class="material-symbols-outlined" data-icon="category">category</span>
+                  </div>
+                </div>
+                <p class="text-xs text-on-surface-variant">Traceability ID: SCR-ADM-CATFORM-001</p>
+              </div>
+              <!-- Description Input -->
+              <div class="space-y-3">
+                <label class="block text-xs font-bold uppercase tracking-widest text-blue-400"
+                  for="description">Description</label>
+                <textarea
+                  class="w-full bg-surface-container-low border-none rounded-lg py-4 px-5 text-base text-blue-700 focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none resize-none"
+                  id="description" name="description" placeholder="Describe the scope of this category..."
+                  rows="6">Includes roles specializing in the design, development, and maintenance of software systems. This spans across Full-Stack, Backend, Frontend, and DevOps engineering disciplines.</textarea>
+              </div>
+              <!-- Form Actions -->
+              <div class="flex items-center gap-4 pt-6">
+                <button
+                  class="px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-white font-semibold rounded-lg shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  type="submit">
+                  Update Category
+                </button>
+                <button
+                  class="px-8 py-4 bg-surface-container-high text-on-secondary-container font-semibold rounded-lg hover:bg-surface-container-highest transition-all"
+                  type="button">
+                  Discard Changes
+                </button>
+              </div>
+            </form>
+          </section>
+          <!-- Sidebar Info / Visual Anchor -->
+          <aside class="lg:col-span-4 space-y-8">
+            <!-- Preview Card -->
+            <div class="bg-surface-container-low rounded-xl p-8 border border-white/40">
+              <h3 class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-6">Live Preview</h3>
+              <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+                  <span class="material-symbols-outlined" data-icon="developer_mode">developer_mode</span>
+                </div>
+                <h4 class="text-lg font-bold text-blue-900 mb-2">Software Engineering</h4>
+                <p class="text-sm text-blue-500 line-clamp-3">Includes roles specializing in the design, development,
+                  and maintenance of software systems.</p>
+                <div class="mt-4 flex items-center gap-2 text-xs font-semibold text-blue-600">
+                  <span>24 Active Openings</span>
+                  <span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span>
+                </div>
+              </div>
+            </div>
+            <!-- Metadata Info -->
+            <div class="bg-blue-900 text-white rounded-xl p-8 overflow-hidden relative">
+              <div class="relative z-10">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-white/50 mb-4">Traceability Data</h3>
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                    <span class="text-xs text-white/60">Stakeholder Ref</span>
+                    <span class="text-xs font-mono font-medium">STK-ADM-CAT-001</span>
+                  </div>
+                  <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                    <span class="text-xs text-white/60">Compliance Status</span>
+                    <span
+                      class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">STK-ADM-CAT-002</span>
+                  </div>
+                  <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                    <span class="text-xs text-white/60">Last Edited</span>
+                    <span class="text-xs">Oct 24, 2023</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Aesthetic Gradient Background -->
+              <div
+                class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-primary rounded-full blur-[80px] opacity-30">
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+  <!-- Floating Action for Quick Access (Only for Home/Dashboard context usually, but placed here as requested by system rules) -->
+  <!-- Not rendered as this is a focused sub-page based on suppression rules -->
+</body>
+
+</html>

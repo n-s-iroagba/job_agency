@@ -1,408 +1,492 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>JobNexa | Your Gateway to Global Opportunities</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-secondary-container": "#54647a",
-                    "primary-fixed-dim": "#b4c5ff",
-                    "error-container": "#ffdad6",
-                    "secondary-fixed": "#d3e4fe",
-                    "surface-container-high": "#e6e8ea",
-                    "background": "#f7f9fb",
-                    "on-primary": "#ffffff",
-                    "outline-variant": "#c3c6d7",
-                    "secondary-fixed-dim": "#b7c8e1",
-                    "primary": "#004ac6",
-                    "tertiary": "#943700",
-                    "surface-container-lowest": "#ffffff",
-                    "tertiary-fixed-dim": "#ffb596",
-                    "on-secondary-fixed": "#0b1c30",
-                    "on-primary-fixed": "#00174b",
-                    "inverse-on-surface": "#eff1f3",
-                    "tertiary-fixed": "#ffdbcd",
-                    "tertiary-container": "#bc4800",
-                    "on-secondary": "#ffffff",
-                    "on-tertiary-container": "#ffede6",
-                    "on-background": "#191c1e",
-                    "secondary": "#505f76",
-                    "surface-tint": "#0053db",
-                    "outline": "#737686",
-                    "surface-container-low": "#f2f4f6",
-                    "surface-container-highest": "#e0e3e5",
-                    "primary-container": "#2563eb",
-                    "surface": "#f7f9fb",
-                    "secondary-container": "#d0e1fb",
-                    "inverse-surface": "#2d3133",
-                    "on-tertiary-fixed": "#360f00",
-                    "on-surface-variant": "#434655",
-                    "on-error-container": "#93000a",
-                    "on-secondary-fixed-variant": "#38485d",
-                    "on-primary-container": "#eeefff",
-                    "on-primary-fixed-variant": "#003ea8",
-                    "surface-variant": "#e0e3e5",
-                    "on-error": "#ffffff",
-                    "surface-bright": "#f7f9fb",
-                    "error": "#ba1a1a",
-                    "on-surface": "#191c1e",
-                    "primary-fixed": "#dbe1ff",
-                    "inverse-primary": "#b4c5ff",
-                    "on-tertiary": "#ffffff",
-                    "on-tertiary-fixed-variant": "#7d2d00",
-                    "surface-container": "#eceef0",
-                    "surface-dim": "#d8dadc"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>JobNexe | Your Gateway to Global Opportunities</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-container": "#54647a",
+            "primary-fixed-dim": "#b4c5ff",
+            "error-container": "#ffdad6",
+            "secondary-fixed": "#d3e4fe",
+            "surface-container-high": "#e6e8ea",
+            "background": "#f7f9fb",
+            "on-primary": "#ffffff",
+            "outline-variant": "#c3c6d7",
+            "secondary-fixed-dim": "#b7c8e1",
+            "primary": "#004ac6",
+            "tertiary": "#943700",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-fixed-dim": "#ffb596",
+            "on-secondary-fixed": "#0b1c30",
+            "on-primary-fixed": "#00174b",
+            "inverse-on-surface": "#eff1f3",
+            "tertiary-fixed": "#ffdbcd",
+            "tertiary-container": "#bc4800",
+            "on-secondary": "#ffffff",
+            "on-tertiary-container": "#ffede6",
+            "on-background": "#191c1e",
+            "secondary": "#505f76",
+            "surface-tint": "#0053db",
+            "outline": "#737686",
+            "surface-container-low": "#f2f4f6",
+            "surface-container-highest": "#e0e3e5",
+            "primary-container": "#2563eb",
+            "surface": "#f7f9fb",
+            "secondary-container": "#d0e1fb",
+            "inverse-surface": "#2d3133",
+            "on-tertiary-fixed": "#360f00",
+            "on-surface-variant": "#434655",
+            "on-error-container": "#93000a",
+            "on-secondary-fixed-variant": "#38485d",
+            "on-primary-container": "#eeefff",
+            "on-primary-fixed-variant": "#003ea8",
+            "surface-variant": "#e0e3e5",
+            "on-error": "#ffffff",
+            "surface-bright": "#f7f9fb",
+            "error": "#ba1a1a",
+            "on-surface": "#191c1e",
+            "primary-fixed": "#dbe1ff",
+            "inverse-primary": "#b4c5ff",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "surface-container": "#eceef0",
+            "surface-dim": "#d8dadc"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
         },
-      }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-nav {
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-        }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .glass-nav {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+  </style>
 </head>
+
 <body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm shadow-blue-200/50 flex justify-between items-center px-8 h-16 max-w-full">
-<div class="flex items-center gap-8">
-<span class="text-xl font-bold tracking-tight text-blue-900">JobNexa</span>
-<div class="hidden md:flex gap-6 items-center">
-<a class="text-blue-600 font-semibold font-sans antialiased text-sm transition-colors duration-300" href="#">Home</a>
-<a class="text-blue-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300" href="#">Jobs</a>
-<a class="text-blue-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300" href="#">Privacy</a>
-</div>
-</div>
-<div class="flex items-center gap-4">
-<button class="text-blue-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300">Login</button>
-<button class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-md shadow-primary/20 hover:bg-primary-container transition-all duration-300">Signup</button>
-</div>
-</nav>
-<main class="pt-16">
-<!-- Hero Section -->
-<section class="relative min-h-[870px] flex items-center overflow-hidden bg-surface">
-<div class="absolute inset-0 z-0">
-<div class="absolute top-[-10%] right-[-10%] w-[50%] h-[80%] rounded-full bg-primary/5 blur-[120px]"></div>
-<div class="absolute bottom-[-5%] left-[-5%] w-[40%] h-[60%] rounded-full bg-secondary/5 blur-[100px]"></div>
-</div>
-<div class="container mx-auto px-8 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
-<div class="lg:col-span-7">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/30 text-primary text-xs font-bold mb-6">
-<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
-                        PRECISION IN PROFESSIONAL PLACEMENT
-                    </div>
-<h1 class="text-blue-900 font-bold leading-[1.1] tracking-tight mb-6 text-[3.5rem] lg:text-[4.5rem]">
-                        Your Gateway to <span class="text-primary">Global</span> Opportunities
-                    </h1>
-<p class="text-on-surface-variant text-lg lg:text-xl max-w-xl mb-10 leading-relaxed">
-                        An editorial approach to job searching. We curate high-impact roles for specialized professionals across the globe.
-                    </p>
-<div class="flex flex-wrap gap-4">
-<button class="bg-primary text-white px-8 py-4 rounded-lg font-bold text-base shadow-xl shadow-primary/30 hover:scale-[1.02] transition-transform">Explore Careers</button>
-<button class="bg-surface-container-high text-on-secondary-container px-8 py-4 rounded-lg font-bold text-base hover:bg-surface-container-highest transition-colors">Our Process</button>
-</div>
-</div>
-<div class="lg:col-span-5 relative">
-<div class="aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl relative group">
-<img alt="Corporate Excellence" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Modern glass skyscraper architecture reflecting a blue clear sky with sophisticated professional atmosphere and high-end lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Xnwi37B5XPgmD3a9CFgqJpSIMWlUZo0kSeHMXU-CwG1C1yOmKYCpvNtc8efaPp1pNXpZDWqnQnbWRXPqzSMp08e4sq0AudRIFwrssNsLEJsYMpC9yeb7c14Qrh7Fg7lhEAe6A5j28QIzUFv8fB8Nwitrl2lec4MuyRY0LdYx-5AKRL3MrHuAfDAkVSGGlAQq03QN5mkKifvmXw1TN3agviYUHsBajwAqRHRzrcuJuyjYuocSpiJeZwg8pW1Bh9MMuGPd1aZKG3bI"/>
-<div class="absolute bottom-8 left-8 right-8 bg-white/80 backdrop-blur-xl p-6 rounded-2xl shadow-xl">
-<p class="text-primary font-bold text-sm mb-1">Global Reach</p>
-<p class="text-blue-900 font-semibold">1,200+ Verified Agency Credentials</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Trust Indicators -->
-<section class="py-16 bg-surface-container-low">
-<div class="container mx-auto px-8">
-<p class="text-center text-blue-500 text-xs font-bold tracking-[0.2em] mb-10">TRUSTED BY GLOBAL INSTITUTIONS</p>
-<div class="flex flex-wrap justify-center items-center gap-12 lg:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-4xl">verified_user</span>
-<span class="font-bold text-xl tracking-tighter">GLOBALCERT</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-4xl">shield_person</span>
-<span class="font-bold text-xl tracking-tighter">SECUREHIRE</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-4xl">gavel</span>
-<span class="font-bold text-xl tracking-tighter">LEGALALIGN</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-4xl">public</span>
-<span class="font-bold text-xl tracking-tighter">WORLDWORK</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Job Listings Search & Filters -->
-<section class="py-24 bg-surface">
-<div class="container mx-auto px-8">
-<div class="mb-16">
-<h2 class="text-3xl font-bold text-blue-900 mb-8">Curated Opportunities</h2>
-<!-- Search & Filter Bar -->
-<div class="bg-surface-container-low p-2 rounded-xl flex flex-col md:flex-row gap-2">
-<div class="flex-grow flex items-center bg-white rounded-lg px-4 border-none shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-<span class="material-symbols-outlined text-blue-400">search</span>
-<input class="w-full border-none focus:ring-0 text-sm py-3 bg-transparent" placeholder="Job title, keywords, or company..." type="text"/>
-</div>
-<div class="flex gap-2">
-<select class="bg-white border-none rounded-lg text-sm px-4 py-3 shadow-sm focus:ring-2 ring-primary/20">
-<option>Category</option>
-<option>Healthcare</option>
-<option>Technology</option>
-<option>Logistics</option>
-</select>
-<select class="bg-white border-none rounded-lg text-sm px-4 py-3 shadow-sm focus:ring-2 ring-primary/20">
-<option>Remote/On-site</option>
-<option>Remote</option>
-<option>Hybrid</option>
-<option>On-site</option>
-</select>
-<button class="bg-primary text-white px-6 rounded-lg font-bold text-sm shadow-md hover:bg-primary-container transition-colors">Search</button>
-</div>
-</div>
-</div>
-<!-- Bento Grid / Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Job Card 1 -->
-<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
-<div class="flex justify-between items-start mb-6">
-<div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">medical_services</span>
-</div>
-<span class="px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold rounded-full">NEW</span>
-</div>
-<h3 class="text-xl font-bold text-blue-900 mb-2">Senior Registered Nurse</h3>
-<p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
-<span class="material-symbols-outlined text-base">location_on</span> London, United Kingdom
-                        </p>
-<div class="flex flex-wrap gap-2 mb-8">
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Healthcare</span>
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Full-time</span>
-</div>
-<button class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply Now</button>
-</div>
-<!-- Job Card 2 -->
-<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
-<div class="flex justify-between items-start mb-6">
-<div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined text-fill" style="font-variation-settings: 'FILL' 1;">code</span>
-</div>
-</div>
-<h3 class="text-xl font-bold text-blue-900 mb-2">Senior IT Specialist</h3>
-<p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
-<span class="material-symbols-outlined text-base">location_on</span> Berlin, Germany
-                        </p>
-<div class="flex flex-wrap gap-2 mb-8">
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Technology</span>
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Hybrid</span>
-</div>
-<button class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply Now</button>
-</div>
-<!-- Job Card 3 -->
-<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
-<div class="flex justify-between items-start mb-6">
-<div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">local_shipping</span>
-</div>
-</div>
-<h3 class="text-xl font-bold text-blue-900 mb-2">Long-haul Logistics Driver</h3>
-<p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
-<span class="material-symbols-outlined text-base">location_on</span> Toronto, Canada
-                        </p>
-<div class="flex flex-wrap gap-2 mb-8">
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Logistics</span>
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Contract</span>
-</div>
-<button class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply Now</button>
-</div>
-<!-- Job Card 4 -->
-<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
-<div class="flex justify-between items-start mb-6">
-<div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">architecture</span>
-</div>
-</div>
-<h3 class="text-xl font-bold text-blue-900 mb-2">Cloud Infrastructure Architect</h3>
-<p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
-<span class="material-symbols-outlined text-base">location_on</span> Remote, Global
-                        </p>
-<div class="flex flex-wrap gap-2 mb-8">
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Technology</span>
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Remote</span>
-</div>
-<button class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply Now</button>
-</div>
-<!-- Job Card 5 -->
-<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
-<div class="flex justify-between items-start mb-6">
-<div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">psychology</span>
-</div>
-</div>
-<h3 class="text-xl font-bold text-blue-900 mb-2">Clinical Psychologist</h3>
-<p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
-<span class="material-symbols-outlined text-base">location_on</span> Melbourne, Australia
-                        </p>
-<div class="flex flex-wrap gap-2 mb-8">
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Healthcare</span>
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Full-time</span>
-</div>
-<button class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply Now</button>
-</div>
-<!-- Job Card 6 -->
-<div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
-<div class="flex justify-between items-start mb-6">
-<div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">payments</span>
-</div>
-</div>
-<h3 class="text-xl font-bold text-blue-900 mb-2">Financial Analyst</h3>
-<p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
-<span class="material-symbols-outlined text-base">location_on</span> New York, USA
-                        </p>
-<div class="flex flex-wrap gap-2 mb-8">
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Finance</span>
-<span class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Full-time</span>
-</div>
-<button class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply Now</button>
-</div>
-</div>
-<div class="mt-16 text-center">
-<button class="text-primary font-bold flex items-center gap-2 mx-auto group">
-                        View All Opportunities
-                        <span class="material-symbols-outlined group-hover:tranblue-x-1 transition-transform">arrow_forward</span>
-</button>
-</div>
-</div>
-</section>
-<!-- Candidate Spotlight / Signature Component -->
-<section class="py-24 bg-surface-container-low overflow-hidden">
-<div class="container mx-auto px-8">
-<div class="grid lg:grid-cols-2 gap-16 items-center">
-<div class="relative">
-<div class="bg-white p-10 rounded-[2rem] shadow-2xl relative z-10">
-<div class="flex items-center gap-6 mb-8">
-<img alt="Candidate Spotlight" class="w-24 h-24 rounded-2xl object-cover grayscale" data-alt="Professional portrait of a confident smiling woman business leader in a modern office environment with soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC500VKOj6V4ZjscSKKMJkEPq-MxcNwtS6MQCB7oNSdKJyoWa5s_EFzu-AXHZ6o2L7PCKBtgRLijZKJNNap_325AQVpWiESclBVkPXeS0ZPX7_4RhJzbVLiRUNQcM-iA2LJJU_mmHOHJ8UIvt-X67hhZbD42hmewN905Z1N0HJYsvzG3GfIBU9ceRlX-gc5ULL8qS8BSvvpSU4t-gqus_bZBOWw4OfvbIISPIhGUsdGlEEfg1qJ56wXZQ75tWAVkTMyfeuEYYZygq3A"/>
-<div>
-<h4 class="text-2xl font-bold text-blue-900 leading-tight">Elite Talent <br/>Matching</h4>
-<p class="text-primary font-semibold text-sm">Case Study: Sarah J., DevOps Engineer</p>
-</div>
-</div>
-<p class="text-blue-600 text-lg italic leading-relaxed mb-8">
-                                "JobNexa didn't just find me a job; they curated a career path that aligned with my global ambitions. The precision of their placement is unmatched in the industry."
-                            </p>
-<div class="flex gap-4">
-<div class="px-4 py-2 bg-blue-50 rounded-lg">
-<p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">PLACED IN</p>
-<p class="font-bold text-blue-900">14 Days</p>
-</div>
-<div class="px-4 py-2 bg-blue-50 rounded-lg">
-<p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">SALARY INCREASE</p>
-<p class="font-bold text-blue-900">+45%</p>
-</div>
-</div>
-</div>
-<div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
-<div class="absolute -bottom-10 -right-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
-</div>
-<div>
-<h2 class="text-4xl lg:text-5xl font-bold text-blue-900 mb-8 leading-tight">Beyond a Simple <br/>Bulletin Board.</h2>
-<div class="space-y-6">
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">stars</span>
-<div>
-<h5 class="font-bold text-blue-900">Vetted Partnerships</h5>
-<p class="text-on-surface-variant text-sm">We only work with agencies and companies that meet our strict ethical and professional standards.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">insights</span>
-<div>
-<h5 class="font-bold text-blue-900">Precision Analysis</h5>
-<p class="text-on-surface-variant text-sm">Our curation engine matches your unique skills with roles where you'll thrive, not just fit.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">language</span>
-<div>
-<h5 class="font-bold text-blue-900">Seamless Relocation</h5>
-<p class="text-on-surface-variant text-sm">Integrated support for global mobility, visas, and settling into your new career chapter.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-blue-50 dark:bg-blue-950 w-full py-12 px-8">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-<div class="space-y-4">
-<span class="font-bold text-blue-900 dark:text-white text-xl">JobNexa</span>
-<p class="text-xs font-normal text-blue-500 dark:text-blue-400 leading-relaxed">
-                    © 2024 JobNexa. Precision in Professional Placement.
-                </p>
-<div class="flex gap-4">
-<a class="text-blue-400 hover:text-blue-600 transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
-<a class="text-blue-400 hover:text-blue-600 transition-colors" href="#"><span class="material-symbols-outlined">chat</span></a>
-<a class="text-blue-400 hover:text-blue-600 transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
-</div>
-</div>
-<div>
-<h6 class="font-bold text-blue-900 dark:text-white text-sm mb-4">Contact</h6>
-<ul class="text-xs text-blue-500 dark:text-blue-400 space-y-2">
-<li>support@JobNexa.com</li>
-<li>+1 (555) 000-8888</li>
-<li>Global HQ, New York</li>
-</ul>
-</div>
-<div>
-<h6 class="font-bold text-blue-900 dark:text-white text-sm mb-4">Legal</h6>
-<ul class="text-xs text-blue-500 dark:text-blue-400 space-y-2">
-<li>Privacy Policy</li>
-<li>Terms of Service</li>
-<li>Cookie Policy</li>
-</ul>
-</div>
-<div>
-<h6 class="font-bold text-blue-900 dark:text-white text-sm mb-4">Subscribe</h6>
-<p class="text-[10px] text-blue-500 mb-4">Get curated job alerts directly.</p>
-<div class="flex">
-<input class="bg-white border-none rounded-l-lg text-xs w-full focus:ring-1 ring-primary" placeholder="Email" type="text"/>
-<button class="bg-primary text-white px-3 rounded-r-lg"><span class="material-symbols-outlined text-sm">send</span></button>
-</div>
-</div>
-</div>
-</footer>
-</body></html>
+  <!-- TopNavBar -->
+  <nav
+    class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm shadow-blue-200/50 flex justify-between items-center px-8 h-16 max-w-full">
+    <div class="flex items-center gap-8">
+      <span class="text-xl font-bold tracking-tight text-blue-900">JobNexe</span>
+      <div class="hidden md:flex gap-6 items-center">
+        <a class="text-blue-600 font-semibold font-sans antialiased text-sm transition-colors duration-300"
+          href="#">Home</a>
+        <a class="text-blue-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300"
+          href="#">Jobs</a>
+        <a class="text-blue-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300"
+          href="#">Privacy</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <button
+        class="text-blue-600 hover:text-blue-700 font-sans antialiased text-sm font-medium transition-colors duration-300">Login</button>
+      <button
+        class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-md shadow-primary/20 hover:bg-primary-container transition-all duration-300">Signup</button>
+    </div>
+  </nav>
+  <main class="pt-16">
+    <!-- Hero Section -->
+    <section class="relative min-h-[870px] flex items-center overflow-hidden bg-surface">
+      <div class="absolute inset-0 z-0">
+        <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[80%] rounded-full bg-primary/5 blur-[120px]"></div>
+        <div class="absolute bottom-[-5%] left-[-5%] w-[40%] h-[60%] rounded-full bg-secondary/5 blur-[100px]"></div>
+      </div>
+      <div class="container mx-auto px-8 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/30 text-primary text-xs font-bold mb-6">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+            PRECISION IN PROFESSIONAL PLACEMENT
+          </div>
+          <h1 class="text-blue-900 font-bold leading-[1.1] tracking-tight mb-6 text-[3.5rem] lg:text-[4.5rem]">
+            Your Gateway to <span class="text-primary">Global</span> Opportunities
+          </h1>
+          <p class="text-on-surface-variant text-lg lg:text-xl max-w-xl mb-10 leading-relaxed">
+            An editorial approach to job searching. We curate high-impact roles for specialized professionals across the
+            globe.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <button
+              class="bg-primary text-white px-8 py-4 rounded-lg font-bold text-base shadow-xl shadow-primary/30 hover:scale-[1.02] transition-transform">Explore
+              Careers</button>
+            <button
+              class="bg-surface-container-high text-on-secondary-container px-8 py-4 rounded-lg font-bold text-base hover:bg-surface-container-highest transition-colors">Our
+              Process</button>
+          </div>
+        </div>
+        <div class="lg:col-span-5 relative">
+          <div class="aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl relative group">
+            <img alt="Corporate Excellence"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              data-alt="Modern glass skyscraper architecture reflecting a blue clear sky with sophisticated professional atmosphere and high-end lighting"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Xnwi37B5XPgmD3a9CFgqJpSIMWlUZo0kSeHMXU-CwG1C1yOmKYCpvNtc8efaPp1pNXpZDWqnQnbWRXPqzSMp08e4sq0AudRIFwrssNsLEJsYMpC9yeb7c14Qrh7Fg7lhEAe6A5j28QIzUFv8fB8Nwitrl2lec4MuyRY0LdYx-5AKRL3MrHuAfDAkVSGGlAQq03QN5mkKifvmXw1TN3agviYUHsBajwAqRHRzrcuJuyjYuocSpiJeZwg8pW1Bh9MMuGPd1aZKG3bI" />
+            <div class="absolute bottom-8 left-8 right-8 bg-white/80 backdrop-blur-xl p-6 rounded-2xl shadow-xl">
+              <p class="text-primary font-bold text-sm mb-1">Global Reach</p>
+              <p class="text-blue-900 font-semibold">1,200+ Verified Agency Credentials</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Trust Indicators -->
+    <section class="py-16 bg-surface-container-low">
+      <div class="container mx-auto px-8">
+        <p class="text-center text-blue-500 text-xs font-bold tracking-[0.2em] mb-10">TRUSTED BY GLOBAL INSTITUTIONS</p>
+        <div
+          class="flex flex-wrap justify-center items-center gap-12 lg:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-4xl">verified_user</span>
+            <span class="font-bold text-xl tracking-tighter">GLOBALCERT</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-4xl">shield_person</span>
+            <span class="font-bold text-xl tracking-tighter">SECUREHIRE</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-4xl">gavel</span>
+            <span class="font-bold text-xl tracking-tighter">LEGALALIGN</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-4xl">public</span>
+            <span class="font-bold text-xl tracking-tighter">WORLDWORK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Job Listings Search & Filters -->
+    <section class="py-24 bg-surface">
+      <div class="container mx-auto px-8">
+        <div class="mb-16">
+          <h2 class="text-3xl font-bold text-blue-900 mb-8">Curated Opportunities</h2>
+          <!-- Search & Filter Bar -->
+          <div class="bg-surface-container-low p-2 rounded-xl flex flex-col md:flex-row gap-2">
+            <div
+              class="flex-grow flex items-center bg-white rounded-lg px-4 border-none shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
+              <span class="material-symbols-outlined text-blue-400">search</span>
+              <input class="w-full border-none focus:ring-0 text-sm py-3 bg-transparent"
+                placeholder="Job title, keywords, or company..." type="text" />
+            </div>
+            <div class="flex gap-2">
+              <select class="bg-white border-none rounded-lg text-sm px-4 py-3 shadow-sm focus:ring-2 ring-primary/20">
+                <option>Category</option>
+                <option>Healthcare</option>
+                <option>Technology</option>
+                <option>Logistics</option>
+              </select>
+              <select class="bg-white border-none rounded-lg text-sm px-4 py-3 shadow-sm focus:ring-2 ring-primary/20">
+                <option>Remote/On-site</option>
+                <option>Remote</option>
+                <option>Hybrid</option>
+                <option>On-site</option>
+              </select>
+              <button
+                class="bg-primary text-white px-6 rounded-lg font-bold text-sm shadow-md hover:bg-primary-container transition-colors">Search</button>
+            </div>
+          </div>
+        </div>
+        <!-- Bento Grid / Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Job Card 1 -->
+          <div
+            class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">medical_services</span>
+              </div>
+              <span class="px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold rounded-full">NEW</span>
+            </div>
+            <h3 class="text-xl font-bold text-blue-900 mb-2">Senior Registered Nurse</h3>
+            <p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">location_on</span> London, United Kingdom
+            </p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Healthcare</span>
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Full-time</span>
+            </div>
+            <button
+              class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply
+              Now</button>
+          </div>
+          <!-- Job Card 2 -->
+          <div
+            class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-fill" style="font-variation-settings: 'FILL' 1;">code</span>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-blue-900 mb-2">Senior IT Specialist</h3>
+            <p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">location_on</span> Berlin, Germany
+            </p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Technology</span>
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Hybrid</span>
+            </div>
+            <button
+              class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply
+              Now</button>
+          </div>
+          <!-- Job Card 3 -->
+          <div
+            class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">local_shipping</span>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-blue-900 mb-2">Long-haul Logistics Driver</h3>
+            <p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">location_on</span> Toronto, Canada
+            </p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Logistics</span>
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Contract</span>
+            </div>
+            <button
+              class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply
+              Now</button>
+          </div>
+          <!-- Job Card 4 -->
+          <div
+            class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">architecture</span>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-blue-900 mb-2">Cloud Infrastructure Architect</h3>
+            <p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">location_on</span> Remote, Global
+            </p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Technology</span>
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Remote</span>
+            </div>
+            <button
+              class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply
+              Now</button>
+          </div>
+          <!-- Job Card 5 -->
+          <div
+            class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">psychology</span>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-blue-900 mb-2">Clinical Psychologist</h3>
+            <p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">location_on</span> Melbourne, Australia
+            </p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Healthcare</span>
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Full-time</span>
+            </div>
+            <button
+              class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply
+              Now</button>
+          </div>
+          <!-- Job Card 6 -->
+          <div
+            class="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all group border border-blue-100/50">
+            <div class="flex justify-between items-start mb-6">
+              <div
+                class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined">payments</span>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-blue-900 mb-2">Financial Analyst</h3>
+            <p class="text-blue-500 text-sm mb-6 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">location_on</span> New York, USA
+            </p>
+            <div class="flex flex-wrap gap-2 mb-8">
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Finance</span>
+              <span
+                class="px-2 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider">Full-time</span>
+            </div>
+            <button
+              class="w-full py-3 bg-blue-50 text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-white transition-all">Apply
+              Now</button>
+          </div>
+        </div>
+        <div class="mt-16 text-center">
+          <button class="text-primary font-bold flex items-center gap-2 mx-auto group">
+            View All Opportunities
+            <span class="material-symbols-outlined group-hover:tranblue-x-1 transition-transform">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Candidate Spotlight / Signature Component -->
+    <section class="py-24 bg-surface-container-low overflow-hidden">
+      <div class="container mx-auto px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="relative">
+            <div class="bg-white p-10 rounded-[2rem] shadow-2xl relative z-10">
+              <div class="flex items-center gap-6 mb-8">
+                <img alt="Candidate Spotlight" class="w-24 h-24 rounded-2xl object-cover grayscale"
+                  data-alt="Professional portrait of a confident smiling woman business leader in a modern office environment with soft focus background"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC500VKOj6V4ZjscSKKMJkEPq-MxcNwtS6MQCB7oNSdKJyoWa5s_EFzu-AXHZ6o2L7PCKBtgRLijZKJNNap_325AQVpWiESclBVkPXeS0ZPX7_4RhJzbVLiRUNQcM-iA2LJJU_mmHOHJ8UIvt-X67hhZbD42hmewN905Z1N0HJYsvzG3GfIBU9ceRlX-gc5ULL8qS8BSvvpSU4t-gqus_bZBOWw4OfvbIISPIhGUsdGlEEfg1qJ56wXZQ75tWAVkTMyfeuEYYZygq3A" />
+                <div>
+                  <h4 class="text-2xl font-bold text-blue-900 leading-tight">Elite Talent <br />Matching</h4>
+                  <p class="text-primary font-semibold text-sm">Case Study: Sarah J., DevOps Engineer</p>
+                </div>
+              </div>
+              <p class="text-blue-600 text-lg italic leading-relaxed mb-8">
+                "JobNexe didn't just find me a job; they curated a career path that aligned with my global ambitions.
+                The precision of their placement is unmatched in the industry."
+              </p>
+              <div class="flex gap-4">
+                <div class="px-4 py-2 bg-blue-50 rounded-lg">
+                  <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">PLACED IN</p>
+                  <p class="font-bold text-blue-900">14 Days</p>
+                </div>
+                <div class="px-4 py-2 bg-blue-50 rounded-lg">
+                  <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">SALARY INCREASE</p>
+                  <p class="font-bold text-blue-900">+45%</p>
+                </div>
+              </div>
+            </div>
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
+          </div>
+          <div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-blue-900 mb-8 leading-tight">Beyond a Simple <br />Bulletin
+              Board.</h2>
+            <div class="space-y-6">
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary"
+                  style="font-variation-settings: 'FILL' 1;">stars</span>
+                <div>
+                  <h5 class="font-bold text-blue-900">Vetted Partnerships</h5>
+                  <p class="text-on-surface-variant text-sm">We only work with agencies and companies that meet our
+                    strict ethical and professional standards.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary"
+                  style="font-variation-settings: 'FILL' 1;">insights</span>
+                <div>
+                  <h5 class="font-bold text-blue-900">Precision Analysis</h5>
+                  <p class="text-on-surface-variant text-sm">Our curation engine matches your unique skills with roles
+                    where you'll thrive, not just fit.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary"
+                  style="font-variation-settings: 'FILL' 1;">language</span>
+                <div>
+                  <h5 class="font-bold text-blue-900">Seamless Relocation</h5>
+                  <p class="text-on-surface-variant text-sm">Integrated support for global mobility, visas, and settling
+                    into your new career chapter.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-blue-50 dark:bg-blue-950 w-full py-12 px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+      <div class="space-y-4">
+        <span class="font-bold text-blue-900 dark:text-white text-xl">JobNexe</span>
+        <p class="text-xs font-normal text-blue-500 dark:text-blue-400 leading-relaxed">
+          © 2024 JobNexe. Precision in Professional Placement.
+        </p>
+        <div class="flex gap-4">
+          <a class="text-blue-400 hover:text-blue-600 transition-colors" href="#"><span
+              class="material-symbols-outlined">public</span></a>
+          <a class="text-blue-400 hover:text-blue-600 transition-colors" href="#"><span
+              class="material-symbols-outlined">chat</span></a>
+          <a class="text-blue-400 hover:text-blue-600 transition-colors" href="#"><span
+              class="material-symbols-outlined">mail</span></a>
+        </div>
+      </div>
+      <div>
+        <h6 class="font-bold text-blue-900 dark:text-white text-sm mb-4">Contact</h6>
+        <ul class="text-xs text-blue-500 dark:text-blue-400 space-y-2">
+          <li>support@JobNexe.com</li>
+          <li>+1 (555) 000-8888</li>
+          <li>Global HQ, New York</li>
+        </ul>
+      </div>
+      <div>
+        <h6 class="font-bold text-blue-900 dark:text-white text-sm mb-4">Legal</h6>
+        <ul class="text-xs text-blue-500 dark:text-blue-400 space-y-2">
+          <li>Privacy Policy</li>
+          <li>Terms of Service</li>
+          <li>Cookie Policy</li>
+        </ul>
+      </div>
+      <div>
+        <h6 class="font-bold text-blue-900 dark:text-white text-sm mb-4">Subscribe</h6>
+        <p class="text-[10px] text-blue-500 mb-4">Get curated job alerts directly.</p>
+        <div class="flex">
+          <input class="bg-white border-none rounded-l-lg text-xs w-full focus:ring-1 ring-primary" placeholder="Email"
+            type="text" />
+          <button class="bg-primary text-white px-3 rounded-r-lg"><span
+              class="material-symbols-outlined text-sm">send</span></button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,408 +1,464 @@
 <!DOCTYPE html>
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>JobNexa Admin - Bank Management</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "outline": "#737686",
-                    "on-primary-fixed-variant": "#003ea8",
-                    "on-tertiary-fixed": "#360f00",
-                    "on-primary-fixed": "#00174b",
-                    "on-error-container": "#93000a",
-                    "primary": "#004ac6",
-                    "surface-container": "#eceef0",
-                    "surface": "#f7f9fb",
-                    "surface-dim": "#d8dadc",
-                    "on-tertiary-fixed-variant": "#7d2d00",
-                    "secondary-fixed": "#d3e4fe",
-                    "surface-container-highest": "#e0e3e5",
-                    "surface-variant": "#e0e3e5",
-                    "surface-container-lowest": "#ffffff",
-                    "on-primary": "#ffffff",
-                    "primary-fixed-dim": "#b4c5ff",
-                    "on-secondary": "#ffffff",
-                    "on-secondary-fixed-variant": "#38485d",
-                    "surface-container-high": "#e6e8ea",
-                    "outline-variant": "#c3c6d7",
-                    "error-container": "#ffdad6",
-                    "background": "#f7f9fb",
-                    "tertiary-fixed-dim": "#ffb596",
-                    "tertiary-container": "#bc4800",
-                    "inverse-primary": "#b4c5ff",
-                    "primary-fixed": "#dbe1ff",
-                    "inverse-on-surface": "#eff1f3",
-                    "error": "#ba1a1a",
-                    "tertiary": "#943700",
-                    "primary-container": "#2563eb",
-                    "on-error": "#ffffff",
-                    "surface-container-low": "#f2f4f6",
-                    "inverse-surface": "#2d3133",
-                    "secondary-container": "#d0e1fb",
-                    "secondary-fixed-dim": "#b7c8e1",
-                    "surface-tint": "#0053db",
-                    "surface-bright": "#f7f9fb",
-                    "on-tertiary": "#ffffff",
-                    "tertiary-fixed": "#ffdbcd",
-                    "on-tertiary-container": "#ffede6",
-                    "on-background": "#191c1e",
-                    "on-surface": "#191c1e",
-                    "on-secondary-fixed": "#0b1c30",
-                    "on-secondary-container": "#54647a",
-                    "secondary": "#505f76",
-                    "on-primary-container": "#eeefff",
-                    "on-surface-variant": "#434655"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>JobNexe Admin - Bank Management</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline": "#737686",
+            "on-primary-fixed-variant": "#003ea8",
+            "on-tertiary-fixed": "#360f00",
+            "on-primary-fixed": "#00174b",
+            "on-error-container": "#93000a",
+            "primary": "#004ac6",
+            "surface-container": "#eceef0",
+            "surface": "#f7f9fb",
+            "surface-dim": "#d8dadc",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "secondary-fixed": "#d3e4fe",
+            "surface-container-highest": "#e0e3e5",
+            "surface-variant": "#e0e3e5",
+            "surface-container-lowest": "#ffffff",
+            "on-primary": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#38485d",
+            "surface-container-high": "#e6e8ea",
+            "outline-variant": "#c3c6d7",
+            "error-container": "#ffdad6",
+            "background": "#f7f9fb",
+            "tertiary-fixed-dim": "#ffb596",
+            "tertiary-container": "#bc4800",
+            "inverse-primary": "#b4c5ff",
+            "primary-fixed": "#dbe1ff",
+            "inverse-on-surface": "#eff1f3",
+            "error": "#ba1a1a",
+            "tertiary": "#943700",
+            "primary-container": "#2563eb",
+            "on-error": "#ffffff",
+            "surface-container-low": "#f2f4f6",
+            "inverse-surface": "#2d3133",
+            "secondary-container": "#d0e1fb",
+            "secondary-fixed-dim": "#b7c8e1",
+            "surface-tint": "#0053db",
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#ffdbcd",
+            "on-tertiary-container": "#ffede6",
+            "on-background": "#191c1e",
+            "on-surface": "#191c1e",
+            "on-secondary-fixed": "#0b1c30",
+            "on-secondary-container": "#54647a",
+            "secondary": "#505f76",
+            "on-primary-container": "#eeefff",
+            "on-surface-variant": "#434655"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
         },
-      }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .glass-header { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-        .no-line { border: none !important; }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7f9fb;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .glass-header {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .no-line {
+      border: none !important;
+    }
+  </style>
 </head>
+
 <body class="text-on-surface antialiased">
-<!-- Sidebar (Admin SideNavBar) -->
-<aside class="h-screen w-72 fixed left-0 top-0 bg-blue-900 flex flex-col space-y-2 shadow-2xl shadow-black z-40">
-<div class="px-8 py-10">
-<h1 class="text-white font-black tracking-tighter text-2xl">JobNexa</h1>
-<p class="text-blue-400 text-xs uppercase font-semibold mt-2 tracking-widest">System Oversight</p>
-</div>
-<nav class="flex-1 flex flex-col space-y-2">
-<a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-                Overview
-            </a>
-<a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
-<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
-                Applications
-            </a>
-<a class="bg-blue-600/10 text-blue-400 rounded-lg mx-4 px-4 py-3 flex items-center gap-3 font-semibold" href="#">
-<span class="material-symbols-outlined" data-icon="payments" style="font-variation-settings: 'FILL' 1;">payments</span>
-                Payments
-            </a>
-<a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
-<span class="material-symbols-outlined" data-icon="business_center">business_center</span>
-                Job Management
-            </a>
-<a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
-<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
-                Finance
-            </a>
-<a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
-<span class="material-symbols-outlined" data-icon="chat">chat</span>
-                Communication
-            </a>
-<a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
-<span class="material-symbols-outlined" data-icon="health_and_safety">health_and_safety</span>
-                System Health
-            </a>
-</nav>
-<div class="p-8 mt-auto border-t border-blue-800/50">
-<div class="flex items-center gap-4">
-<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="Professional corporate headshot of a male admin executive in a tailored suit against a clean studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6Rha7sawopQLCy05xVeDYEa-BQz5SycUP-KI9L7-1U2JkbbOUkDdcABWZ3w4PtXmHOXYF-XqV166h0bl2x_0lgxnVOX-rZux5k51pA50Y0bTYJxpqGZl9KJCqBTDGJ7N3VEsnLVSGQNn4yWIF6tzkfeJ0-uj__zWTKpb4_DsoZ0ROlL8Sjla9rVdV_E63x9gVWJAmY6NgELpSateXHuViPOZXNiW4fUPNQ5NG5wUoz91IIi0PLSjTiOiekP84szUPSPjaDT-DLi5Q"/>
-<div>
-<p class="text-white text-sm font-bold">Admin User</p>
-<p class="text-blue-500 text-[10px] uppercase font-bold tracking-tighter">Chief Controller</p>
-</div>
-</div>
-</div>
-</aside>
-<!-- Main Content Canvas -->
-<main class="ml-72 min-h-screen bg-surface">
-<!-- Top Bar (Contextual) -->
-<header class="h-16 flex items-center justify-between px-10 bg-white/70 glass-header sticky top-0 z-30">
-<div class="flex items-center gap-2">
-<span class="text-on-surface-variant text-sm font-medium">Finance</span>
-<span class="material-symbols-outlined text-sm text-outline-variant" data-icon="chevron_right">chevron_right</span>
-<span class="text-on-surface text-sm font-bold">Bank Management</span>
-</div>
-<div class="flex items-center gap-6">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
-<div class="w-px h-6 bg-outline-variant/20"></div>
-<p class="text-xs font-bold text-primary uppercase tracking-widest">SCR-ADM-BANK-001</p>
-</div>
-</header>
-<div class="p-10 max-w-7xl mx-auto">
-<!-- Hero Header Section -->
-<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-<div class="space-y-2">
-<h2 class="text-5xl font-bold tracking-tight text-on-surface">Manage Accounts</h2>
-<p class="text-lg text-on-surface-variant max-w-2xl">Configure and audit institutional bank records for cross-border candidate placements and payroll distributions.</p>
-</div>
-<div>
-<button class="bg-primary text-on-primary px-6 py-3 rounded-lg font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform duration-200">
-<span class="material-symbols-outlined" data-icon="add">add</span>
-                        Add Bank Account
-                    </button>
-</div>
-</section>
-<!-- Quick Stats Bento Grid -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm shadow-blue-200/50">
-<p class="text-label-md text-on-surface-variant uppercase tracking-widest mb-4">Total Liquidity Accounts</p>
-<div class="flex items-baseline gap-2">
-<span class="text-4xl font-bold text-on-surface">24</span>
-<span class="text-emerald-600 text-sm font-bold flex items-center">+2 this month</span>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm shadow-blue-200/50">
-<p class="text-label-md text-on-surface-variant uppercase tracking-widest mb-4">Open Beneficiary</p>
-<div class="flex items-baseline gap-2">
-<span class="text-4xl font-bold text-on-surface">09</span>
-<span class="text-on-surface-variant text-sm font-medium">Active Channels</span>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm shadow-blue-200/50 border-r-4 border-primary">
-<p class="text-label-md text-on-surface-variant uppercase tracking-widest mb-4">System Health</p>
-<div class="flex items-center gap-3">
-<div class="h-2 flex-1 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-primary w-[98%]"></div>
-</div>
-<span class="text-sm font-bold text-on-surface">98%</span>
-</div>
-</div>
-</div>
-<!-- Data Table Container -->
-<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
-<div class="p-6 flex items-center justify-between border-b border-surface-container">
-<div class="flex gap-4">
-<div class="bg-surface-container-low px-4 py-2 rounded-lg flex items-center gap-3">
-<span class="material-symbols-outlined text-outline" data-icon="filter_list">filter_list</span>
-<span class="text-sm font-medium">Filter By Type</span>
-</div>
-<div class="bg-surface-container-low px-4 py-2 rounded-lg flex items-center gap-3">
-<span class="text-sm font-medium">Sort: Newest</span>
-</div>
-</div>
-<div class="relative">
-<input class="bg-surface-container-low border-none rounded-lg text-sm px-4 py-2 w-64 focus:ring-2 focus:ring-primary/40 transition-all" placeholder="Search accounts..." type="text"/>
-</div>
-</div>
-<table class="w-full text-left">
-<thead>
-<tr class="bg-surface-container-low/50">
-<th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Bank Name</th>
-<th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Account Number</th>
-<th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Type</th>
-<th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Status</th>
-<th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold text-right">Actions</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-surface-container">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors">
-<td class="px-8 py-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-primary">
-<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
-</div>
-<div>
-<p class="font-bold text-on-surface">Chase Manhattan</p>
-<p class="text-xs text-on-surface-variant">Institutional Branch</p>
-</div>
-</div>
-</td>
-<td class="px-8 py-6">
-<code class="text-sm font-mono text-on-surface-variant">**** **** 9012</code>
-</td>
-<td class="px-8 py-6">
-<span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Open Beneficiary</span>
-</td>
-<td class="px-8 py-6">
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-<span class="text-sm font-medium">Active</span>
-</div>
-</td>
-<td class="px-8 py-6 text-right">
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors">
-<td class="px-8 py-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
-<span class="material-symbols-outlined" data-icon="domain">domain</span>
-</div>
-<div>
-<p class="font-bold text-on-surface">HSBC Global</p>
-<p class="text-xs text-on-surface-variant">Corporate Treasury</p>
-</div>
-</div>
-</td>
-<td class="px-8 py-6">
-<code class="text-sm font-mono text-on-surface-variant">**** **** 4455</code>
-</td>
-<td class="px-8 py-6">
-<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Normal</span>
-</td>
-<td class="px-8 py-6">
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-<span class="text-sm font-medium">Active</span>
-</div>
-</td>
-<td class="px-8 py-6 text-right">
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors">
-<td class="px-8 py-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
-<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
-</div>
-<div>
-<p class="font-bold text-on-surface">Standard Chartered</p>
-<p class="text-xs text-on-surface-variant">APAC Regional</p>
-</div>
-</div>
-</td>
-<td class="px-8 py-6">
-<code class="text-sm font-mono text-on-surface-variant">**** **** 1122</code>
-</td>
-<td class="px-8 py-6">
-<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Normal</span>
-</td>
-<td class="px-8 py-6">
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-amber-500"></div>
-<span class="text-sm font-medium">Verification Pending</span>
-</div>
-</td>
-<td class="px-8 py-6 text-right">
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors">
-<td class="px-8 py-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-primary">
-<span class="material-symbols-outlined" data-icon="monetization_on">monetization_on</span>
-</div>
-<div>
-<p class="font-bold text-on-surface">Goldman Sachs</p>
-<p class="text-xs text-on-surface-variant">Asset Custody</p>
-</div>
-</div>
-</td>
-<td class="px-8 py-6">
-<code class="text-sm font-mono text-on-surface-variant">**** **** 8877</code>
-</td>
-<td class="px-8 py-6">
-<span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Open Beneficiary</span>
-</td>
-<td class="px-8 py-6">
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-<span class="text-sm font-medium">Active</span>
-</div>
-</td>
-<td class="px-8 py-6 text-right">
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
-</button>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="p-6 bg-surface-container-low/20 flex items-center justify-between">
-<p class="text-xs text-on-surface-variant font-medium">Showing 4 of 24 records</p>
-<div class="flex gap-2">
-<button class="w-8 h-8 flex items-center justify-center rounded bg-white text-on-surface-variant border border-surface-container">
-<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
-</button>
-<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-bold text-xs">1</button>
-<button class="w-8 h-8 flex items-center justify-center rounded bg-white text-on-surface-variant border border-surface-container font-bold text-xs">2</button>
-<button class="w-8 h-8 flex items-center justify-center rounded bg-white text-on-surface-variant border border-surface-container">
-<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Contextual Insight (Candidate Spotlight Variant) -->
-<section class="mt-12">
-<div class="bg-blue-900 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
-<div class="p-12 md:w-3/5 z-10">
-<span class="bg-tertiary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-6 inline-block">Security Protocol</span>
-<h3 class="text-4xl font-bold text-white mb-4 leading-tight">Multi-Sig Authorization Required</h3>
-<p class="text-blue-400 text-lg mb-8">All new beneficiary account additions must undergo a secondary verification loop from the Regional Finance Director. This ensures compliance with Tier-1 placement standards.</p>
-<div class="flex items-center gap-6">
-<div class="flex -space-x-3">
-<img class="w-12 h-12 rounded-full border-4 border-blue-900 object-cover" data-alt="Close-up of a middle-aged male professional with glasses, intelligent expression, high-end business attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaVZ4M8Zc4PAO6S74NBGdbWB5WARVwgBY9uJCjOlWSmNPZjbUfIRuBxz9s5lBjfSCFmWGDbze7wlwkcABsmQfBcvP9jkomwlOZFCnOI4uUAA7Ss5PO8hWt9qEgaqLYcLgzwqya2XSF1SIJ7QkSS7vSVzOClrS0VfzmYHUHAFnpcFTFApjX7_cOKIMhe4DAxB6nm8_GexJULJRphGNcfngPQzLVhNBiGY2wMqEiPX3Hzuu5Nx6DH1FjuxLN6BM8FtMBpa1shi01UkRV"/>
-<img class="w-12 h-12 rounded-full border-4 border-blue-900 object-cover" data-alt="Portrait of a female corporate leader, confident and approachable, soft studio lighting, professional attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Ig1U4zQ1oUzdlLnn7YBIbmtmRo0wBqnXEK9n2hXWDHTxTFrQ19QiYauePfOzNLkXl4LbhYP5nuwrsynJMghosL33gD7CCqUCPMbi9z9IWQ4JjBBCjqArP3KOqy3kaihgxMV2_Sbxm-AeWAqLG2iGHuEhAHSo-s90ZRLGDxU7p05ef-cBpyA6-hCepluY8N-vAXHCEiubhSNcMueHcUI8Q3LqniOa9UBzJKJuqClceMr-GTA4mEhr3YdLeQlAXwUOtGa2q21g1ZfY"/>
-</div>
-<p class="text-sm text-blue-300 font-medium">Pending 2 verifications</p>
-</div>
-</div>
-<div class="md:w-2/5 relative h-64 md:h-auto min-h-[300px]">
-<img class="absolute inset-0 w-full h-full object-cover opacity-60" data-alt="Modern high-tech banking office with glass walls, blue ambient light, and futuristic financial dashboard displays in soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg3eykaENHrL6SJ_KUZRyYwafaOFsOaPey07SKQpzZE-dHpiJv5kPcwejupjp555W0M1F9pBYiPGeNAOamaeLfVBFhi91i0neuGlhDpRjRL03ADQeGNSKfXPB4WKXZcN6wtme0FvlicDxaLbUvynJve7XyByBrRror5RNbJuu2KLGsDhyMp6nK5f7yxnkx40AdE0Vyh7KLogeHJIPhc2ya5zQz0SHjKwFXR9DsqPVDyNoDO3Ax_ECMiK87OBO_UUxo6sCK4Xv8akDn"/>
-<div class="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-900/40 to-transparent"></div>
-</div>
-</div>
-</section>
-</div>
-<!-- Footer -->
-<footer class="w-full py-12 px-10 bg-blue-50 mt-20">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-<div class="col-span-1 md:col-span-2">
-<p class="font-bold text-blue-900 mb-4">JobNexa Admin Console</p>
-<p class="text-xs text-blue-500 max-w-xs leading-relaxed">Precision in Professional Placement. Global financial systems and candidate management platform for executive recruitment agencies.</p>
-</div>
-<div>
-<p class="text-[10px] font-black uppercase text-blue-400 mb-4 tracking-widest">Resources</p>
-<ul class="space-y-2">
-<li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Legal Docs</a></li>
-<li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Security Audit</a></li>
-<li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">API Docs</a></li>
-</ul>
-</div>
-<div>
-<p class="text-[10px] font-black uppercase text-blue-400 mb-4 tracking-widest">Support</p>
-<ul class="space-y-2">
-<li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Technical Desk</a></li>
-<li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">System Health</a></li>
-<li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Incident Logs</a></li>
-</ul>
-</div>
-</div>
-<div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-blue-200">
-<p class="text-xs font-normal text-blue-400">© 2024 JobNexa. Precision in Professional Placement. SCR-ADM-BANK-001</p>
-</div>
-</footer>
-</main>
-</body></html>
+  <!-- Sidebar (Admin SideNavBar) -->
+  <aside class="h-screen w-72 fixed left-0 top-0 bg-blue-900 flex flex-col space-y-2 shadow-2xl shadow-black z-40">
+    <div class="px-8 py-10">
+      <h1 class="text-white font-black tracking-tighter text-2xl">JobNexe</h1>
+      <p class="text-blue-400 text-xs uppercase font-semibold mt-2 tracking-widest">System Oversight</p>
+    </div>
+    <nav class="flex-1 flex flex-col space-y-2">
+      <a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
+        <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+        Overview
+      </a>
+      <a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
+        <span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+        Applications
+      </a>
+      <a class="bg-blue-600/10 text-blue-400 rounded-lg mx-4 px-4 py-3 flex items-center gap-3 font-semibold" href="#">
+        <span class="material-symbols-outlined" data-icon="payments"
+          style="font-variation-settings: 'FILL' 1;">payments</span>
+        Payments
+      </a>
+      <a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
+        <span class="material-symbols-outlined" data-icon="business_center">business_center</span>
+        Job Management
+      </a>
+      <a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
+        <span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+        Finance
+      </a>
+      <a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
+        <span class="material-symbols-outlined" data-icon="chat">chat</span>
+        Communication
+      </a>
+      <a class="text-blue-400 px-8 py-3 hover:bg-blue-800 transition-colors flex items-center gap-3" href="#">
+        <span class="material-symbols-outlined" data-icon="health_and_safety">health_and_safety</span>
+        System Health
+      </a>
+    </nav>
+    <div class="p-8 mt-auto border-t border-blue-800/50">
+      <div class="flex items-center gap-4">
+        <img class="w-10 h-10 rounded-full object-cover grayscale"
+          data-alt="Professional corporate headshot of a male admin executive in a tailored suit against a clean studio background"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6Rha7sawopQLCy05xVeDYEa-BQz5SycUP-KI9L7-1U2JkbbOUkDdcABWZ3w4PtXmHOXYF-XqV166h0bl2x_0lgxnVOX-rZux5k51pA50Y0bTYJxpqGZl9KJCqBTDGJ7N3VEsnLVSGQNn4yWIF6tzkfeJ0-uj__zWTKpb4_DsoZ0ROlL8Sjla9rVdV_E63x9gVWJAmY6NgELpSateXHuViPOZXNiW4fUPNQ5NG5wUoz91IIi0PLSjTiOiekP84szUPSPjaDT-DLi5Q" />
+        <div>
+          <p class="text-white text-sm font-bold">Admin User</p>
+          <p class="text-blue-500 text-[10px] uppercase font-bold tracking-tighter">Chief Controller</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <!-- Main Content Canvas -->
+  <main class="ml-72 min-h-screen bg-surface">
+    <!-- Top Bar (Contextual) -->
+    <header class="h-16 flex items-center justify-between px-10 bg-white/70 glass-header sticky top-0 z-30">
+      <div class="flex items-center gap-2">
+        <span class="text-on-surface-variant text-sm font-medium">Finance</span>
+        <span class="material-symbols-outlined text-sm text-outline-variant"
+          data-icon="chevron_right">chevron_right</span>
+        <span class="text-on-surface text-sm font-bold">Bank Management</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+        <span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+        <div class="w-px h-6 bg-outline-variant/20"></div>
+        <p class="text-xs font-bold text-primary uppercase tracking-widest">SCR-ADM-BANK-001</p>
+      </div>
+    </header>
+    <div class="p-10 max-w-7xl mx-auto">
+      <!-- Hero Header Section -->
+      <section class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div class="space-y-2">
+          <h2 class="text-5xl font-bold tracking-tight text-on-surface">Manage Accounts</h2>
+          <p class="text-lg text-on-surface-variant max-w-2xl">Configure and audit institutional bank records for
+            cross-border candidate placements and payroll distributions.</p>
+        </div>
+        <div>
+          <button
+            class="bg-primary text-on-primary px-6 py-3 rounded-lg font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform duration-200">
+            <span class="material-symbols-outlined" data-icon="add">add</span>
+            Add Bank Account
+          </button>
+        </div>
+      </section>
+      <!-- Quick Stats Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm shadow-blue-200/50">
+          <p class="text-label-md text-on-surface-variant uppercase tracking-widest mb-4">Total Liquidity Accounts</p>
+          <div class="flex items-baseline gap-2">
+            <span class="text-4xl font-bold text-on-surface">24</span>
+            <span class="text-emerald-600 text-sm font-bold flex items-center">+2 this month</span>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm shadow-blue-200/50">
+          <p class="text-label-md text-on-surface-variant uppercase tracking-widest mb-4">Open Beneficiary</p>
+          <div class="flex items-baseline gap-2">
+            <span class="text-4xl font-bold text-on-surface">09</span>
+            <span class="text-on-surface-variant text-sm font-medium">Active Channels</span>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm shadow-blue-200/50 border-r-4 border-primary">
+          <p class="text-label-md text-on-surface-variant uppercase tracking-widest mb-4">System Health</p>
+          <div class="flex items-center gap-3">
+            <div class="h-2 flex-1 bg-surface-container rounded-full overflow-hidden">
+              <div class="h-full bg-primary w-[98%]"></div>
+            </div>
+            <span class="text-sm font-bold text-on-surface">98%</span>
+          </div>
+        </div>
+      </div>
+      <!-- Data Table Container -->
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+        <div class="p-6 flex items-center justify-between border-b border-surface-container">
+          <div class="flex gap-4">
+            <div class="bg-surface-container-low px-4 py-2 rounded-lg flex items-center gap-3">
+              <span class="material-symbols-outlined text-outline" data-icon="filter_list">filter_list</span>
+              <span class="text-sm font-medium">Filter By Type</span>
+            </div>
+            <div class="bg-surface-container-low px-4 py-2 rounded-lg flex items-center gap-3">
+              <span class="text-sm font-medium">Sort: Newest</span>
+            </div>
+          </div>
+          <div class="relative">
+            <input
+              class="bg-surface-container-low border-none rounded-lg text-sm px-4 py-2 w-64 focus:ring-2 focus:ring-primary/40 transition-all"
+              placeholder="Search accounts..." type="text" />
+          </div>
+        </div>
+        <table class="w-full text-left">
+          <thead>
+            <tr class="bg-surface-container-low/50">
+              <th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Bank Name
+              </th>
+              <th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Account
+                Number</th>
+              <th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Type</th>
+              <th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Status</th>
+              <th class="px-8 py-5 text-label-md text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-surface-container">
+            <!-- Row 1 -->
+            <tr class="hover:bg-surface-container-low/30 transition-colors">
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+                  </div>
+                  <div>
+                    <p class="font-bold text-on-surface">Chase Manhattan</p>
+                    <p class="text-xs text-on-surface-variant">Institutional Branch</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-8 py-6">
+                <code class="text-sm font-mono text-on-surface-variant">**** **** 9012</code>
+              </td>
+              <td class="px-8 py-6">
+                <span
+                  class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Open
+                  Beneficiary</span>
+              </td>
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                  <span class="text-sm font-medium">Active</span>
+                </div>
+              </td>
+              <td class="px-8 py-6 text-right">
+                <button class="text-on-surface-variant hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+                </button>
+              </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr class="hover:bg-surface-container-low/30 transition-colors">
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
+                    <span class="material-symbols-outlined" data-icon="domain">domain</span>
+                  </div>
+                  <div>
+                    <p class="font-bold text-on-surface">HSBC Global</p>
+                    <p class="text-xs text-on-surface-variant">Corporate Treasury</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-8 py-6">
+                <code class="text-sm font-mono text-on-surface-variant">**** **** 4455</code>
+              </td>
+              <td class="px-8 py-6">
+                <span
+                  class="bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Normal</span>
+              </td>
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                  <span class="text-sm font-medium">Active</span>
+                </div>
+              </td>
+              <td class="px-8 py-6 text-right">
+                <button class="text-on-surface-variant hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+                </button>
+              </td>
+            </tr>
+            <!-- Row 3 -->
+            <tr class="hover:bg-surface-container-low/30 transition-colors">
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
+                    <span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+                  </div>
+                  <div>
+                    <p class="font-bold text-on-surface">Standard Chartered</p>
+                    <p class="text-xs text-on-surface-variant">APAC Regional</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-8 py-6">
+                <code class="text-sm font-mono text-on-surface-variant">**** **** 1122</code>
+              </td>
+              <td class="px-8 py-6">
+                <span
+                  class="bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Normal</span>
+              </td>
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-amber-500"></div>
+                  <span class="text-sm font-medium">Verification Pending</span>
+                </div>
+              </td>
+              <td class="px-8 py-6 text-right">
+                <button class="text-on-surface-variant hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+                </button>
+              </td>
+            </tr>
+            <!-- Row 4 -->
+            <tr class="hover:bg-surface-container-low/30 transition-colors">
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined" data-icon="monetization_on">monetization_on</span>
+                  </div>
+                  <div>
+                    <p class="font-bold text-on-surface">Goldman Sachs</p>
+                    <p class="text-xs text-on-surface-variant">Asset Custody</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-8 py-6">
+                <code class="text-sm font-mono text-on-surface-variant">**** **** 8877</code>
+              </td>
+              <td class="px-8 py-6">
+                <span
+                  class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Open
+                  Beneficiary</span>
+              </td>
+              <td class="px-8 py-6">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                  <span class="text-sm font-medium">Active</span>
+                </div>
+              </td>
+              <td class="px-8 py-6 text-right">
+                <button class="text-on-surface-variant hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="p-6 bg-surface-container-low/20 flex items-center justify-between">
+          <p class="text-xs text-on-surface-variant font-medium">Showing 4 of 24 records</p>
+          <div class="flex gap-2">
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded bg-white text-on-surface-variant border border-surface-container">
+              <span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+            </button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-bold text-xs">1</button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded bg-white text-on-surface-variant border border-surface-container font-bold text-xs">2</button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded bg-white text-on-surface-variant border border-surface-container">
+              <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Contextual Insight (Candidate Spotlight Variant) -->
+      <section class="mt-12">
+        <div class="bg-blue-900 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
+          <div class="p-12 md:w-3/5 z-10">
+            <span
+              class="bg-tertiary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-6 inline-block">Security
+              Protocol</span>
+            <h3 class="text-4xl font-bold text-white mb-4 leading-tight">Multi-Sig Authorization Required</h3>
+            <p class="text-blue-400 text-lg mb-8">All new beneficiary account additions must undergo a secondary
+              verification loop from the Regional Finance Director. This ensures compliance with Tier-1 placement
+              standards.</p>
+            <div class="flex items-center gap-6">
+              <div class="flex -space-x-3">
+                <img class="w-12 h-12 rounded-full border-4 border-blue-900 object-cover"
+                  data-alt="Close-up of a middle-aged male professional with glasses, intelligent expression, high-end business attire"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaVZ4M8Zc4PAO6S74NBGdbWB5WARVwgBY9uJCjOlWSmNPZjbUfIRuBxz9s5lBjfSCFmWGDbze7wlwkcABsmQfBcvP9jkomwlOZFCnOI4uUAA7Ss5PO8hWt9qEgaqLYcLgzwqya2XSF1SIJ7QkSS7vSVzOClrS0VfzmYHUHAFnpcFTFApjX7_cOKIMhe4DAxB6nm8_GexJULJRphGNcfngPQzLVhNBiGY2wMqEiPX3Hzuu5Nx6DH1FjuxLN6BM8FtMBpa1shi01UkRV" />
+                <img class="w-12 h-12 rounded-full border-4 border-blue-900 object-cover"
+                  data-alt="Portrait of a female corporate leader, confident and approachable, soft studio lighting, professional attire"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Ig1U4zQ1oUzdlLnn7YBIbmtmRo0wBqnXEK9n2hXWDHTxTFrQ19QiYauePfOzNLkXl4LbhYP5nuwrsynJMghosL33gD7CCqUCPMbi9z9IWQ4JjBBCjqArP3KOqy3kaihgxMV2_Sbxm-AeWAqLG2iGHuEhAHSo-s90ZRLGDxU7p05ef-cBpyA6-hCepluY8N-vAXHCEiubhSNcMueHcUI8Q3LqniOa9UBzJKJuqClceMr-GTA4mEhr3YdLeQlAXwUOtGa2q21g1ZfY" />
+              </div>
+              <p class="text-sm text-blue-300 font-medium">Pending 2 verifications</p>
+            </div>
+          </div>
+          <div class="md:w-2/5 relative h-64 md:h-auto min-h-[300px]">
+            <img class="absolute inset-0 w-full h-full object-cover opacity-60"
+              data-alt="Modern high-tech banking office with glass walls, blue ambient light, and futuristic financial dashboard displays in soft focus background"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg3eykaENHrL6SJ_KUZRyYwafaOFsOaPey07SKQpzZE-dHpiJv5kPcwejupjp555W0M1F9pBYiPGeNAOamaeLfVBFhi91i0neuGlhDpRjRL03ADQeGNSKfXPB4WKXZcN6wtme0FvlicDxaLbUvynJve7XyByBrRror5RNbJuu2KLGsDhyMp6nK5f7yxnkx40AdE0Vyh7KLogeHJIPhc2ya5zQz0SHjKwFXR9DsqPVDyNoDO3Ax_ECMiK87OBO_UUxo6sCK4Xv8akDn" />
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-900/40 to-transparent"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Footer -->
+    <footer class="w-full py-12 px-10 bg-blue-50 mt-20">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div class="col-span-1 md:col-span-2">
+          <p class="font-bold text-blue-900 mb-4">JobNexe Admin Console</p>
+          <p class="text-xs text-blue-500 max-w-xs leading-relaxed">Precision in Professional Placement. Global
+            financial systems and candidate management platform for executive recruitment agencies.</p>
+        </div>
+        <div>
+          <p class="text-[10px] font-black uppercase text-blue-400 mb-4 tracking-widest">Resources</p>
+          <ul class="space-y-2">
+            <li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Legal Docs</a></li>
+            <li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Security Audit</a></li>
+            <li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">API Docs</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-[10px] font-black uppercase text-blue-400 mb-4 tracking-widest">Support</p>
+          <ul class="space-y-2">
+            <li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Technical Desk</a></li>
+            <li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">System Health</a></li>
+            <li><a class="text-xs text-blue-500 hover:text-blue-600 transition-colors" href="#">Incident Logs</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-blue-200">
+        <p class="text-xs font-normal text-blue-400">© 2024 JobNexe. Precision in Professional Placement.
+          SCR-ADM-BANK-001</p>
+      </div>
+    </footer>
+  </main>
+</body>
+
+</html>

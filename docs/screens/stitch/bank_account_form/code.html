@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Bank Account Management - JobNexa</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Bank Account Management - JobNexe</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
       theme: {
@@ -77,216 +83,274 @@
       },
     }
   </script>
-<style>
-    body { font-family: 'Inter', sans-serif; }
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
+
     /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
     /* Hide scrollbar for IE, Edge and Firefox */
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   </style>
 </head>
+
 <body class="bg-surface text-on-surface antialiased min-h-screen flex">
-<!-- SideNavBar Anchor -->
-<aside class="hidden md:flex flex-col py-6 px-4 gap-4 bg-blue-50 dark:bg-blue-950 h-screen w-64 border-r border-blue-200/20 fixed left-0 top-0 z-40">
-<div class="flex items-center gap-3 px-2 mb-6">
-<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-on-primary">
-<span class="material-symbols-outlined">corporate_fare</span>
-</div>
-<div>
-<h2 class="text-lg font-bold text-blue-900 dark:text-blue-50 leading-tight">Agency Portal</h2>
-<p class="text-[10px] uppercase tracking-wider text-blue-500 font-semibold">Precision Management</p>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-medium text-sm">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group" href="#">
-<span class="material-symbols-outlined">work</span>
-<span class="font-medium text-sm">Postings</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group" href="#">
-<span class="material-symbols-outlined">group</span>
-<span class="font-medium text-sm">Candidates</span>
-</a>
-<!-- Active State Logic: Wallets for Bank Account Form -->
-<a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-blue-900 text-blue-600 dark:text-blue-400 shadow-sm rounded-lg hover:tranblue-x-1 transition-all duration-200 group" href="#">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="font-semibold text-sm">Wallets</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group" href="#">
-<span class="material-symbols-outlined">settings_input_component</span>
-<span class="font-medium text-sm">System</span>
-</a>
-</nav>
-<div class="mt-auto pt-6 border-t border-blue-200/20 space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-blue-500 hover:text-blue-900 transition-colors" href="#">
-<span class="material-symbols-outlined">help</span>
-<span class="text-sm">Help</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-blue-500 hover:text-blue-900 transition-colors" href="#">
-<span class="material-symbols-outlined">logout</span>
-<span class="text-sm">Logout</span>
-</a>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 md:ml-64 min-h-screen bg-surface">
-<!-- TopNavBar Anchor -->
-<header class="fixed top-0 right-0 left-0 md:left-64 h-20 bg-white/70 backdrop-blur-xl z-30 flex justify-between items-center px-8 shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
-<div class="flex items-center gap-2">
-<span class="text-xl font-bold tracking-tight text-blue-900">JobNexa</span>
-<span class="mx-2 text-outline-variant">/</span>
-<span class="text-sm font-medium text-on-surface-variant">Banking Configuration</span>
-</div>
-<div class="flex items-center gap-6">
-<div class="hidden lg:flex items-center gap-6 text-sm">
-<a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Opportunities</a>
-<a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Talent</a>
-<a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Analytics</a>
-</div>
-<div class="flex items-center gap-3">
-<button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
-<span class="material-symbols-outlined">settings</span>
-</button>
-<img alt="Recruiter Profile" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="professional portrait of a corporate executive with a friendly expression and sharp business attire in a modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5GIUsoREztFVxEwZ99uBrVxVEmfhYfnDlxxX_rI7UTfBjwgeKtCo52Wf3Ra7VXU8XaDiGqQjC8P17DAutbWo1TbW28cljj_xCVAPA5cmgvuGZWwXPGn2G88jjQ4dcYj-An4C-MX3Q52-UO0V3e1ezm_M-NLbo3Le-J-N5x_3ybkWPqW-f6aedc1wNQryXtpTj_DRYYlp2qxaHnx9dxX_eypK899UVsM46Cb4IXvnpfunyHGSmP8M1xsV_BmciU87VNhSP6WhFIYJB"/>
-</div>
-</div>
-</header>
-<!-- Content Canvas -->
-<div class="pt-32 pb-16 px-6 max-w-3xl mx-auto">
-<!-- Breadcrumb & Header -->
-<div class="mb-10 text-center">
-<div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/30 text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">
+  <!-- SideNavBar Anchor -->
+  <aside
+    class="hidden md:flex flex-col py-6 px-4 gap-4 bg-blue-50 dark:bg-blue-950 h-screen w-64 border-r border-blue-200/20 fixed left-0 top-0 z-40">
+    <div class="flex items-center gap-3 px-2 mb-6">
+      <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-on-primary">
+        <span class="material-symbols-outlined">corporate_fare</span>
+      </div>
+      <div>
+        <h2 class="text-lg font-bold text-blue-900 dark:text-blue-50 leading-tight">Agency Portal</h2>
+        <p class="text-[10px] uppercase tracking-wider text-blue-500 font-semibold">Precision Management</p>
+      </div>
+    </div>
+    <nav class="flex-1 space-y-1">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group"
+        href="#">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="font-medium text-sm">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group"
+        href="#">
+        <span class="material-symbols-outlined">work</span>
+        <span class="font-medium text-sm">Postings</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group"
+        href="#">
+        <span class="material-symbols-outlined">group</span>
+        <span class="font-medium text-sm">Candidates</span>
+      </a>
+      <!-- Active State Logic: Wallets for Bank Account Form -->
+      <a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-blue-900 text-blue-600 dark:text-blue-400 shadow-sm rounded-lg hover:tranblue-x-1 transition-all duration-200 group"
+        href="#">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+        <span class="font-semibold text-sm">Wallets</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:tranblue-x-1 transition-all duration-200 rounded-lg group"
+        href="#">
+        <span class="material-symbols-outlined">settings_input_component</span>
+        <span class="font-medium text-sm">System</span>
+      </a>
+    </nav>
+    <div class="mt-auto pt-6 border-t border-blue-200/20 space-y-1">
+      <a class="flex items-center gap-3 px-3 py-2 text-blue-500 hover:text-blue-900 transition-colors" href="#">
+        <span class="material-symbols-outlined">help</span>
+        <span class="text-sm">Help</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-blue-500 hover:text-blue-900 transition-colors" href="#">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="text-sm">Logout</span>
+      </a>
+    </div>
+  </aside>
+  <!-- Main Content Area -->
+  <main class="flex-1 md:ml-64 min-h-screen bg-surface">
+    <!-- TopNavBar Anchor -->
+    <header
+      class="fixed top-0 right-0 left-0 md:left-64 h-20 bg-white/70 backdrop-blur-xl z-30 flex justify-between items-center px-8 shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
+      <div class="flex items-center gap-2">
+        <span class="text-xl font-bold tracking-tight text-blue-900">JobNexe</span>
+        <span class="mx-2 text-outline-variant">/</span>
+        <span class="text-sm font-medium text-on-surface-variant">Banking Configuration</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="hidden lg:flex items-center gap-6 text-sm">
+          <a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Opportunities</a>
+          <a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Talent</a>
+          <a class="text-blue-500 hover:text-blue-900 transition-colors" href="#">Analytics</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+          <button class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-all">
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+          <img alt="Recruiter Profile" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
+            data-alt="professional portrait of a corporate executive with a friendly expression and sharp business attire in a modern office"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5GIUsoREztFVxEwZ99uBrVxVEmfhYfnDlxxX_rI7UTfBjwgeKtCo52Wf3Ra7VXU8XaDiGqQjC8P17DAutbWo1TbW28cljj_xCVAPA5cmgvuGZWwXPGn2G88jjQ4dcYj-An4C-MX3Q52-UO0V3e1ezm_M-NLbo3Le-J-N5x_3ybkWPqW-f6aedc1wNQryXtpTj_DRYYlp2qxaHnx9dxX_eypK899UVsM46Cb4IXvnpfunyHGSmP8M1xsV_BmciU87VNhSP6WhFIYJB" />
+        </div>
+      </div>
+    </header>
+    <!-- Content Canvas -->
+    <div class="pt-32 pb-16 px-6 max-w-3xl mx-auto">
+      <!-- Breadcrumb & Header -->
+      <div class="mb-10 text-center">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/30 text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">
           Traceability: STK-ADM-BANK-001
         </div>
-<h1 class="text-[3.5rem] font-bold text-on-surface leading-[1.1] tracking-tight mb-4">Bank Account <span class="text-primary italic">Setup</span></h1>
-<p class="text-on-surface-variant text-lg max-w-xl mx-auto leading-relaxed">
+        <h1 class="text-[3.5rem] font-bold text-on-surface leading-[1.1] tracking-tight mb-4">Bank Account <span
+            class="text-primary italic">Setup</span></h1>
+        <p class="text-on-surface-variant text-lg max-w-xl mx-auto leading-relaxed">
           Configure secure financial endpoints for international candidate disbursements and agency payroll operations.
         </p>
-</div>
-<!-- Form Container -->
-<div class="bg-surface-container-lowest rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] overflow-hidden">
-<div class="p-8 md:p-12">
-<form class="space-y-8">
-<!-- Row 1: Bank Name -->
-<div class="space-y-2">
-<label class="block text-sm font-semibold text-on-surface uppercase tracking-wider" for="bank_name">Bank Name</label>
-<div class="relative">
-<span class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">account_balance</span>
-<input class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300" id="bank_name" placeholder="e.g. International Finance Corp" type="text"/>
-</div>
-</div>
-<!-- Row 2: Account Number & Account Type -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-<div class="space-y-2">
-<label class="block text-sm font-semibold text-on-surface uppercase tracking-wider" for="account_number">Account Number</label>
-<div class="relative">
-<span class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">payments</span>
-<input class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300" id="account_number" placeholder="0000 0000 0000" type="text"/>
-</div>
-</div>
-<div class="space-y-2">
-<label class="block text-sm font-semibold text-on-surface uppercase tracking-wider" for="account_type">Account Type</label>
-<div class="relative">
-<span class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">category</span>
-<select class="w-full pl-12 pr-10 py-4 bg-surface-container-low border-none rounded-lg text-on-surface focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 appearance-none" id="account_type">
-<option value="normal">Normal</option>
-<option value="open_beneficiary">Open Beneficiary</option>
-</select>
-<span class="absolute right-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline pointer-events-none">expand_more</span>
-</div>
-</div>
-</div>
-<!-- Row 3: Routing/Sort Code & Currency -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-<div class="space-y-2">
-<label class="block text-sm font-semibold text-on-surface uppercase tracking-wider" for="routing_code">Routing / Sort Code</label>
-<div class="relative">
-<span class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">pin</span>
-<input class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300" id="routing_code" placeholder="XY-12345" type="text"/>
-</div>
-</div>
-<div class="space-y-2">
-<label class="block text-sm font-semibold text-on-surface uppercase tracking-wider" for="currency">Currency</label>
-<div class="relative">
-<span class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">currency_exchange</span>
-<select class="w-full pl-12 pr-10 py-4 bg-surface-container-low border-none rounded-lg text-on-surface focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 appearance-none" id="currency">
-<option value="USD">USD - United States Dollar</option>
-<option value="EUR">EUR - Euro</option>
-<option value="GBP">GBP - British Pound</option>
-<option value="SGD">SGD - Singapore Dollar</option>
-</select>
-<span class="absolute right-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline pointer-events-none">expand_more</span>
-</div>
-</div>
-</div>
-<!-- Row 4: Additional Instructions -->
-<div class="space-y-2">
-<label class="block text-sm font-semibold text-on-surface uppercase tracking-wider" for="instructions">Additional Instructions</label>
-<div class="relative">
-<span class="absolute left-4 top-6 material-symbols-outlined text-outline">description</span>
-<textarea class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 resize-none" id="instructions" placeholder="Mention any specific processing requirements or intermediary bank details..." rows="4"></textarea>
-</div>
-</div>
-<!-- Action Buttons -->
-<div class="pt-8 flex flex-col sm:flex-row items-center justify-end gap-4">
-<button class="w-full sm:w-auto px-8 py-3.5 text-on-surface-variant font-semibold hover:bg-surface-container-high rounded-lg transition-all" type="button">
+      </div>
+      <!-- Form Container -->
+      <div class="bg-surface-container-lowest rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] overflow-hidden">
+        <div class="p-8 md:p-12">
+          <form class="space-y-8">
+            <!-- Row 1: Bank Name -->
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-on-surface uppercase tracking-wider" for="bank_name">Bank
+                Name</label>
+              <div class="relative">
+                <span
+                  class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">account_balance</span>
+                <input
+                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300"
+                  id="bank_name" placeholder="e.g. International Finance Corp" type="text" />
+              </div>
+            </div>
+            <!-- Row 2: Account Number & Account Type -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="space-y-2">
+                <label class="block text-sm font-semibold text-on-surface uppercase tracking-wider"
+                  for="account_number">Account Number</label>
+                <div class="relative">
+                  <span
+                    class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">payments</span>
+                  <input
+                    class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300"
+                    id="account_number" placeholder="0000 0000 0000" type="text" />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-semibold text-on-surface uppercase tracking-wider"
+                  for="account_type">Account Type</label>
+                <div class="relative">
+                  <span
+                    class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">category</span>
+                  <select
+                    class="w-full pl-12 pr-10 py-4 bg-surface-container-low border-none rounded-lg text-on-surface focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 appearance-none"
+                    id="account_type">
+                    <option value="normal">Normal</option>
+                    <option value="open_beneficiary">Open Beneficiary</option>
+                  </select>
+                  <span
+                    class="absolute right-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline pointer-events-none">expand_more</span>
+                </div>
+              </div>
+            </div>
+            <!-- Row 3: Routing/Sort Code & Currency -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="space-y-2">
+                <label class="block text-sm font-semibold text-on-surface uppercase tracking-wider"
+                  for="routing_code">Routing / Sort Code</label>
+                <div class="relative">
+                  <span
+                    class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">pin</span>
+                  <input
+                    class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300"
+                    id="routing_code" placeholder="XY-12345" type="text" />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-semibold text-on-surface uppercase tracking-wider"
+                  for="currency">Currency</label>
+                <div class="relative">
+                  <span
+                    class="absolute left-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline">currency_exchange</span>
+                  <select
+                    class="w-full pl-12 pr-10 py-4 bg-surface-container-low border-none rounded-lg text-on-surface focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 appearance-none"
+                    id="currency">
+                    <option value="USD">USD - United States Dollar</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - British Pound</option>
+                    <option value="SGD">SGD - Singapore Dollar</option>
+                  </select>
+                  <span
+                    class="absolute right-4 top-1/2 -tranblue-y-1/2 material-symbols-outlined text-outline pointer-events-none">expand_more</span>
+                </div>
+              </div>
+            </div>
+            <!-- Row 4: Additional Instructions -->
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-on-surface uppercase tracking-wider"
+                for="instructions">Additional Instructions</label>
+              <div class="relative">
+                <span class="absolute left-4 top-6 material-symbols-outlined text-outline">description</span>
+                <textarea
+                  class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 resize-none"
+                  id="instructions"
+                  placeholder="Mention any specific processing requirements or intermediary bank details..."
+                  rows="4"></textarea>
+              </div>
+            </div>
+            <!-- Action Buttons -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-end gap-4">
+              <button
+                class="w-full sm:w-auto px-8 py-3.5 text-on-surface-variant font-semibold hover:bg-surface-container-high rounded-lg transition-all"
+                type="button">
                 Cancel
               </button>
-<button class="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold rounded-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" type="submit">
+              <button
+                class="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold rounded-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                type="submit">
                 Save Account
               </button>
-</div>
-</form>
-</div>
-<!-- Safety/Security Footer -->
-<div class="bg-surface-container-low px-8 py-4 flex items-center justify-center gap-3 text-on-surface-variant/70">
-<span class="material-symbols-outlined text-[20px]">shield</span>
-<span class="text-xs font-medium uppercase tracking-[0.1em]">AES-256 Encrypted Infrastructure (NFR-SEC-009)</span>
-</div>
-</div>
-<!-- Supporting Context Grid -->
-<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-primary">
-<h4 class="font-bold text-on-surface mb-1">Direct Deposit</h4>
-<p class="text-xs text-on-surface-variant">Validated for instant candidate payouts across 40+ countries.</p>
-</div>
-<div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-secondary">
-<h4 class="font-bold text-on-surface mb-1">Multi-Currency</h4>
-<p class="text-xs text-on-surface-variant">Automatic FX conversion available for EUR/GBP settlement.</p>
-</div>
-<div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-tertiary">
-<h4 class="font-bold text-on-surface mb-1">Audit Trail</h4>
-<p class="text-xs text-on-surface-variant">Logged change management tracked via STK-ADM-BANK-002.</p>
-</div>
-</div>
-</div>
-</main>
-<!-- Mobile Navigation Shell Visibility -->
-<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-md flex items-center justify-around px-4 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
-<button class="flex flex-col items-center gap-1 text-blue-400">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="text-[10px] font-medium">Dash</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
-<span class="text-[10px] font-bold">Wallets</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-blue-400">
-<span class="material-symbols-outlined">group</span>
-<span class="text-[10px] font-medium">Talent</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-blue-400">
-<span class="material-symbols-outlined">settings</span>
-<span class="text-[10px] font-medium">System</span>
-</button>
-</nav>
-</body></html>
+            </div>
+          </form>
+        </div>
+        <!-- Safety/Security Footer -->
+        <div
+          class="bg-surface-container-low px-8 py-4 flex items-center justify-center gap-3 text-on-surface-variant/70">
+          <span class="material-symbols-outlined text-[20px]">shield</span>
+          <span class="text-xs font-medium uppercase tracking-[0.1em]">AES-256 Encrypted Infrastructure
+            (NFR-SEC-009)</span>
+        </div>
+      </div>
+      <!-- Supporting Context Grid -->
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-primary">
+          <h4 class="font-bold text-on-surface mb-1">Direct Deposit</h4>
+          <p class="text-xs text-on-surface-variant">Validated for instant candidate payouts across 40+ countries.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-secondary">
+          <h4 class="font-bold text-on-surface mb-1">Multi-Currency</h4>
+          <p class="text-xs text-on-surface-variant">Automatic FX conversion available for EUR/GBP settlement.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-tertiary">
+          <h4 class="font-bold text-on-surface mb-1">Audit Trail</h4>
+          <p class="text-xs text-on-surface-variant">Logged change management tracked via STK-ADM-BANK-002.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Mobile Navigation Shell Visibility -->
+  <nav
+    class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-md flex items-center justify-around px-4 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+    <button class="flex flex-col items-center gap-1 text-blue-400">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span class="text-[10px] font-medium">Dash</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-primary">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+      <span class="text-[10px] font-bold">Wallets</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-blue-400">
+      <span class="material-symbols-outlined">group</span>
+      <span class="text-[10px] font-medium">Talent</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-blue-400">
+      <span class="material-symbols-outlined">settings</span>
+      <span class="text-[10px] font-medium">System</span>
+    </button>
+  </nav>
+</body>
+
+</html>

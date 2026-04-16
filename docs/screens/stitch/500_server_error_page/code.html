@@ -1,191 +1,218 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>System Error - JobNexa</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-container-lowest": "#ffffff",
-                    "on-secondary": "#ffffff",
-                    "on-primary-container": "#eeefff",
-                    "primary-fixed": "#dbe1ff",
-                    "on-error-container": "#93000a",
-                    "tertiary-fixed": "#ffdbcd",
-                    "background": "#f7f9fb",
-                    "secondary-container": "#d0e1fb",
-                    "surface": "#f7f9fb",
-                    "inverse-surface": "#2d3133",
-                    "tertiary-container": "#bc4800",
-                    "surface-tint": "#0053db",
-                    "on-tertiary-container": "#ffede6",
-                    "secondary-fixed-dim": "#b7c8e1",
-                    "tertiary-fixed-dim": "#ffb596",
-                    "primary": "#004ac6",
-                    "surface-dim": "#d8dadc",
-                    "surface-container-low": "#f2f4f6",
-                    "surface-bright": "#f7f9fb",
-                    "outline-variant": "#c3c6d7",
-                    "surface-container-high": "#e6e8ea",
-                    "on-background": "#191c1e",
-                    "on-primary-fixed-variant": "#003ea8",
-                    "error-container": "#ffdad6",
-                    "on-error": "#ffffff",
-                    "inverse-primary": "#b4c5ff",
-                    "inverse-on-surface": "#eff1f3",
-                    "error": "#ba1a1a",
-                    "surface-variant": "#e0e3e5",
-                    "outline": "#737686",
-                    "on-primary-fixed": "#00174b",
-                    "secondary": "#505f76",
-                    "on-surface": "#191c1e",
-                    "tertiary": "#943700",
-                    "on-tertiary-fixed-variant": "#7d2d00",
-                    "secondary-fixed": "#d3e4fe",
-                    "on-primary": "#ffffff",
-                    "on-surface-variant": "#434655",
-                    "primary-container": "#2563eb",
-                    "on-secondary-fixed-variant": "#38485d",
-                    "on-tertiary-fixed": "#360f00",
-                    "on-tertiary": "#ffffff",
-                    "primary-fixed-dim": "#b4c5ff",
-                    "surface-container-highest": "#e0e3e5",
-                    "on-secondary-container": "#54647a",
-                    "on-secondary-fixed": "#0b1c30",
-                    "surface-container": "#eceef0"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>System Error - JobNexe</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#eeefff",
+            "primary-fixed": "#dbe1ff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#ffdbcd",
+            "background": "#f7f9fb",
+            "secondary-container": "#d0e1fb",
+            "surface": "#f7f9fb",
+            "inverse-surface": "#2d3133",
+            "tertiary-container": "#bc4800",
+            "surface-tint": "#0053db",
+            "on-tertiary-container": "#ffede6",
+            "secondary-fixed-dim": "#b7c8e1",
+            "tertiary-fixed-dim": "#ffb596",
+            "primary": "#004ac6",
+            "surface-dim": "#d8dadc",
+            "surface-container-low": "#f2f4f6",
+            "surface-bright": "#f7f9fb",
+            "outline-variant": "#c3c6d7",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "on-primary-fixed-variant": "#003ea8",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "inverse-primary": "#b4c5ff",
+            "inverse-on-surface": "#eff1f3",
+            "error": "#ba1a1a",
+            "surface-variant": "#e0e3e5",
+            "outline": "#737686",
+            "on-primary-fixed": "#00174b",
+            "secondary": "#505f76",
+            "on-surface": "#191c1e",
+            "tertiary": "#943700",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "secondary-fixed": "#d3e4fe",
+            "on-primary": "#ffffff",
+            "on-surface-variant": "#434655",
+            "primary-container": "#2563eb",
+            "on-secondary-fixed-variant": "#38485d",
+            "on-tertiary-fixed": "#360f00",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "surface-container-highest": "#e0e3e5",
+            "on-secondary-container": "#54647a",
+            "on-secondary-fixed": "#0b1c30",
+            "surface-container": "#eceef0"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
         },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
+
 <body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
-<!-- Header (TopNavBar) -->
-<header class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] h-20 flex justify-between items-center px-8 max-w-full mx-auto">
-<div class="flex items-center gap-2">
-<span class="text-xl font-bold tracking-tight text-blue-900">JobNexa</span>
-</div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Opportunities</a>
-<a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Talent</a>
-<a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Categories</a>
-<a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Analytics</a>
-</nav>
-<div class="flex items-center gap-4">
-<button class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-all duration-300">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<button class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-all duration-300">
-<span class="material-symbols-outlined">settings</span>
-</button>
-<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
-<img alt="Recruiter Profile" class="w-full h-full object-cover" data-alt="professional portrait of a recruiter in a clean modern office setting with soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYunt9GjLiyr179Co_rtyFVfoBptJNKq4rrS-IlzWS_MSPGuk3t6of68x2s_wdS9hAKTtlH8YFi7Usv93p70HQ28jXd7hGxjTpWLRmmGaUgaohyfQHFhGksN5ZytSywHCBPkVTx_3veaitqxo1lUALahfiJAKVfQCDqoZ6qI5tuJs8OSH3JW8y60wY80_DTpJgqmtkoMxLKsWeYQCqw2w7isrDbPpImkdLuucKbskLuHNqPv8FHoK7XLO9rf4nj-cw2pbVHGUji31W"/>
-</div>
-</div>
-</header>
-<!-- Main Content Canvas -->
-<main class="flex-grow flex items-center justify-center pt-20 px-6">
-<div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-<!-- Asymmetric Error Message Section -->
-<div class="lg:col-span-7 space-y-8">
-<div class="space-y-4">
-<span class="inline-flex items-center gap-2 px-3 py-1 bg-error-container text-on-error-container rounded-full text-xs font-semibold tracking-wide uppercase">
-<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">error</span>
-                        System Error 500
-                    </span>
-<h1 class="text-5xl md:text-7xl font-bold tracking-tight text-on-surface leading-[1.1]">
-                        Our servers are taking <span class="text-primary">a breather.</span>
-</h1>
-<p class="text-lg text-on-surface-variant max-w-xl leading-relaxed">
-                        We apologize for the inconvenience. Our technical team has been notified and is currently working to restore precision to your curation experience.
-                    </p>
-</div>
-<div class="flex flex-wrap gap-4 items-center">
-<button class="px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-semibold rounded-lg shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center gap-2">
-<span class="material-symbols-outlined">refresh</span>
-                        Try Again
-                    </button>
-<button class="px-8 py-4 bg-surface-container-high text-on-secondary-container font-semibold rounded-lg hover:bg-surface-container-highest active:scale-95 transition-all">
-                        Return to Dashboard
-                    </button>
-</div>
-<!-- Support Contact Information Bento Grid Style -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8 border-t border-outline-variant/20">
-<div class="p-6 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all duration-300">
-<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-primary">mail</span>
-</div>
-<h3 class="font-semibold text-on-surface mb-1">Email Support</h3>
-<p class="text-sm text-on-surface-variant mb-3">Response within 2 hours</p>
-<a class="text-primary font-bold hover:underline" href="mailto:support@JobNexa.io">support@JobNexa.io</a>
-</div>
-<div class="p-6 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all duration-300">
-<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-primary">call</span>
-</div>
-<h3 class="font-semibold text-on-surface mb-1">Priority Line</h3>
-<p class="text-sm text-on-surface-variant mb-3">Available 24/7 for agencies</p>
-<a class="text-primary font-bold hover:underline" href="tel:+18005550199">+1 (800) 555-0199</a>
-</div>
-</div>
-<div class="flex items-center gap-4 text-xs font-medium text-blue-400">
-<span>Traceability: TRUST-003, TRUST-010</span>
-<span class="w-1 h-1 bg-blue-300 rounded-full"></span>
-<span>Ref: SCR-SYS-ERROR-002</span>
-</div>
-</div>
-<!-- Visual Editorial Element -->
-<div class="lg:col-span-5 relative hidden lg:block">
-<div class="aspect-[4/5] bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_40px_80px_rgba(25,28,30,0.08)] relative">
-<img alt="Abstract Tech" class="w-full h-full object-cover opacity-90" data-alt="abstract digital representation of flowing data streams in deep blue and teal tones with soft glowing light particles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAER7kGhbBl3amVR4RzNQC9Qgfq8wf67nDKya1fUXskOZ8AZJM8DGYZinEcUjqBdPN-5_EZw8KnU53Usu9m7osvgspzCo5AwoWJ7k9y6S37Rn11wG4tEYDlEkuScACfk8zi8L2k7kI2_GjpUw3lAS1A8cMPmpgzLT05eWz_I28GrZjwtXEMxKUy76m2yhp3XjOhuv4UQyWMcMzk66juUBSOEbW2_-M7OI9LX4-QHfESOQaT-zzuLoRBNoJAsrteVjW6g7KRGt6umrq7"/>
-<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
-<div class="absolute bottom-8 left-8 right-8 p-6 bg-white/70 backdrop-blur-md rounded-xl">
-<p class="text-sm font-bold text-primary mb-2 italic">"Precision is our priority."</p>
-<p class="text-xs text-on-surface-variant leading-relaxed">Our systems are engineered for 99.9% uptime. We are resolving this rare deviation immediately to ensure your workflow remains uninterrupted.</p>
-</div>
-</div>
-<!-- Decorative Asymmetric Elements -->
-<div class="absolute -top-6 -right-6 w-32 h-32 bg-secondary-container/30 rounded-full blur-3xl -z-10"></div>
-<div class="absolute -bottom-10 -left-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-</div>
-</div>
-</main>
-<!-- Footer Identity -->
-<footer class="py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 mt-auto">
-<div class="flex items-center gap-2">
-<span class="text-lg font-bold text-blue-900">JobNexa</span>
-<span class="text-blue-300">|</span>
-<span class="text-sm text-blue-500 font-medium">Agency Portal Management</span>
-</div>
-<div class="flex gap-8 text-sm font-medium text-blue-500">
-<a class="hover:text-primary transition-colors" href="#">System Status</a>
-<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
-<a class="hover:text-primary transition-colors" href="#">Security Standards</a>
-</div>
-</footer>
-</body></html>
+  <!-- Header (TopNavBar) -->
+  <header
+    class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] h-20 flex justify-between items-center px-8 max-w-full mx-auto">
+    <div class="flex items-center gap-2">
+      <span class="text-xl font-bold tracking-tight text-blue-900">JobNexe</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-8">
+      <a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Opportunities</a>
+      <a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Talent</a>
+      <a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Categories</a>
+      <a class="text-blue-500 hover:text-blue-900 transition-colors font-medium" href="#">Analytics</a>
+    </nav>
+    <div class="flex items-center gap-4">
+      <button class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-all duration-300">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+      <button class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-all duration-300">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+      <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+        <img alt="Recruiter Profile" class="w-full h-full object-cover"
+          data-alt="professional portrait of a recruiter in a clean modern office setting with soft focus background"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYunt9GjLiyr179Co_rtyFVfoBptJNKq4rrS-IlzWS_MSPGuk3t6of68x2s_wdS9hAKTtlH8YFi7Usv93p70HQ28jXd7hGxjTpWLRmmGaUgaohyfQHFhGksN5ZytSywHCBPkVTx_3veaitqxo1lUALahfiJAKVfQCDqoZ6qI5tuJs8OSH3JW8y60wY80_DTpJgqmtkoMxLKsWeYQCqw2w7isrDbPpImkdLuucKbskLuHNqPv8FHoK7XLO9rf4nj-cw2pbVHGUji31W" />
+      </div>
+    </div>
+  </header>
+  <!-- Main Content Canvas -->
+  <main class="flex-grow flex items-center justify-center pt-20 px-6">
+    <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <!-- Asymmetric Error Message Section -->
+      <div class="lg:col-span-7 space-y-8">
+        <div class="space-y-4">
+          <span
+            class="inline-flex items-center gap-2 px-3 py-1 bg-error-container text-on-error-container rounded-full text-xs font-semibold tracking-wide uppercase">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">error</span>
+            System Error 500
+          </span>
+          <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-on-surface leading-[1.1]">
+            Our servers are taking <span class="text-primary">a breather.</span>
+          </h1>
+          <p class="text-lg text-on-surface-variant max-w-xl leading-relaxed">
+            We apologize for the inconvenience. Our technical team has been notified and is currently working to restore
+            precision to your curation experience.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-4 items-center">
+          <button
+            class="px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-semibold rounded-lg shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined">refresh</span>
+            Try Again
+          </button>
+          <button
+            class="px-8 py-4 bg-surface-container-high text-on-secondary-container font-semibold rounded-lg hover:bg-surface-container-highest active:scale-95 transition-all">
+            Return to Dashboard
+          </button>
+        </div>
+        <!-- Support Contact Information Bento Grid Style -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8 border-t border-outline-variant/20">
+          <div
+            class="p-6 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all duration-300">
+            <div
+              class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-primary">mail</span>
+            </div>
+            <h3 class="font-semibold text-on-surface mb-1">Email Support</h3>
+            <p class="text-sm text-on-surface-variant mb-3">Response within 2 hours</p>
+            <a class="text-primary font-bold hover:underline" href="mailto:support@JobNexe.io">support@JobNexe.io</a>
+          </div>
+          <div
+            class="p-6 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all duration-300">
+            <div
+              class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-primary">call</span>
+            </div>
+            <h3 class="font-semibold text-on-surface mb-1">Priority Line</h3>
+            <p class="text-sm text-on-surface-variant mb-3">Available 24/7 for agencies</p>
+            <a class="text-primary font-bold hover:underline" href="tel:+18005550199">+1 (800) 555-0199</a>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-medium text-blue-400">
+          <span>Traceability: TRUST-003, TRUST-010</span>
+          <span class="w-1 h-1 bg-blue-300 rounded-full"></span>
+          <span>Ref: SCR-SYS-ERROR-002</span>
+        </div>
+      </div>
+      <!-- Visual Editorial Element -->
+      <div class="lg:col-span-5 relative hidden lg:block">
+        <div
+          class="aspect-[4/5] bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0_40px_80px_rgba(25,28,30,0.08)] relative">
+          <img alt="Abstract Tech" class="w-full h-full object-cover opacity-90"
+            data-alt="abstract digital representation of flowing data streams in deep blue and teal tones with soft glowing light particles"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAER7kGhbBl3amVR4RzNQC9Qgfq8wf67nDKya1fUXskOZ8AZJM8DGYZinEcUjqBdPN-5_EZw8KnU53Usu9m7osvgspzCo5AwoWJ7k9y6S37Rn11wG4tEYDlEkuScACfk8zi8L2k7kI2_GjpUw3lAS1A8cMPmpgzLT05eWz_I28GrZjwtXEMxKUy76m2yhp3XjOhuv4UQyWMcMzk66juUBSOEbW2_-M7OI9LX4-QHfESOQaT-zzuLoRBNoJAsrteVjW6g7KRGt6umrq7" />
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+          <div class="absolute bottom-8 left-8 right-8 p-6 bg-white/70 backdrop-blur-md rounded-xl">
+            <p class="text-sm font-bold text-primary mb-2 italic">"Precision is our priority."</p>
+            <p class="text-xs text-on-surface-variant leading-relaxed">Our systems are engineered for 99.9% uptime. We
+              are resolving this rare deviation immediately to ensure your workflow remains uninterrupted.</p>
+          </div>
+        </div>
+        <!-- Decorative Asymmetric Elements -->
+        <div class="absolute -top-6 -right-6 w-32 h-32 bg-secondary-container/30 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer Identity -->
+  <footer class="py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 mt-auto">
+    <div class="flex items-center gap-2">
+      <span class="text-lg font-bold text-blue-900">JobNexe</span>
+      <span class="text-blue-300">|</span>
+      <span class="text-sm text-blue-500 font-medium">Agency Portal Management</span>
+    </div>
+    <div class="flex gap-8 text-sm font-medium text-blue-500">
+      <a class="hover:text-primary transition-colors" href="#">System Status</a>
+      <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+      <a class="hover:text-primary transition-colors" href="#">Security Standards</a>
+    </div>
+  </footer>
+</body>
+
+</html>

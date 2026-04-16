@@ -1,352 +1,418 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Admin Console - Job Categories</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "outline": "#737686",
-                    "on-primary-fixed-variant": "#003ea8",
-                    "on-tertiary-fixed": "#360f00",
-                    "on-primary-fixed": "#00174b",
-                    "on-error-container": "#93000a",
-                    "primary": "#004ac6",
-                    "surface-container": "#eceef0",
-                    "surface": "#f7f9fb",
-                    "surface-dim": "#d8dadc",
-                    "on-tertiary-fixed-variant": "#7d2d00",
-                    "secondary-fixed": "#d3e4fe",
-                    "surface-container-highest": "#e0e3e5",
-                    "surface-variant": "#e0e3e5",
-                    "surface-container-lowest": "#ffffff",
-                    "on-primary": "#ffffff",
-                    "primary-fixed-dim": "#b4c5ff",
-                    "on-secondary": "#ffffff",
-                    "on-secondary-fixed-variant": "#38485d",
-                    "surface-container-high": "#e6e8ea",
-                    "outline-variant": "#c3c6d7",
-                    "error-container": "#ffdad6",
-                    "background": "#f7f9fb",
-                    "tertiary-fixed-dim": "#ffb596",
-                    "tertiary-container": "#bc4800",
-                    "inverse-primary": "#b4c5ff",
-                    "primary-fixed": "#dbe1ff",
-                    "inverse-on-surface": "#eff1f3",
-                    "error": "#ba1a1a",
-                    "tertiary": "#943700",
-                    "primary-container": "#2563eb",
-                    "on-error": "#ffffff",
-                    "surface-container-low": "#f2f4f6",
-                    "inverse-surface": "#2d3133",
-                    "secondary-container": "#d0e1fb",
-                    "secondary-fixed-dim": "#b7c8e1",
-                    "surface-tint": "#0053db",
-                    "surface-bright": "#f7f9fb",
-                    "on-tertiary": "#ffffff",
-                    "tertiary-fixed": "#ffdbcd",
-                    "on-tertiary-container": "#ffede6",
-                    "on-background": "#191c1e",
-                    "on-surface": "#191c1e",
-                    "on-secondary-fixed": "#0b1c30",
-                    "on-secondary-container": "#54647a",
-                    "secondary": "#505f76",
-                    "on-primary-container": "#eeefff",
-                    "on-surface-variant": "#434655"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Admin Console - Job Categories</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline": "#737686",
+            "on-primary-fixed-variant": "#003ea8",
+            "on-tertiary-fixed": "#360f00",
+            "on-primary-fixed": "#00174b",
+            "on-error-container": "#93000a",
+            "primary": "#004ac6",
+            "surface-container": "#eceef0",
+            "surface": "#f7f9fb",
+            "surface-dim": "#d8dadc",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "secondary-fixed": "#d3e4fe",
+            "surface-container-highest": "#e0e3e5",
+            "surface-variant": "#e0e3e5",
+            "surface-container-lowest": "#ffffff",
+            "on-primary": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#38485d",
+            "surface-container-high": "#e6e8ea",
+            "outline-variant": "#c3c6d7",
+            "error-container": "#ffdad6",
+            "background": "#f7f9fb",
+            "tertiary-fixed-dim": "#ffb596",
+            "tertiary-container": "#bc4800",
+            "inverse-primary": "#b4c5ff",
+            "primary-fixed": "#dbe1ff",
+            "inverse-on-surface": "#eff1f3",
+            "error": "#ba1a1a",
+            "tertiary": "#943700",
+            "primary-container": "#2563eb",
+            "on-error": "#ffffff",
+            "surface-container-low": "#f2f4f6",
+            "inverse-surface": "#2d3133",
+            "secondary-container": "#d0e1fb",
+            "secondary-fixed-dim": "#b7c8e1",
+            "surface-tint": "#0053db",
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#ffdbcd",
+            "on-tertiary-container": "#ffede6",
+            "on-background": "#191c1e",
+            "on-surface": "#191c1e",
+            "on-secondary-fixed": "#0b1c30",
+            "on-secondary-container": "#54647a",
+            "secondary": "#505f76",
+            "on-primary-container": "#eeefff",
+            "on-surface-variant": "#434655"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
         },
-      }
-    </script>
-<style>
-        body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
 </head>
+
 <body class="bg-surface text-on-surface antialiased">
-<!-- Admin SideNavBar Shell -->
-<aside class="h-screen w-72 fixed left-0 top-0 bg-blue-900 flex flex-col space-y-2 shadow-2xl shadow-black z-50">
-<div class="px-6 py-8">
-<h1 class="text-white font-black tracking-tighter text-xl">JobNexa</h1>
-<div class="mt-8 flex items-center space-x-3 px-2">
-<div class="w-10 h-10 rounded-lg overflow-hidden bg-blue-800">
-<img class="w-full h-full object-cover" data-alt="Professional headshot of a mature executive in a navy suit with soft cinematic studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtK6M9D0jffUOYkcEB1vBM2PagAo0qE9gzkNPLDHvCpsLv3AO9LUXsI8Ddfd71Tua4LVDqhyoSixP_HPQzjGcG4Epwqg15huy64NTOPUyjevWA8ac91m3gEyphKcxmdJc6xwp_QCttw_mjCAexLsv-B5-mZoBitftQPTcBtv35pswhUXdYx8jNnYBy4QUuIR6YCA5BTP5-MC8gMg_HBEyQvPTVOPei97rgI9ueSd2jVF_R4S9pQZLES1e50zDOunoUeNB3VEr3LInK"/>
-</div>
-<div>
-<p class="text-white font-bold text-xs uppercase tracking-wider">Admin User</p>
-<p class="text-blue-500 text-[10px] uppercase font-semibold">System Oversight</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 overflow-y-auto no-scrollbar py-4">
-<div class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
-<span class="material-symbols-outlined text-xl" data-icon="analytics">analytics</span>
-<span class="font-sans text-xs uppercase font-semibold">Overview</span>
-</div>
-<div class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
-<span class="material-symbols-outlined text-xl" data-icon="assignment">assignment</span>
-<span class="font-sans text-xs uppercase font-semibold">Applications</span>
-</div>
-<div class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
-<span class="material-symbols-outlined text-xl" data-icon="payments">payments</span>
-<span class="font-sans text-xs uppercase font-semibold">Payments</span>
-</div>
-<!-- Active State for Job Management (Categories fall under this) -->
-<div class="bg-blue-600/10 text-blue-400 rounded-lg mx-2 px-4 py-3 flex items-center space-x-3 scale-95 duration-150">
-<span class="material-symbols-outlined text-xl" data-icon="business_center">business_center</span>
-<span class="font-sans text-xs uppercase font-semibold">Job Management</span>
-</div>
-<div class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
-<span class="material-symbols-outlined text-xl" data-icon="account_balance">account_balance</span>
-<span class="font-sans text-xs uppercase font-semibold">Finance</span>
-</div>
-<div class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
-<span class="material-symbols-outlined text-xl" data-icon="chat">chat</span>
-<span class="font-sans text-xs uppercase font-semibold">Communication</span>
-</div>
-<div class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
-<span class="material-symbols-outlined text-xl" data-icon="health_and_safety">health_and_safety</span>
-<span class="font-sans text-xs uppercase font-semibold">System Health</span>
-</div>
-</nav>
-<div class="p-6">
-<button class="flex items-center space-x-3 text-blue-500 hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
-<span class="font-sans text-xs uppercase font-semibold tracking-tighter">Sign Out</span>
-</button>
-</div>
-</aside>
-<!-- Main Content Canvas -->
-<main class="ml-72 min-h-screen bg-surface p-12">
-<!-- Header Section -->
-<header class="mb-12 flex justify-between items-end">
-<div class="space-y-2">
-<p class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Inventory Control</p>
-<h2 class="text-on-surface font-bold text-4xl tracking-tight leading-none">Job Categories</h2>
-<p class="text-on-surface-variant text-sm max-w-lg">Manage the organizational taxonomy of industries and specializations for all global job listings.</p>
-</div>
-<button class="bg-primary bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-lg font-semibold text-sm flex items-center space-x-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
-<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
-<span>Add Category</span>
-</button>
-</header>
-<!-- Stats Overview (Asymmetric Layout) -->
-<div class="grid grid-cols-12 gap-6 mb-12">
-<div class="col-span-8 bg-surface-container-low rounded-xl p-8 flex justify-between items-center relative overflow-hidden group">
-<div class="relative z-10">
-<p class="text-on-surface-variant font-semibold text-xs uppercase tracking-widest mb-1">Total Taxonomy Nodes</p>
-<p class="text-on-surface font-black text-5xl">42</p>
-<div class="mt-4 flex items-center text-primary text-xs font-bold">
-<span class="material-symbols-outlined text-xs mr-1" data-icon="trending_up">trending_up</span>
-<span>+4 NEW THIS MONTH</span>
-</div>
-</div>
-<div class="relative z-10 text-right">
-<p class="text-on-surface-variant text-sm italic mb-4">"Structure is the backbone of precision placement."</p>
-<div class="flex -space-x-2 justify-end">
-<div class="w-8 h-8 rounded-full border-2 border-surface-container-low bg-blue-200 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Female professional portrait with natural daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3icjH5EuqQUqHngJuJyLrC6BFReHczqy3RIZ48fJFbl16C4NUIncjqXMC7xNzG0hAnwW7c4hnzw1jCXJpbRF1HDEiyTnVDSLfrWFfCXU1mj_JnORtn9sX1v9tMg4aiB98WhX-dIKPzZOwq2b4JSuiBaOCgJJTLn-LhkF7B8N2v89aNmgbbBYdIdbrl9Pj3NtBbNO8S6fgXkj8zbOBsUq4QW9p_ED6yCreMuJ9xc49bl4I6tVTH6hW_ExS6Js62a5WFw4VLHK4qH8a"/>
-</div>
-<div class="w-8 h-8 rounded-full border-2 border-surface-container-low bg-blue-200 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="Male professional portrait with studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlmAHP5bpsIO1B79u5U6I3yHkBuzOwMYeUkYnnj94XmT5-0n4r755bpaBli1i9sq0Tt3B_dShva0C6pJpe6N5TXSltcJhpy3xtm1iz8gjKd8gYFquKwKyoO0L3ZFSTagZrSCBsv7yYzyLYsgeXPboRID4Rfd0Nhd24QixfCIK4Pu0lKip4GPACdeS7FQ5NOwDr9Iz4Jw76-ecxMM_IEbQL2WPBXRJUPjGatXPkWJf74OZqHYtBKL9RSaVQfvsu-unt_05JmZYkbunv"/>
-</div>
-<div class="w-8 h-8 rounded-full border-2 border-surface-container-low bg-blue-200 flex items-center justify-center bg-primary text-[10px] text-white font-bold">
-                            +12
-                        </div>
-</div>
-</div>
-<!-- Subtle background visual -->
-<div class="absolute -right-10 -bottom-10 opacity-5 group-hover:scale-110 transition-transform duration-700">
-<span class="material-symbols-outlined text-[200px]" data-icon="category">category</span>
-</div>
-</div>
-<div class="col-span-4 bg-primary bg-gradient-to-br from-primary to-primary-container rounded-xl p-8 text-on-primary shadow-xl shadow-primary/10">
-<span class="material-symbols-outlined mb-4 opacity-70" data-icon="auto_awesome">auto_awesome</span>
-<h3 class="text-xl font-bold mb-2">Category Health</h3>
-<p class="text-on-primary-container text-xs leading-relaxed mb-6">94% of jobs are accurately mapped to categories. 6 listings require manual review.</p>
-<div class="w-full bg-on-primary/20 h-1 rounded-full overflow-hidden">
-<div class="bg-on-primary w-[94%] h-full"></div>
-</div>
-</div>
-</div>
-<!-- Data Table Section -->
-<div class="bg-surface-container-lowest rounded-xl shadow-2xl shadow-blue-200/40 overflow-hidden">
-<div class="px-8 py-6 flex items-center justify-between border-b border-outline-variant/10">
-<div class="flex items-center space-x-4">
-<h3 class="text-on-surface font-bold">Active Classifications</h3>
-<div class="flex space-x-2">
-<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Industries</span>
-<span class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Functions</span>
-</div>
-</div>
-<div class="flex items-center bg-surface-container-low px-4 py-2 rounded-lg space-x-3 w-64">
-<span class="material-symbols-outlined text-outline text-lg" data-icon="search">search</span>
-<input class="bg-transparent border-none text-xs focus:ring-0 w-full text-on-surface" placeholder="Filter categories..." type="text"/>
-</div>
-</div>
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low/50">
-<th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Category Name</th>
-<th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Description</th>
-<th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-center">Associated Jobs</th>
-<th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">Actions</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-outline-variant/10">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors group">
-<td class="px-8 py-6">
-<div class="flex items-center space-x-3">
-<div class="w-8 h-8 rounded bg-primary/5 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="code">code</span>
-</div>
-<span class="text-on-surface font-semibold text-sm">Software Engineering</span>
-</div>
-</td>
-<td class="px-8 py-6">
-<p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">Full-stack, backend, frontend, and mobile application development roles.</p>
-</td>
-<td class="px-8 py-6 text-center">
-<span class="text-on-surface font-bold text-sm">1,248</span>
-</td>
-<td class="px-8 py-6 text-right">
-<div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="p-2 text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
-<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors group">
-<td class="px-8 py-6">
-<div class="flex items-center space-x-3">
-<div class="w-8 h-8 rounded bg-tertiary/5 flex items-center justify-center text-tertiary">
-<span class="material-symbols-outlined text-sm" data-icon="palette">palette</span>
-</div>
-<span class="text-on-surface font-semibold text-sm">Creative &amp; Design</span>
-</div>
-</td>
-<td class="px-8 py-6">
-<p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">UI/UX, graphic design, art direction, and multimedia content creation.</p>
-</td>
-<td class="px-8 py-6 text-center">
-<span class="text-on-surface font-bold text-sm">482</span>
-</td>
-<td class="px-8 py-6 text-right">
-<div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="p-2 text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
-<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors group">
-<td class="px-8 py-6">
-<div class="flex items-center space-x-3">
-<div class="w-8 h-8 rounded bg-secondary/5 flex items-center justify-center text-secondary">
-<span class="material-symbols-outlined text-sm" data-icon="account_balance">account_balance</span>
-</div>
-<span class="text-on-surface font-semibold text-sm">Finance &amp; Fintech</span>
-</div>
-</td>
-<td class="px-8 py-6">
-<p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">Banking, investment analysis, crypto, and accounting services.</p>
-</td>
-<td class="px-8 py-6 text-center">
-<span class="text-on-surface font-bold text-sm">815</span>
-</td>
-<td class="px-8 py-6 text-right">
-<div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="p-2 text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
-<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
-</div>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-surface-container-low/30 transition-colors group">
-<td class="px-8 py-6">
-<div class="flex items-center space-x-3">
-<div class="w-8 h-8 rounded bg-primary/5 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="medical_services">medical_services</span>
-</div>
-<span class="text-on-surface font-semibold text-sm">Healthcare &amp; Biotech</span>
-</div>
-</td>
-<td class="px-8 py-6">
-<p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">Clinical research, medical practitioners, and laboratory science.</p>
-</td>
-<td class="px-8 py-6 text-center">
-<span class="text-on-surface font-bold text-sm">312</span>
-</td>
-<td class="px-8 py-6 text-right">
-<div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="p-2 text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
-<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="px-8 py-6 flex items-center justify-between bg-surface-container-low/20">
-<p class="text-on-surface-variant text-xs">Showing 4 of 42 categories</p>
-<div class="flex space-x-2">
-<button class="px-4 py-2 text-xs font-bold text-on-surface-variant bg-surface-container rounded-lg opacity-50 cursor-not-allowed">Previous</button>
-<button class="px-4 py-2 text-xs font-bold text-primary bg-primary-fixed rounded-lg hover:bg-primary-fixed-dim transition-colors">Next Page</button>
-</div>
-</div>
-</div>
-<!-- System Intelligence Callout -->
-<section class="mt-12 grid grid-cols-2 gap-8">
-<div class="bg-surface-container-low p-8 rounded-xl flex items-start space-x-6 border-l-4 border-primary">
-<div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container shrink-0">
-<span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
-</div>
-<div>
-<h4 class="text-on-surface font-bold mb-2">Smart Suggestion</h4>
-<p class="text-on-surface-variant text-sm leading-relaxed">The system detected a surge in "AI Ethics" and "Sustainability Audit" related postings. Would you like to create a new sub-category for these emerging roles?</p>
-<button class="mt-4 text-primary text-xs font-bold uppercase tracking-widest hover:underline flex items-center">
-                        Review Emerging Data <span class="material-symbols-outlined text-xs ml-1" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-</div>
-<div class="bg-surface-container-low p-8 rounded-xl flex items-start space-x-6 border-l-4 border-tertiary">
-<div class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed shrink-0">
-<span class="material-symbols-outlined" data-icon="warning">warning</span>
-</div>
-<div>
-<h4 class="text-on-surface font-bold mb-2">Unmapped Volume</h4>
-<p class="text-on-surface-variant text-sm leading-relaxed">There are 18 newly uploaded jobs from 'Aura Corp' that do not match existing category descriptions. Manual mapping recommended.</p>
-<button class="mt-4 text-tertiary text-xs font-bold uppercase tracking-widest hover:underline flex items-center">
-                        Go to Mapping Tool <span class="material-symbols-outlined text-xs ml-1" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-</div>
-</section>
-<footer class="mt-24 text-center">
-<p class="text-on-surface-variant text-[10px] uppercase tracking-[0.3em]">© 2024 JobNexa • Precision in Professional Placement • V4.2.1</p>
-</footer>
-</main>
-</body></html>
+  <!-- Admin SideNavBar Shell -->
+  <aside class="h-screen w-72 fixed left-0 top-0 bg-blue-900 flex flex-col space-y-2 shadow-2xl shadow-black z-50">
+    <div class="px-6 py-8">
+      <h1 class="text-white font-black tracking-tighter text-xl">JobNexe</h1>
+      <div class="mt-8 flex items-center space-x-3 px-2">
+        <div class="w-10 h-10 rounded-lg overflow-hidden bg-blue-800">
+          <img class="w-full h-full object-cover"
+            data-alt="Professional headshot of a mature executive in a navy suit with soft cinematic studio lighting"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtK6M9D0jffUOYkcEB1vBM2PagAo0qE9gzkNPLDHvCpsLv3AO9LUXsI8Ddfd71Tua4LVDqhyoSixP_HPQzjGcG4Epwqg15huy64NTOPUyjevWA8ac91m3gEyphKcxmdJc6xwp_QCttw_mjCAexLsv-B5-mZoBitftQPTcBtv35pswhUXdYx8jNnYBy4QUuIR6YCA5BTP5-MC8gMg_HBEyQvPTVOPei97rgI9ueSd2jVF_R4S9pQZLES1e50zDOunoUeNB3VEr3LInK" />
+        </div>
+        <div>
+          <p class="text-white font-bold text-xs uppercase tracking-wider">Admin User</p>
+          <p class="text-blue-500 text-[10px] uppercase font-semibold">System Oversight</p>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 overflow-y-auto no-scrollbar py-4">
+      <div
+        class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
+        <span class="material-symbols-outlined text-xl" data-icon="analytics">analytics</span>
+        <span class="font-sans text-xs uppercase font-semibold">Overview</span>
+      </div>
+      <div
+        class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
+        <span class="material-symbols-outlined text-xl" data-icon="assignment">assignment</span>
+        <span class="font-sans text-xs uppercase font-semibold">Applications</span>
+      </div>
+      <div
+        class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
+        <span class="material-symbols-outlined text-xl" data-icon="payments">payments</span>
+        <span class="font-sans text-xs uppercase font-semibold">Payments</span>
+      </div>
+      <!-- Active State for Job Management (Categories fall under this) -->
+      <div
+        class="bg-blue-600/10 text-blue-400 rounded-lg mx-2 px-4 py-3 flex items-center space-x-3 scale-95 duration-150">
+        <span class="material-symbols-outlined text-xl" data-icon="business_center">business_center</span>
+        <span class="font-sans text-xs uppercase font-semibold">Job Management</span>
+      </div>
+      <div
+        class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
+        <span class="material-symbols-outlined text-xl" data-icon="account_balance">account_balance</span>
+        <span class="font-sans text-xs uppercase font-semibold">Finance</span>
+      </div>
+      <div
+        class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
+        <span class="material-symbols-outlined text-xl" data-icon="chat">chat</span>
+        <span class="font-sans text-xs uppercase font-semibold">Communication</span>
+      </div>
+      <div
+        class="text-blue-400 px-4 py-3 hover:bg-blue-800 transition-colors cursor-pointer flex items-center space-x-3 scale-95 duration-150 group">
+        <span class="material-symbols-outlined text-xl" data-icon="health_and_safety">health_and_safety</span>
+        <span class="font-sans text-xs uppercase font-semibold">System Health</span>
+      </div>
+    </nav>
+    <div class="p-6">
+      <button class="flex items-center space-x-3 text-blue-500 hover:text-white transition-colors">
+        <span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+        <span class="font-sans text-xs uppercase font-semibold tracking-tighter">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+  <!-- Main Content Canvas -->
+  <main class="ml-72 min-h-screen bg-surface p-12">
+    <!-- Header Section -->
+    <header class="mb-12 flex justify-between items-end">
+      <div class="space-y-2">
+        <p class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Inventory Control</p>
+        <h2 class="text-on-surface font-bold text-4xl tracking-tight leading-none">Job Categories</h2>
+        <p class="text-on-surface-variant text-sm max-w-lg">Manage the organizational taxonomy of industries and
+          specializations for all global job listings.</p>
+      </div>
+      <button
+        class="bg-primary bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-lg font-semibold text-sm flex items-center space-x-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+        <span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+        <span>Add Category</span>
+      </button>
+    </header>
+    <!-- Stats Overview (Asymmetric Layout) -->
+    <div class="grid grid-cols-12 gap-6 mb-12">
+      <div
+        class="col-span-8 bg-surface-container-low rounded-xl p-8 flex justify-between items-center relative overflow-hidden group">
+        <div class="relative z-10">
+          <p class="text-on-surface-variant font-semibold text-xs uppercase tracking-widest mb-1">Total Taxonomy Nodes
+          </p>
+          <p class="text-on-surface font-black text-5xl">42</p>
+          <div class="mt-4 flex items-center text-primary text-xs font-bold">
+            <span class="material-symbols-outlined text-xs mr-1" data-icon="trending_up">trending_up</span>
+            <span>+4 NEW THIS MONTH</span>
+          </div>
+        </div>
+        <div class="relative z-10 text-right">
+          <p class="text-on-surface-variant text-sm italic mb-4">"Structure is the backbone of precision placement."</p>
+          <div class="flex -space-x-2 justify-end">
+            <div class="w-8 h-8 rounded-full border-2 border-surface-container-low bg-blue-200 overflow-hidden">
+              <img class="w-full h-full object-cover" data-alt="Female professional portrait with natural daylight"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3icjH5EuqQUqHngJuJyLrC6BFReHczqy3RIZ48fJFbl16C4NUIncjqXMC7xNzG0hAnwW7c4hnzw1jCXJpbRF1HDEiyTnVDSLfrWFfCXU1mj_JnORtn9sX1v9tMg4aiB98WhX-dIKPzZOwq2b4JSuiBaOCgJJTLn-LhkF7B8N2v89aNmgbbBYdIdbrl9Pj3NtBbNO8S6fgXkj8zbOBsUq4QW9p_ED6yCreMuJ9xc49bl4I6tVTH6hW_ExS6Js62a5WFw4VLHK4qH8a" />
+            </div>
+            <div class="w-8 h-8 rounded-full border-2 border-surface-container-low bg-blue-200 overflow-hidden">
+              <img class="w-full h-full object-cover" data-alt="Male professional portrait with studio lighting"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlmAHP5bpsIO1B79u5U6I3yHkBuzOwMYeUkYnnj94XmT5-0n4r755bpaBli1i9sq0Tt3B_dShva0C6pJpe6N5TXSltcJhpy3xtm1iz8gjKd8gYFquKwKyoO0L3ZFSTagZrSCBsv7yYzyLYsgeXPboRID4Rfd0Nhd24QixfCIK4Pu0lKip4GPACdeS7FQ5NOwDr9Iz4Jw76-ecxMM_IEbQL2WPBXRJUPjGatXPkWJf74OZqHYtBKL9RSaVQfvsu-unt_05JmZYkbunv" />
+            </div>
+            <div
+              class="w-8 h-8 rounded-full border-2 border-surface-container-low bg-blue-200 flex items-center justify-center bg-primary text-[10px] text-white font-bold">
+              +12
+            </div>
+          </div>
+        </div>
+        <!-- Subtle background visual -->
+        <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:scale-110 transition-transform duration-700">
+          <span class="material-symbols-outlined text-[200px]" data-icon="category">category</span>
+        </div>
+      </div>
+      <div
+        class="col-span-4 bg-primary bg-gradient-to-br from-primary to-primary-container rounded-xl p-8 text-on-primary shadow-xl shadow-primary/10">
+        <span class="material-symbols-outlined mb-4 opacity-70" data-icon="auto_awesome">auto_awesome</span>
+        <h3 class="text-xl font-bold mb-2">Category Health</h3>
+        <p class="text-on-primary-container text-xs leading-relaxed mb-6">94% of jobs are accurately mapped to
+          categories. 6 listings require manual review.</p>
+        <div class="w-full bg-on-primary/20 h-1 rounded-full overflow-hidden">
+          <div class="bg-on-primary w-[94%] h-full"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Data Table Section -->
+    <div class="bg-surface-container-lowest rounded-xl shadow-2xl shadow-blue-200/40 overflow-hidden">
+      <div class="px-8 py-6 flex items-center justify-between border-b border-outline-variant/10">
+        <div class="flex items-center space-x-4">
+          <h3 class="text-on-surface font-bold">Active Classifications</h3>
+          <div class="flex space-x-2">
+            <span
+              class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Industries</span>
+            <span
+              class="px-3 py-1 bg-surface-container rounded-full text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Functions</span>
+          </div>
+        </div>
+        <div class="flex items-center bg-surface-container-low px-4 py-2 rounded-lg space-x-3 w-64">
+          <span class="material-symbols-outlined text-outline text-lg" data-icon="search">search</span>
+          <input class="bg-transparent border-none text-xs focus:ring-0 w-full text-on-surface"
+            placeholder="Filter categories..." type="text" />
+        </div>
+      </div>
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-surface-container-low/50">
+            <th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Category Name
+            </th>
+            <th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Description
+            </th>
+            <th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-center">
+              Associated Jobs</th>
+            <th class="px-8 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">
+              Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/10">
+          <!-- Row 1 -->
+          <tr class="hover:bg-surface-container-low/30 transition-colors group">
+            <td class="px-8 py-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded bg-primary/5 flex items-center justify-center text-primary">
+                  <span class="material-symbols-outlined text-sm" data-icon="code">code</span>
+                </div>
+                <span class="text-on-surface font-semibold text-sm">Software Engineering</span>
+              </div>
+            </td>
+            <td class="px-8 py-6">
+              <p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">Full-stack, backend,
+                frontend, and mobile application development roles.</p>
+            </td>
+            <td class="px-8 py-6 text-center">
+              <span class="text-on-surface font-bold text-sm">1,248</span>
+            </td>
+            <td class="px-8 py-6 text-right">
+              <div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button class="p-2 text-outline hover:text-primary transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+                <button class="p-2 text-outline hover:text-error transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
+              </div>
+            </td>
+          </tr>
+          <!-- Row 2 -->
+          <tr class="hover:bg-surface-container-low/30 transition-colors group">
+            <td class="px-8 py-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded bg-tertiary/5 flex items-center justify-center text-tertiary">
+                  <span class="material-symbols-outlined text-sm" data-icon="palette">palette</span>
+                </div>
+                <span class="text-on-surface font-semibold text-sm">Creative &amp; Design</span>
+              </div>
+            </td>
+            <td class="px-8 py-6">
+              <p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">UI/UX, graphic design,
+                art direction, and multimedia content creation.</p>
+            </td>
+            <td class="px-8 py-6 text-center">
+              <span class="text-on-surface font-bold text-sm">482</span>
+            </td>
+            <td class="px-8 py-6 text-right">
+              <div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button class="p-2 text-outline hover:text-primary transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+                <button class="p-2 text-outline hover:text-error transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
+              </div>
+            </td>
+          </tr>
+          <!-- Row 3 -->
+          <tr class="hover:bg-surface-container-low/30 transition-colors group">
+            <td class="px-8 py-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded bg-secondary/5 flex items-center justify-center text-secondary">
+                  <span class="material-symbols-outlined text-sm" data-icon="account_balance">account_balance</span>
+                </div>
+                <span class="text-on-surface font-semibold text-sm">Finance &amp; Fintech</span>
+              </div>
+            </td>
+            <td class="px-8 py-6">
+              <p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">Banking, investment
+                analysis, crypto, and accounting services.</p>
+            </td>
+            <td class="px-8 py-6 text-center">
+              <span class="text-on-surface font-bold text-sm">815</span>
+            </td>
+            <td class="px-8 py-6 text-right">
+              <div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button class="p-2 text-outline hover:text-primary transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+                <button class="p-2 text-outline hover:text-error transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
+              </div>
+            </td>
+          </tr>
+          <!-- Row 4 -->
+          <tr class="hover:bg-surface-container-low/30 transition-colors group">
+            <td class="px-8 py-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded bg-primary/5 flex items-center justify-center text-primary">
+                  <span class="material-symbols-outlined text-sm" data-icon="medical_services">medical_services</span>
+                </div>
+                <span class="text-on-surface font-semibold text-sm">Healthcare &amp; Biotech</span>
+              </div>
+            </td>
+            <td class="px-8 py-6">
+              <p class="text-on-surface-variant text-xs max-w-xs leading-relaxed line-clamp-1">Clinical research,
+                medical practitioners, and laboratory science.</p>
+            </td>
+            <td class="px-8 py-6 text-center">
+              <span class="text-on-surface font-bold text-sm">312</span>
+            </td>
+            <td class="px-8 py-6 text-right">
+              <div class="flex justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button class="p-2 text-outline hover:text-primary transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+                <button class="p-2 text-outline hover:text-error transition-colors"><span
+                    class="material-symbols-outlined text-lg" data-icon="delete">delete</span></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="px-8 py-6 flex items-center justify-between bg-surface-container-low/20">
+        <p class="text-on-surface-variant text-xs">Showing 4 of 42 categories</p>
+        <div class="flex space-x-2">
+          <button
+            class="px-4 py-2 text-xs font-bold text-on-surface-variant bg-surface-container rounded-lg opacity-50 cursor-not-allowed">Previous</button>
+          <button
+            class="px-4 py-2 text-xs font-bold text-primary bg-primary-fixed rounded-lg hover:bg-primary-fixed-dim transition-colors">Next
+            Page</button>
+        </div>
+      </div>
+    </div>
+    <!-- System Intelligence Callout -->
+    <section class="mt-12 grid grid-cols-2 gap-8">
+      <div class="bg-surface-container-low p-8 rounded-xl flex items-start space-x-6 border-l-4 border-primary">
+        <div
+          class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container shrink-0">
+          <span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+        </div>
+        <div>
+          <h4 class="text-on-surface font-bold mb-2">Smart Suggestion</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">The system detected a surge in "AI Ethics" and
+            "Sustainability Audit" related postings. Would you like to create a new sub-category for these emerging
+            roles?</p>
+          <button
+            class="mt-4 text-primary text-xs font-bold uppercase tracking-widest hover:underline flex items-center">
+            Review Emerging Data <span class="material-symbols-outlined text-xs ml-1"
+              data-icon="arrow_forward">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+      <div class="bg-surface-container-low p-8 rounded-xl flex items-start space-x-6 border-l-4 border-tertiary">
+        <div
+          class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed shrink-0">
+          <span class="material-symbols-outlined" data-icon="warning">warning</span>
+        </div>
+        <div>
+          <h4 class="text-on-surface font-bold mb-2">Unmapped Volume</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">There are 18 newly uploaded jobs from 'Aura Corp'
+            that do not match existing category descriptions. Manual mapping recommended.</p>
+          <button
+            class="mt-4 text-tertiary text-xs font-bold uppercase tracking-widest hover:underline flex items-center">
+            Go to Mapping Tool <span class="material-symbols-outlined text-xs ml-1"
+              data-icon="arrow_forward">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <footer class="mt-24 text-center">
+      <p class="text-on-surface-variant text-[10px] uppercase tracking-[0.3em]">© 2024 JobNexe • Precision in
+        Professional Placement • V4.2.1</p>
+    </footer>
+  </main>
+</body>
+
+</html>

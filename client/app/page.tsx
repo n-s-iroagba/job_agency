@@ -12,7 +12,7 @@ const TESTIMONIALS = [
   {
     name: "Elena R.",
     role: "Senior DevOps Engineer",
-    text: "JobNexa streamlined my transition to a global tech hub. The curation is unmatched and the process is seamless.",
+    text: "JobNexe streamlined my transition to a global tech hub. The curation is unmatched and the process is seamless.",
     location: "Berlin, DE"
   },
   {

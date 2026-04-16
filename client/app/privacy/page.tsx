@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
                         </div>
                         <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-on-surface mb-8">Data Protection <br /><span className="text-primary">& Transparency</span></h1>
                         <p className="text-on-surface-variant text-base lg:text-lg max-w-[640px] leading-relaxed font-light">
-                            At JobNexa, we prioritize your professional privacy. Our practices are designed to ensure your data is handled with clarity, security, and absolute integrity.
+                            At JobNexe, we prioritize your professional privacy. Our practices are designed to ensure your data is handled with clarity, security, and absolute integrity.
                         </p>
                     </header>
 

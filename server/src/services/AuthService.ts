@@ -33,7 +33,7 @@ export class AuthService {
             'Verify Your Account',
             this.getPremiumTemplate(
                 'Identity Verification',
-                'Welcome to JobNexa. We require a high-priority identity verification to activate your professional node. Please use the secure link below to proceed.',
+                'Welcome to JobNexe. We require a high-priority identity verification to activate your professional node. Please use the secure link below to proceed.',
                 'Verify Identity',
                 verificationUrl
             )
@@ -98,7 +98,7 @@ export class AuthService {
             'Password Reset Request',
             this.getPremiumTemplate(
                 'Access Recovery',
-                'A cryptographic reset sequence has been initialized for your JobNexa account. If you did not trigger this protocol, please secure your node immediately.',
+                'A cryptographic reset sequence has been initialized for your JobNexe account. If you did not trigger this protocol, please secure your node immediately.',
                 'Reset Passphrase',
                 resetUrl
             )
@@ -216,7 +216,7 @@ export class AuthService {
             <body>
                 <div class="container">
                     <div class="header">
-                        <h1>JobNexa</h1>
+                        <h1>JobNexe</h1>
                     </div>
                     <div class="content">
                         <h2>${title}</h2>
@@ -224,7 +224,7 @@ export class AuthService {
                         <a href="${buttonUrl}" target="_blank" class="button">${buttonLabel}</a>
                     </div>
                     <div class="footer">
-                        <p>© 2024 JobNexa · Secure Identity Management</p>
+                        <p>© 2024 JobNexe · Secure Identity Management</p>
                     </div>
                 </div>
             </body>
