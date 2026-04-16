@@ -317,7 +317,7 @@ export class AdminController {
         try {
             const { applicantId, subject, message, sendPushNotification, email } = req.body;
             const result = await adminService.sendMailToApplicant(
-                applicantId ? parseInt(applicantId, 10) : undefined,
+                applicantId,
                 subject,
                 message,
                 sendPushNotification ?? false,
