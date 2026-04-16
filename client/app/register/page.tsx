@@ -71,7 +71,7 @@ export default function RegisterPage() {
         <div className="bg-white text-slate-900 antialiased min-h-screen flex flex-col font-sans">
             {/* Top Navigation */}
             <header className="fixed top-0 w-full z-50 bg-white border-b border-slate-100 px-8 h-20 flex items-center justify-between">
-                <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">CareerCurator</Link>
+                <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">JobNexa</Link>
                 <Link href="/login" className="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Sign In</Link>
             </header>
 
@@ -96,7 +96,7 @@ export default function RegisterPage() {
                                 </button>
                             </Link>
                             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-loose text-center pt-4">
-                                No receipt? <button 
+                                No receipt? <button
                                     onClick={handleResend}
                                     disabled={resendMutation.isPending}
                                     className="text-slate-900 underline disabled:opacity-50 hover:text-slate-700 ml-1"
@@ -208,7 +208,7 @@ export default function RegisterPage() {
 
             <footer className="py-12 px-8 border-t border-slate-50 mt-auto">
                 <div className="flex flex-col md:flex-row justify-between items-center max-w-[1440px] mx-auto gap-6 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                    <p>© 2024 CAREERCURATOR ENTERPRISE</p>
+                    <p>© 2024 JOBNEXA ENTERPRISE</p>
                     <div className="flex gap-10">
                         <Link className="hover:text-slate-900 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Data Protection</Link>
                         <a className="hover:text-slate-900 transition-colors" href="#">Support</a>

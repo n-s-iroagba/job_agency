@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
                         <section>
                             <h2 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.4em] mb-8 border-b border-slate-100 pb-4">01. Data Sovereignty</h2>
                             <div className="text-slate-500 font-medium leading-[2] text-sm space-y-6">
-                                <p>At CareerCurator, we implement advanced data protection protocols to ensure your professional identity remains secure. This document establishes our commitment to transparency in information handling.</p>
+                                <p>At JobNexa, we implement advanced data protection protocols to ensure your professional identity remains secure. This document establishes our commitment to transparency in information handling.</p>
                                 <p>We operate under the principle of minimal data retention, collecting only the necessary vectors required to facilitate high-impact professional placement.</p>
                             </div>
                         </section>

@@ -43,7 +43,7 @@ function VerifyEmailContent() {
         <main className="max-w-[448px] w-full space-y-12 text-center">
             <div className="space-y-6">
                 <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900 block mb-12">
-                    CareerCurator
+                    JobNexa
                 </Link>
                 <div>
                     <div className={`w-20 h-20 rounded-2xl mx-auto flex items-center justify-center transition-all duration-700 shadow-xl ${status === 'loading' ? 'bg-slate-50 text-slate-300 shadow-slate-100' : status === 'success' ? 'bg-slate-900 text-white shadow-slate-900/10' : 'bg-red-50 text-red-600 shadow-red-100'}`}>
@@ -86,7 +86,7 @@ export default function VerifyEmailPage() {
 
             <footer className="mt-24 py-12 border-t border-slate-50 w-full max-w-[1440px]">
                 <div className="flex justify-center flex-col items-center gap-4">
-                    <p className="text-slate-300 text-[9px] font-bold uppercase tracking-[0.3em]">© 2024 CAREERCURATOR ENTERPRISE</p>
+                    <p className="text-slate-300 text-[9px] font-bold uppercase tracking-[0.3em]">© 2024 JOBNEXA ENTERPRISE</p>
                 </div>
             </footer>
         </div>

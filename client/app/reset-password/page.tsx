@@ -60,7 +60,7 @@ function ResetPasswordContent() {
         <main className="max-w-[448px] w-full space-y-12">
             <div className="space-y-4 text-center lg:text-left">
                 <Link href="/" className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900 block mb-12">
-                    CareerCurator
+                    JobNexa
                 </Link>
                 <h1 className="text-4xl font-bold text-slate-900 tracking-tight uppercase">Update Key</h1>
                 <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
@@ -141,8 +141,8 @@ export default function ResetPasswordPage() {
 
             <footer className="mt-20 py-12 px-8 border-t border-slate-50 w-full max-w-[1440px]">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                   <p>© 2024 CAREERCURATOR ENTERPRISE</p>
-                   <p>Registry Update Authority Active</p>
+                    <p>© 2024 JOBNEXA ENTERPRISE</p>
+                    <p>Registry Update Authority Active</p>
                 </div>
             </footer>
         </div>

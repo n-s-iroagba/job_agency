@@ -57,7 +57,7 @@ export default function AdminRegisterPage() {
             {/* Header */}
             <header className="h-20 px-8 lg:px-16 flex items-center border-b border-slate-100 sticky top-0 bg-white z-50 justify-between">
                 <Link href="/" className="flex items-center gap-1">
-                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">CareerCurator</span>
+                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">JobNexa</span>
                 </Link>
                 <div className="flex items-center space-x-2">
                     <span className="w-2 h-2 rounded-full bg-slate-900"></span>
@@ -76,11 +76,11 @@ export default function AdminRegisterPage() {
                             </h1>
                         </div>
                         <p className="text-slate-500 text-lg font-medium leading-relaxed max-w-[440px]">
-                            Join the CareerCurator control plane to manage institutional grade talent acquisitions and automated pipeline logistics.
+                            Join the JobNexa control plane to manage institutional grade talent acquisitions and automated pipeline logistics.
                         </p>
                         <div className="flex items-center gap-4 pt-10 border-t border-slate-200">
                             <div className="flex -space-x-3">
-                                {[1,2,3].map(i => <div key={i} className="w-10 h-10 rounded-full bg-slate-200 border-2 border-white shadow-sm"></div>)}
+                                {[1, 2, 3].map(i => <div key={i} className="w-10 h-10 rounded-full bg-slate-200 border-2 border-white shadow-sm"></div>)}
                             </div>
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Verified Controller Network</span>
                         </div>
@@ -171,7 +171,7 @@ export default function AdminRegisterPage() {
             </main>
 
             <footer className="py-12 flex items-center justify-center border-t border-slate-100 bg-white">
-                <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.3em]">© 2024 CAREERCURATOR ENTERPRISE • ADMINISTRATIVE ZONE</p>
+                <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.3em]">© 2024 JOBNEXA ENTERPRISE • ADMINISTRATIVE ZONE</p>
             </footer>
         </div>
     );

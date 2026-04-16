@@ -29,7 +29,7 @@ export function ApplicantSidebar({ isOpen, onToggle }: { isOpen: boolean; onTogg
             {/* Branding */}
             <div className="py-12 px-8 border-b border-slate-50">
                 <Link href="/" className="flex flex-col">
-                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">CareerCurator</span>
+                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">JobNexa</span>
                     <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Applicant Portal</span>
                 </Link>
             </div>

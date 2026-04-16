@@ -8,9 +8,9 @@ export function PublicFooter() {
         <footer className="bg-white w-full py-24 px-8 lg:px-16 border-t border-slate-100 mt-auto font-sans antialiased text-slate-900">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-16 max-w-[1440px] mx-auto">
                 <div className="space-y-8">
-                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">CareerCurator</span>
+                    <span className="text-xl font-black italic uppercase tracking-[0.1em] text-slate-900">JobNexa</span>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] leading-loose max-w-[200px]">
-                        © 2024 CareerCurator Enterprise. Global placement & recruitment infrastructure.
+                        © 2024 JobNexa Enterprise. Global placement & recruitment infrastructure.
                     </p>
                 </div>
                 <div>
