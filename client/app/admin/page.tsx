@@ -1,8 +1,8 @@
 'use client';
 
-
 import { useApiQuery } from '@/lib/hooks';
-
+import Link from 'next/link';
+import { CONSTANTS } from '@/constants';
 
 export default function AdminDashboardPage() {
     const { data: apps, isLoading: appsLoading } = useApiQuery<any>(['admin', 'apps', 'summary'], '/admin/applications?limit=5');
@@ -17,172 +17,183 @@ export default function AdminDashboardPage() {
     const totalUsers = users?.count || 0;
 
     return (
-        <div className="flex flex-col min-h-screen bg-surface selection:bg-blue-500/10 selection:text-blue-600">
+        <div className="flex flex-col min-h-screen bg-[#fafbfc] selection:bg-blue-600/10 selection:text-blue-700 font-sans antialiased text-blue-900">
             {/* Header */}
-            <header className="h-24 px-12 flex items-center justify-between sticky top-0 bg-white/70 backdrop-blur-2xl z-40 border-b border-blue-100/50">
-                <div>
-                    <h2 className="text-2xl font-black tracking-tighter text-on-surface uppercase decoration-primary decoration-4">Administrative Overview</h2>
-                    <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest opacity-60">Monitoring Precision Professional Placement Systems</p>
+            <header className="h-20 px-6 md:px-12 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-40 border-b border-blue-50/50">
+                <div className="min-w-0">
+                    <h2 className="text-lg md:text-xl font-black tracking-tight text-blue-900 uppercase italic">Control Terminal</h2>
+                    <p className="text-blue-400 text-[9px] font-bold uppercase tracking-[0.3em] truncate opacity-80">Infrastructure & Registry Monitoring</p>
                 </div>
-                <div className="flex items-center space-x-6">
-                    <div className="flex items-center space-x-2 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100">
-                        <span className={`w-2 h-2 rounded-full animate-pulse shadow-lg ${health?.database?.status === 'Connected' ? 'bg-emerald-500 shadow-emerald-500/50' : 'bg-red-500 shadow-red-500/50'}`}></span>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700">
-                            {health?.database?.status === 'Connected' ? 'System Live' : 'Service Disrupted'}
+                <div className="flex items-center gap-4 shrink-0">
+                    <div className="flex items-center gap-2.5 bg-white px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-blue-100 shadow-sm">
+                        <span className={`w-2 h-2 rounded-full ${health?.database?.status === 'Connected' ? 'bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-red-500'}`}></span>
+                        <span className="text-[9px] font-black uppercase tracking-widest text-blue-900 hidden md:block">
+                            {health?.database?.status === 'Connected' ? 'Node Secured' : 'Node Disrupted'}
                         </span>
+                        <span className="text-[9px] font-black uppercase tracking-widest text-blue-900 md:hidden">Live</span>
                     </div>
                 </div>
             </header>
 
-            <div className="p-12 space-y-12 max-w-[1280px]">
-                {/* Bento Stats Grid */}
-                <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-6 md:p-12 space-y-12 max-w-[1400px]">
+                {/* Stats Grid */}
+                <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Summary Card 1: Applications */}
-                    <div className="bg-white p-8 rounded-2xl shadow-2xl shadow-blue-200/50 flex flex-col justify-between h-48 relative overflow-hidden group border border-blue-50">
-                        <div className="absolute -right-6 -top-6 opacity-5 group-hover:scale-110 transition-transform duration-700">
-                            <span className="material-symbols-outlined text-[12rem] font-bold">assignment</span>
+                    <div className="bg-white p-8 rounded-2xl border border-blue-50/50 shadow-2xl shadow-blue-900/[0.02] flex flex-col justify-between h-44 relative overflow-hidden group">
+                        <div className="absolute right-0 top-0 p-8 opacity-5 group-hover:scale-110 transition-transform duration-700">
+                            <span className="material-symbols-outlined text-8xl font-black">inventory_2</span>
                         </div>
                         <div className="relative z-10">
-                            <p className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Total Applications</p>
-                            <h3 className="text-6xl font-black tracking-tighter text-primary">{appCount.toString().padStart(2, '0')}</h3>
+                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] block mb-2">Talent Registry</span>
+                            <h3 className="text-5xl font-black tracking-tighter text-blue-900 italic leading-none">{appCount.toString().padStart(2, '0')}</h3>
                         </div>
-                        <div className="flex items-center text-blue-400 font-bold text-[10px] uppercase tracking-widest bg-blue-50 w-fit px-3 py-1 rounded-full border border-blue-100">
-                            <span className="material-symbols-outlined text-sm mr-1 font-bold">groups</span>
+                        <div className="mt-auto flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-blue-400">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-900"></span>
                             {totalUsers} Registered Users
                         </div>
                     </div>
 
                     {/* Summary Card 2: Unpaid */}
-                    <div className="bg-white p-8 rounded-2xl shadow-2xl shadow-blue-200/50 flex flex-col justify-between h-48 relative overflow-hidden group border border-blue-50">
-                        <div className="absolute -right-6 -top-6 opacity-5 group-hover:scale-110 transition-transform duration-700 text-error">
-                            <span className="material-symbols-outlined text-[12rem] font-bold">payments</span>
+                    <div className="bg-white p-8 rounded-2xl border border-blue-50/50 shadow-2xl shadow-blue-900/[0.02] flex flex-col justify-between h-44 relative overflow-hidden group">
+                        <div className="absolute right-0 top-0 p-8 opacity-5 group-hover:scale-110 transition-transform duration-700 text-red-500">
+                            <span className="material-symbols-outlined text-8xl font-black">payments</span>
                         </div>
                         <div className="relative z-10">
-                            <p className="text-error text-[10px] font-black uppercase tracking-[0.2em] mb-4">Unpaid Sums</p>
-                            <h3 className="text-6xl font-black tracking-tighter text-on-surface">{unpaidCount.toString().padStart(2, '0')}</h3>
+                            <span className="text-[10px] font-black text-red-400 uppercase tracking-[0.3em] block mb-2">Settlement Queue</span>
+                            <h3 className="text-5xl font-black tracking-tighter text-blue-900 italic leading-none">{unpaidCount.toString().padStart(2, '0')}</h3>
                         </div>
-                        <div className="flex items-center text-error font-bold text-[10px] uppercase tracking-widest bg-error/5 w-fit px-3 py-1 rounded-full border border-error/10">
-                            <span className="material-symbols-outlined text-sm mr-1 font-bold">warning</span>
-                            {unpaidCount > 0 ? 'Pending Collection' : 'Settled'}
+                        <div className="mt-auto flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-red-400">
+                            <span className={`w-1.5 h-1.5 rounded-full ${unpaidCount > 0 ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'}`}></span>
+                            {unpaidCount > 0 ? 'Action Required' : 'Ledger Clean'}
                         </div>
                     </div>
 
                     {/* Summary Card 3: Unverified */}
-                    <div className="bg-white p-8 rounded-2xl shadow-2xl shadow-blue-200/50 flex flex-col justify-between h-48 relative overflow-hidden group border border-blue-50">
-                        <div className="absolute -right-6 -top-6 opacity-5 group-hover:scale-110 transition-transform duration-700 text-tertiary">
-                            <span className="material-symbols-outlined text-[12rem] font-bold">verified_user</span>
+                    <div className="bg-white p-8 rounded-2xl border border-blue-50/50 shadow-2xl shadow-blue-900/[0.02] flex flex-col justify-between h-44 relative overflow-hidden group">
+                        <div className="absolute right-0 top-0 p-8 opacity-5 group-hover:scale-110 transition-transform duration-700 text-blue-500">
+                            <span className="material-symbols-outlined text-8xl font-black">gavel</span>
                         </div>
                         <div className="relative z-10">
-                            <p className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Pending Proofs</p>
-                            <h3 className="text-6xl font-black tracking-tighter text-on-surface">{unverifiedCount.toString().padStart(2, '0')}</h3>
+                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] block mb-2">Audit Queue</span>
+                            <h3 className="text-5xl font-black tracking-tighter text-blue-900 italic leading-none">{unverifiedCount.toString().padStart(2, '0')}</h3>
                         </div>
-                        <div className="flex items-center text-blue-500 font-bold text-[10px] uppercase tracking-widest bg-blue-50 w-fit px-3 py-1 rounded-full border border-blue-100">
-                            <span className="material-symbols-outlined text-sm mr-1 font-bold">hourglass_empty</span>
-                            Audit Queue
+                        <div className="mt-auto flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-blue-400">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                            Pending Verification
                         </div>
                     </div>
                 </section>
 
-                {/* Operational Insight Layer */}
-                <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Operations Layer */}
+                <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* System Health Widget */}
-                    <div className="lg:col-span-4 bg-blue-900 text-white rounded-2xl p-10 shadow-2xl shadow-blue-300 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <span className="material-symbols-outlined text-9xl font-bold">health_and_safety</span>
-                        </div>
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] mb-10 border-b border-white/10 pb-6 flex items-center text-emerald-400">
-                            <span className="material-symbols-outlined mr-3 text-2xl font-bold">shield_with_heart</span>
-                            System Health Core
+                    <div className="lg:col-span-4 bg-white rounded-2xl border border-blue-50/50 p-8 shadow-2xl shadow-blue-900/[0.02]">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900 mb-10 flex items-center gap-3">
+                            <span className="material-symbols-outlined text-xl text-emerald-500">health_and_safety</span>
+                            Health Matrix
                         </h4>
-                        <div className="space-y-10 relative z-10">
-                            {/* CPU/Latency */}
-                            <div className="space-y-3">
+                        
+                        <div className="space-y-12">
+                            {/* Sync Status */}
+                            <div className="space-y-4">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Database Sync</span>
-                                    <span className={`text-xs font-black uppercase tracking-tighter ${health?.database?.status === 'Connected' ? 'text-emerald-400' : 'text-red-400'}`}>
-                                        {health?.database?.status === 'Connected' ? 'Stable' : 'Offline'}
+                                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Database Synchronization</span>
+                                    <span className={`text-[10px] font-black uppercase italic ${health?.database?.status === 'Connected' ? 'text-emerald-500' : 'text-red-500'}`}>
+                                        {health?.database?.status === 'Connected' ? 'Optimized' : 'Desynced'}
                                     </span>
                                 </div>
-                                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className={`h-full bg-emerald-500 shadow-lg shadow-emerald-500/50 ${health?.database?.status === 'Connected' ? 'w-full' : 'w-0'}`}></div>
+                                <div className="h-1 w-full bg-blue-50 rounded-full overflow-hidden">
+                                    <div className={`h-full bg-emerald-500 transition-all duration-700 ${health?.database?.status === 'Connected' ? 'w-full' : 'w-0'}`}></div>
                                 </div>
                             </div>
+
                             {/* Memory */}
-                            <div className="space-y-3">
+                            <div className="space-y-4">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Memory Matrix</span>
-                                    <span className="text-xs font-black text-amber-400 uppercase tracking-tighter">
-                                        {health?.memoryUsage ? `${health.memoryUsage.heapUsedMb}/${health.memoryUsage.heapTotalMb} MB` : 'Scanning...'}
+                                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Memory Distribution</span>
+                                    <span className="text-[10px] font-black uppercase text-blue-900 italic">
+                                        {health?.memoryUsage ? `${(health.memoryUsage.heapUsedMb / health.memoryUsage.heapTotalMb * 100).toFixed(0)}% Utilized` : 'Cold'}
                                     </span>
                                 </div>
-                                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-amber-500 shadow-lg shadow-amber-500/50 transition-all duration-1000"
+                                <div className="h-1 w-full bg-blue-50 rounded-full overflow-hidden">
+                                    <div 
+                                        className="h-full bg-blue-900 transition-all duration-1000" 
                                         style={{ width: health?.memoryUsage ? `${(health.memoryUsage.heapUsedMb / health.memoryUsage.heapTotalMb * 100).toFixed(0)}%` : '0%' }}
                                     ></div>
                                 </div>
                             </div>
+
                             {/* Uptime */}
-                            <div className="space-y-3">
+                            <div className="space-y-4">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Logic Availability</span>
-                                    <span className="text-xs font-black text-emerald-400 uppercase tracking-tighter">
-                                        {health?.serverUptime ? `${(health.serverUptime / 3600).toFixed(1)} Hours` : 'Online'}
+                                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Registry Uptime</span>
+                                    <span className="text-[10px] font-black uppercase text-blue-900 italic">
+                                        {health?.serverUptime ? `${(health.serverUptime / 3600).toFixed(1)}h Active` : 'Online'}
                                     </span>
                                 </div>
-                                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-500 w-full shadow-lg shadow-emerald-500/50"></div>
+                                <div className="h-1 w-full bg-blue-50 rounded-full overflow-hidden">
+                                    <div className="h-full bg-blue-300 w-full"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Recent Activity Feed */}
-                    <div className="lg:col-span-8 bg-white rounded-2xl p-10 shadow-2xl shadow-blue-200/50 border border-blue-50">
+                    {/* Operational Logs */}
+                    <div className="lg:col-span-8 bg-white rounded-2xl border border-blue-50/50 p-8 shadow-2xl shadow-blue-900/[0.02]">
                         <div className="flex items-center justify-between mb-10">
-                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface flex items-center">
-                                <span className="material-symbols-outlined mr-3 text-primary font-bold">history</span>
-                                Real-time Operational Logs
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900 flex items-center gap-3">
+                                <span className="material-symbols-outlined text-xl text-blue-400">monitoring</span>
+                                Real-time Logic Stream
                             </h4>
                         </div>
-                        <div className="space-y-0 relative min-h-[200px]">
+                        
+                        <div className="space-y-1 relative">
                             {apps?.rows?.length > 0 ? (
-                                <>
-                                    <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-blue-100"></div>
+                                <div className="relative">
+                                    <div className="absolute left-1.5 top-0 bottom-0 w-px bg-blue-50"></div>
                                     {apps.rows.map((app: any, i: number) => (
-                                        <div key={app.id} className="relative pl-12 pb-10 last:pb-0">
-                                            <div className={`absolute left-1.5 top-0 w-3.5 h-3.5 ${i === 0 ? 'bg-primary' : 'bg-blue-200'} rounded-full border-4 border-white z-10 shadow-sm`}></div>
-                                            <div className="flex items-center justify-between mb-1">
-                                                <p className="text-xs font-black text-on-surface uppercase tracking-tight">Application Protocol</p>
-                                                <span className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">
+                                        <div key={app.id} className="relative pl-10 pb-10 last:pb-0 group">
+                                            <div className="absolute left-0 top-0 w-3 h-3 rounded-full border-2 border-white bg-blue-100 group-hover:bg-blue-900 transition-colors z-10 shadow-sm"></div>
+                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
+                                                <p className="text-[11px] font-black text-blue-900 uppercase tracking-tight">Application protocol initialized</p>
+                                                <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded">
                                                     {new Date(app.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </span>
                                             </div>
-                                            <p className="text-xs text-on-surface-variant font-medium leading-relaxed italic opacity-80">
-                                                Subscriber <span className="text-primary font-bold not-italic font-sans text-[10px]">{app.User?.fullName}</span> initiated placement sequence for {app.JobListing?.title}.
+                                            <p className="text-[12px] text-blue-500 font-medium leading-relaxed max-w-2xl">
+                                                User <span className="text-blue-900 font-bold italic">{app.User?.fullName}</span> has submitted a new placement request for <span className="text-blue-900 font-bold underline decoration-blue-100 underline-offset-4">{app.JobListing?.title}</span>.
                                             </p>
                                         </div>
                                     ))}
-                                </>
+                                </div>
                             ) : (
-                                <div className="flex flex-col items-center justify-center p-12 text-center">
-                                    <span className="material-symbols-outlined text-4xl text-blue-200 mb-4 font-bold">inbox</span>
-                                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">No Recent Log Entries</p>
+                                <div className="py-20 text-center flex flex-col items-center">
+                                    <span className="material-symbols-outlined text-4xl text-blue-100 mb-4">stream</span>
+                                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Stream Idle • No Active Sequence</p>
                                 </div>
                             )}
                         </div>
                     </div>
                 </section>
 
-                {/* Featured Dashboard Spot */}
-                <section className="bg-blue-900 overflow-hidden rounded-3xl relative min-h-[320px] flex items-center shadow-2xl shadow-blue-300">
-                    <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1551288049-bbbda5366392?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"></div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-900/90 to-transparent"></div>
-                    <div className="relative z-10 px-16 py-12 max-w-[672px]">
-
-                        <p className="text-blue-400 text-sm mb-10 leading-relaxed font-medium italic">
-                            There are currently {appCount} applications in the pipeline across {totalUsers} registered candidates. {unverifiedCount > 0 ? `Attention required for ${unverifiedCount} pending verifications.` : 'All payment queues are currently clear.'}
-                        </p>
+                {/* Support Matrix Banner */}
+                <section className="bg-blue-900 p-10 md:p-16 rounded-3xl relative overflow-hidden shadow-2xl shadow-blue-900/10">
+                    <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-12 transform translate-x-32"></div>
+                    <div className="relative z-10 max-w-2xl">
+                        <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em] block mb-6">Executive Summary</span>
+                        <h4 className="text-2xl md:text-3xl font-black text-white italic tracking-tighter mb-8 leading-tight">
+                            Infrastructure maintaining {appCount} high-fidelity placement sequences across {totalUsers} registered candidates.
+                        </h4>
+                        <div className="flex flex-wrap gap-8">
+                            <div className="space-y-1">
+                                <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Critical Action Items</p>
+                                <p className="text-sm font-black text-white uppercase tracking-widest">{unverifiedCount > 0 ? `${unverifiedCount} UNVERIFIED` : 'ALL CLEAR'}</p>
+                            </div>
+                            <div className="space-y-1">
+                                <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Finance Integrity</p>
+                                <p className="text-sm font-black text-white uppercase tracking-widest">{unpaidCount > 0 ? `${unpaidCount} PENDING` : 'SETTLED'}</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
