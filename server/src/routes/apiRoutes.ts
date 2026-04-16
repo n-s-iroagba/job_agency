@@ -104,11 +104,6 @@ router.post('/admin/jobs', ...adminMW, jobController.createJob.bind(jobControlle
 router.put('/admin/jobs/:id', ...adminMW, jobController.updateJob.bind(jobController));
 router.delete('/admin/jobs/:id', ...adminMW, jobController.deleteJob.bind(jobController));
 
-// STK-ADM-STAGE-001..005: stage management
-router.get('/admin/jobs/:id/stages', ...adminMW, jobController.getJobStages.bind(jobController));
-router.post('/admin/jobs/:id/stages', ...adminMW, jobController.createJobStage.bind(jobController));
-router.put('/admin/jobs/stages/:stageId', ...adminMW, jobController.updateJobStage.bind(jobController));
-router.delete('/admin/jobs/stages/:stageId', ...adminMW, jobController.deleteJobStage.bind(jobController));
 
 // STK-ADM-BANK-001..004
 router.get('/admin/finance/configs', ...adminMW, adminController.getFinancialConfigs.bind(adminController));
