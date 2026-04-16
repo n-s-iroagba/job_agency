@@ -16,16 +16,16 @@ export function PublicFooter() {
                 <div>
                     <h6 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.3em] mb-8">Channel Information</h6>
                     <ul className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] space-y-4">
-                        <li className="hover:text-blue-900 transition-colors cursor-pointer">Inquiries: info@jobnexe.com</li>
-                        <li className="hover:text-blue-900 transition-colors cursor-pointer">Support: help@jobnexe.com</li>
+                        <li><Link href={CONSTANTS.ROUTES.ABOUT} className="hover:text-blue-900 transition-colors">About JobNexa</Link></li>
+                        <li><Link href={CONSTANTS.ROUTES.SUPPORT} className="hover:text-blue-900 transition-colors">Support Portal</Link></li>
                     </ul>
                 </div>
                 <div>
                     <h6 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.3em] mb-8">Registry & Terms</h6>
                     <ul className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] space-y-4">
                         <li><Link href={CONSTANTS.ROUTES.PRIVACY} className="hover:text-blue-900 transition-colors">Data Privacy Policy</Link></li>
-                        <li><Link href="#" className="hover:text-blue-900 transition-colors">Service Agreement</Link></li>
-                        <li><Link href="#" className="hover:text-blue-900 transition-colors">Compliance Standards</Link></li>
+                        <li><Link href={CONSTANTS.ROUTES.TERMS} className="hover:text-blue-900 transition-colors">Service Agreement</Link></li>
+                        <li><Link href={CONSTANTS.ROUTES.COMPLIANCE} className="hover:text-blue-900 transition-colors">Compliance Standards</Link></li>
                     </ul>
                 </div>
                 <div>
