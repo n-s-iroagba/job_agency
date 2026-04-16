@@ -4,30 +4,7 @@ import bcrypt from 'bcrypt';
 
 async function seed() {
     await sequelize.sync({ force: true });
-    console.log('Database synced. Seeding data...');
 
-    const passwordHash = await bcrypt.hash('AdminPass1!', 12);
-
-    // Seed Admin User
-    const admin = await User.create({
-        fullName: 'System Admin',
-        email: 'admin@jobagency.com',
-        passwordHash,
-        role: CONSTANTS.ROLES.ADMIN,
-        isVerified: true,
-    });
-
-    // Seed Applicant Users (Simulating capacity sample)
-    const applicants = [];
-    for (let i = 1; i <= 5; i++) {
-        applicants.push(await User.create({
-            fullName: `Applicant ${i}`,
-            email: `applicant${i}@jobagency.com`,
-            passwordHash: await bcrypt.hash('Password1!', 12),
-            role: CONSTANTS.ROLES.APPLICANT,
-            isVerified: true,
-        }));
-    }
 
     // Seed Bank Accounts
     await BankAccount.create({
