@@ -64,5 +64,10 @@ export const CONSTANTS = {
     FILE_CONSTRAINTS: {
         CV_LIMIT_MB: 5,
         PAYMENT_LIMIT_MB: 10,
+    },
+
+    BANK_ACCOUNT_TYPES: {
+        OPEN_BENEFICIARY: 'Open Beneficiary',
+        NORMAL: 'Normal',
     }
 };

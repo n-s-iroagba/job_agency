@@ -15,7 +15,7 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
     const router = useRouter();
     const [bankName, setBankName] = useState(initialData?.bankName || '');
     const [accountNumber, setAccountNumber] = useState(initialData?.accountNumber || '');
-    const [accountType, setAccountType] = useState(initialData?.accountType || 'normal');
+    const [accountType, setAccountType] = useState(initialData?.accountType || CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL);
     const [routingCode, setRoutingCode] = useState(initialData?.routingCode || '');
     const [currency, setCurrency] = useState(initialData?.currency || 'USD');
 
@@ -95,8 +95,8 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
                                 value={accountType}
                                 onChange={(e) => setAccountType(e.target.value)}
                             >
-                                <option value="normal">Normal</option>
-                                <option value="open_beneficiary">Open Beneficiary</option>
+                                <option value={CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL}>Standard / Normal</option>
+                                <option value={CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY}>Open Beneficiary</option>
                             </select>
                         </div>
                     </div>

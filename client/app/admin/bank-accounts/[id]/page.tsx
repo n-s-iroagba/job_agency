@@ -45,7 +45,7 @@ export default function BankAccountViewPage() {
                                 {bankAccount?.currency}
                             </span>
                             <span className="px-3 py-1 bg-blue-100 text-blue-500 text-[9px] font-bold uppercase tracking-widest rounded-lg border border-blue-200">
-                                {bankAccount?.accountType === 'open_beneficiary' ? 'Open Beneficiary' : 'Standard Account'}
+                                {bankAccount?.accountType === CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY ? 'Open Beneficiary' : 'Standard Account'}
                             </span>
                         </div>
                     </div>
