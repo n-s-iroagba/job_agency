@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+'use client'
+import { useState } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import { JobCondition, JobCategory } from '@/types/models';
 import Link from 'next/link';
