@@ -84,8 +84,8 @@ export class ApplicationService {
             const job = await jobRepository.findById(jobId, t);
             if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-            // Clone template stages to application instance
-            const templateStages = await jobStageRepository.findByJobId(jobId, t);
+            // Clone template stages from job's stages JSON array
+            const templateStages = job.stages || [];
             
             const newApp = await applicationRepository.create({
                 userId,
@@ -97,23 +97,23 @@ export class ApplicationService {
 
             let firstStageId: number | null = null;
 
-            if (templateStages.rows.length > 0) {
-                for (const stage of templateStages.rows) {
+            if (templateStages.length > 0) {
+                for (const stage of templateStages) {
                     const clonedStage = await jobStageRepository.create({
                         applicationId: newApp.id,
                         name: stage.name,
                         description: stage.description,
-                        orderPosition: stage.orderPosition,
-                        requiresPayment: stage.requiresPayment,
-                        amount: stage.amount,
-                        currency: stage.currency,
+                        orderPosition: stage.orderPosition || stage.order,
+                        requiresPayment: stage.requiresPayment ?? stage.pay,
+                        amount: stage.amount || stage.amt,
+                        currency: stage.currency || 'USD',
                         instructions: stage.instructions,
                         deadlineDays: stage.deadlineDays,
-                        notifyEmail: stage.notifyEmail,
-                        notifyPush: stage.notifyPush
+                        notifyEmail: stage.notifyEmail ?? true,
+                        notifyPush: stage.notifyPush ?? true
                     }, t);
                     
-                    if (stage.orderPosition === 1) {
+                    if (clonedStage.orderPosition === 1) {
                         firstStageId = clonedStage.id;
                     }
                 }

@@ -3,14 +3,13 @@ import { sequelize } from '../config/database';
 
 export class JobStage extends Model {
     declare id: number;
-    declare applicationId: number | null;
-    declare jobId: number | null;
+    declare applicationId: number;
     declare name: string;
-    declare description: string;
+    declare description: string | null;
     declare orderPosition: number;
     declare requiresPayment: boolean;
     declare amount: number | null;
-    declare currency: string | null;
+    declare currency: string;
     declare instructions: string | null;
     declare deadlineDays: number | null;
     declare notifyEmail: boolean;
@@ -27,11 +26,7 @@ JobStage.init({
     },
     applicationId: {
         type: DataTypes.INTEGER,
-        allowNull: true,
-    },
-    jobId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
     },
     name: {
         type: DataTypes.STRING,
@@ -39,7 +34,7 @@ JobStage.init({
     },
     description: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     orderPosition: {
         type: DataTypes.INTEGER,
@@ -55,7 +50,7 @@ JobStage.init({
     },
     currency: {
         type: DataTypes.STRING,
-        allowNull: true,
+        defaultValue: 'USD',
     },
     instructions: {
         type: DataTypes.TEXT,

@@ -3,14 +3,6 @@ import { JobStage } from '../models';
 
 export class JobStageRepository {
 
-    public async findByJobId(jobId: number, transaction?: Transaction): Promise<{ rows: JobStage[], count: number }> {
-        return JobStage.findAndCountAll({
-            where: { jobId, applicationId: null },
-            order: [['orderPosition', 'ASC']],
-            transaction
-        });
-    }
-
     public async findByApplicationId(applicationId: number, transaction?: Transaction): Promise<{ rows: JobStage[], count: number }> {
         return JobStage.findAndCountAll({
             where: { applicationId },

@@ -12,6 +12,7 @@ export class JobListing extends Model {
     declare company: string;
     declare visaSponsorship: boolean;
     declare isActive: boolean;
+    declare stages: any[];
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 
@@ -28,6 +29,10 @@ JobListing.init({
     },
     conditionIds: {
         type: DataTypes.JSON
+    },
+    stages: {
+        type: DataTypes.JSON,
+        allowNull: true,
     },
     company: {
         type: DataTypes.STRING,
