@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+'use client'
+import { useState, useEffect } from 'react';
 import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
 import { useApiQuery } from '@/lib/hooks';
@@ -77,10 +78,10 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-3 p-2 bg-slate-50 rounded-2xl border border-slate-100 shadow-sm">
             <div className="flex-1 flex items-center px-4">
               <span className="material-symbols-outlined text-slate-400 mr-3">search</span>
-              <input 
-                className="w-full bg-transparent border-none focus:ring-0 text-sm font-bold uppercase tracking-widest py-3 placeholder:text-slate-300 outline-none" 
-                placeholder="Job title or keywords" 
-                type="text" 
+              <input
+                className="w-full bg-transparent border-none focus:ring-0 text-sm font-bold uppercase tracking-widest py-3 placeholder:text-slate-300 outline-none"
+                placeholder="Job title or keywords"
+                type="text"
               />
             </div>
             <button className="bg-slate-900 text-white px-10 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-95">
@@ -113,22 +114,22 @@ export default function HomePage() {
               </div>
             ) : (
               jobList.slice(0, 6).map((job: JobListing) => (
-                <Link 
-                  key={job.id} 
+                <Link
+                  key={job.id}
                   href={`/jobs/${job.id}`}
                   className="bg-white p-10 rounded-[2rem] border border-slate-100 hover:border-slate-900 hover:shadow-2xl hover:shadow-slate-900/5 transition-all duration-500 flex flex-col justify-between h-full group relative overflow-hidden"
                 >
                   <div className="relative z-10">
                     <div className="flex justify-between items-start mb-10">
-                       <span className="px-3 py-1 bg-slate-50 rounded text-[9px] font-bold text-slate-400 uppercase tracking-widest group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                      <span className="px-3 py-1 bg-slate-50 rounded text-[9px] font-bold text-slate-400 uppercase tracking-widest group-hover:bg-slate-900 group-hover:text-white transition-colors">
                         {job.JobCategory?.name || 'Vetted'}
-                       </span>
-                       {new Date(job.createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000 && (
-                          <span className="flex items-center gap-2">
-                            <span className="w-1 h-1 rounded-full bg-slate-900 animate-pulse"></span>
-                            <span className="text-[8px] font-black uppercase tracking-widest text-slate-900">New</span>
-                          </span>
-                       )}
+                      </span>
+                      {new Date(job.createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000 && (
+                        <span className="flex items-center gap-2">
+                          <span className="w-1 h-1 rounded-full bg-slate-900 animate-pulse"></span>
+                          <span className="text-[8px] font-black uppercase tracking-widest text-slate-900">New</span>
+                        </span>
+                      )}
                     </div>
                     <h3 className="text-2xl font-bold text-slate-900 mb-2 tracking-tight leading-tight group-hover:translate-x-1 transition-transform">{job.title}</h3>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-10">
@@ -152,7 +153,7 @@ export default function HomePage() {
             <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full mix-blend-overlay filter blur-3xl"></div>
             <div className="absolute bottom-10 right-10 w-96 h-96 bg-slate-500 rounded-full mix-blend-overlay filter blur-3xl"></div>
           </div>
-          
+
           <div className="max-w-[1280px] mx-auto px-8 relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-20">
               <div className="flex-1">
@@ -164,7 +165,7 @@ export default function HomePage() {
                   Our physical presence in key economic zones ensures localized expertise and cultural alignment for every placement.
                 </p>
               </div>
-              
+
               <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-10 w-full">
                 <div className="p-10 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 group hover:bg-white/10 transition-all">
                   <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-10 block">Region 01</span>
@@ -172,7 +173,7 @@ export default function HomePage() {
                   <p className="text-sm text-slate-400 leading-relaxed mb-6 font-medium">100 Mount St, North Sydney NSW 2060, Australia</p>
                   <div className="w-10 h-1 bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                 </div>
-                
+
                 <div className="p-10 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 group hover:bg-white/10 transition-all">
                   <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-10 block">Region 02</span>
                   <h4 className="text-2xl font-bold mb-4">United States</h4>
@@ -205,7 +206,7 @@ export default function HomePage() {
 
             <div className="flex justify-center gap-3 mt-16 relative z-10">
               {TESTIMONIALS.map((_, idx) => (
-                <button 
+                <button
                   key={idx}
                   onClick={() => setCurrentSlide(idx)}
                   className={`h-1.5 transition-all duration-500 rounded-full ${idx === currentSlide ? 'w-10 bg-slate-900' : 'w-4 bg-slate-200'}`}
@@ -213,13 +214,13 @@ export default function HomePage() {
               ))}
             </div>
 
-            <button 
+            <button
               onClick={() => setCurrentSlide((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
               className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-900 transition-all z-20 hidden md:flex"
             >
               <span className="material-symbols-outlined font-bold">west</span>
             </button>
-            <button 
+            <button
               onClick={() => setCurrentSlide((prev) => (prev + 1) % TESTIMONIALS.length)}
               className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-900 transition-all z-20 hidden md:flex"
             >
@@ -231,14 +232,14 @@ export default function HomePage() {
         {/* CTA Section */}
         <section className="max-w-[1280px] mx-auto px-6 mb-24">
           <div className="bg-slate-50 rounded-[4rem] px-8 py-24 text-center border border-slate-100 flex flex-col items-center">
-             <div className="w-20 h-20 bg-white rounded-3xl shadow-xl shadow-slate-900/5 flex items-center justify-center mb-10 animate-bounce">
-                <span className="material-symbols-outlined text-4xl text-slate-900">verified_user</span>
-             </div>
-             <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-8 uppercase italic tracking-tighter">Ready for the Next Protocol?</h2>
-             <p className="text-slate-500 text-lg mb-12 max-w-sm mx-auto font-medium leading-relaxed">Join the registry and unlock access to hand-curated global opportunities.</p>
-             <Link href={CONSTANTS.ROUTES.REGISTER} className="bg-slate-900 text-white px-12 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.3em] shadow-2xl shadow-slate-900/30 hover:bg-slate-800 transition-all hover:scale-[1.02] active:scale-95">
-               Begin Enrollment
-             </Link>
+            <div className="w-20 h-20 bg-white rounded-3xl shadow-xl shadow-slate-900/5 flex items-center justify-center mb-10 animate-bounce">
+              <span className="material-symbols-outlined text-4xl text-slate-900">verified_user</span>
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-8 uppercase italic tracking-tighter">Ready for the Next Protocol?</h2>
+            <p className="text-slate-500 text-lg mb-12 max-w-sm mx-auto font-medium leading-relaxed">Join the registry and unlock access to hand-curated global opportunities.</p>
+            <Link href={CONSTANTS.ROUTES.REGISTER} className="bg-slate-900 text-white px-12 py-5 rounded-2xl text-xs font-black uppercase tracking-[0.3em] shadow-2xl shadow-slate-900/30 hover:bg-slate-800 transition-all hover:scale-[1.02] active:scale-95">
+              Begin Enrollment
+            </Link>
           </div>
         </section>
       </main>
