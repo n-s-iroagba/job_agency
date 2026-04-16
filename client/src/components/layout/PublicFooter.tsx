@@ -16,8 +16,8 @@ export function PublicFooter() {
                 <div>
                     <h6 className="text-[10px] font-bold text-slate-900 uppercase tracking-[0.3em] mb-8">Channel Information</h6>
                     <ul className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] space-y-4">
-                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Inquiries: general@curator.io</li>
-                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Support: help@curator.io</li>
+                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Inquiries: info@jobnexe.com</li>
+                        <li className="hover:text-slate-900 transition-colors cursor-pointer">Support: help@jobnexe.com</li>
                     </ul>
                 </div>
                 <div>
