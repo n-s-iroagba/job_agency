@@ -49,6 +49,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
             setDescription(initialData.description);
             setRequirements(initialData.requirements || '');
             setIsActive(initialData.isActive);
+            setCompany(initialData.company || '');
+            setVisaSponsorship(initialData.visaSponsorship || false);
             setSelectedBenefits(initialData.JobBenefits?.map(b => b.id) || []);
             setSelectedConditions(initialData.JobConditions?.map(c => c.id) || []);
         }
@@ -76,6 +78,8 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                 description,
                 requirements,
                 isActive,
+                company,
+                visaSponsorship,
                 benefitsIds: selectedBenefits,
                 conditionsIds: selectedConditions
             });
@@ -143,15 +147,16 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                         />
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Visa Sponsorship</label>
+                    <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div>
+                            <label className="text-[10px] font-bold text-slate-900 uppercase tracking-widest block">Visa Sponsorship</label>
+                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Offered for this position</p>
+                        </div>
                         <input
-                            className=" py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-900 placeholder:text-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-900/5 focus:border-slate-900 transition-all outline-none"
-                            placeholder="Visa Sponsorship"
+                            className="w-5 h-5 accent-slate-900 cursor-pointer"
                             type="checkbox"
                             checked={visaSponsorship}
                             onChange={(e) => setVisaSponsorship(e.target.checked)}
-
                         />
                     </div>
 
@@ -218,7 +223,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                             }`}
                                     >
                                         {benefit.benefitType}
-                                        <br />
+                                        -
                                         {benefit.value}
                                     </button>
                                 );
