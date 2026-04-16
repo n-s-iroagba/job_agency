@@ -1,6 +1,6 @@
 export const CONSTANTS = {
     APP_NAME: 'Job Agency',
-    API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
+    API_BASE_URL: `${process.env.NEXT_PUBLIC_API_URL}/api` || 'http://localhost:5000/api',
 
     ROLES: {
         ADMIN: 'ADMIN',
