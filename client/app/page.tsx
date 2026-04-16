@@ -42,7 +42,7 @@ const TESTIMONIALS = [
 ];
 
 export default function HomePage() {
-  const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(['jobs', 'public'], '/jobs');
+  const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(['jobs', 'public'], '/api/jobs');
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const jobList = jobs?.rows || [];
