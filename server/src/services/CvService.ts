@@ -14,8 +14,8 @@ export class CvService {
         const user = await userRepository.findById(userId);
         if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-        const [, updatedUsers] = await userRepository.update(userId, { cvUrl });
-        return updatedUsers[0];
+        await userRepository.update(userId, { cvUrl });
+        return userRepository.findById(userId);
     }
 
     // Maps to STK-APP-CV-001 (Read)

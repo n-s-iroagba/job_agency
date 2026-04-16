@@ -1,9 +1,14 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
+import { useSearchParams, useRouter } from 'next/navigation';
 
-export default function ProfilePage() {
+function ProfileContent() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectPath = searchParams.get('redirect');
     const { data, isLoading, refetch } = useApiQuery<any>(['auth', 'me'], '/auth/me');
+    const [successMessage, setSuccessMessage] = useState(false);
     
     const [formData, setFormData] = useState({
         fullName: '',
@@ -41,6 +46,12 @@ export default function ProfilePage() {
             refetch();
             // Update local storage for sidebar/nav consistency
             localStorage.setItem('user', JSON.stringify(response.user));
+            setSuccessMessage(true);
+            setTimeout(() => setSuccessMessage(false), 3000);
+            
+            if (redirectPath) {
+                setTimeout(() => router.push(redirectPath), 1000);
+            }
         }
     });
 
@@ -91,6 +102,13 @@ export default function ProfilePage() {
                 <p className="text-slate-500 text-sm mt-2 font-medium">Manage your personal information and biodata for applications.</p>
             </header>
 
+            {successMessage && (
+                <div className="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
+                    <span className="material-symbols-outlined text-emerald-500">check_circle</span>
+                    <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">Profile Synced Successfully {redirectPath ? '— Redirecting...' : ''}</p>
+                </div>
+            )}
+
             <div className="space-y-12">
                 {/* Identity Section */}
                 <section className="bg-white p-10 rounded-3xl border border-slate-100 shadow-sm space-y-8">
@@ -104,7 +122,7 @@ export default function ProfilePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="flex items-center gap-6 md:col-span-2 pb-6 border-b border-slate-50">
                             <div className="w-20 h-20 rounded-2xl bg-slate-900 flex items-center justify-center text-white text-3xl font-bold italic">
-                                {formData.fullName[0] || user.email?.[0] || '?'}
+                                {formData.fullName?.[0] || user.email?.[0] || '?'}
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-slate-900">{formData.fullName || 'New Applicant'}</h3>
@@ -167,5 +185,13 @@ export default function ProfilePage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function ProfilePage() {
+    return (
+        <Suspense fallback={<div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Module...</div>}>
+            <ProfileContent />
+        </Suspense>
     );
 }

@@ -191,7 +191,12 @@ export class AuthService {
     }
 
     public async updateProfile(userId: number, data: any): Promise<any> {
-        return userRepository.update(userId, data);
+        await userRepository.update(userId, data);
+        const user = await userRepository.findById(userId);
+        if (!user) {
+            throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND);
+        }
+        return user;
     }
 
     private getPremiumTemplate(title: string, message: string, buttonLabel: string, buttonUrl: string): string {

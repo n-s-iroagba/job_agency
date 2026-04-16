@@ -43,6 +43,10 @@ Application.belongsTo(User, { foreignKey: 'userId' });
 JobListing.hasMany(Application, { foreignKey: 'jobId' });
 Application.belongsTo(JobListing, { foreignKey: 'jobId' });
 
+// JobListing <-> JobStage (Template Stages)
+JobListing.hasMany(JobStage, { foreignKey: 'jobId', as: 'TemplateStages' });
+JobStage.belongsTo(JobListing, { foreignKey: 'jobId' });
+
 // Application <-> Payment
 Application.hasMany(Payment, { foreignKey: 'applicationId' });
 Payment.belongsTo(Application, { foreignKey: 'applicationId' });

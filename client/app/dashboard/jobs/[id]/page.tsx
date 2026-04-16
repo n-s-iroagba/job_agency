@@ -12,6 +12,7 @@ export default function JobDetailPage() {
     const router = useRouter();
 
     const { data: job, isLoading } = useApiQuery<any>(['job', jobId], `/jobs/${jobId}`);
+    const { data: userData } = useApiQuery<any>(['auth', 'me'], '/auth/me');
 
     const applyMutation = useApiMutation('post', '/applications', {
         onSuccess: (data: any) => {
@@ -20,6 +21,23 @@ export default function JobDetailPage() {
     });
 
     const handleApply = () => {
+        const user = userData?.user;
+        if (!user) return;
+
+        // Pre-flight validation: Check if biodata is complete
+        const isBiodataComplete = user.fullName && user.phoneNumber && user.nationality;
+        
+        if (!isBiodataComplete) {
+            router.push(`${CONSTANTS.ROUTES.PROFILE}?redirect=/dashboard/jobs/${jobId}`);
+            return;
+        }
+
+        // Pre-flight validation: Check if CV is uploaded
+        if (!user.cvUrl) {
+            router.push(`${CONSTANTS.ROUTES.CV}?redirect=/dashboard/jobs/${jobId}`);
+            return;
+        }
+
         applyMutation.mutate({ jobId: parseInt(jobId, 10) });
     };
 

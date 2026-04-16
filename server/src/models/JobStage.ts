@@ -3,7 +3,8 @@ import { sequelize } from '../config/database';
 
 export class JobStage extends Model {
     declare id: number;
-    declare applicationId: number;
+    declare applicationId: number | null;
+    declare jobId: number | null;
     declare name: string;
     declare description: string;
     declare orderPosition: number;
@@ -26,7 +27,11 @@ JobStage.init({
     },
     applicationId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+    },
+    jobId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
     },
     name: {
         type: DataTypes.STRING,

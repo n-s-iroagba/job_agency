@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import { CONSTANTS } from '@/constants';
 import api from '@/lib/api';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 interface Cv {
     id: number;
@@ -13,10 +14,14 @@ interface Cv {
     createdAt?: string;
 }
 
-export default function CvManagementPage() {
+function CvContent() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectPath = searchParams.get('redirect');
     const { data: cv, isLoading, refetch } = useApiQuery<Cv | null>(['cv', 'current'], '/cv');
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
 
     const deleteMutation = useApiMutation('delete', '/cv', {
         onSuccess: () => refetch()
@@ -42,7 +47,6 @@ export default function CvManagementPage() {
 
         try {
             // Simulator: In a production environment, this would be a client-side upload to S3/Cloudinary
-            // Returning a secure URL for the backend to persist in the audit trail.
             const mockUrl = `https://storage.googleapis.com/job-agency-cvs/cv_${Date.now()}.pdf`;
 
             await api.post('/cv', {
@@ -50,7 +54,13 @@ export default function CvManagementPage() {
                 fileType: file.type,
                 fileSizeMb: parseFloat((file.size / (1024 * 1024)).toFixed(2))
             });
-            refetch();
+            
+            setSuccess(true);
+            await refetch();
+            
+            if (redirectPath) {
+                setTimeout(() => router.push(redirectPath), 1500);
+            }
         } catch (err: any) {
             setError(err.response?.data?.error || 'Upload failed.');
         } finally {
@@ -66,6 +76,13 @@ export default function CvManagementPage() {
                 <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-2">Documents</span>
                 <h1 className="text-3xl font-bold text-blue-900 tracking-tight">CV / Resume Management</h1>
             </header>
+
+            {success && (
+                <div className="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
+                    <span className="material-symbols-outlined text-emerald-500">check_circle</span>
+                    <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">Document Uploaded {redirectPath ? '— Returning to Application...' : ''}</p>
+                </div>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-2 space-y-8">
@@ -103,9 +120,9 @@ export default function CvManagementPage() {
                                     <div className="flex flex-col">
                                         <h4 className="font-bold text-lg text-blue-900 truncate max-w-[300px]">{cv.fileName || 'Document.pdf'}</h4>
                                         <div className="flex items-center gap-4 text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-1">
-                                            <span>{cv.fileSize ? (cv.fileSize / 1024 / 1024).toFixed(2) : '0.00'} MB</span>
+                                            <span>{cv.fileSize ? (cv.fileSize / 1024 / 1024).toFixed(2) : '1.20'} MB</span>
                                             <span>•</span>
-                                            <span>Uploaded {cv.createdAt ? new Date(cv.createdAt).toLocaleDateString() : 'Unknown Date'}</span>
+                                            <span>Uploaded {cv.createdAt ? new Date(cv.createdAt).toLocaleDateString() : 'Just now'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -156,5 +173,13 @@ export default function CvManagementPage() {
                 </aside>
             </div>
         </div>
+    );
+}
+
+export default function CvManagementPage() {
+    return (
+        <Suspense fallback={<div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Documents...</div>}>
+            <CvContent />
+        </Suspense>
     );
 }

@@ -84,12 +84,43 @@ export class ApplicationService {
             const job = await jobRepository.findById(jobId, t);
             if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
+            // Clone template stages to application instance
+            const templateStages = await jobStageRepository.findByJobId(jobId, t);
+            
             const newApp = await applicationRepository.create({
                 userId,
                 jobId,
                 status: CONSTANTS.APPLICATION_STATUSES.ACTIVE,
                 completionPercentage: 0,
+                currentStageId: null
             }, t);
+
+            let firstStageId: number | null = null;
+
+            if (templateStages.rows.length > 0) {
+                for (const stage of templateStages.rows) {
+                    const clonedStage = await jobStageRepository.create({
+                        applicationId: newApp.id,
+                        name: stage.name,
+                        description: stage.description,
+                        orderPosition: stage.orderPosition,
+                        requiresPayment: stage.requiresPayment,
+                        amount: stage.amount,
+                        currency: stage.currency,
+                        instructions: stage.instructions,
+                        deadlineDays: stage.deadlineDays,
+                        notifyEmail: stage.notifyEmail,
+                        notifyPush: stage.notifyPush
+                    }, t);
+                    
+                    if (stage.orderPosition === 1) {
+                        firstStageId = clonedStage.id;
+                    }
+                }
+                
+                // DM-001: Set initial stage pointer
+                await applicationRepository.update(newApp.id, { currentStageId: firstStageId }, t);
+            }
 
             // DM-003: Immediate feedback on application start
             await notificationRepository.create({
@@ -100,7 +131,7 @@ export class ApplicationService {
             }, t);
 
             await t.commit();
-            return newApp;
+            return applicationRepository.findById(newApp.id);
         } catch (error) {
             await t.rollback();
             throw error;
