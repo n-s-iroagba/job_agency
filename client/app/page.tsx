@@ -46,7 +46,18 @@ const TESTIMONIALS = [
 ];
 
 const PARTNERS = [
-  "Microsoft", "BP Global", "Shell Africa", "Chevron", "TotalEnergies", "ExxonMobil"
+  { name: "Microsoft", industry: "Tech" },
+  { name: "BP Global", industry: "Energy" },
+  { name: "Shell Africa", industry: "Energy" },
+  { name: "Chevron", industry: "Energy" },
+  { name: "TotalEnergies", industry: "Energy" },
+  { name: "ExxonMobil", industry: "Energy" },
+  { name: "Saudi Aramco", industry: "Energy" },
+  { name: "Equinor", industry: "Energy" },
+  { name: "Schlumberger", industry: "Services" },
+  { name: "Halliburton", industry: "Services" },
+  { name: "Petronas", industry: "Energy" },
+  { name: "Eni S.p.A.", industry: "Energy" }
 ];
 
 import { useRouter } from 'next/navigation';
@@ -123,12 +134,15 @@ export default function HomePage() {
             <span className="text-[10px] font-black text-blue-300 uppercase tracking-[0.4em]">Integrated with Global Infrastructure</span>
           </div>
           <div className="flex whitespace-nowrap overflow-hidden">
-            <div className="flex gap-20 animate-marquee items-center min-w-full justify-around opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+            <div className="flex gap-16 md:gap-24 animate-marquee items-center min-w-full justify-around opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
               {PARTNERS.concat(PARTNERS).map((partner, i) => (
-                <span key={i} className="text-xl md:text-2xl font-black italic uppercase tracking-tighter text-blue-900 flex items-center gap-4">
-                  <span className="w-2 h-2 rounded-full bg-blue-200"></span>
-                  {partner}
-                </span>
+                <div key={i} className="flex flex-col items-center gap-1 group">
+                  <span className="text-xl md:text-3xl font-black italic uppercase tracking-tighter text-blue-900 flex items-center gap-4 transition-transform group-hover:scale-105">
+                    <span className="w-2.5 h-2.5 rounded-full bg-blue-400 group-hover:bg-blue-900 group-hover:animate-ping transition-all"></span>
+                    {partner.name}
+                  </span>
+                  <span className="text-[7px] font-black text-blue-300 uppercase tracking-[0.3em] group-hover:text-blue-900 transition-colors">{partner.industry}</span>
+                </div>
               ))}
             </div>
           </div>
