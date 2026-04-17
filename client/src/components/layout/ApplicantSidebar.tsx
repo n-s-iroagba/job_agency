@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CONSTANTS } from '@/constants';
 import { useAuth } from '@/contexts/AuthContext';
+import { useApiQuery } from '@/lib/hooks';
 
 const navItems = [
     { label: 'Dashboard', href: CONSTANTS.ROUTES.DASHBOARD, icon: 'dashboard' },
@@ -28,6 +29,18 @@ export function ApplicantSidebar({
 }) {
     const pathname = usePathname();
     const { user, logout } = useAuth();
+    
+    // Fetch notifications to check for unread status
+    const { data: notifications } = useApiQuery<any>(
+        ['notifications', 'sidebar'], 
+        '/notifications', 
+        { 
+            refetchInterval: 60000, // Refresh every minute
+            enabled: !!user 
+        }
+    );
+    
+    const hasUnread = notifications?.rows?.some((n: any) => !n.isRead);
 
     const handleLogout = async () => {
         await logout();
@@ -97,8 +110,11 @@ export function ApplicantSidebar({
                                         : 'text-blue-500 hover:text-blue-900 hover:bg-blue-50'
                                     }`}
                             >
-                                <span className={`material-symbols-outlined transition-transform group-hover:scale-110 ${active ? 'font-bold' : ''}`} style={{ fontSize: '20px' }}>
+                                <span className={`material-symbols-outlined transition-transform group-hover:scale-110 relative ${active ? 'font-bold' : ''}`} style={{ fontSize: '20px' }}>
                                     {item.icon}
+                                    {item.label === 'Notifications' && hasUnread && (
+                                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-600 rounded-full border border-white animate-pulse" />
+                                    )}
                                 </span>
                                 <span className={`font-bold uppercase tracking-[0.05em] transition-all duration-300 text-center ${isCollapsed
                                     ? 'text-[10px] mt-2 opacity-100 leading-tight w-full px-1'

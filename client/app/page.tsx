@@ -46,18 +46,18 @@ const TESTIMONIALS = [
 ];
 
 const PARTNERS = [
-  { name: "Microsoft", industry: "Tech" },
-  { name: "BP Global", industry: "Energy" },
-  { name: "Shell Africa", industry: "Energy" },
-  { name: "Chevron", industry: "Energy" },
-  { name: "TotalEnergies", industry: "Energy" },
-  { name: "ExxonMobil", industry: "Energy" },
-  { name: "Saudi Aramco", industry: "Energy" },
-  { name: "Equinor", industry: "Energy" },
-  { name: "Schlumberger", industry: "Services" },
-  { name: "Halliburton", industry: "Services" },
-  { name: "Petronas", industry: "Energy" },
-  { name: "Eni S.p.A.", industry: "Energy" }
+  { name: "Microsoft", industry: "Tech", icon: "window" },
+  { name: "BP Global", industry: "Energy", icon: "emergency" },
+  { name: "Shell Africa", industry: "Energy", icon: "database" },
+  { name: "Chevron", industry: "Energy", icon: "featured_play_list" },
+  { name: "TotalEnergies", industry: "Energy", icon: "circle" },
+  { name: "ExxonMobil", industry: "Energy", icon: "change_history" },
+  { name: "Saudi Aramco", industry: "Energy", icon: "hexagon" },
+  { name: "Equinor", industry: "Energy", icon: "filter_tilt_shift" },
+  { name: "Schlumberger", industry: "Services", icon: "architecture" },
+  { name: "Halliburton", industry: "Services", icon: "settings_input_component" },
+  { name: "Petronas", industry: "Energy", icon: "shield" },
+  { name: "Eni S.p.A.", industry: "Energy", icon: "token" }
 ];
 
 import { useRouter } from 'next/navigation';
@@ -134,14 +134,18 @@ export default function HomePage() {
             <span className="text-[10px] font-black text-blue-300 uppercase tracking-[0.4em]">Integrated with Global Infrastructure</span>
           </div>
           <div className="flex whitespace-nowrap overflow-hidden">
-            <div className="flex gap-16 md:gap-24 animate-marquee items-center min-w-full justify-around opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+            <div className="flex gap-20 md:gap-32 animate-marquee items-center min-w-full justify-around opacity-60 hover:opacity-100 transition-all duration-700 grayscale hover:grayscale-0">
               {PARTNERS.concat(PARTNERS).map((partner, i) => (
-                <div key={i} className="flex flex-col items-center gap-1 group">
-                  <span className="text-xl md:text-3xl font-black italic uppercase tracking-tighter text-blue-900 flex items-center gap-4 transition-transform group-hover:scale-105">
-                    <span className="w-2.5 h-2.5 rounded-full bg-blue-400 group-hover:bg-blue-900 group-hover:animate-ping transition-all"></span>
-                    {partner.name}
-                  </span>
-                  <span className="text-[7px] font-black text-blue-300 uppercase tracking-[0.3em] group-hover:text-blue-900 transition-colors">{partner.industry}</span>
+                <div key={i} className="flex flex-col items-center gap-2 group">
+                  <div className="flex items-center gap-4">
+                    <span className="material-symbols-outlined text-3xl md:text-4xl text-blue-900 transition-transform group-hover:scale-110 group-hover:text-blue-600">
+                      {partner.icon}
+                    </span>
+                    <span className="text-xl md:text-3xl font-black italic uppercase tracking-tighter text-blue-900 transition-all group-hover:italic group-hover:tracking-tight">
+                      {partner.name}
+                    </span>
+                  </div>
+                  <span className="text-[8px] font-black text-blue-300 uppercase tracking-[0.4em] group-hover:text-blue-900 transition-colors ml-12">{partner.industry}</span>
                 </div>
               ))}
             </div>
@@ -321,7 +325,7 @@ export default function HomePage() {
           100% { transform: translateX(-50%); }
         }
         .animate-marquee {
-          animation: marquee 30s linear infinite;
+          animation: marquee 20s linear infinite;
         }
         .animate-marquee:hover {
           animation-play-state: paused;
