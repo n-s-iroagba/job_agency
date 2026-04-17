@@ -8,7 +8,7 @@ interface Job {
     id: number;
     title: string;
     location: string;
-    salaryRange: string;
+    salary: string;
     type: string;
     description: string;
     companyLogo?: string;
@@ -168,7 +168,7 @@ export default function BrowseJobsPage() {
                                     <div className="flex flex-col justify-between items-end gap-6 md:border-l border-blue-50 md:pl-8 min-w-[160px]">
                                         <div className="text-right">
                                             <p className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Budget Allocation</p>
-                                            <span className="text-xl font-bold font-mono text-blue-900 tracking-tighter">{job.salaryRange || 'Unspecified'}</span>
+                                            <span className="text-xl font-bold font-mono text-blue-900 tracking-tighter">{job.salary || 'Undisclosed'}</span>
                                         </div>
                                         <div className="w-full bg-blue-50 text-blue-900 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] group-hover:bg-blue-900 group-hover:text-white transition-all text-center shadow-lg shadow-blue-900/5">
                                             View Artifact

@@ -86,6 +86,7 @@ export async function seedDatabase() {
             employmentType: 'Full-Time',
             requirements: '10+ years in Petrophysical engineering; Deep-water certification.',
             company: 'Oceanic Energy Corp',
+            salary: '$180,000 - $240,000',
             visaSponsorship: true,
             category: 'Energy & Resources'
         },
@@ -96,6 +97,7 @@ export async function seedDatabase() {
             employmentType: 'Contract',
             requirements: 'Class 1 Marine Engineer Certificate of Competency.',
             company: 'Maersk Liner Services',
+            salary: '$12,000 - $15,000 / month',
             visaSponsorship: false,
             category: 'Maritime & Logistics'
         },
@@ -106,6 +108,7 @@ export async function seedDatabase() {
             employmentType: 'Full-Time',
             requirements: '5,000+ flight hours; Valid ATPL license.',
             company: 'British Global Airways',
+            salary: '£95,000 - £110,000',
             visaSponsorship: true,
             category: 'Aerospace & Aviation'
         },
@@ -116,6 +119,7 @@ export async function seedDatabase() {
             employmentType: 'Full-Time',
             requirements: 'Registered Nurse; 5+ years in Critical Care; Post-grad specialization.',
             company: 'King Faisal Specialist Hospital',
+            salary: '$60,000 - $85,000 (Tax Free)',
             visaSponsorship: true,
             category: 'Healthcare & Life Sciences'
         },
@@ -126,6 +130,7 @@ export async function seedDatabase() {
             employmentType: 'Full-Time',
             requirements: 'Expertise in Azure/AWS; Multi-regional network design experience.',
             company: 'NexaCore Global',
+            salary: '$140,000 - $175,000',
             visaSponsorship: true,
             category: 'Technology & Innovation'
         },
@@ -136,6 +141,7 @@ export async function seedDatabase() {
             employmentType: 'Full-Time',
             requirements: 'Chartered Engineer; Experience in projects >$500M.',
             company: 'LTA Engineering Partners',
+            salary: '$250,000 - $320,000 SGD',
             visaSponsorship: true,
             category: 'Infrastructure & Construction'
         },
@@ -146,6 +152,7 @@ export async function seedDatabase() {
             employmentType: 'Full-Time',
             requirements: 'Master’s in Supply Chain Mgmt; Expert in SAP S/4HANA.',
             company: 'Siemens Industrial Automation',
+            salary: '€90,000 - €120,000',
             visaSponsorship: true,
             category: 'Global Trade & Manufacturing'
         }
@@ -166,6 +173,7 @@ export async function seedDatabase() {
             employmentType: jobData.employmentType,
             requirements: jobData.requirements,
             company: jobData.company,
+            salary: jobData.salary,
             visaSponsorship: jobData.visaSponsorship,
             categoryId: categoryMap[jobData.category].id,
             isActive: true,

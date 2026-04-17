@@ -47,6 +47,7 @@ export interface JobListing {
     company: string;
     visaSponsorship: boolean;
     isActive: boolean;
+    salary: string | null;
     createdAt: string;
     updatedAt: string;
     JobCategory?: JobCategory;

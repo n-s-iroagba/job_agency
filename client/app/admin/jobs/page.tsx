@@ -113,6 +113,7 @@ export default function AdminJobsPage() {
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400 cursor-pointer" onClick={() => toggleSort('title')}>Title</th>
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400">Category</th>
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400">Location</th>
+                                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400">Salary</th>
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400 text-center">Status</th>
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400 text-right">Actions</th>
                             </tr>
@@ -138,6 +139,9 @@ export default function AdminJobsPage() {
                                     <td className="px-6 py-5">
                                         <p className="text-sm text-blue-600">{job.location}</p>
                                         <p className="text-[9px] text-blue-400 font-bold uppercase">{job.employmentType}</p>
+                                    </td>
+                                    <td className="px-6 py-5">
+                                        <span className="text-sm font-bold text-emerald-600">{job.salary || 'Undisclosed'}</span>
                                     </td>
                                     <td className="px-6 py-5 text-center">
                                         <button

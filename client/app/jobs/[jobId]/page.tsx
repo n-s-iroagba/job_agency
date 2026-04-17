@@ -13,6 +13,7 @@ interface JobDetail {
     title: string;
     description: string;
     location: string;
+    salary: string;
     employmentType: string;
     JobCategory: { name: string };
     JobBenefits: { benefitType: string; description: string }[];
@@ -80,6 +81,8 @@ export default function JobDetailPage() {
             applyMutation.mutate({ jobId: parseInt(jobId) });
         }
     };
+    const salaryDisplay = job.salary || 'Salary Undisclosed';
+
 
     return (
         <div className="bg-white text-blue-900 antialiased min-h-screen flex flex-col font-sans">
@@ -100,6 +103,10 @@ export default function JobDetailPage() {
                             <div className="flex items-center gap-2 text-[10px] font-black text-blue-900 uppercase tracking-widest">
                                 <span className="material-symbols-outlined text-sm font-bold">location_on</span>
                                 {job.location}
+                            </div>
+                            <div className="flex items-center gap-3 bg-emerald-50/50 border border-emerald-100 px-6 py-3 rounded-2xl">
+                                <span className="material-symbols-outlined text-emerald-600">payments</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700">{salaryDisplay}</span>
                             </div>
                         </header>
 

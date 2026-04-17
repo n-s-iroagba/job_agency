@@ -12,6 +12,7 @@ export class JobListing extends Model {
     declare company: string;
     declare visaSponsorship: boolean;
     declare isActive: boolean;
+    declare salary: string | null;
     declare stages: any[];
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
@@ -69,6 +70,10 @@ JobListing.init({
     isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+    },
+    salary: {
+        type: DataTypes.STRING,
+        allowNull: true,
     }
 }, {
     sequelize,

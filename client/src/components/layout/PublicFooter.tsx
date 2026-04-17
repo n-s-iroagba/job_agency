@@ -31,9 +31,9 @@ export function PublicFooter() {
                 <div>
                     <h6 className="text-[10px] font-bold text-blue-900 uppercase tracking-[0.3em] mb-8">Verified Protocols</h6>
                     <div className="flex gap-8">
-                        <a className="text-blue-400 hover:text-blue-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">language</span></a>
-                        <a className="text-blue-400 hover:text-blue-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">shield</span></a>
-                        <a className="text-blue-400 hover:text-blue-900 transition-colors" href="#"><span className="material-symbols-outlined text-xl">alternate_email</span></a>
+                        <Link className="text-blue-400 hover:text-blue-900 transition-colors" href="/"><span className="material-symbols-outlined text-xl">language</span></Link>
+                        <Link className="text-blue-400 hover:text-blue-900 transition-colors" href="/compliance"><span className="material-symbols-outlined text-xl">shield</span></Link>
+                        <a className="text-blue-400 hover:text-blue-900 transition-colors" href="mailto:support@jobnexe.com"><span className="material-symbols-outlined text-xl">alternate_email</span></a>
                     </div>
                 </div>
             </div>

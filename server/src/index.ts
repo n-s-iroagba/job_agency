@@ -4,6 +4,7 @@ import { logger } from './utils/logger';
 
 // Initializes Associations Mapping
 import './models';
+import { seedDatabase } from './seedDatabase';
 
 
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 const startServer = async () => {
     try {
         await connectDB();
+        await seedDatabase()
 
         if (process.env.NODE_ENV !== 'production') {
             //await sequelize.sync({ force: true });

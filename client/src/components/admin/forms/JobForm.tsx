@@ -29,6 +29,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     const [description, setDescription] = useState(initialData?.description || '');
     const [requirements, setRequirements] = useState(initialData?.requirements || '');
     const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
+    const [salary, setSalary] = useState(initialData?.salary || '');
 
     const [selectedBenefits, setSelectedBenefits] = useState<number[]>(
         initialData?.JobBenefits?.map(b => b.id) || []
@@ -49,6 +50,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
             setDescription(initialData.description);
             setRequirements(initialData.requirements || '');
             setIsActive(initialData.isActive);
+            setSalary(initialData.salary || '');
             setCompany(initialData.company || '');
             setVisaSponsorship(initialData.visaSponsorship || false);
             setSelectedBenefits(initialData.JobBenefits?.map(b => b.id) || []);
@@ -78,6 +80,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                 description,
                 requirements,
                 isActive,
+                salary,
                 company,
                 visaSponsorship,
                 benefitsIds: selectedBenefits,
@@ -89,6 +92,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     };
 
     return (
+
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6 font-sans">
             <div className="lg:col-span-8 space-y-6">
                 <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-8">
@@ -135,132 +139,133 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                         </div>
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Company</label>
-                        <input
-                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
-                            placeholder="Company"
-                            type="text"
-                            value={company}
-                            onChange={(e) => setCompany(e.target.value)}
-                            required
-                        />
-                    </div>
 
-                    <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-200">
-                        <div>
-                            <label className="text-[10px] font-bold text-blue-900 uppercase tracking-widest block">Visa Sponsorship</label>
-                            <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-0.5">Offered for this position</p>
-                        </div>
-                        <input
-                            className="w-5 h-5 accent-blue-900 cursor-pointer"
-                            type="checkbox"
-                            checked={visaSponsorship}
-                            onChange={(e) => setVisaSponsorship(e.target.checked)}
-                        />
-                    </div>
+                </div>
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Salary Range</label>
+                    <input
+                        className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
+                        placeholder="e.g. $120,000 - $160,000"
+                        type="text"
+                        value={salary}
+                        onChange={(e) => setSalary(e.target.value)}
+                    />
+                </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Location</label>
-                        <input
-                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
-                            placeholder="City, Country or Remote"
-                            type="text"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            required
-                        />
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-200">
+                    <div>
+                        <label className="text-[10px] font-bold text-blue-900 uppercase tracking-widest block">Visa Sponsorship</label>
+                        <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-0.5">Offered for this position</p>
+                    </div>
+                    <input
+                        className="w-5 h-5 accent-blue-900 cursor-pointer"
+                        type="checkbox"
+                        checked={visaSponsorship}
+                        onChange={(e) => setVisaSponsorship(e.target.checked)}
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Location</label>
+                    <input
+                        className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
+                        placeholder="City, Country or Remote"
+                        type="text"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        required
+                    />
+                </div>
+            </div>
+
+            <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Job Description</label>
+                    <textarea
+                        className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none resize-none leading-relaxed"
+                        placeholder="Enter the job description..."
+                        rows={10}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                    ></textarea>
+                </div>
+            </div>
+
+            <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Requirements</label>
+                    <textarea
+                        className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none resize-none leading-relaxed"
+                        placeholder="List requirements..."
+                        rows={8}
+                        value={requirements}
+                        onChange={(e) => setRequirements(e.target.value)}
+                        required
+                    ></textarea>
+                </div>
+            </div>
+
+            <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-10">
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Benefits</label>
+                        <Link href="/admin/benefits/new" className="text-[9px] font-bold text-blue-900 uppercase tracking-widest hover:underline">
+                            + Add New
+                        </Link>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                        {allBenefits.map(benefit => {
+                            const isSelected = selectedBenefits.includes(benefit.id);
+                            return (
+                                <button
+                                    key={benefit.id}
+                                    type="button"
+                                    onClick={() => setSelectedBenefits(prev => isSelected ? prev.filter(id => id !== benefit.id) : [...prev, benefit.id])}
+                                    className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
+                                        ? 'bg-blue-900 text-white border-blue-900 shadow-lg shadow-blue-900/10'
+                                        : 'bg-blue-50 text-blue-400 border-blue-100 hover:border-blue-300'
+                                        }`}
+                                >
+                                    {benefit.benefitType}
+                                    -
+                                    {benefit.value}
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
 
-                <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Job Description</label>
-                        <textarea
-                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none resize-none leading-relaxed"
-                            placeholder="Enter the job description..."
-                            rows={10}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                        ></textarea>
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Conditions</label>
+                        <Link href="/admin/conditions/new" className="text-[9px] font-bold text-blue-900 uppercase tracking-widest hover:underline">
+                            + Add New
+                        </Link>
                     </div>
-                </div>
-
-                <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Requirements</label>
-                        <textarea
-                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none resize-none leading-relaxed"
-                            placeholder="List requirements..."
-                            rows={8}
-                            value={requirements}
-                            onChange={(e) => setRequirements(e.target.value)}
-                            required
-                        ></textarea>
-                    </div>
-                </div>
-
-                <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-10">
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Benefits</label>
-                            <Link href="/admin/benefits/new" className="text-[9px] font-bold text-blue-900 uppercase tracking-widest hover:underline">
-                                + Add New
-                            </Link>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {allBenefits.map(benefit => {
-                                const isSelected = selectedBenefits.includes(benefit.id);
-                                return (
-                                    <button
-                                        key={benefit.id}
-                                        type="button"
-                                        onClick={() => setSelectedBenefits(prev => isSelected ? prev.filter(id => id !== benefit.id) : [...prev, benefit.id])}
-                                        className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
-                                            ? 'bg-blue-900 text-white border-blue-900 shadow-lg shadow-blue-900/10'
-                                            : 'bg-blue-50 text-blue-400 border-blue-100 hover:border-blue-300'
-                                            }`}
-                                    >
-                                        {benefit.benefitType}
-                                        -
-                                        {benefit.value}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Conditions</label>
-                            <Link href="/admin/conditions/new" className="text-[9px] font-bold text-blue-900 uppercase tracking-widest hover:underline">
-                                + Add New
-                            </Link>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {allConditions.map(condition => {
-                                const isSelected = selectedConditions.includes(condition.id);
-                                return (
-                                    <button
-                                        key={condition.id}
-                                        type="button"
-                                        onClick={() => setSelectedConditions(prev => isSelected ? prev.filter(id => id !== condition.id) : [...prev, condition.id])}
-                                        className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
-                                            ? 'bg-blue-900 text-white border-blue-900 shadow-lg shadow-blue-900/10'
-                                            : 'bg-blue-50 text-blue-400 border-blue-100 hover:border-blue-300'
-                                            }`}
-                                    >
-                                        {condition.name}
+                    <div className="flex flex-wrap gap-2">
+                        {allConditions.map(condition => {
+                            const isSelected = selectedConditions.includes(condition.id);
+                            return (
+                                <button
+                                    key={condition.id}
+                                    type="button"
+                                    onClick={() => setSelectedConditions(prev => isSelected ? prev.filter(id => id !== condition.id) : [...prev, condition.id])}
+                                    className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${isSelected
+                                        ? 'bg-blue-900 text-white border-blue-900 shadow-lg shadow-blue-900/10'
+                                        : 'bg-blue-50 text-blue-400 border-blue-100 hover:border-blue-300'
+                                        }`}
+                                >
+                                    {condition.name}
 
 
-                                    </button>
-                                );
-                            })}
-                        </div>
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
+
 
             <div className="lg:col-span-4 space-y-6">
                 <div className="bg-blue-50 p-6 md:p-8 rounded-2xl border border-blue-100 space-y-8 sticky top-24">

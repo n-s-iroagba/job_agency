@@ -65,15 +65,14 @@ export default function JobDetailPage() {
         </div>
     );
 
-    // Extract salary from benefits
-    const salaryBenefit = job.JobBenefits?.find((b: any) => b.benefitType.toLowerCase().includes('salary'));
-    const salaryDisplay = salaryBenefit ? (salaryBenefit.value || salaryBenefit.description) : 'Salary Undisclosed';
+    // Extract salary (Prioritize explicit field, fallback to benefits)
+    const salaryDisplay = job.salary || (job.JobBenefits?.find((b: any) => b.benefitType.toLowerCase().includes('salary'))?.value || 'Salary Undisclosed');
 
     const requirements = job.requirements ? job.requirements.split('\n').filter((line: string) => line.trim()) : [];
     const stages = job.stages || [];
 
     return (
-        <div className="space-y-16 selection:bg-blue-100 selection:text-blue-900 pb-32 antialiased">
+        <div className="space-y-16 selection:bg-blue-100 selection:text-blue-900 pb-10 antialiased">
             {/* Hero Job Header */}
             <div className="flex flex-col xl:flex-row gap-12 items-start">
                 <div className="flex-1 space-y-8">
@@ -106,7 +105,7 @@ export default function JobDetailPage() {
                     >
                         {applyMutation.isPending ? 'Syncing...' : isReadyToApply ? 'Initiate Application' : 'Incomplete Profile'}
                     </button>
-                    
+
                     <div className="bg-white p-8 rounded-[2.5rem] border border-blue-100 shadow-sm space-y-6">
                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-900 flex items-center gap-3">
                             <span className="material-symbols-outlined text-base">task_alt</span>
@@ -167,7 +166,7 @@ export default function JobDetailPage() {
                         {(job.JobBenefits?.length > 0 || job.JobConditions?.length > 0) && (
                             <div className="bg-blue-900 text-white p-12 rounded-[4rem] shadow-2xl shadow-blue-900/10 space-y-12 relative overflow-hidden">
                                 <span className="absolute -top-10 -right-10 material-symbols-outlined text-[20rem] opacity-5 text-white italic">award_star</span>
-                                
+
                                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16">
                                     <div className="space-y-10">
                                         <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Package Benefits</h3>
@@ -181,7 +180,7 @@ export default function JobDetailPage() {
                                             ))}
                                         </div>
                                     </div>
-                                    
+
                                     <div className="space-y-10">
                                         <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Service Conditions</h3>
                                         <div className="space-y-8">
@@ -201,38 +200,6 @@ export default function JobDetailPage() {
 
                 {/* Vertical Application Journey */}
                 <div className="lg:col-span-4 space-y-8">
-                    <div className="bg-white p-10 rounded-[3rem] border border-blue-100 shadow-sm relative overflow-hidden">
-                        <div className="flex items-center justify-between mb-12">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-900">Application Node Path</h3>
-                            <span className="px-3 py-1 bg-blue-50 text-blue-900 text-[9px] font-black uppercase rounded-lg">{stages.length} Phases</span>
-                        </div>
-                        
-                        <div className="relative space-y-12 ml-4">
-                            <div className="absolute left-4 top-4 bottom-4 w-[1px] bg-blue-50" />
-                            
-                            {stages.map((stage: any, idx: number) => (
-                                <div key={idx} className="relative flex gap-8 group">
-                                    <div className={`z-10 w-9 h-9 rounded-2xl flex items-center justify-center text-[10px] font-black uppercase transition-all shadow-xl group-hover:rotate-12 ${
-                                        idx === 0 ? 'bg-blue-900 text-white shadow-blue-900/20' : 'bg-white border border-blue-100 text-blue-300'
-                                    }`}>
-                                        {(idx + 1).toString().padStart(2, '0')}
-                                    </div>
-                                    <div className="flex-1 transition-all group-hover:translate-x-1">
-                                        <h4 className="font-black text-sm text-blue-900 uppercase tracking-tight mb-1">{stage.name}</h4>
-                                        <p className="text-[11px] text-blue-400 font-bold leading-relaxed">{stage.description}</p>
-                                        <div className="flex gap-4 mt-3">
-                                            {stage.requiresPayment && (
-                                                <span className="text-[8px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase tracking-widest border border-emerald-100">Payment Req</span>
-                                            )}
-                                            {stage.deadlineDays && (
-                                                <span className="text-[8px] font-black text-blue-400 bg-blue-50 px-2 py-0.5 rounded uppercase tracking-widest border border-blue-100">{stage.deadlineDays} Days</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
 
                     <div className="p-10 rounded-[3rem] bg-emerald-50 border border-emerald-100 relative overflow-hidden group hover:bg-emerald-900 transition-all duration-500">
                         <div className="absolute -top-10 -right-10 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
