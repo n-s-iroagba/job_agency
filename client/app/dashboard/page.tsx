@@ -54,13 +54,16 @@ export default function ApplicantDashboard() {
                             </div>
                             <div>
                                 <h4 className="text-[10px] font-black text-red-600 uppercase tracking-[0.3em] mb-1">Financial Notice Required</h4>
-                                <p className="text-sm font-black text-blue-900 uppercase tracking-tight">System bottleneck detected: Pending settlement required for pipeline progression.</p>
+                                <p className="text-sm font-black text-blue-900 uppercase tracking-tight">Payment is required to proceed with the recruitment proccess</p>
+                                <p className="text-sm font-black text-blue-800  tracking-tight">Recruitment Stage: {pendingStages[0].name}</p>
+                                <p className="text-sm font-black text-blue-700  tracking-tight">Recruitment Stage: {pendingStages[0].description}</p>
+
                             </div>
                         </div>
                         <button
                             onClick={() => {
                                 const payApp = pendingStages.find((app: any) => app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid'));
-                                if(payApp) setSelectedPaymentApp(payApp);
+                                if (payApp) setSelectedPaymentApp(payApp);
                                 setAppFilter('Payments');
                             }}
                             className="bg-red-500 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-red-500/20 active:scale-95 whitespace-nowrap"
@@ -145,18 +148,17 @@ export default function ApplicantDashboard() {
                                     <div className="flex items-center justify-between pt-6 border-t border-blue-50">
                                         <div className="flex items-center gap-2">
                                             {app.requiresPayment ? (
-                                                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border ${
-                                                        app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                                                        app.paymentStatus === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' : 
+                                                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border ${app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                                    app.paymentStatus === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' :
                                                         'bg-amber-50 text-amber-700 border-amber-100'
                                                     }`}>
                                                     <span className="material-symbols-outlined text-[14px]">
-                                                        {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'verified' : 
-                                                         app.paymentStatus === 'Pending' ? 'hourglass_empty' : 'payments'}
+                                                        {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'verified' :
+                                                            app.paymentStatus === 'Pending' ? 'hourglass_empty' : 'payments'}
                                                     </span>
                                                     <span className="text-[9px] font-black uppercase tracking-widest">
                                                         {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'Settlement Verified' :
-                                                         app.paymentStatus === 'Pending' ? 'Verification In Progress' : `Pending Settlement: $${app.amount}`}
+                                                            app.paymentStatus === 'Pending' ? 'Verification In Progress' : `Pending Settlement: $${app.amount}`}
                                                     </span>
                                                 </div>
                                             ) : (

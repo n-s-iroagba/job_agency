@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
     { label: 'Overview', href: CONSTANTS.ROUTES.ADMIN.DASHBOARD, icon: 'analytics' },
+    { label: 'Applications', href: CONSTANTS.ROUTES.ADMIN.APPLICATIONS, icon: 'assignment' },
     { label: 'Applicants', href: '/admin/applicants', icon: 'groups' },
     { label: 'Payment Queue', href: CONSTANTS.ROUTES.ADMIN.UNVERIFIED, icon: 'account_tree' },
     { label: 'Payments', href: CONSTANTS.ROUTES.ADMIN.UNPAID, icon: 'receipt_long' },

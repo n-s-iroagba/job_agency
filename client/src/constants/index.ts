@@ -28,6 +28,7 @@ export const CONSTANTS = {
         JOBS: '/dashboard/jobs',
         ADMIN: {
             DASHBOARD: '/admin',
+            APPLICATIONS: '/admin/applications',
             HEALTH: '/admin/health',
             JOBS: '/admin/jobs',
             CATEGORIES: '/admin/categories',
