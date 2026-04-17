@@ -9,11 +9,19 @@ export default function ApplicantDashboard() {
     const { data: summary, isLoading, refetch } = useApiQuery<any>(['applicant', 'dashboard'], '/dashboard');
     const [selectedPaymentApp, setSelectedPaymentApp] = useState<any>(null);
     const [appFilter, setAppFilter] = useState<'All' | 'Active' | 'Completed' | 'Payments'>('All');
+    
+    const hasFinancialActivity = (summary?.allPayments?.length > 0) || 
+                               (summary?.pendingStages?.some((ap: any) => ap.requiresPayment));
+
+    const availableFilters = ['All', 'Active', 'Payments', 'Completed'].filter(f => {
+        if (f === 'Payments') return hasFinancialActivity;
+        return true;
+    });
 
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400 animate-pulse">Loading Dashboard...</div>;
 
     const pendingStages = summary?.pendingStages || [];
-    const activeJobs = summary?.activeJobs?.rows || [];
+    const activeJobs = summary?.activeJobs?.rows || summary?.activeJobs || [];
 
     const filteredStages = pendingStages.filter((app: any) => {
         if (appFilter === 'All') return true;
@@ -45,7 +53,7 @@ export default function ApplicantDashboard() {
                                 <p className="text-[9px] text-blue-300 font-bold uppercase mt-1">{filteredStages.length} Active Processes</p>
                             </div>
                             <div className="flex bg-blue-50 p-1 rounded-xl border border-blue-100 self-start">
-                                {['All', 'Active', 'Payments', 'Completed'].map((filter: any) => (
+                                {availableFilters.map((filter: any) => (
                                     <button
                                         key={filter}
                                         onClick={() => setAppFilter(filter)}
