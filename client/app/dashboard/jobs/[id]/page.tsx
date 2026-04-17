@@ -26,7 +26,6 @@ export default function JobDetailPage() {
         const user = userData?.user;
         if (!user) return;
 
-        // Pre-flight validation: Check if biodata is complete
         const isBiodataComplete = user.fullName && user.phoneNumber && user.nationality;
         const isCvUploaded = !!user.cvUrl;
 
@@ -49,205 +48,199 @@ export default function JobDetailPage() {
 
     if (isLoading) return (
         <div className="space-y-12 animate-pulse">
-            <div className="h-64 bg-blue-100 rounded-2xl" />
+            <div className="h-64 bg-blue-50/50 rounded-[3rem]" />
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                <div className="lg:col-span-8 h-96 bg-blue-100 rounded-2xl" />
-                <div className="lg:col-span-4 h-96 bg-blue-100 rounded-2xl" />
+                <div className="lg:col-span-8 h-96 bg-blue-50/50 rounded-[3rem]" />
+                <div className="lg:col-span-4 h-96 bg-blue-50/50 rounded-[3rem]" />
             </div>
         </div>
     );
 
-    if (!job) return <div>Job not found</div>;
+    if (!job) return (
+        <div className="py-20 text-center bg-red-50 rounded-[3rem] border border-red-100 mt-12">
+            <span className="material-symbols-outlined text-red-200 text-6xl mb-6">error</span>
+            <h2 className="text-xl font-bold text-red-900 uppercase tracking-widest">Entry Not Found</h2>
+            <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mt-2">The requested career node does not exist in the active registry.</p>
+            <Link href="/dashboard/jobs" className="inline-block mt-8 text-[10px] font-black text-red-900 uppercase tracking-[0.3em] underline underline-offset-8">Return to Dashboard</Link>
+        </div>
+    );
+
+    // Extract salary from benefits
+    const salaryBenefit = job.JobBenefits?.find((b: any) => b.benefitType.toLowerCase().includes('salary'));
+    const salaryDisplay = salaryBenefit ? (salaryBenefit.value || salaryBenefit.description) : 'Salary Undisclosed';
+
+    const requirements = job.requirements ? job.requirements.split('\n').filter((line: string) => line.trim()) : [];
+    const stages = job.stages || [];
 
     return (
-        <div className="space-y-16 selection:bg-primary-container selection:text-on-primary-container">
+        <div className="space-y-16 selection:bg-blue-100 selection:text-blue-900 pb-32 antialiased">
             {/* Hero Job Header */}
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-                <div className="flex-1 space-y-6">
-                    <div className="flex items-center gap-3">
-                        <span className="bg-primary/10 text-primary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">Premium Partner</span>
-                        <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Posted 2 days ago</span>
+            <div className="flex flex-col xl:flex-row gap-12 items-start">
+                <div className="flex-1 space-y-8">
+                    <div className="flex items-center gap-4">
+                        <span className="bg-blue-900 text-white px-4 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-[0.3em]">Verified Listing</span>
+                        <span className="text-blue-400 text-[9px] font-black uppercase tracking-[0.2em]">{job.employmentType}</span>
                     </div>
-                    <h1 className="text-[3.5rem] font-bold leading-tight tracking-tight text-on-surface">{job.title}</h1>
-                    <div className="flex flex-wrap gap-4 text-on-surface-variant font-medium">
-                        <div className="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg">
-                            <span className="material-symbols-outlined text-primary">apartment</span>
-                            <span className="text-sm font-bold uppercase tracking-tight">{job.JobCategory?.name || 'Global Systems'}</span>
+                    <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tighter text-blue-900 drop-shadow-sm">{job.title}</h1>
+                    <div className="flex flex-wrap gap-6 text-blue-400 font-bold">
+                        <div className="flex items-center gap-3 bg-blue-50/50 border border-blue-100 px-6 py-3 rounded-2xl">
+                            <span className="material-symbols-outlined text-blue-900">corporate_fare</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-blue-900">{job.JobCategory?.name || 'Uncategorized'}</span>
                         </div>
-                        <div className="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg">
-                            <span className="material-symbols-outlined text-primary">location_on</span>
-                            <span className="text-sm font-bold uppercase tracking-tight">{job.location}</span>
+                        <div className="flex items-center gap-3 bg-blue-50/50 border border-blue-100 px-6 py-3 rounded-2xl">
+                            <span className="material-symbols-outlined text-blue-900">location_on</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-blue-900">{job.location || 'Remote Node'}</span>
                         </div>
-                        <div className="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-lg">
-                            <span className="material-symbols-outlined text-primary">payments</span>
-                            <span className="text-sm font-bold uppercase tracking-tight">{job.salaryRange || '$120,000 - $160,000'}</span>
+                        <div className="flex items-center gap-3 bg-emerald-50/50 border border-emerald-100 px-6 py-3 rounded-2xl">
+                            <span className="material-symbols-outlined text-emerald-600">payments</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700">{salaryDisplay}</span>
                         </div>
                     </div>
                 </div>
-                <div className="w-full md:w-80 bg-surface-container-lowest p-8 rounded-xl shadow-xl shadow-blue-200/50 border border-blue-100/50">
+
+                <div className="w-full xl:w-96 flex flex-col gap-6">
                     <button
                         onClick={handleApply}
                         disabled={applyMutation.isPending}
-                        className={`w-full py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:shadow-lg transition-all mb-4 active:scale-95 disabled:opacity-50 ${isReadyToApply ? 'bg-primary text-white' : 'bg-blue-200 text-blue-500'}`}
+                        className={`w-full py-6 rounded-3xl font-black text-[10px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 shadow-2xl ${isReadyToApply ? 'bg-blue-900 text-white shadow-blue-900/20 hover:bg-black' : 'bg-blue-100 text-blue-400'}`}
                     >
-                        {applyMutation.isPending ? 'Initializing...' : isReadyToApply ? 'Start Application' : 'Resolve Readiness to Apply'}
+                        {applyMutation.isPending ? 'Syncing...' : isReadyToApply ? 'Initiate Application' : 'Incomplete Profile'}
                     </button>
-                    <button className="w-full bg-surface-container-high text-on-surface py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:bg-blue-200 transition-all flex items-center justify-center gap-2">
-                        <span className="material-symbols-outlined">bookmark</span>
-                        Save for Later
-                    </button>
-                    <p className="text-[10px] text-center text-on-surface-variant mt-4 leading-relaxed font-bold uppercase tracking-tighter">
-                        Safe and Secure Recruitment • (NFR-SEC-006)
-                    </p>
-                </div>
+                    
+                    <div className="bg-white p-8 rounded-[2.5rem] border border-blue-100 shadow-sm space-y-6">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-900 flex items-center gap-3">
+                            <span className="material-symbols-outlined text-base">task_alt</span>
+                            Profile Integrity
+                        </h4>
 
-                {/* Pre-flight Readiness Card */}
-                <div className="w-full md:w-80 bg-white p-8 rounded-xl border border-blue-100 shadow-sm space-y-6">
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-900 flex items-center gap-2">
-                        <span className="material-symbols-outlined text-sm">fact_check</span>
-                        Application Readiness
-                    </h4>
+                        <div className="space-y-4">
+                            <ReadinessItem
+                                label="Verification Biodata"
+                                isComplete={!!(userData?.user?.fullName && userData?.user?.phoneNumber && userData?.user?.nationality)}
+                                link={`${CONSTANTS.ROUTES.PROFILE}?redirect=/dashboard/jobs/${jobId}`}
+                            />
+                            <ReadinessItem
+                                label="CV / Career History"
+                                isComplete={!!userData?.user?.cvUrl}
+                                link={`${CONSTANTS.ROUTES.CV}?redirect=/dashboard/jobs/${jobId}`}
+                            />
+                        </div>
 
-                    <div className="space-y-4">
-                        <ReadinessItem
-                            label="Professional Biodata"
-                            isComplete={!!(userData?.user?.fullName && userData?.user?.phoneNumber && userData?.user?.nationality)}
-                            link={`${CONSTANTS.ROUTES.PROFILE}?redirect=/dashboard/jobs/${jobId}`}
-                        />
-                        <ReadinessItem
-                            label="Document: CV / Resume"
-                            isComplete={!!userData?.user?.cvUrl}
-                            link={`${CONSTANTS.ROUTES.CV}?redirect=/dashboard/jobs/${jobId}`}
-                        />
+                        <p className="text-[9px] text-blue-400 font-bold uppercase tracking-widest leading-relaxed pt-2 border-t border-blue-50">
+                            Status: {isReadyToApply ? 'Authorized for Submission' : 'Awaiting Profile Updates'}
+                        </p>
                     </div>
-
-                    <p className="text-[9px] text-blue-400 font-bold uppercase tracking-tight leading-relaxed">
-                        Complete all modules to authorize your professional profile for this role.
-                    </p>
                 </div>
             </div>
 
-            {/* Asymmetric Content Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                {/* Left Column: Role Details */}
-                <div className="lg:col-span-8 space-y-12">
-                    {/* Role Conditions Bento Section */}
-                    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="md:col-span-2 bg-surface-container-low p-8 rounded-xl">
-                            <h3 className="text-xl font-bold mb-4">The Mission</h3>
-                            <p className="text-on-surface-variant leading-relaxed text-lg font-light">
-                                {job.description || "We are seeking a visionary to lead our next phase of growth. You will be the bridge between global strategy and technical execution, managing a multi-disciplinary team. Your role is not just to manage, but to define the next decade of professional excellence."}
-                            </p>
-                        </div>
-                        <div className="bg-primary/5 p-8 rounded-xl border border-primary/10">
-                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4">Quick Stats</h4>
-                            <ul className="space-y-4">
-                                <li className="flex justify-between items-center">
-                                    <span className="text-on-surface-variant text-[10px] font-bold uppercase">Experience</span>
-                                    <span className="font-bold text-sm uppercase">6+ Years</span>
-                                </li>
-                                <li className="flex justify-between items-center">
-                                    <span className="text-on-surface-variant text-[10px] font-bold uppercase">Duration</span>
-                                    <span className="font-bold text-sm uppercase">{job.type}</span>
-                                </li>
-                                <li className="flex justify-between items-center">
-                                    <span className="text-on-surface-variant text-[10px] font-bold uppercase">Stages</span>
-                                    <span className="font-bold text-sm uppercase">{job.JobStages?.length || 4} Steps</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </section>
-
-                    {/* Detailed Content */}
+            {/* Content Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <div className="lg:col-span-8 space-y-16">
                     <section className="space-y-8">
                         <div>
-                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                                <span className="w-8 h-1 bg-primary rounded-full"></span>
-                                Key Responsibilities
+                            <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mb-8 pb-4 border-b border-blue-50 flex items-center gap-4">
+                                <span className="w-10 h-[1px] bg-blue-100" />
+                                01. Operational Mission
                             </h2>
-                            <ul className="space-y-4 text-on-surface-variant leading-relaxed list-none">
-                                <li className="flex gap-4">
-                                    <span className="material-symbols-outlined text-primary font-bold">check_circle</span>
-                                    <span className="text-sm font-medium">Oversee strategic implementation for major regional accounts, ensuring top-tier consistency.</span>
-                                </li>
-                                <li className="flex gap-4">
-                                    <span className="material-symbols-outlined text-primary font-bold">check_circle</span>
-                                    <span className="text-sm font-medium">Direct stakeholder management with C-suite executives at global partner organizations.</span>
-                                </li>
-                                <li className="flex gap-4">
-                                    <span className="material-symbols-outlined text-primary font-bold">check_circle</span>
-                                    <span className="text-sm font-medium">Lead high-stakes pitches and conceptual development for multi-channel campaigns.</span>
-                                </li>
-                            </ul>
+                            <p className="text-blue-900 leading-[2.2] text-xl font-medium tracking-tight">
+                                {job.description}
+                            </p>
                         </div>
-                        <div className="bg-surface-container-lowest p-8 rounded-xl border border-blue-100">
-                            <h2 className="text-2xl font-bold mb-6">Benefits & Conditions</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div className="flex gap-4">
-                                    <div className="w-12 h-12 bg-secondary-container/30 rounded-lg flex items-center justify-center text-primary">
-                                        <span className="material-symbols-outlined">health_and_safety</span>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold">Health & Wellness</h4>
-                                        <p className="text-xs text-on-surface-variant font-medium">Premium private insurance and mental health support for you and your family.</p>
-                                    </div>
+
+                        {requirements.length > 0 && (
+                            <div>
+                                <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mb-8 pb-4 border-b border-blue-50 flex items-center gap-4">
+                                    <span className="w-10 h-[1px] bg-blue-100" />
+                                    02. Core Requirements
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {requirements.map((req: string, idx: number) => (
+                                        <div key={idx} className="flex gap-4 p-6 bg-blue-50/30 rounded-3xl border border-blue-50 transition-all hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 group">
+                                            <span className="text-[10px] font-black text-blue-200 mt-1 opacity-40 group-hover:opacity-100">{(idx + 1).toString().padStart(2, '0')}</span>
+                                            <span className="text-sm font-bold text-blue-900 leading-relaxed">{req.replace(/^[•-]\s*/, '')}</span>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="flex gap-4">
-                                    <div className="w-12 h-12 bg-secondary-container/30 rounded-lg flex items-center justify-center text-primary">
-                                        <span className="material-symbols-outlined">travel_explore</span>
+                            </div>
+                        )}
+
+                        {(job.JobBenefits?.length > 0 || job.JobConditions?.length > 0) && (
+                            <div className="bg-blue-900 text-white p-12 rounded-[4rem] shadow-2xl shadow-blue-900/10 space-y-12 relative overflow-hidden">
+                                <span className="absolute -top-10 -right-10 material-symbols-outlined text-[20rem] opacity-5 text-white italic">award_star</span>
+                                
+                                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16">
+                                    <div className="space-y-10">
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Package Benefits</h3>
+                                        <div className="space-y-8">
+                                            {job.JobBenefits?.map((benefit: any) => (
+                                                <div key={benefit.id} className="group">
+                                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white mb-2 group-hover:text-blue-300 transition-colors">{benefit.benefitType}</h4>
+                                                    <p className="text-sm text-blue-300 font-medium leading-relaxed">{benefit.description}</p>
+                                                    {benefit.value && <span className="inline-block mt-3 px-3 py-1 bg-white/10 rounded-lg text-[9px] font-black uppercase tracking-widest text-blue-100">{benefit.value}</span>}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 className="font-bold">Global Mobility</h4>
-                                        <p className="text-xs text-on-surface-variant font-medium">Annual work-from-anywhere credit and relocation assistance if needed.</p>
+                                    
+                                    <div className="space-y-10">
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Service Conditions</h3>
+                                        <div className="space-y-8">
+                                            {job.JobConditions?.map((condition: any) => (
+                                                <div key={condition.id} className="group text-right md:text-left">
+                                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white mb-2 group-hover:text-blue-300 transition-colors">{condition.name}</h4>
+                                                    <p className="text-sm text-blue-300 font-medium leading-relaxed">{condition.description}</p>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </section>
                 </div>
 
-                {/* Right Column: Application Journey */}
+                {/* Vertical Application Journey */}
                 <div className="lg:col-span-4 space-y-8">
-                    <div className="bg-surface-container-high/20 p-8 rounded-xl">
-                        <h3 className="text-xl font-bold mb-8">Application Journey</h3>
-                        <div className="relative space-y-12">
-                            {/* Step 1 */}
-                            <div className="relative flex gap-6">
-                                <div className="absolute left-4 top-10 h-14 border-l-2 border-dashed border-blue-200"></div>
-                                <div className="z-10 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs uppercase shadow-lg shadow-primary/20">01</div>
-                                <div>
-                                    <h4 className="font-bold text-sm">Profile Screening</h4>
-                                    <p className="text-xs text-on-surface-variant font-medium">Initial review of your resume and portfolio by our talent curators.</p>
-                                    <span className="text-[10px] uppercase tracking-widest text-primary font-bold mt-1 inline-block">Avg. 3 Days</span>
+                    <div className="bg-white p-10 rounded-[3rem] border border-blue-100 shadow-sm relative overflow-hidden">
+                        <div className="flex items-center justify-between mb-12">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-900">Application Node Path</h3>
+                            <span className="px-3 py-1 bg-blue-50 text-blue-900 text-[9px] font-black uppercase rounded-lg">{stages.length} Phases</span>
+                        </div>
+                        
+                        <div className="relative space-y-12 ml-4">
+                            <div className="absolute left-4 top-4 bottom-4 w-[1px] bg-blue-50" />
+                            
+                            {stages.map((stage: any, idx: number) => (
+                                <div key={idx} className="relative flex gap-8 group">
+                                    <div className={`z-10 w-9 h-9 rounded-2xl flex items-center justify-center text-[10px] font-black uppercase transition-all shadow-xl group-hover:rotate-12 ${
+                                        idx === 0 ? 'bg-blue-900 text-white shadow-blue-900/20' : 'bg-white border border-blue-100 text-blue-300'
+                                    }`}>
+                                        {(idx + 1).toString().padStart(2, '0')}
+                                    </div>
+                                    <div className="flex-1 transition-all group-hover:translate-x-1">
+                                        <h4 className="font-black text-sm text-blue-900 uppercase tracking-tight mb-1">{stage.name}</h4>
+                                        <p className="text-[11px] text-blue-400 font-bold leading-relaxed">{stage.description}</p>
+                                        <div className="flex gap-4 mt-3">
+                                            {stage.requiresPayment && (
+                                                <span className="text-[8px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase tracking-widest border border-emerald-100">Payment Req</span>
+                                            )}
+                                            {stage.deadlineDays && (
+                                                <span className="text-[8px] font-black text-blue-400 bg-blue-50 px-2 py-0.5 rounded uppercase tracking-widest border border-blue-100">{stage.deadlineDays} Days</span>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            {/* Step 2 */}
-                            <div className="relative flex gap-6">
-                                <div className="absolute left-4 top-10 h-14 border-l-2 border-dashed border-blue-200"></div>
-                                <div className="z-10 w-8 h-8 rounded-full bg-white border-2 border-blue-200 flex items-center justify-center text-blue-400 font-bold text-xs uppercase">02</div>
-                                <div>
-                                    <h4 className="font-bold text-sm">Discovery Call</h4>
-                                    <p className="text-xs text-on-surface-variant font-medium">30-minute chat with the Creative Director about vision and culture.</p>
-                                </div>
-                            </div>
-                            {/* Step 3 */}
-                            <div className="relative flex gap-6">
-                                <div className="z-10 w-8 h-8 rounded-full bg-white border-2 border-blue-200 flex items-center justify-center text-blue-400 font-bold text-xs uppercase">03</div>
-                                <div>
-                                    <h4 className="font-bold text-sm">Strategic Workshop</h4>
-                                    <p className="text-xs text-on-surface-variant font-medium">A paid 3-hour deep dive into a real-world business challenge.</p>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
-                    {/* Glassmorphism Card for Diversity */}
-                    <div className="p-8 rounded-xl bg-primary/5 backdrop-blur-md border border-primary/10 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <span className="material-symbols-outlined text-primary text-6xl">diversity_3</span>
+
+                    <div className="p-10 rounded-[3rem] bg-emerald-50 border border-emerald-100 relative overflow-hidden group hover:bg-emerald-900 transition-all duration-500">
+                        <div className="absolute -top-10 -right-10 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <span className="material-symbols-outlined text-emerald-900 group-hover:text-white text-[10rem]">verified</span>
                         </div>
-                        <h4 className="text-sm font-bold uppercase tracking-widest text-primary mb-4 relative z-10">Our Commitment</h4>
-                        <p className="text-xs text-on-surface-variant leading-relaxed relative z-10 font-medium italic">
-                            JobNexe works exclusively with agencies that prioritize diversity. This role is open to all qualified applicants regardless of background.
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 group-hover:text-emerald-300 mb-6 relative z-10 transition-colors">Direct Placement</h4>
+                        <p className="text-xs text-emerald-900 leading-loose relative z-10 font-bold group-hover:text-white transition-colors">
+                            JobNexe exclusively curates roles that offer direct contractual agreements with verified global entities. No intermediaries involved.
                         </p>
                     </div>
                 </div>
