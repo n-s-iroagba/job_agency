@@ -46,7 +46,7 @@ const TESTIMONIALS = [
 ];
 
 const PARTNERS = [
-    "Microsoft", "BP Global", "Shell Africa", "Chevron", "TotalEnergies", "ExxonMobil"
+  "Microsoft", "BP Global", "Shell Africa", "Chevron", "TotalEnergies", "ExxonMobil"
 ];
 
 export default function HomePage() {
@@ -99,19 +99,19 @@ export default function HomePage() {
 
         {/* Trusted By Section */}
         <section className="mb-32 overflow-hidden border-y border-blue-50 py-12 lg:py-16">
-            <div className="max-w-[1280px] mx-auto px-8 mb-10 text-center">
-                <span className="text-[10px] font-black text-blue-300 uppercase tracking-[0.4em]">Integrated with Global Infrastructure</span>
+          <div className="max-w-[1280px] mx-auto px-8 mb-10 text-center">
+            <span className="text-[10px] font-black text-blue-300 uppercase tracking-[0.4em]">Integrated with Global Infrastructure</span>
+          </div>
+          <div className="flex whitespace-nowrap overflow-hidden">
+            <div className="flex gap-20 animate-marquee items-center min-w-full justify-around opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+              {PARTNERS.concat(PARTNERS).map((partner, i) => (
+                <span key={i} className="text-xl md:text-2xl font-black italic uppercase tracking-tighter text-blue-900 flex items-center gap-4">
+                  <span className="w-2 h-2 rounded-full bg-blue-200"></span>
+                  {partner}
+                </span>
+              ))}
             </div>
-            <div className="flex whitespace-nowrap overflow-hidden">
-                <div className="flex gap-20 animate-marquee items-center min-w-full justify-around opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                    {PARTNERS.concat(PARTNERS).map((partner, i) => (
-                        <span key={i} className="text-xl md:text-2xl font-black italic uppercase tracking-tighter text-blue-900 flex items-center gap-4">
-                            <span className="w-2 h-2 rounded-full bg-blue-200"></span>
-                            {partner}
-                        </span>
-                    ))}
-                </div>
-            </div>
+          </div>
         </section>
 
         {/* Job Listings Grid */}
@@ -209,27 +209,27 @@ export default function HomePage() {
 
           <div className="relative bg-blue-50/50 rounded-[4rem] p-12 lg:p-24 overflow-hidden border border-blue-50">
             <div className="relative z-10 transition-all duration-700 min-h-[300px] flex flex-col items-center justify-center text-center">
-                <div className="mb-12 relative">
-                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-2xl relative z-10">
-                        <img 
-                            src={TESTIMONIALS[currentSlide].image} 
-                            alt={TESTIMONIALS[currentSlide].name}
-                            className="w-full h-full object-cover transition-all duration-500 scale-105"
-                        />
-                    </div>
-                    <div className="absolute -bottom-2 -right-2 w-10 h-10 md:w-12 md:h-12 bg-blue-900 rounded-full flex items-center justify-center text-white shadow-xl z-20">
-                        <span className="material-symbols-outlined text-sm md:text-xl">format_quote</span>
-                    </div>
+              <div className="mb-12 relative">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-2xl relative z-10">
+                  <img
+                    src={TESTIMONIALS[currentSlide].image}
+                    alt={TESTIMONIALS[currentSlide].name}
+                    className="w-full h-full object-cover transition-all duration-500 scale-105"
+                  />
                 </div>
-                
-                <p className="text-xl md:text-3xl font-medium text-blue-900 leading-relaxed max-w-[800px] mb-12 italic tracking-tight">
-                    "{TESTIMONIALS[currentSlide].text}"
-                </p>
-                
-                <div className="space-y-1">
-                    <h5 className="font-black text-blue-900 uppercase tracking-widest text-base md:text-lg">{TESTIMONIALS[currentSlide].name}</h5>
-                    <p className="text-[9px] md:text-[10px] font-bold text-blue-400 uppercase tracking-widest">{TESTIMONIALS[currentSlide].role} • {TESTIMONIALS[currentSlide].location}</p>
+                <div className="absolute -bottom-2 -right-2 w-10 h-10 md:w-12 md:h-12 bg-blue-900 rounded-full flex items-center justify-center text-white shadow-xl z-20">
+                  <span className="material-symbols-outlined text-sm md:text-xl">format_quote</span>
                 </div>
+              </div>
+
+              <p className="text-xl md:text-3xl font-medium text-blue-900 leading-relaxed max-w-[800px] mb-12 italic tracking-tight">
+                "{TESTIMONIALS[currentSlide].text}"
+              </p>
+
+              <div className="space-y-1">
+                <h5 className="font-black text-blue-900 uppercase tracking-widest text-base md:text-lg">{TESTIMONIALS[currentSlide].name}</h5>
+                <p className="text-[9px] md:text-[10px] font-bold text-blue-400 uppercase tracking-widest">{TESTIMONIALS[currentSlide].role} • {TESTIMONIALS[currentSlide].location}</p>
+              </div>
             </div>
 
             <div className="flex justify-center gap-3 mt-16 relative z-10">
