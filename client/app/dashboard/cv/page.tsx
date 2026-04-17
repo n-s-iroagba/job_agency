@@ -2,6 +2,7 @@
 
 import React, { useState, Suspense } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import { CONSTANTS } from '@/constants';
 import api from '@/lib/api';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -16,6 +17,7 @@ interface Cv {
 
 function CvContent() {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const searchParams = useSearchParams();
     const redirectPath = searchParams.get('redirect');
     const { data: cv, isLoading, refetch } = useApiQuery<Cv | null>(['cv', 'current'], '/cv');
@@ -24,7 +26,10 @@ function CvContent() {
     const [success, setSuccess] = useState(false);
 
     const deleteMutation = useApiMutation('delete', '/cv', {
-        onSuccess: () => refetch()
+        onSuccess: () => {
+            refetch();
+            queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+        }
     });
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +62,7 @@ function CvContent() {
             
             setSuccess(true);
             await refetch();
+            await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
             
             if (redirectPath) {
                 setTimeout(() => router.push(redirectPath), 1500);

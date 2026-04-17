@@ -1,10 +1,12 @@
 'use client'
 import { useState, useEffect, Suspense } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 function ProfileContent() {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const searchParams = useSearchParams();
     const redirectPath = searchParams.get('redirect');
     const { data, isLoading, refetch } = useApiQuery<any>(['auth', 'me'], '/auth/me');
@@ -44,6 +46,7 @@ function ProfileContent() {
     const updateProfileMutation = useApiMutation('put', '/auth/profile', {
         onSuccess: (response: any) => {
             refetch();
+            queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
             // Update local storage for sidebar/nav consistency
             localStorage.setItem('user', JSON.stringify(response.user));
             setSuccessMessage(true);
