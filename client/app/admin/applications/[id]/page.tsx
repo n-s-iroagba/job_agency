@@ -388,8 +388,8 @@ export default function ApplicationDetailPage() {
             {(showAddStage || editingStage) && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
                     <div className="absolute inset-0 bg-blue-900/80 backdrop-blur-xl animate-in fade-in duration-500" onClick={() => { setShowAddStage(false); setEditingStage(null); }}></div>
-                    <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
-                        <div className="p-10 border-b border-blue-50 flex items-center justify-between">
+                    <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-300">
+                        <div className="p-10 border-b border-blue-50 flex items-center justify-between shrink-0">
                             <div>
                                 <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">{editingStage ? 'Reconfigure Stage' : 'Inject New Stage'}</h3>
                                 <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Configuring application pipeline node</p>
@@ -398,7 +398,7 @@ export default function ApplicationDetailPage() {
                                 <span className="material-symbols-outlined">close</span>
                             </button>
                         </div>
-                        <form onSubmit={handleSaveStage} className="p-10 space-y-8">
+                        <form onSubmit={handleSaveStage} className="p-10 space-y-8 overflow-y-auto custom-scrollbar">
                             <div className="space-y-2">
                                 <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Protocol Name</label>
                                 <input
