@@ -45,20 +45,25 @@ export class ApplicationService {
             unpaidPayments.push(...payList);
         }
 
-        // STK-APP-DASH-001: full active job listings
-        const activeJobs = await jobRepository.findAllActive({});
+        // Collect all payments for history
+        const allPayments: any[] = [];
+        for (const app of appsList) {
+            const payments = await paymentRepository.findByApplicationId(app.id);
+            allPayments.push(...payments);
+        }
 
         return {
             pendingStages,      // STK-APP-DASH-001
             unpaidPayments,     // STK-APP-DASH-001
+            allPayments,        // New: Support for full settlement history view
             activeJobs,         // STK-APP-DASH-001
             applicationCount: appsList.length,   // STK-APP-DASH-002
         };
     }
 
     // Maps to STK-ADM-APP-001, SCR-ADM-NEWAPPS-001
-    public async getApplicationsByStatus(status: string, limit?: number, offset?: number) {
-        return applicationRepository.findAllAdmin({ status, limit, offset });
+    public async getApplicationsByStatus(status: string, limit?: number, offset?: number, userId?: number) {
+        return applicationRepository.findAllAdmin({ status, limit, offset, userId });
     }
 
     // Maps to STK-ADM-APP-002, SCR-ADM-DRAFTS-001 — explicit draft filter

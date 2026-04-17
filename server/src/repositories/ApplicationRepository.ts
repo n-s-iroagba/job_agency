@@ -5,6 +5,7 @@ export interface FindApplicationOptions {
     limit?: number;
     offset?: number;
     status?: string;
+    userId?: number;
 }
 
 export class ApplicationRepository {
@@ -26,6 +27,7 @@ export class ApplicationRepository {
     public async findAllAdmin(options: FindApplicationOptions = {}, transaction?: Transaction): Promise<{ rows: Application[]; count: number }> {
         const whereClause: any = {};
         if (options.status) whereClause.status = options.status;
+        if (options.userId) whereClause.userId = options.userId;
 
         return Application.findAndCountAll({
             where: whereClause,

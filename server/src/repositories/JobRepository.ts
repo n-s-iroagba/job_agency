@@ -25,12 +25,19 @@ export class JobRepository {
             ];
         }
 
+        const order: any[] = [];
+        if (options.sortBy) {
+            order.push([options.sortBy, options.sortOrder || 'DESC']);
+        } else {
+            order.push(['createdAt', 'DESC']);
+        }
+
         return JobListing.findAndCountAll({
             where: whereClause,
             limit: options.limit || 10,
             offset: options.offset || 0,
             include: [JobCategory, JobBenefit, JobCondition],
-            order: [['createdAt', 'DESC']]
+            order
         });
     }
 

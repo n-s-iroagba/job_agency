@@ -223,6 +223,14 @@ export class AdminService {
     public async getAllApplicants(limit?: number, offset?: number) {
         return userRepository.findAndCountAll({ role: CONSTANTS.ROLES.APPLICANT, limit, offset });
     }
+
+    public async deleteApplicant(id: number) {
+        const user = await userRepository.findById(id);
+        if (!user || user.role !== CONSTANTS.ROLES.APPLICANT) {
+            throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        }
+        await userRepository.delete(id);
+    }
 }
 
 export const adminService = new AdminService();

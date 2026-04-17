@@ -4,11 +4,15 @@ import React from 'react';
 import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { ApplicationStageManager } from '@/components/admin/ApplicationStageManager';
+import { Application } from '@/types/models';
 
 export default function AdminApplicantDetailPage() {
     const { id } = useParams();
     const { data: userData, isLoading } = useApiQuery<any>(['admin', 'applicants', id], `/admin/users/${id}`);
+    const { data: appsData, isLoading: isAppsLoading, refetch: refetchApps } = useApiQuery<{ rows: Application[] }>(['admin', 'applicants', id, 'applications'], `/admin/applications?userId=${id}`);
     const user = userData?.user;
+    const applications = appsData?.rows || [];
 
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Retrieving Talent Dossier...</div>;
     if (!user) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-red-500">Applicant Node Not Found</div>;
@@ -120,6 +124,55 @@ export default function AdminApplicantDetailPage() {
                             <p className="text-[11px] font-bold text-amber-600 mt-1 uppercase">No curriculum vitae has been synchronized with this profile.</p>
                         </div>
                     )}
+
+                    {/* Talent Pipeline - Active Applications */}
+                    <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
+                        <div className="flex items-center gap-4 mb-10 pb-4 border-b border-blue-50">
+                            <span className="material-symbols-outlined text-blue-900">analytics</span>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900">Talent Pipeline</h2>
+                        </div>
+
+                        {isAppsLoading ? (
+                             <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Synchronizing Application Data...</div>
+                        ) : applications.length === 0 ? (
+                            <div className="p-12 text-center bg-blue-50 rounded-3xl">
+                                <p className="text-[9px] font-black uppercase tracking-widest text-blue-400">No active applications detected in registry.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-12">
+                                {applications.map((app) => (
+                                    <div key={app.id} className="space-y-8 p-10 bg-blue-50/30 rounded-[2.5rem] border border-blue-100/50">
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <h3 className="text-xl font-black italic uppercase tracking-tight text-blue-900">{app.JobListing?.title}</h3>
+                                                <div className="flex items-center gap-3 mt-2">
+                                                    <span className={`px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest ${app.status === 'COMPLETED' ? 'bg-green-500 text-white' : 'bg-blue-900 text-white'}`}>
+                                                        {app.status}
+                                                    </span>
+                                                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">
+                                                        Progress: {app.completionPercentage}%
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <Link 
+                                                href={`/admin/jobs/${app.jobId}`}
+                                                className="text-[9px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-900 flex items-center gap-1"
+                                            >
+                                                View Original Brief
+                                                <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                                            </Link>
+                                        </div>
+
+                                        <ApplicationStageManager 
+                                            applicationId={app.id} 
+                                            initialStages={app.JobStages} 
+                                            onRefresh={refetchApps} 
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

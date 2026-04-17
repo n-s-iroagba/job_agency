@@ -82,9 +82,10 @@ export class ApplicationController {
     public async getAdminApplications(req: Request, res: Response): Promise<void> {
         try {
             const status = req.query.status as string;
+            const userId = req.query.userId ? parseInt(req.query.userId as string, 10) : undefined;
             const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
             const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
-            const applications = await applicationService.getApplicationsByStatus(status, limit, offset);
+            const applications = await applicationService.getApplicationsByStatus(status, limit, offset, userId);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(applications);
         } catch (error) {
             console.error('[ApplicationController.getAdminApplications]', error);

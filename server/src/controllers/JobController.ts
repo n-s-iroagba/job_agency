@@ -9,10 +9,12 @@ export class JobController {
             const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string, 10) : undefined;
             const employmentType = req.query.employmentType as string;
             const searchQuery = req.query.searchQuery as string;
+            const sortBy = req.query.sortBy as string;
+            const sortOrder = req.query.sortOrder as 'ASC' | 'DESC';
             const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 10;
             const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
 
-            const result = await jobService.getActiveJobs(limit, offset, categoryId, employmentType, searchQuery);
+            const result = await jobService.getActiveJobs(limit, offset, categoryId, employmentType, searchQuery, sortBy, sortOrder);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
         } catch (error) {
             console.error('[JobController.getActiveJobs]', error);

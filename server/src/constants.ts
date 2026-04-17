@@ -98,6 +98,6 @@ export const CONSTANTS = {
 
     // Default Seeding Values
     SEED_DEFAULTS: {
-        HIGH_VALUE_THRESHOLD: 4999, // $4,999 threshold constraint mapping to StRS
+        HIGH_VALUE_THRESHOLD: 5000, // $5,000 threshold mapping
     }
 };

@@ -3,6 +3,7 @@
 import React from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import { useParams, useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { CONSTANTS } from '@/constants';
 import Link from 'next/link';
 
@@ -10,12 +11,13 @@ export default function JobDetailPage() {
     const params = useParams();
     const jobId = params.id as string;
     const router = useRouter();
-
+    const queryClient = useQueryClient();
     const { data: job, isLoading } = useApiQuery<any>(['job', jobId], `/jobs/${jobId}`);
     const { data: userData } = useApiQuery<any>(['auth', 'me'], '/auth/me');
 
     const applyMutation = useApiMutation('post', '/applications', {
         onSuccess: (data: any) => {
+            queryClient.invalidateQueries({ queryKey: ['applicant', 'dashboard'] });
             router.push(`${CONSTANTS.ROUTES.APPLICATIONS}/${data.id}`);
         }
     });
@@ -26,20 +28,24 @@ export default function JobDetailPage() {
 
         // Pre-flight validation: Check if biodata is complete
         const isBiodataComplete = user.fullName && user.phoneNumber && user.nationality;
-        
+        const isCvUploaded = !!user.cvUrl;
+
         if (!isBiodataComplete) {
+            alert('Your professional profile is split. Please complete your basic biodata (Name, Phone, Nationality) before proceeding.');
             router.push(`${CONSTANTS.ROUTES.PROFILE}?redirect=/dashboard/jobs/${jobId}`);
             return;
         }
 
-        // Pre-flight validation: Check if CV is uploaded
-        if (!user.cvUrl) {
+        if (!isCvUploaded) {
+            alert('A CV/Resume document is required for screening. Redirecting to your document vault.');
             router.push(`${CONSTANTS.ROUTES.CV}?redirect=/dashboard/jobs/${jobId}`);
             return;
         }
 
         applyMutation.mutate({ jobId: parseInt(jobId, 10) });
     };
+
+    const isReadyToApply = userData?.user?.fullName && userData?.user?.phoneNumber && userData?.user?.nationality && userData?.user?.cvUrl;
 
     if (isLoading) return (
         <div className="space-y-12 animate-pulse">
@@ -82,9 +88,9 @@ export default function JobDetailPage() {
                     <button
                         onClick={handleApply}
                         disabled={applyMutation.isPending}
-                        className="w-full bg-primary text-white py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:shadow-lg transition-all mb-4 active:scale-95 disabled:opacity-50"
+                        className={`w-full py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:shadow-lg transition-all mb-4 active:scale-95 disabled:opacity-50 ${isReadyToApply ? 'bg-primary text-white' : 'bg-blue-200 text-blue-500'}`}
                     >
-                        {applyMutation.isPending ? 'Initializing...' : 'Start Application'}
+                        {applyMutation.isPending ? 'Initializing...' : isReadyToApply ? 'Start Application' : 'Resolve Readiness to Apply'}
                     </button>
                     <button className="w-full bg-surface-container-high text-on-surface py-4 rounded-lg font-bold text-sm uppercase tracking-widest hover:bg-blue-200 transition-all flex items-center justify-center gap-2">
                         <span className="material-symbols-outlined">bookmark</span>
@@ -92,6 +98,31 @@ export default function JobDetailPage() {
                     </button>
                     <p className="text-[10px] text-center text-on-surface-variant mt-4 leading-relaxed font-bold uppercase tracking-tighter">
                         Safe and Secure Recruitment • (NFR-SEC-006)
+                    </p>
+                </div>
+
+                {/* Pre-flight Readiness Card */}
+                <div className="w-full md:w-80 bg-white p-8 rounded-xl border border-blue-100 shadow-sm space-y-6">
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-900 flex items-center gap-2">
+                        <span className="material-symbols-outlined text-sm">fact_check</span>
+                        Application Readiness
+                    </h4>
+
+                    <div className="space-y-4">
+                        <ReadinessItem
+                            label="Professional Biodata"
+                            isComplete={!!(userData?.user?.fullName && userData?.user?.phoneNumber && userData?.user?.nationality)}
+                            link={`${CONSTANTS.ROUTES.PROFILE}?redirect=/dashboard/jobs/${jobId}`}
+                        />
+                        <ReadinessItem
+                            label="Document: CV / Resume"
+                            isComplete={!!userData?.user?.cvUrl}
+                            link={`${CONSTANTS.ROUTES.CV}?redirect=/dashboard/jobs/${jobId}`}
+                        />
+                    </div>
+
+                    <p className="text-[9px] text-blue-400 font-bold uppercase tracking-tight leading-relaxed">
+                        Complete all modules to authorize your professional profile for this role.
                     </p>
                 </div>
             </div>
@@ -221,6 +252,28 @@ export default function JobDetailPage() {
                     </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+function ReadinessItem({ label, isComplete, link }: { label: string, isComplete: boolean, link: string }) {
+    return (
+        <div className="flex items-center justify-between group">
+            <div className="flex items-center gap-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${isComplete ? 'bg-emerald-500 text-white' : 'bg-blue-50 text-blue-300'}`}>
+                    <span className="material-symbols-outlined text-[14px] font-bold">
+                        {isComplete ? 'check' : 'pending'}
+                    </span>
+                </div>
+                <span className={`text-[11px] font-bold uppercase tracking-tight transition-colors ${isComplete ? 'text-blue-900' : 'text-blue-400'}`}>
+                    {label}
+                </span>
+            </div>
+            {!isComplete && (
+                <Link href={link} className="text-[9px] font-black uppercase tracking-widest text-blue-900 hover:underline decoration-2 underline-offset-4">
+                    Update
+                </Link>
+            )}
         </div>
     );
 }

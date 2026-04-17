@@ -10,8 +10,9 @@ const navItems = [
     { label: 'My Applications', href: CONSTANTS.ROUTES.APPLICATIONS, icon: 'work' },
     { label: 'Browse Jobs', href: CONSTANTS.ROUTES.JOBS, icon: 'search' },
     { label: 'CV / Resume', href: CONSTANTS.ROUTES.CV, icon: 'description' },
+    { label: 'Bio', href: CONSTANTS.ROUTES.PROFILE, icon: 'person' },
     { label: 'Notifications', href: CONSTANTS.ROUTES.NOTIFICATIONS, icon: 'notifications' },
-    { label: 'Settings', href: CONSTANTS.ROUTES.PROFILE, icon: 'person' },
+
 ];
 
 export function ApplicantSidebar({

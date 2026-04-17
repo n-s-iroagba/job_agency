@@ -60,6 +60,8 @@ function CvContent() {
             
             if (redirectPath) {
                 setTimeout(() => router.push(redirectPath), 1500);
+            } else {
+                setTimeout(() => router.push('/dashboard'), 1500);
             }
         } catch (err: any) {
             setError(err.response?.data?.error || 'Upload failed.');

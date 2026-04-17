@@ -146,5 +146,6 @@ router.delete('/admin/benefits/:id', ...adminMW, adminController.deleteBenefit.b
 // REG-004: admin user management
 router.get('/admin/users/:id', ...adminMW, adminController.getApplicantById.bind(adminController));
 router.get('/admin/users', ...adminMW, adminController.getAllApplicants.bind(adminController));
+router.delete('/admin/users/:id', ...adminMW, adminController.deleteApplicant.bind(adminController));
 
 export default router;

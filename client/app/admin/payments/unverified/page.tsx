@@ -1,154 +1,140 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useApiQuery } from '@/lib/hooks';
-import api from '@/lib/api';
-import { Payment } from '@/types/models';
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
-export default function UnverifiedProofsPage() {
-    const { data: proofs, isLoading, refetch } = useApiQuery<{ rows: Payment[], count: number }>(
+export default function UnverifiedPaymentsPage() {
+    const queryClient = useQueryClient();
+    const [selectedPayment, setSelectedPayment] = useState<any>(null);
+    const [note, setNote] = useState('');
+
+    const { data: payments, isLoading } = useApiQuery<any>(
         ['admin', 'payments', 'unverified'],
         '/admin/payments/unverified'
     );
-    const [selectedProof, setSelectedProof] = useState<Payment | null>(null);
-    const [note, setNote] = useState('');
 
-    const executeVerify = async (id: number, status: 'PAID' | 'REJECTED') => {
-        try {
-            await api.post(`/admin/payments/${id}/verify`, {
-                isApproved: status === 'PAID',
-                note
-            });
-            refetch();
-            setSelectedProof(null);
+    const verifyMutation = useApiMutation('post', `/admin/payments/${selectedPayment?.id}/verify`, {
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'payments', 'unverified'] });
+            setSelectedPayment(null);
             setNote('');
-        } catch (err) {
-            console.error(err);
         }
-    };
+    });
 
-    const proofList = proofs?.rows || [];
-    const totalPending = proofs?.count || 0;
-    const pendingValue = proofList.reduce((acc: number, p: Payment) => acc + (p.amount || 0), 0);
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Auditing Settlement Proofs...</div>;
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Proofs...</div>;
+    const paymentList = payments?.rows || [];
 
     return (
-        <div className="font-sans">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-                <div>
-                    <h1 className="text-3xl font-bold text-blue-900 tracking-tight">Payment Verification</h1>
-                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Audit submitted proof of payments</p>
-                </div>
-                <div className="flex gap-4">
-                    <div className="bg-white px-6 py-3 rounded-xl border border-blue-100 shadow-sm flex flex-col">
-                        <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Pending Value</span>
-                        <span className="text-xl font-bold text-blue-900">${pendingValue.toLocaleString()}</span>
-                    </div>
+        <div className="font-sans antialiased text-blue-900">
+            <div className="mb-12">
+                <h1 className="text-3xl font-bold tracking-tight uppercase leading-tight">Verification Queue</h1>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Audit and clear documentary evidence for processing fees</p>
+            </div>
+
+            <div className="bg-white rounded-[2rem] border border-blue-100 overflow-hidden shadow-2xl shadow-blue-900/5">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-blue-50 border-b border-blue-100">
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Applicant</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Stage / Fee</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Proof Evidence</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-blue-50">
+                            {paymentList.map((pay: any) => (
+                                <tr key={pay.id} className="hover:bg-blue-50/50 transition-colors group">
+                                    <td className="px-8 py-6">
+                                        <p className="text-sm font-bold text-blue-900 uppercase tracking-tight">{pay.Application?.User?.fullName}</p>
+                                        <p className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">{pay.Application?.User?.email}</p>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <p className="text-sm font-bold text-blue-900 uppercase tracking-tight">{pay.JobStage?.name}</p>
+                                        <p className="text-[10px] text-blue-500 font-bold uppercase tracking-[0.2em]">${pay.amount}</p>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <a 
+                                            href={pay.proofUrl} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 text-[10px] font-bold text-blue-400 hover:text-blue-900 transition-colors uppercase tracking-widest"
+                                        >
+                                            <span className="material-symbols-outlined text-base">image</span>
+                                            View Document
+                                        </a>
+                                    </td>
+                                    <td className="px-8 py-6 text-right">
+                                        <button
+                                            onClick={() => setSelectedPayment(pay)}
+                                            className="bg-blue-900 text-white px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-lg shadow-blue-900/10 active:scale-95"
+                                        >
+                                            Audit Pass
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            {paymentList.length === 0 && (
+                                <tr>
+                                    <td colSpan={4} className="px-8 py-12 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300 italic">
+                                        No unverified nodes detected
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div className="space-y-4">
-                {proofList.length === 0 ? (
-                    <div className="py-20 text-center bg-white rounded-2xl border border-blue-100 border-dashed">
-                        <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Verification queue is empty</p>
-                    </div>
-                ) : proofList.map((p: Payment) => (
-                    <div key={p.id} className={`bg-white rounded-2xl p-6 border border-blue-100 shadow-sm flex flex-col lg:flex-row items-center gap-8 ${p.amount >= 5000 ? 'ring-1 ring-blue-900 shadow-md' : ''}`}>
-                        <div
-                            className="w-24 h-32 rounded-lg bg-blue-100 overflow-hidden cursor-pointer border border-blue-100 shrink-0 shadow-inner group relative"
-                            onClick={() => setSelectedProof(p)}
-                        >
-                            {p.proofUrl?.endsWith('.pdf') ? (
-                                <div className="h-full flex items-center justify-center bg-blue-200">
-                                    <span className="material-symbols-outlined text-blue-400">picture_as_pdf</span>
-                                </div>
-                            ) : (
-                                <img src={p.proofUrl || ''} alt="Proof" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
-                            )}
-                            <div className="absolute inset-0 bg-blue-900/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all">
-                                <span className="material-symbols-outlined text-white text-base">zoom_in</span>
-                            </div>
-                        </div>
-
-                        <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {selectedPayment && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-blue-900/95 backdrop-blur-md animate-in fade-in duration-300">
+                    <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-xl overflow-hidden border border-white/20">
+                        <div className="p-8 border-b border-blue-50 flex justify-between items-center">
                             <div>
-                                <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Applicant</span>
-                                <p className="text-sm font-bold text-blue-900 mt-1">{p.Application?.User?.fullName || 'Anonymous'}</p>
-                                <p className="text-[10px] text-blue-500 font-medium">#{p.applicationId}</p>
+                                <h3 className="text-lg font-bold text-blue-900 uppercase tracking-tight">Settlement Audit</h3>
+                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Protocol #CC-{selectedPayment.id.toString().padStart(5, '0')}</p>
                             </div>
-                            <div>
-                                <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Amount</span>
-                                <p className="text-2xl font-bold text-blue-900 tracking-tight mt-1">${p.amount.toLocaleString()}</p>
-                                {p.amount >= 5000 && <span className="text-[9px] font-black text-blue-900 uppercase tracking-widest px-1.5 py-0.5 bg-blue-100 rounded">High Value</span>}
-                            </div>
-                            <div>
-                                <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Submitted</span>
-                                <p className="text-[11px] font-bold text-blue-900 uppercase tracking-tight mt-1">{new Date(p.updatedAt).toLocaleDateString()}</p>
-                                <p className="text-[10px] text-blue-400 uppercase tracking-widest">{new Date(p.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-3 shrink-0">
-                            <button
-                                onClick={() => executeVerify(p.id, 'PAID')}
-                                className="bg-blue-900 text-white px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10"
-                            >
-                                Verify
-                            </button>
-                            <button
-                                onClick={() => { setSelectedProof(p); setNote(''); }}
-                                className="bg-white text-blue-900 border border-blue-200 px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-50 transition-all"
-                            >
-                                Inspect
+                            <button onClick={() => setSelectedPayment(null)} className="text-blue-400 hover:text-blue-900 transition-colors">
+                                <span className="material-symbols-outlined">close</span>
                             </button>
                         </div>
-                    </div>
-                ))}
-            </div>
-
-            {selectedProof && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-blue-900/90 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl flex flex-col md:flex-row h-[80vh] overflow-hidden border border-blue-100">
-                        <div className="flex-1 bg-blue-50 relative border-r border-blue-100">
-                            {selectedProof.proofUrl?.endsWith('.pdf') ? (
-                                <iframe src={selectedProof.proofUrl} className="w-full h-full" />
-                            ) : (
-                                <img src={selectedProof.proofUrl || ''} className="w-full h-full object-contain p-8" />
-                            )}
-                            <button onClick={() => setSelectedProof(null)} className="absolute top-4 left-4 bg-white p-2 rounded-lg shadow-sm hover:bg-blue-50 transition-all border border-blue-200">
-                                <span className="material-symbols-outlined text-base">close</span>
-                            </button>
-                        </div>
-                        <div className="w-full md:w-80 p-8 flex flex-col justify-between">
-                            <div className="space-y-6">
-                                <div>
-                                    <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Audit Action</h3>
-                                    <p className="text-xl font-bold text-blue-900 tracking-tight">Review Proof</p>
-                                </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Internal Note</label>
-                                    <textarea
-                                        className="w-full h-32 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm font-medium focus:bg-white transition-all outline-none focus:ring-2 focus:ring-blue-900/5 resize-none"
-                                        placeholder="Add verification notes..."
-                                        value={note}
-                                        onChange={(e) => setNote(e.target.value)}
-                                    />
-                                    <p className="text-[9px] text-blue-400 italic">This note is shared with the applicant.</p>
-                                </div>
+                        
+                        <div className="p-8 space-y-8">
+                            <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                                <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-4">Verification Artifact</p>
+                                <img 
+                                    src={selectedPayment.proofUrl} 
+                                    alt="Proof of Payment" 
+                                    className="w-full rounded-xl shadow-lg border border-white object-contain max-h-[300px]"
+                                />
                             </div>
-                            <div className="space-y-3">
+
+                            <div className="space-y-4">
+                                <label className="text-[10px] font-black text-blue-400 uppercase tracking-widest px-1">Internal Note / Rejection Reason</label>
+                                <textarea
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
+                                    placeholder="Enter audit notes or rejection details..."
+                                    className="w-full bg-blue-50 border border-blue-100 rounded-2xl p-5 text-sm font-medium text-blue-900 focus:bg-white outline-none focus:ring-4 focus:ring-blue-100 transition-all h-32 resize-none"
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
                                 <button
-                                    onClick={() => executeVerify(selectedProof.id, 'PAID')}
-                                    className="w-full bg-blue-900 text-white py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg"
+                                    onClick={() => verifyMutation.mutate({ isApproved: false, note })}
+                                    disabled={verifyMutation.isPending}
+                                    className="py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-red-50 text-red-600 hover:bg-red-100 transition-all active:scale-95"
                                 >
-                                    Approve Proof
+                                    {verifyMutation.isPending ? 'Processing...' : 'Fail Audit'}
                                 </button>
                                 <button
-                                    onClick={() => executeVerify(selectedProof.id, 'REJECTED')}
-                                    className="w-full bg-red-50 text-red-600 border border-red-100 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-red-100 transition-all"
+                                    onClick={() => verifyMutation.mutate({ isApproved: true, note })}
+                                    disabled={verifyMutation.isPending}
+                                    className="py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-blue-900 text-white shadow-xl shadow-blue-900/10 hover:bg-black transition-all active:scale-95"
                                 >
-                                    Reject Proof
+                                    {verifyMutation.isPending ? 'Processing...' : 'Approve Node'}
                                 </button>
                             </div>
                         </div>

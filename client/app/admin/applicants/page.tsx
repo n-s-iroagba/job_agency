@@ -1,13 +1,26 @@
 'use client';
 
 import React from 'react';
-import { useApiQuery } from '@/lib/hooks';
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { User } from '@/types/models';
 
 export default function AdminApplicantsPage() {
-    const { data: users, isLoading } = useApiQuery<{ rows: User[], count: number }>(['admin', 'users', 'all'], '/admin/users');
+    const { data: users, isLoading, refetch } = useApiQuery<{ rows: User[], count: number }>(['admin', 'users', 'all'], '/admin/users');
+    const deleteMutation = useApiMutation('delete', '/admin/users/:id');
     const userList = users?.rows || [];
+
+    const handleDelete = async (id: number) => {
+        if (confirm('CAUTION: This will permanently purge this talent identity and all associated dossiers. Continue?')) {
+            try {
+                await deleteMutation.mutateAsync({ params: { id } });
+                refetch();
+            } catch (error) {
+                alert('Purge failed: Access denied or system conflict.');
+            }
+        }
+    };
 
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Synchronizing Registry...</div>;
 
@@ -64,6 +77,13 @@ export default function AdminApplicantsPage() {
                                                 <span className="material-symbols-outlined text-sm font-bold">mail</span>
                                                 Message
                                             </Link>
+                                            <button
+                                                onClick={() => handleDelete(u.id)}
+                                                className="inline-flex items-center gap-2 bg-white border border-red-100 px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-[0.2em] text-red-400 hover:text-white hover:bg-red-500 hover:border-red-500 transition-all shadow-sm active:scale-95"
+                                            >
+                                                <span className="material-symbols-outlined text-sm font-bold">delete</span>
+                                                Purge
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

@@ -6,8 +6,8 @@ import { JobListing, Application, JobCategory } from '../models';
 
 export class JobService {
     // Maps to STK-APP-DASH-001
-    public async getActiveJobs(limit?: number, offset?: number, categoryId?: number, employmentType?: string, searchQuery?: string) {
-        return jobRepository.findAllActive({ limit, offset, categoryId, employmentType, searchQuery });
+    public async getActiveJobs(limit?: number, offset?: number, categoryId?: number, employmentType?: string, searchQuery?: string, sortBy?: string, sortOrder?: 'ASC' | 'DESC') {
+        return jobRepository.findAllActive({ limit, offset, categoryId, employmentType, searchQuery, sortBy, sortOrder });
     }
 
     // Maps to STK-ADM-JOB-004

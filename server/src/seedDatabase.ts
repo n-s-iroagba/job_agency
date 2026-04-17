@@ -1,130 +1,196 @@
-import bcrypt from 'bcrypt';
-import { sequelize, User, BankAccount, CryptoWallet, JobCategory, JobListing, JobBenefit, JobCondition, JobStage, Application, Payment, Notification } from './models';
+import { sequelize, User, BankAccount, CryptoWallet, JobCategory, JobListing, JobBenefit, JobCondition } from './models';
 import { CONSTANTS } from './constants';
+import bcrypt from 'bcrypt';
 
-const seedDatabase = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Database connected.');
+export async function seedDatabase() {
+    await sequelize.sync({ force: true });
+    console.log('Database synced. Seeding global recruitment data with JSON pipeline templates...');
 
-        // 1. Synchronize (with safety)
-        const isForce = process.argv.includes('--force');
-        const userCount = await User.count();
+    const adminPassword = await bcrypt.hash('AdminPass123!', 12);
+    const applicantPassword = await bcrypt.hash('ApplicantPass123!', 12);
 
-        if (userCount > 0 && !isForce) {
-            console.log('Database already contains data. Use --force to reseed.');
-            process.exit(0);
-        }
+    // 1. Seed Core Identity
+    await User.create({
+        fullName: 'Global System Admin',
+        email: 'admin@careercurator.com',
+        passwordHash: adminPassword,
+        role: CONSTANTS.ROLES.ADMIN,
+        isVerified: true,
+    });
 
-        if (isForce) {
-            await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
-            await sequelize.sync({ force: true });
-            await sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
-            console.log('Database recreated (FORCED).');
-        } else {
-            await sequelize.sync();
-            console.log('Database synced (safe mode).');
-        }
-
-        // 2. Add Users
-        const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@elite.com';
-        const adminPass = process.env.SEED_ADMIN_PASSWORD || 'admin123';
-        const passwordHash = await bcrypt.hash(adminPass, 10);
-
-        const admin = await User.create({
-            fullName: 'Admin User',
-            email: adminEmail,
-            passwordHash,
-            role: CONSTANTS.ROLES.ADMIN,
-            isVerified: true,
-        });
-
-        const appPasswordHash = await bcrypt.hash('applicant123', 10);
-        const applicant = await User.create({
-            fullName: 'Marcus Sterling',
-            email: 'm.sterling@example.com',
-            passwordHash: appPasswordHash,
+    for (let i = 1; i <= 3; i++) {
+        await User.create({
+            fullName: `Global Applicant ${i}`,
+            email: `applicant${i}@example.com`,
+            passwordHash: applicantPassword,
             role: CONSTANTS.ROLES.APPLICANT,
             isVerified: true,
         });
-
-        // 3. System Finance
-        await CryptoWallet.create({
-            currencyName: CONSTANTS.CRYPTO_TYPES.USDT,
-            networkType: CONSTANTS.CRYPTO_NETWORKS.TRC20,
-            walletAddress: 'T9yD14Nj9j7xAB4dbzL...',
-            displayLabel: 'Primary Treasury Wallet USDT (TRC20)',
-            isActive: true,
-        });
-
-        await BankAccount.create({
-            bankName: 'Global Heritage Bank',
-            accountNumber: '92837492019',
-            accountType: CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY,
-            routingCode: 'CHASUS33XX',
-            currency: 'USD',
-            isActive: true,
-        });
-
-        // 4. Categories
-        const engCat = await JobCategory.create({ name: 'Engineering' });
-        const designCat = await JobCategory.create({ name: 'Design & Creative' });
-
-        // 5. Conditions & Benefits
-        const benefitRemote = await JobBenefit.create({ benefitType: 'WORK_LIFE', description: 'Fully Remote Workflow' });
-        const condRelo = await JobCondition.create({ name: 'Relocation Required', description: 'Available within 30 days.' });
-
-        // 6. Job Listing
-        const job = await JobListing.create({
-            title: 'Senior UX Architect',
-            description: 'Craft a compelling narrative for your next role.',
-            location: 'London, UK or Remote',
-            employmentType: 'Full-time',
-            requirements: '5+ years UX research experience',
-            categoryId: designCat.id,
-        });
-
-        // Add relationships
-        // @ts-ignore
-        await job.addJobBenefits([benefitRemote]);
-        // @ts-ignore
-        await job.addJobConditions([condRelo]);
-
-        // 7. Stages
-        const stage1 = await JobStage.create({
-            jobId: job.id,
-            name: 'Portfolio Review',
-            description: 'Submit your best designs',
-            orderPosition: 1,
-            requiresPayment: true,
-            amount: 50.00,
-            currency: 'USD',
-        });
-
-        // 8. Application
-        const app = await Application.create({
-            userId: applicant.id,
-            jobId: job.id,
-            currentStageId: stage1.id,
-            status: CONSTANTS.APPLICATION_STATUSES.ACTIVE,
-            completionPercentage: 85,
-        });
-
-        await Payment.create({
-            applicationId: app.id,
-            stageId: stage1.id,
-            amount: 50.00,
-            currency: 'USD',
-            status: CONSTANTS.PAYMENT_STATUSES.UNPAID
-        });
-
-        console.log('Seeding Complete! 🎉');
-        process.exit(0);
-
-    } catch (e) {
-        console.error('Seeding failed: ', e);
-        process.exit(1);
     }
-};
 
-void seedDatabase();
+    // 2. Seed Financial Rails
+    await BankAccount.create({
+        bankName: 'International Settlement Bank',
+        accountNumber: 'GB12ISB80000',
+        accountType: CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY,
+        routingCode: 'ISB88',
+    });
+
+    await BankAccount.create({
+        bankName: 'Global High-Yield Capital',
+        accountNumber: 'CH99GHYC5000',
+        accountType: CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL,
+        routingCode: 'GHYC22',
+    });
+
+    await CryptoWallet.create({
+        displayLabel: 'Corporate Settlement (USDT)',
+        currencyName: CONSTANTS.CRYPTO_TYPES.USDT,
+        networkType: CONSTANTS.CRYPTO_NETWORKS.TRC20,
+        walletAddress: 'TYhc6R6pS3Y1s8vX2a9zB4mN7kL3p9qR',
+        isActive: true,
+    });
+
+    // 3. Seed Industrial Sectors (Categories)
+    const sectors = [
+        { name: 'Energy & Resources', description: 'Oil, Gas, and Renewable Energy operations.' },
+        { name: 'Maritime & Logistics', description: 'Global shipping and port management.' },
+        { name: 'Aerospace & Aviation', description: 'Commercial aviation and aerospace engineering.' },
+        { name: 'Healthcare & Life Sciences', description: 'Specialized healthcare and clinical research.' },
+        { name: 'Technology & Innovation', description: 'Global infrastructure and digital transformation.' },
+        { name: 'Infrastructure & Construction', description: 'Civil engineering and mega-projects.' },
+        { name: 'Global Trade & Manufacturing', description: 'Supply chain and industrial automation.' }
+    ];
+
+    const categoryMap: any = {};
+    for (const sector of sectors) {
+        const cat = await JobCategory.create(sector);
+        categoryMap[sector.name] = cat;
+    }
+
+    // 4. Global Benefits & Conditions
+    const benHealth = await JobBenefit.create({ benefitType: 'Global Health Premium', description: 'Full international health and dental coverage for family.' });
+    const benRelo = await JobBenefit.create({ benefitType: 'Relocation Package', description: 'Complete relocation assistance including housing search and flights.' });
+    const benFlight = await JobBenefit.create({ benefitType: 'Annual Home Flight', description: 'Business class annual return flights to country of origin.' });
+
+    const condVisa = await JobCondition.create({ name: 'International Work Rights', description: 'Must be eligible for a work visa in the destination country.' });
+    const condCert = await JobCondition.create({ name: 'Sector Certification', description: 'Mandatory industry-standard certification for high-risk roles.' });
+    const condLang = await JobCondition.create({ name: 'English Proficiency', description: 'Minimum IELTS 7.5 or equivalent professional proficiency.' });
+
+    // 5. Seed 7 Realistic Global Jobs
+    const jobs = [
+        {
+            title: 'Drilling Operations Manager',
+            description: 'Oversee offshore drilling operations in the Gulf of Mexico. This role requires extensive experience in deep-water pressure management and safety protocols.',
+            location: 'Houston / Offshore',
+            employmentType: 'Full-Time',
+            requirements: '10+ years in Petrophysical engineering; Deep-water certification.',
+            company: 'Oceanic Energy Corp',
+            visaSponsorship: true,
+            category: 'Energy & Resources'
+        },
+        {
+            title: 'Chief Marine Engineer',
+            description: 'Lead engineering department on a 20,000 TEU container vessel. Responsible for main propulsion and auxiliary systems during global transits.',
+            location: 'Global (Vessel-Based)',
+            employmentType: 'Contract',
+            requirements: 'Class 1 Marine Engineer Certificate of Competency.',
+            company: 'Maersk Liner Services',
+            visaSponsorship: false,
+            category: 'Maritime & Logistics'
+        },
+        {
+            title: 'Senior First Officer (B787)',
+            description: 'Operate long-haul international routes. Ensuring passenger safety and following strict global EASA/FAA regulations.',
+            location: 'London Heathrow Base',
+            employmentType: 'Full-Time',
+            requirements: '5,000+ flight hours; Valid ATPL license.',
+            company: 'British Global Airways',
+            visaSponsorship: true,
+            category: 'Aerospace & Aviation'
+        },
+        {
+            title: 'Critical Care Specialist Nurse',
+            description: 'Provide advanced life support in a state-of-the-art ICU environment. Role includes mentoring junior nurses and managing patient technology.',
+            location: 'Riyadh, Saudi Arabia',
+            employmentType: 'Full-Time',
+            requirements: 'Registered Nurse; 5+ years in Critical Care; Post-grad specialization.',
+            company: 'King Faisal Specialist Hospital',
+            visaSponsorship: true,
+            category: 'Healthcare & Life Sciences'
+        },
+        {
+            title: 'Global Infrastructure Architect',
+            description: 'Design and implement hybrid cloud infrastructure for a multinational organization with nodes in 45 countries.',
+            location: 'Dubai / Remote Flex',
+            employmentType: 'Full-Time',
+            requirements: 'Expertise in Azure/AWS; Multi-regional network design experience.',
+            company: 'NexaCore Global',
+            visaSponsorship: true,
+            category: 'Technology & Innovation'
+        },
+        {
+            title: 'Mega-Project Director',
+            description: 'Direct a $2B infrastructure project including tunnel boring and urban station construction in a dense metropolitan area.',
+            location: 'Singapore',
+            employmentType: 'Full-Time',
+            requirements: 'Chartered Engineer; Experience in projects >$500M.',
+            company: 'LTA Engineering Partners',
+            visaSponsorship: true,
+            category: 'Infrastructure & Construction'
+        },
+        {
+            title: 'Global Supply Chain Lead',
+            description: 'Optimize manufacturing throughput across European and Asian production hubs. implementing AI-driven logistics models.',
+            location: 'Berlin, Germany',
+            employmentType: 'Full-Time',
+            requirements: 'Master’s in Supply Chain Mgmt; Expert in SAP S/4HANA.',
+            company: 'Siemens Industrial Automation',
+            visaSponsorship: true,
+            category: 'Global Trade & Manufacturing'
+        }
+    ];
+
+    const genericStages = [
+        { name: 'Identity & Initial Screening', description: 'Review of professional credentials and government-issued identity.', orderPosition: 1, requiresPayment: false },
+        { name: 'Background Verification Payment', description: 'Third-party investigation including criminal and credit history.', orderPosition: 2, requiresPayment: true, amount: 250 },
+        { name: 'Technical Simulation', description: 'Remote assessment of specialized skills or flight simulator session.', orderPosition: 3, requiresPayment: false },
+        { name: 'Compliance & Medical Review', description: 'Final medical clearance and visa eligibility assessment.', orderPosition: 4, requiresPayment: true, amount: 450 }
+    ];
+
+    for (const jobData of jobs) {
+        const job = await JobListing.create({
+            title: jobData.title,
+            description: jobData.description,
+            location: jobData.location,
+            employmentType: jobData.employmentType,
+            requirements: jobData.requirements,
+            company: jobData.company,
+            visaSponsorship: jobData.visaSponsorship,
+            categoryId: categoryMap[jobData.category].id,
+            isActive: true,
+            stages: genericStages.map(s => ({
+                ...s,
+                currency: 'USD',
+                instructions: s.requiresPayment ? `Please complete the ${s.name} by transferring the required fee to our secure settlement accounts.` : `Please complete the ${s.name} as per the instructions provided in your dashboard.`
+            }))
+        });
+
+        // Link Benefits & Conditions
+        await (job as any).addJobBenefit(benHealth);
+        await (job as any).addJobBenefit(benRelo);
+        if (jobData.visaSponsorship) {
+            await (job as any).addJobBenefit(benFlight);
+            await (job as any).addJobCondition(condVisa);
+        }
+        await (job as any).addJobCondition(condCert);
+        await (job as any).addJobCondition(condLang);
+    }
+
+    console.log('Seeding completed successfully! 7 Global Jobs with pipelines created.');
+}
+
+seedDatabase().catch(err => {
+    console.error('Failed to seed database:', err);
+    process.exit(1);
+});

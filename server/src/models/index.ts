@@ -24,7 +24,7 @@ JobCategory.hasMany(JobCondition, { foreignKey: 'categoryId' });
 JobCondition.belongsTo(JobCategory, { foreignKey: 'categoryId' });
 
 // Application <-> Job Stage
-Application.hasMany(JobStage, { foreignKey: 'applicationId', as: 'JobStages' });
+Application.hasMany(JobStage, { foreignKey: 'applicationId', as: 'JobStages', onDelete: 'CASCADE', hooks: true });
 JobStage.belongsTo(Application, { foreignKey: 'applicationId' });
 
 // JobListing <-> JobBenefit (M:N)
@@ -36,7 +36,7 @@ JobListing.belongsToMany(JobCondition, { through: 'ListingConditions', foreignKe
 JobCondition.belongsToMany(JobListing, { through: 'ListingConditions', foreignKey: 'conditionId', otherKey: 'jobId' });
 
 // User <-> Application
-User.hasMany(Application, { foreignKey: 'userId' });
+User.hasMany(Application, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
 Application.belongsTo(User, { foreignKey: 'userId' });
 
 // JobListing <-> Application
@@ -46,14 +46,14 @@ Application.belongsTo(JobListing, { foreignKey: 'jobId' });
 // JobListing <-> JobStage (Template Stages)
 
 // Application <-> Payment
-Application.hasMany(Payment, { foreignKey: 'applicationId' });
+Application.hasMany(Payment, { foreignKey: 'applicationId', onDelete: 'CASCADE', hooks: true });
 Payment.belongsTo(Application, { foreignKey: 'applicationId' });
 
 // JobStage <-> Payment
-JobStage.hasMany(Payment, { foreignKey: 'stageId' });
+JobStage.hasMany(Payment, { foreignKey: 'stageId', onDelete: 'CASCADE', hooks: true });
 Payment.belongsTo(JobStage, { foreignKey: 'stageId' });
 // User <-> Notification
-User.hasMany(Notification, { foreignKey: 'userId' });
+User.hasMany(Notification, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
 Notification.belongsTo(User, { foreignKey: 'userId' });
 
 // Admin who verified payment
