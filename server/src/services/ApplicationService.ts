@@ -52,6 +52,8 @@ export class ApplicationService {
             allPayments.push(...payments);
         }
 
+        const activeJobs = await jobRepository.findAllActive({ limit: 5 });
+
         return {
             pendingStages,      // STK-APP-DASH-001
             unpaidPayments,     // STK-APP-DASH-001
