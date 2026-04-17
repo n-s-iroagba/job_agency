@@ -16,7 +16,7 @@ export class ApplicationRepository {
             limit: options.limit || 10,
             offset: options.offset || 0,
             include: [
-                { model: JobListing, attributes: ['id', 'title'] }
+                { model: JobListing, attributes: ['id', 'title', 'company', 'location', 'salary'] }
             ],
             order: [['updatedAt', 'DESC']],
             transaction

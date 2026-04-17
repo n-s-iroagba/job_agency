@@ -97,14 +97,34 @@ export default function ApplicantDashboard() {
                                 <div key={app.applicationId} className="bg-white p-6 rounded-[2rem] border border-blue-100 shadow-sm transition-all hover:shadow-xl hover:shadow-blue-900/5 hover:border-blue-900/20">
                                     <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-8">
                                         <div className="flex-1">
-                                            <h3 className="text-xl font-bold text-blue-900 tracking-tight leading-tight">{app.jobTitle}</h3>
-                                            <div className="flex items-center gap-3 mt-3">
-                                                <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest">Active Phase:</span>
-                                                <span className="px-3 py-1 bg-blue-50 text-blue-900 text-[9px] font-black uppercase tracking-widest rounded-lg border border-blue-100">{app.stageName}</span>
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest leading-none bg-blue-50 px-2 py-1 rounded">#{app.applicationId}</span>
+                                                <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest leading-none bg-emerald-50 px-2 py-1 rounded">{app.jobCompany}</span>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-blue-900 tracking-tight leading-tight mb-2">{app.jobTitle}</h3>
+                                            <div className="flex items-center gap-4 mb-6">
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className="material-symbols-outlined text-[14px] text-blue-300">location_on</span>
+                                                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">{app.jobLocation}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-blue-400">
+                                                    <span className="material-symbols-outlined text-[14px] text-blue-300">payments</span>
+                                                    <span className="text-[10px] font-bold uppercase tracking-widest">{app.jobSalary}</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-50 mb-6 group-hover:bg-white group-hover:border-blue-100 transition-all">
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-900 animate-pulse" />
+                                                    <span className="text-[9px] font-black text-blue-900 uppercase tracking-[0.2em]">{app.stageName}</span>
+                                                </div>
+                                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-tight leading-relaxed line-clamp-2 italic opacity-80">
+                                                    {app.stageDescription}
+                                                </p>
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <div className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Total Progress</div>
+                                            <div className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Vector Depth</div>
                                             <div className="text-2xl font-bold font-mono text-blue-900 tracking-tighter">{app.completionPercentage}%</div>
                                         </div>
                                     </div>

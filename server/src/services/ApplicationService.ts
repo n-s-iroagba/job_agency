@@ -34,12 +34,16 @@ export class ApplicationService {
                 pendingStages.push({
                     applicationId: app.id,
                     jobTitle: app.JobListing?.title,
+                    jobCompany: app.JobListing?.company,
+                    jobLocation: app.JobListing?.location,
+                    jobSalary: app.JobListing?.salary,
                     stageId: app.currentStageId,
                     completionPercentage: app.completionPercentage,
                     requiresPayment: currentStage?.requiresPayment || false,
                     amount: currentStage?.amount,
                     currency: currentStage?.currency,
                     stageName: currentStage?.name,
+                    stageDescription: currentStage?.description,
                     paymentStatus: payment?.status || 'Unpaid',
                 });
             }
