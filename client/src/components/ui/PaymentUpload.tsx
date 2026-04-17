@@ -115,12 +115,12 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
             {selectedCurrency && (
                 <div className="space-y-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <h4 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Settlement Instruction Set</h4>
-                    
+
                     {paymentMode === 'bank' && isHighValue && (
                         <div className="p-5 bg-amber-50 border border-amber-100 rounded-xl flex items-start gap-3">
                             <span className="material-symbols-outlined text-amber-600">info</span>
                             <p className="text-[10px] text-amber-700 font-bold uppercase tracking-widest leading-relaxed">
-                                High-Value Security Alert: Please ensure the account holder name is set to "Application Manager" to avoid automated clearance delays on this node.
+                                You are to make payment to the recruitment manager's company account for this process.
                             </p>
                         </div>
                     )}
@@ -133,7 +133,7 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
                                         <div>
                                             <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest mb-1">Account Beneficiary</p>
                                             <p className="text-sm font-bold text-blue-900 uppercase tracking-tight">
-                                                {isHighValue ? 'Application Manager' : 'JOBNEXE LLC'}
+                                                {isHighValue ? `${acc.accountHolderName}` : 'JOBNEXE LLC'}
                                             </p>
                                             <p className="text-[11px] text-blue-500 font-bold uppercase mt-1">{acc.bankName}</p>
                                         </div>
@@ -147,7 +147,7 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
                                         <div className="bg-blue-50 p-4 rounded-xl relative group">
                                             <p className="text-[8px] font-bold text-blue-400 uppercase tracking-widest mb-1">Account Number</p>
                                             <p className="text-xs font-mono font-bold text-blue-900 break-all">{acc.accountNumber}</p>
-                                            <button 
+                                            <button
                                                 onClick={() => handleCopy(acc.accountNumber, `bank-num-${acc.id}`)}
                                                 className="absolute top-4 right-4 text-[9px] font-bold text-blue-400 hover:text-blue-900 uppercase tracking-widest"
                                             >
@@ -158,7 +158,7 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
                                             <p className="text-[8px] font-bold text-blue-400 uppercase tracking-widest mb-1">Routing / Sort Code</p>
                                             <p className="text-xs font-mono font-bold text-blue-900 break-all">{acc.routingCode || 'N/A'}</p>
                                             {acc.routingCode && (
-                                                <button 
+                                                <button
                                                     onClick={() => handleCopy(acc.routingCode, `bank-route-${acc.id}`)}
                                                     className="absolute top-4 right-4 text-[9px] font-bold text-blue-400 hover:text-blue-900 uppercase tracking-widest"
                                                 >
@@ -186,7 +186,7 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
                                     <div className="bg-blue-900 p-5 rounded-xl space-y-3">
                                         <div className="flex justify-between items-center">
                                             <p className="text-[8px] font-bold text-blue-400 uppercase tracking-widest">Network Address</p>
-                                            <button 
+                                            <button
                                                 onClick={() => handleCopy(w.walletAddress, `crypto-${w.id}`)}
                                                 className="text-[9px] font-bold text-blue-500 hover:text-white uppercase tracking-widest transition-colors"
                                             >
@@ -215,7 +215,7 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
                 <div className="pt-10 border-t border-blue-50 animate-in fade-in duration-700">
                     <h4 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-4 px-1">Protocol Conclusion: Documentary Proof</h4>
                     <p className="text-[10px] text-blue-500 font-medium mb-8 leading-relaxed px-1">
-                        Please upload a clear, legible screenshot or PDF of your transaction receipt. <br/>
+                        Please upload a clear, legible screenshot or PDF of your transaction receipt. <br />
                         Required Metadata: <span className="font-bold text-blue-900">#CC-{paymentId.toString().padStart(5, '0')}</span> must be quoted in remarks.
                     </p>
 
