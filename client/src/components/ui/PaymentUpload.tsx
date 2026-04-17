@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { useApiQuery } from '@/lib/hooks';
 import api from '@/lib/api';
+import { uploadFile } from '@/lib/utils';
 
 interface PaymentUploadProps {
     paymentId: number;
@@ -50,12 +51,12 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
         if (!file) return;
 
         setUploading(true);
-        const formData = new FormData();
-        formData.append('proof', file);
 
         try {
-            await api.post(`/payments/${paymentId}/proof`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+            const cloudinaryUrl = await uploadFile(file, 'image');
+
+            await api.post(`/payments/${paymentId}/proof`, {
+                proofUrl: cloudinaryUrl
             });
             onSuccess();
         } catch (err: any) {

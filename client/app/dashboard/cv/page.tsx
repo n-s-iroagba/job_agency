@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { CONSTANTS } from '@/constants';
 import api from '@/lib/api';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { uploadFile } from '@/lib/utils';
 
 interface Cv {
     id: number;
@@ -47,15 +48,12 @@ function CvContent() {
             return;
         }
 
-        setError(null);
-        setUploading(true);
-
         try {
-            // Simulator: In a production environment, this would be a client-side upload to S3/Cloudinary
-            const mockUrl = `https://storage.googleapis.com/job-agency-cvs/cv_${Date.now()}.pdf`;
+            const cloudinaryUrl = await uploadFile(file, 'image');
 
             await api.post('/cv', {
-                cvUrl: mockUrl,
+                cvUrl: cloudinaryUrl,
+                fileName: file.name,
                 fileType: file.type,
                 fileSizeMb: parseFloat((file.size / (1024 * 1024)).toFixed(2))
             });

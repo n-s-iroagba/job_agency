@@ -4,10 +4,50 @@ import bcrypt from 'bcrypt';
 
 export async function seedDatabase() {
     await sequelize.sync({ force: true });
-    console.log('Database synced. Seeding global recruitment data with JSON pipeline templates...');
+    const adminPassword = await bcrypt.hash('AdminPass123!', 12);
+    const applicantPassword = await bcrypt.hash('ApplicantPass123!', 12);
 
+    // 1. Seed Core Identity
+    await User.create({
+        fullName: 'Global System Admin',
+        email: 'admin@careercurator.com',
+        passwordHash: adminPassword,
+        role: CONSTANTS.ROLES.ADMIN,
+        isVerified: true,
+    });
 
-    // 3. Seed Industrial Sectors (Categories)
+    for (let i = 1; i <= 3; i++) {
+        await User.create({
+            fullName: `Global Applicant ${i}`,
+            email: `applicant${i}@example.com`,
+            passwordHash: applicantPassword,
+            role: CONSTANTS.ROLES.APPLICANT,
+            isVerified: true,
+        });
+    }
+
+    // 2. Seed Financial Rails
+    await BankAccount.create({
+        bankName: 'International Settlement Bank',
+        accountNumber: 'GB12ISB80000',
+        accountType: CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY,
+        routingCode: 'ISB88',
+    });
+
+    await BankAccount.create({
+        bankName: 'Global High-Yield Capital',
+        accountNumber: 'CH99GHYC5000',
+        accountType: CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL,
+        routingCode: 'GHYC22',
+    });
+
+    await CryptoWallet.create({
+        displayLabel: 'Corporate Settlement (USDT)',
+        currencyName: CONSTANTS.CRYPTO_TYPES.USDT,
+        networkType: CONSTANTS.CRYPTO_NETWORKS.TRC20,
+        walletAddress: 'TYhc6R6pS3Y1s8vX2a9zB4mN7kL3p9qR',
+        isActive: true,
+    });
     const sectors = [
         { name: 'Energy & Resources', description: 'Oil, Gas, and Renewable Energy operations.' },
         { name: 'Maritime & Logistics', description: 'Global shipping and port management.' },
