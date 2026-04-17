@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         const storedUser = localStorage.getItem('user');
-        
+
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

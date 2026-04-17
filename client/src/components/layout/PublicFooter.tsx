@@ -10,7 +10,7 @@ export function PublicFooter() {
                 <div className="space-y-8">
                     <span className="text-xl font-black italic uppercase tracking-[0.1em] text-blue-900">JobNexe</span>
                     <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] leading-loose max-w-[200px]">
-                        © 2024 JobNexe Enterprise. Global placement & recruitment infrastructure.
+                        © 2026 JobNexe Enterprise. Global placement & recruitment infrastructure.
                     </p>
                 </div>
                 <div>

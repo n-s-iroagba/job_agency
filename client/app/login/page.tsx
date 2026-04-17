@@ -140,7 +140,7 @@ function LoginContent() {
 
             <footer className="py-8 px-6 border-t border-blue-50">
                 <div className="max-w-[1280px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-bold text-blue-400 uppercase tracking-widest">
-                    <p>© 2024 JobNexe</p>
+                    <p>© 2026 JobNexe</p>
                     <div className="flex gap-6">
                         <Link className="hover:text-blue-900 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Privacy</Link>
                         <a className="hover:text-blue-900 transition-colors" href="#">Terms</a>

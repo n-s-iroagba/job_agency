@@ -232,7 +232,7 @@ export class AuthService {
                         <a href="${buttonUrl}" target="_blank" class="button">${buttonLabel}</a>
                     </div>
                     <div class="footer">
-                        <p>© 2024 JobNexe · Secure Identity Management</p>
+                        <p>© 2026 JobNexe · Secure Identity Management</p>
                     </div>
                 </div>
             </body>
