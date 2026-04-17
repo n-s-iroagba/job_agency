@@ -13,10 +13,10 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
     try {
         await connectDB();
-        seedDatabase().catch(err => {
-            console.error('Failed to seed database:', err);
-            process.exit(1);
-        });
+        // seedDatabase().catch(err => {
+        //     console.error('Failed to seed database:', err);
+        //     process.exit(1);
+        // });
 
         if (process.env.NODE_ENV !== 'production') {
             //

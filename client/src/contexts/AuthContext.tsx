@@ -32,12 +32,21 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const PUBLIC_ROUTES = [
+    CONSTANTS.ROUTES.HOME,
+    CONSTANTS.ROUTES.PUBLIC_JOBS,
+    CONSTANTS.ROUTES.ABOUT,
+    CONSTANTS.ROUTES.TERMS,
+    CONSTANTS.ROUTES.PRIVACY,
+    CONSTANTS.ROUTES.COMPLIANCE,
+    CONSTANTS.ROUTES.SUPPORT,
+    '/verify-email',
+];
+
+const AUTH_ROUTES = [
     CONSTANTS.ROUTES.LOGIN,
     CONSTANTS.ROUTES.REGISTER,
     CONSTANTS.ROUTES.FORGOT_PASSWORD,
     CONSTANTS.ROUTES.RESET_PASSWORD,
-    '/verify-email',
-    '/'
 ];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -77,9 +86,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         if (!isLoading) {
-            const isPublicRoute = PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith('/register/'));
-            if (!user && !isPublicRoute) {
-                router.push(CONSTANTS.ROUTES.LOGIN);
+            const isPublicRoute = PUBLIC_ROUTES.some(route => pathname === route || (route !== '/' && pathname.startsWith(route)));
+            const isAuthRoute = AUTH_ROUTES.some(route => pathname === route || pathname.startsWith('/register/'));
+            const isAdminRoute = pathname.startsWith('/admin');
+            const isDashboardRoute = pathname.startsWith('/dashboard');
+
+            if (!user) {
+                // Not logged in: Redirect if accessing restricted routes
+                if (!isPublicRoute && (isAdminRoute || isDashboardRoute)) {
+                    router.push(CONSTANTS.ROUTES.LOGIN);
+                }
+            } else {
+                // Logged in: Handle cross-role protection and auth route redirection
+                if (isAuthRoute) {
+                    const dashboard = user.role === CONSTANTS.ROLES.ADMIN 
+                        ? CONSTANTS.ROUTES.ADMIN.DASHBOARD 
+                        : CONSTANTS.ROUTES.DASHBOARD;
+                    router.push(dashboard);
+                } else if (user.role === CONSTANTS.ROLES.APPLICANT && isAdminRoute) {
+                    router.push(CONSTANTS.ROUTES.DASHBOARD);
+                } else if (user.role === CONSTANTS.ROLES.ADMIN && isDashboardRoute) {
+                    router.push(CONSTANTS.ROUTES.ADMIN.DASHBOARD);
+                }
             }
         }
     }, [user, isLoading, pathname, router]);

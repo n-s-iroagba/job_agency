@@ -1,3 +1,4 @@
+import { Notification } from '../models';
 import { notificationRepository } from '../repositories/NotificationRepository';
 
 export class NotificationService {
@@ -17,8 +18,8 @@ export class NotificationService {
     }
 
     public async markAsRead(id: number) {
-        const [updatedCount, notifications] = await notificationRepository.markAsRead(id);
-        return notifications[0];
+        await notificationRepository.markAsRead(id);
+        return Notification.findByPk(id);
     }
 }
 

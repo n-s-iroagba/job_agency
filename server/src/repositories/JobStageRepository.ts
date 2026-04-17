@@ -21,9 +21,8 @@ export class JobStageRepository {
     }
 
     // Maps to STK-ADM-STAGE-001, STK-ADM-STAGE-003, STK-ADM-STAGE-004
-    public async update(id: number, data: any, transaction?: Transaction): Promise<[number, JobStage[]]> {
-        const [updatedCount] = await JobStage.update(data, { where: { id }, transaction });
-        return [updatedCount, []];
+    public async update(id: number, data: any, transaction?: Transaction): Promise<[number]> {
+        return JobStage.update(data, { where: { id }, transaction });
     }
 
     // Maps to STK-ADM-STAGE-001
