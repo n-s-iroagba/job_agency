@@ -35,7 +35,7 @@ export default function BrowseJobsPage() {
             <aside className="hidden lg:block w-72 space-y-8 flex-shrink-0">
                 <section className="bg-white p-6 rounded-2xl shadow-sm space-y-8 border border-blue-50 sticky top-8">
                     <div>
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Semantic Search</h3>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Search Positions</h3>
                         <div className="relative group">
                             <input
                                 value={searchQuery}
@@ -49,7 +49,7 @@ export default function BrowseJobsPage() {
                     </div>
 
                     <div>
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Node Location</h3>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Preferred Location</h3>
                         <div className="relative group">
                             <input
                                 value={locationQuery}
@@ -63,7 +63,7 @@ export default function BrowseJobsPage() {
                     </div>
 
                     <div>
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Deployment Type</h3>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Employment Type</h3>
                         <div className="space-y-3">
                             {['Full-time', 'Contract', 'Freelance'].map(type => (
                                 <label key={type} className="flex items-center gap-3 cursor-pointer group">
@@ -98,9 +98,9 @@ export default function BrowseJobsPage() {
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="max-w-[600px]">
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Infrastructure / Discovery</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Career / Opportunities</span>
                         <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-blue-900 leading-tight mt-3">Discover your next <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-500">career</span> milestone</h1>
-                        <p className="text-sm text-blue-500 mt-4 font-medium leading-relaxed">Curated high-impact roles for specialized talent. Every node represents a standard-compliant career path.</p>
+                        <p className="text-sm text-blue-500 mt-4 font-medium leading-relaxed">Curated high-impact roles for specialized talent. Every position represents a clear and professional career path.</p>
                     </div>
                     <div className="flex items-center bg-blue-50 p-1.5 rounded-2xl self-start md:self-auto border border-blue-100">
                         <button 
@@ -158,7 +158,7 @@ export default function BrowseJobsPage() {
                                             </p>
                                         )}
                                         <div className="flex flex-wrap gap-2 pt-2">
-                                            {['ISO-Compliant', 'High Priority', 'Scale Node'].map(tag => (
+                                            {['Verified Role', 'High Priority', 'Immediate Start'].map(tag => (
                                                 <span key={tag} className="px-4 py-1.5 bg-blue-50 rounded-xl text-[9px] font-black text-blue-400 uppercase tracking-widest transition-colors group-hover:bg-blue-100 group-hover:text-blue-600">
                                                     {tag}
                                                 </span>
@@ -167,11 +167,11 @@ export default function BrowseJobsPage() {
                                     </div>
                                     <div className="flex flex-col justify-between items-end gap-6 md:border-l border-blue-50 md:pl-8 min-w-[160px]">
                                         <div className="text-right">
-                                            <p className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Budget Allocation</p>
+                                            <p className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Salary Range</p>
                                             <span className="text-xl font-bold font-mono text-blue-900 tracking-tighter">{job.salary || 'Undisclosed'}</span>
                                         </div>
                                         <div className="w-full bg-blue-50 text-blue-900 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] group-hover:bg-blue-900 group-hover:text-white transition-all text-center shadow-lg shadow-blue-900/5">
-                                            View Artifact
+                                            View Details
                                         </div>
                                     </div>
                                 </article>
@@ -180,7 +180,7 @@ export default function BrowseJobsPage() {
                         {jobList.length === 0 && (
                             <div className="md:col-span-2 py-20 text-center border-2 border-dashed border-blue-100 rounded-[3rem]">
                                 <span className="material-symbols-outlined text-5xl text-blue-200 mb-4">search_off</span>
-                                <p className="text-sm font-bold text-blue-400 uppercase tracking-widest">No matching infrastructure nodes detected</p>
+                                <p className="text-sm font-bold text-blue-400 uppercase tracking-widest">No matching positions detected</p>
                             </div>
                         )}
                     </div>

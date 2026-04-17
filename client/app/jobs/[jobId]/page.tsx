@@ -137,13 +137,13 @@ export default function JobDetailPage() {
                                 <div className="space-y-6">
                                     <div className="bg-emerald-50 border border-emerald-100 text-emerald-600 p-6 rounded-2xl text-center">
                                         <span className="material-symbols-outlined text-xl mb-2">check_circle</span>
-                                        <p className="text-[10px] font-black uppercase tracking-widest leading-tight">Identity Recorded: Application Submitted</p>
+                                        <p className="text-[10px] font-black uppercase tracking-widest leading-tight">Application Received</p>
                                     </div>
                                     <Link
                                         href="/dashboard/applications"
                                         className="w-full bg-blue-900 text-white py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-center block"
                                     >
-                                        View Tracking
+                                        View Application Status
                                     </Link>
                                 </div>
                             ) : !requirements.complete ? (
@@ -151,11 +151,11 @@ export default function JobDetailPage() {
                                     <div className="bg-amber-50 border border-amber-100 p-6 rounded-2xl space-y-4">
                                         <h4 className="text-[9px] font-black uppercase tracking-widest text-amber-700 flex items-center gap-2">
                                             <span className="material-symbols-outlined text-xs">warning</span>
-                                            Dossier Incomplete
+                                            Profile Incomplete
                                         </h4>
                                         <ul className="text-[10px] font-bold text-amber-600 uppercase tracking-tight space-y-2 list-none p-0">
-                                            {requirements.missingBio && <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-amber-400"></span>Missing Biodata</li>}
-                                            {requirements.missingCV && <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-amber-400"></span>Missing Curriculum Vitae</li>}
+                                            {requirements.missingBio && <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-amber-400"></span>Missing Personal Information</li>}
+                                            {requirements.missingCV && <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-amber-400"></span>Missing Resume</li>}
                                         </ul>
                                     </div>
 
@@ -167,7 +167,7 @@ export default function JobDetailPage() {
                                         )}
                                         {requirements.missingCV && (
                                             <Link href="/dashboard/cv" className="block text-center py-4 bg-blue-50 text-blue-900 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] border border-blue-100 hover:bg-blue-100 transition-all">
-                                                Synchronize CV
+                                                Upload Resume
                                             </Link>
                                         )}
                                     </div>
@@ -179,7 +179,7 @@ export default function JobDetailPage() {
                                         disabled={applyMutation.isPending}
                                         className="w-full bg-blue-900 text-white py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] shadow-xl shadow-blue-900/10 hover:bg-emerald-600 transition-all active:scale-[0.98] disabled:opacity-50"
                                     >
-                                        {applyMutation.isPending ? 'Propagating...' : 'Submit Final Application'}
+                                        {applyMutation.isPending ? 'Submitting...' : 'Submit Application'}
                                     </button>
                                     <p className="text-[9px] font-bold text-emerald-500 text-center uppercase tracking-widest leading-loose">
                                         Profile Ready • One-click submission active
@@ -191,7 +191,7 @@ export default function JobDetailPage() {
                         <section className="space-y-8 pt-12 border-t border-blue-50">
                             {job.JobBenefits?.length > 0 && (
                                 <div className="space-y-6">
-                                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Yield & Benefits</h3>
+                                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Job Benefits</h3>
                                     <div className="space-y-6">
                                         {job.JobBenefits.map((b, i) => (
                                             <div key={i} className="flex gap-4 group">
@@ -208,7 +208,7 @@ export default function JobDetailPage() {
 
                             {job.JobConditions?.length > 0 && (
                                 <div className="space-y-6 pt-12">
-                                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Role Constraints</h3>
+                                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Requirements & Conditions</h3>
                                     <div className="grid grid-cols-1 gap-4">
                                         {job.JobConditions.map((c, i) => (
                                             <div key={i} className="flex items-center gap-4 bg-blue-50/50 p-4 rounded-xl border border-blue-50">

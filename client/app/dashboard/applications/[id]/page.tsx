@@ -48,8 +48,8 @@ export default function ApplicationDetailPage() {
         onSuccess: () => refetch()
     });
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Journey Audit...</div>;
-    if (!app) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-red-500">Node not found</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Application Details...</div>;
+    if (!app) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-red-500">Application not found</div>;
 
     const stages = job?.JobStages?.sort((a: any, b: any) => a.orderPosition - b.orderPosition) || [];
     const currentStageIndex = stages.findIndex((s: any) => s.id === app.currentStageId);
@@ -78,12 +78,12 @@ export default function ApplicationDetailPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-8">
-                    {/* Settlement Node (If active) */}
+                    {/* Payment Stage (If active) */}
                     {currentStage?.requiresPayment && (!currentPayment || currentPayment.status !== CONSTANTS.STATUSES.PAYMENT.VERIFIED) && (
                         <section className="bg-blue-50 rounded-2xl p-8 border border-blue-100 relative overflow-hidden">
                             <div className="relative z-10">
                                 <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-4">Required Action</span>
-                                <h3 className="text-xl font-bold text-blue-900 tracking-tight mb-2 uppercase">Strategy Contribution Phase</h3>
+                                <h3 className="text-xl font-bold text-blue-900 tracking-tight mb-2 uppercase">Required Processing Fee</h3>
                                 <p className="text-sm text-blue-600 mb-8 max-w-[500px]">A processing fee of <span className="font-bold text-blue-900">${currentStage.amount}</span> is required to proceed to the next stage.</p>
 
                                 <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm">
@@ -98,7 +98,7 @@ export default function ApplicationDetailPage() {
                     )}
 
                     <section className="space-y-4">
-                        <h2 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Pipeline Nodes</h2>
+                        <h2 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Application Stages</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {stages.map((stage: any, index: number) => (
                                 <div key={stage.id} className={`p-6 rounded-2xl border transition-all ${index <= currentStageIndex ? 'bg-white border-blue-100 shadow-sm' : 'bg-blue-50 border-transparent opacity-50'
@@ -114,8 +114,8 @@ export default function ApplicationDetailPage() {
                                     <p className="text-[10px] text-blue-400 font-medium line-clamp-2">{stage.description.replace(/<[^>]*>?/gm, '')}</p>
 
                                     <div className="mt-6 pt-4 border-t border-blue-50 flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
-                                        <span className="text-blue-400">Node Fee</span>
-                                        <span className={stage.requiresPayment ? 'text-blue-900' : 'text-blue-400'}>{stage.requiresPayment ? `$${stage.amount}` : 'Zero'}</span>
+                                        <span className="text-blue-400">Processing Fee</span>
+                                        <span className={stage.requiresPayment ? 'text-blue-900' : 'text-blue-400'}>{stage.requiresPayment ? `$${stage.amount}` : 'Included'}</span>
                                     </div>
 
                                     {index === currentStageIndex && !stage.requiresPayment && (
@@ -123,7 +123,7 @@ export default function ApplicationDetailPage() {
                                             onClick={() => advanceMutation.mutate({})}
                                             className="w-full mt-6 bg-blue-900 text-white py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg"
                                         >
-                                            {advanceMutation.isPending ? 'Processing...' : 'Advance Node'}
+                                            {advanceMutation.isPending ? 'Processing...' : 'Go to Next Stage'}
                                         </button>
                                     )}
                                 </div>
@@ -134,12 +134,12 @@ export default function ApplicationDetailPage() {
 
                 <div className="space-y-8">
                     <section className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
-                        <h2 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-6 pb-4 border-b border-blue-50">Audit Trace</h2>
+                        <h2 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-6 pb-4 border-b border-blue-50">Recent Activity</h2>
                         <div className="space-y-6 relative ml-1">
                             <div className="absolute left-1 top-2 bottom-2 w-px bg-blue-100" />
                             {[
-                                { title: 'Current Node', action: currentStage?.name || 'Processing', time: 'Active' },
-                                { title: 'Security Pass', action: 'Verified', time: 'Stage Start' },
+                                { title: 'Current Status', action: currentStage?.name || 'Processing', time: 'Active' },
+                                { title: 'Security Check', action: 'Verified', time: 'Stage Start' },
                             ].map((item, i) => (
                                 <div key={i} className="relative pl-6">
                                     <div className="absolute left-[-2.5px] top-1.5 w-1.5 h-1.5 rounded-full bg-blue-900" />
@@ -151,14 +151,14 @@ export default function ApplicationDetailPage() {
                     </section>
 
                     <section className="bg-blue-900 text-white p-8 rounded-2xl">
-                        <h3 className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-6">Pipeline Health</h3>
+                        <h3 className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-6">Process Status</h3>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
-                                <span className="text-blue-500">Integrity Score</span>
-                                <span>High</span>
+                                <span className="text-blue-500">Verification</span>
+                                <span>Complete</span>
                             </div>
                             <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
-                                <span className="text-blue-500">Progress</span>
+                                <span className="text-blue-500">Overall Progress</span>
                                 <span>{app.completionPercentage}%</span>
                             </div>
                         </div>

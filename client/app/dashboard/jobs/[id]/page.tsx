@@ -60,8 +60,8 @@ export default function JobDetailPage() {
         <div className="py-20 text-center bg-red-50 rounded-[3rem] border border-red-100 mt-12">
             <span className="material-symbols-outlined text-red-200 text-6xl mb-6">error</span>
             <h2 className="text-xl font-bold text-red-900 uppercase tracking-widest">Entry Not Found</h2>
-            <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mt-2">The requested career node does not exist in the active registry.</p>
-            <Link href="/dashboard/jobs" className="inline-block mt-8 text-[10px] font-black text-red-900 uppercase tracking-[0.3em] underline underline-offset-8">Return to Dashboard</Link>
+            <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mt-2">The requested job listing does not exist in our active registry.</p>
+            <Link href="/dashboard/jobs" className="inline-block mt-8 text-[10px] font-black text-red-900 uppercase tracking-[0.3em] underline underline-offset-8">Return to Jobs</Link>
         </div>
     );
 
@@ -69,10 +69,10 @@ export default function JobDetailPage() {
     const salaryDisplay = job.salary || (job.JobBenefits?.find((b: any) => b.benefitType.toLowerCase().includes('salary'))?.value || 'Salary Undisclosed');
 
     const requirements = job.requirements ? job.requirements.split('\n').filter((line: string) => line.trim()) : [];
-    const stages = job.stages || [];
+
 
     return (
-        <div className="space-y-16 selection:bg-blue-100 selection:text-blue-900 pb-10 antialiased">
+        <div className="space-y-10 selection:bg-blue-100 selection:text-blue-900 pb-10 antialiased">
             {/* Hero Job Header */}
             <div className="flex flex-col xl:flex-row gap-12 items-start">
                 <div className="flex-1 space-y-8">
@@ -88,7 +88,7 @@ export default function JobDetailPage() {
                         </div>
                         <div className="flex items-center gap-3 bg-blue-50/50 border border-blue-100 px-6 py-3 rounded-2xl">
                             <span className="material-symbols-outlined text-blue-900">location_on</span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-blue-900">{job.location || 'Remote Node'}</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-blue-900">{job.location || 'Location Undisclosed'}</span>
                         </div>
                         <div className="flex items-center gap-3 bg-emerald-50/50 border border-emerald-100 px-6 py-3 rounded-2xl">
                             <span className="material-symbols-outlined text-emerald-600">payments</span>
@@ -101,20 +101,20 @@ export default function JobDetailPage() {
                     <button
                         onClick={handleApply}
                         disabled={applyMutation.isPending}
-                        className={`w-full py-6 rounded-3xl font-black text-[10px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 shadow-2xl ${isReadyToApply ? 'bg-blue-900 text-white shadow-blue-900/20 hover:bg-black' : 'bg-blue-100 text-blue-400'}`}
+                        className={`w-full py-6 rounded-3xl font-black text-[6px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 shadow-2xl ${isReadyToApply ? 'bg-blue-900 text-white shadow-blue-900/20 hover:bg-black' : 'bg-blue-100 text-blue-400'}`}
                     >
-                        {applyMutation.isPending ? 'Syncing...' : isReadyToApply ? 'Initiate Application' : 'Incomplete Profile'}
+                        {applyMutation.isPending ? 'Syncing...' : isReadyToApply ? 'Initiate Application' : 'Complete Your Profile To Apply'}
                     </button>
 
                     <div className="bg-white p-8 rounded-[2.5rem] border border-blue-100 shadow-sm space-y-6">
                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-900 flex items-center gap-3">
                             <span className="material-symbols-outlined text-base">task_alt</span>
-                            Profile Integrity
+                            Application Readiness
                         </h4>
 
                         <div className="space-y-4">
                             <ReadinessItem
-                                label="Verification Biodata"
+                                label="Personal Information"
                                 isComplete={!!(userData?.user?.fullName && userData?.user?.phoneNumber && userData?.user?.nationality)}
                                 link={`${CONSTANTS.ROUTES.PROFILE}?redirect=/dashboard/jobs/${jobId}`}
                             />
@@ -126,7 +126,7 @@ export default function JobDetailPage() {
                         </div>
 
                         <p className="text-[9px] text-blue-400 font-bold uppercase tracking-widest leading-relaxed pt-2 border-t border-blue-50">
-                            Status: {isReadyToApply ? 'Authorized for Submission' : 'Awaiting Profile Updates'}
+                            Status: {isReadyToApply ? 'Ready to Apply' : 'Action Required'}
                         </p>
                     </div>
                 </div>
@@ -139,26 +139,26 @@ export default function JobDetailPage() {
                         <div>
                             <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mb-8 pb-4 border-b border-blue-50 flex items-center gap-4">
                                 <span className="w-10 h-[1px] bg-blue-100" />
-                                01. Operational Mission
+                                01. Job Description
                             </h2>
                             <p className="text-blue-900 leading-[2.2] text-xl font-medium tracking-tight">
                                 {job.description}
                             </p>
                         </div>
 
-                        {requirements.length > 0 && (
+                        {job.requirements && (
                             <div>
                                 <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.4em] mb-8 pb-4 border-b border-blue-50 flex items-center gap-4">
                                     <span className="w-10 h-[1px] bg-blue-100" />
-                                    02. Core Requirements
+                                    02. Key Requirements
                                 </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {requirements.map((req: string, idx: number) => (
-                                        <div key={idx} className="flex gap-4 p-6 bg-blue-50/30 rounded-3xl border border-blue-50 transition-all hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 group">
-                                            <span className="text-[10px] font-black text-blue-200 mt-1 opacity-40 group-hover:opacity-100">{(idx + 1).toString().padStart(2, '0')}</span>
-                                            <span className="text-sm font-bold text-blue-900 leading-relaxed">{req.replace(/^[•-]\s*/, '')}</span>
-                                        </div>
-                                    ))}
+
+                                    <div className="flex gap-4 p-6 bg-blue-50/30 rounded-3xl border border-blue-50 transition-all hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 group">
+
+                                        <p className="text-sm font-bold text-blue-900 leading-relaxed">{job.requirements}</p>
+                                    </div>
+
                                 </div>
                             </div>
                         )}
@@ -169,7 +169,19 @@ export default function JobDetailPage() {
 
                                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16">
                                     <div className="space-y-10">
-                                        <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Package Benefits</h3>
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Terms & Conditions</h3>
+                                        <div className="space-y-8">
+                                            {job.JobConditions?.map((condition: any) => (
+                                                <div key={condition.id} className="group text-right md:text-left">
+                                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white mb-2 group-hover:text-blue-300 transition-colors">{condition.name}</h4>
+                                                    <p className="text-sm text-blue-300 font-medium leading-relaxed">{condition.description}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-10">
+                                        <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Employee Benefits</h3>
                                         <div className="space-y-8">
                                             {job.JobBenefits?.map((benefit: any) => (
                                                 <div key={benefit.id} className="group">
@@ -181,17 +193,7 @@ export default function JobDetailPage() {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-10">
-                                        <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-300">Service Conditions</h3>
-                                        <div className="space-y-8">
-                                            {job.JobConditions?.map((condition: any) => (
-                                                <div key={condition.id} className="group text-right md:text-left">
-                                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white mb-2 group-hover:text-blue-300 transition-colors">{condition.name}</h4>
-                                                    <p className="text-sm text-blue-300 font-medium leading-relaxed">{condition.description}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         )}
@@ -199,18 +201,7 @@ export default function JobDetailPage() {
                 </div>
 
                 {/* Vertical Application Journey */}
-                <div className="lg:col-span-4 space-y-8">
 
-                    <div className="p-10 rounded-[3rem] bg-emerald-50 border border-emerald-100 relative overflow-hidden group hover:bg-emerald-900 transition-all duration-500">
-                        <div className="absolute -top-10 -right-10 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                            <span className="material-symbols-outlined text-emerald-900 group-hover:text-white text-[10rem]">verified</span>
-                        </div>
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 group-hover:text-emerald-300 mb-6 relative z-10 transition-colors">Direct Placement</h4>
-                        <p className="text-xs text-emerald-900 leading-loose relative z-10 font-bold group-hover:text-white transition-colors">
-                            JobNexe exclusively curates roles that offer direct contractual agreements with verified global entities. No intermediaries involved.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     );

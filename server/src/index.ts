@@ -7,15 +7,19 @@ import './models';
 import { seedDatabase } from './seedDatabase';
 
 
-const PORT = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
     try {
         await connectDB();
-        await seedDatabase()
+        seedDatabase().catch(err => {
+            console.error('Failed to seed database:', err);
+            process.exit(1);
+        });
 
         if (process.env.NODE_ENV !== 'production') {
-            //await sequelize.sync({ force: true });
+            //
             logger.info('Database Synchronized successfully.');
         }
 

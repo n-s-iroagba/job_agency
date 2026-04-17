@@ -65,7 +65,7 @@ function ProfileContent() {
         updateProfileMutation.mutate(formData);
     };
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Syncing Identity...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Profile...</div>;
 
     const user = data?.user || {};
 
@@ -80,7 +80,7 @@ function ProfileContent() {
             {successMessage && (
                 <div className="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
                     <span className="material-symbols-outlined text-emerald-500">check_circle</span>
-                    <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">Profile Synced Successfully {redirectPath ? '— Redirecting...' : '— Returning to Dashboard'}</p>
+                    <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">Profile Updated Successfully {redirectPath ? '— Redirecting...' : '— Returning to Dashboard'}</p>
                 </div>
             )}
 
@@ -91,7 +91,7 @@ function ProfileContent() {
                         <div className="p-2 bg-blue-900 rounded-lg text-white">
                             <span className="material-symbols-outlined text-base">person</span>
                         </div>
-                        <h2 className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">Personal Identity</h2>
+                        <h2 className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">Personal Information</h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -149,13 +149,13 @@ function ProfileContent() {
 
                 {/* Save Footer */}
                 <div className="flex justify-end gap-4 p-8 bg-blue-50 rounded-2xl border border-blue-100 items-center">
-                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mr-auto px-4">Last Sync: {new Date(user.updatedAt || Date.now()).toLocaleDateString()}</p>
+                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mr-auto px-4">Last Updated: {new Date(user.updatedAt || Date.now()).toLocaleDateString()}</p>
                     <button
                         onClick={handleSave}
                         disabled={updateProfileMutation.isPending}
                         className="px-10 py-4 bg-blue-900 text-white font-bold rounded-xl text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-blue-800 transition-all active:scale-[0.98] disabled:opacity-50"
                     >
-                        {updateProfileMutation.isPending ? 'Syncing Profile...' : 'Save Configuration'}
+                        {updateProfileMutation.isPending ? 'Saving Profile...' : 'Save Profile'}
                     </button>
                 </div>
             </div>

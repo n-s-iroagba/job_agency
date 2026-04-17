@@ -198,7 +198,4 @@ export async function seedDatabase() {
     console.log('Seeding completed successfully! 7 Global Jobs with pipelines created.');
 }
 
-seedDatabase().catch(err => {
-    console.error('Failed to seed database:', err);
-    process.exit(1);
-});
+

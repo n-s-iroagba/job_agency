@@ -8,7 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 const navItems = [
     { label: 'Dashboard', href: CONSTANTS.ROUTES.DASHBOARD, icon: 'dashboard' },
     { label: 'My Applications', href: CONSTANTS.ROUTES.APPLICATIONS, icon: 'work' },
-    { label: 'Browse Jobs', href: CONSTANTS.ROUTES.JOBS, icon: 'search' },
+    { label: 'Active Opportunities', href: CONSTANTS.ROUTES.JOBS, icon: 'search' },
     { label: 'CV / Resume', href: CONSTANTS.ROUTES.CV, icon: 'description' },
     { label: 'Bio', href: CONSTANTS.ROUTES.PROFILE, icon: 'person' },
     { label: 'Notifications', href: CONSTANTS.ROUTES.NOTIFICATIONS, icon: 'notifications' },
@@ -55,7 +55,7 @@ export function ApplicantSidebar({
                 <div className={`py-10 border-b border-blue-50 relative flex items-center ${isCollapsed ? 'justify-center' : 'px-8'}`}>
                     <Link href="/" className={`${isCollapsed ? 'hidden' : 'flex flex-col'}`}>
                         <span className="text-xl font-black italic uppercase tracking-[0.1em] text-blue-900">JobNexe</span>
-                        <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-1">Applicant</span>
+                        <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-1">Career Portal</span>
                     </Link>
                     {isCollapsed && (
                         <div className="w-10 h-10 bg-blue-900 rounded-xl flex items-center justify-center text-white font-black text-xl italic shadow-lg shadow-blue-900/10">J</div>
