@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
 import { BankAccount } from '@/types/models';
+import { CONSTANTS } from '@/constants';
 
 export default function BankAccountViewPage() {
     const params = useParams();
