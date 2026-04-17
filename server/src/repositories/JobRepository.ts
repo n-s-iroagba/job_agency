@@ -84,9 +84,9 @@ export class JobRepository {
     }
 
     // Maps to STK-ADM-JOB-001, STK-ADM-JOB-005
-    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number, JobListing[]]> {
+    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number]> {
         const [updatedCount] = await JobListing.update(updateData, { where: { id }, transaction });
-        return [updatedCount, []]; // Handled by Service layer fetching the record
+        return [updatedCount]; // Handled by Service layer fetching the record
     }
 
     // Maps to STK-ADM-JOB-001

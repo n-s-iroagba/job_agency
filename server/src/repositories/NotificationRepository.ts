@@ -16,8 +16,8 @@ export class NotificationRepository {
         return Notification.create(data, { transaction });
     }
 
-    public async markAsRead(id: number, transaction?: Transaction): Promise<[number, Notification[]]> {
-        return Notification.update({ isRead: true }, { where: { id }, returning: true, transaction });
+    public async markAsRead(id: number, transaction?: Transaction): Promise<[number]> {
+        return Notification.update({ isRead: true }, { where: { id }, transaction });
     }
 }
 

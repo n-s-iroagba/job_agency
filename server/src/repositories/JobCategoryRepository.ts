@@ -35,8 +35,8 @@ export class JobCategoryRepository {
     }
 
     // Maps to STK-ADM-CAT-001
-    public async update(id: number, data: any, transaction?: Transaction): Promise<[number, JobCategory[]]> {
-        return JobCategory.update(data, { where: { id }, returning: true, transaction });
+    public async update(id: number, data: any, transaction?: Transaction): Promise<[number]> {
+        return JobCategory.update(data, { where: { id }, transaction });
     }
 
     // Maps to STK-ADM-CAT-001

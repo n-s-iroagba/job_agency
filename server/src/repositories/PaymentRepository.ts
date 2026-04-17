@@ -44,8 +44,8 @@ export class PaymentRepository {
     }
 
     // Maps to STK-ADM-PAY-001, STK-ADM-PAY-002, SCR-ADM-UNVERIFIED-001
-    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number, Payment[]]> {
-        return Payment.update(updateData, { where: { id }, returning: true, transaction });
+    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number]> {
+        return Payment.update(updateData, { where: { id }, transaction });
     }
 
     public async findById(id: number, transaction?: Transaction): Promise<Payment | null> {

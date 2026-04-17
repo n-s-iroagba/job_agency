@@ -70,19 +70,19 @@ function CvContent() {
         }
     };
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Documents...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Profile...</div>;
 
     return (
         <div className="font-sans text-blue-900 pb-24">
             <header className="mb-12">
-                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-2">Documents</span>
-                <h1 className="text-3xl font-bold text-blue-900 tracking-tight">CV / Resume Management</h1>
+                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-2">Portfolio</span>
+                <h1 className="text-3xl font-bold text-blue-900 tracking-tight">Professional Resume</h1>
             </header>
 
             {success && (
                 <div className="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
                     <span className="material-symbols-outlined text-emerald-500">check_circle</span>
-                    <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">Document Uploaded {redirectPath ? '— Returning to Application...' : ''}</p>
+                    <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">Resume Uploaded Successfully {redirectPath ? '— Returning to Application...' : ''}</p>
                 </div>
             )}
 
@@ -93,12 +93,12 @@ function CvContent() {
                             <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-400 mb-6">
                                 <span className="material-symbols-outlined text-4xl">cloud_upload</span>
                             </div>
-                            <h3 className="text-xl font-bold text-blue-900 mb-2">Upload Your CV</h3>
+                            <h3 className="text-xl font-bold text-blue-900 mb-2">Upload Your Resume</h3>
                             <p className="text-blue-500 text-sm max-w-sm mb-8 leading-relaxed">
-                                Please upload your resume in PDF or DOCX format. This document will be accessible to job curators during the application review process.
+                                Please upload your resume in PDF or DOCX format. This document will be accessible to recruitment partners during the application review process.
                             </p>
                             <label className="bg-blue-900 text-white px-8 py-3.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95">
-                                {uploading ? 'Uploading...' : 'Select Document'}
+                                {uploading ? 'Processing...' : 'Select Resume'}
                                 <input
                                     type="file"
                                     className="hidden"
@@ -111,7 +111,7 @@ function CvContent() {
                         </section>
                     ) : (
                         <section className="space-y-4">
-                            <h2 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Current Active Document</h2>
+                            <h2 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Active Resume</h2>
                             <div className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm flex items-center justify-between">
                                 <div className="flex items-center gap-6">
                                     <div className="w-14 h-14 rounded-xl bg-blue-900 text-white flex items-center justify-center">
@@ -148,7 +148,7 @@ function CvContent() {
                     )}
 
                     <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 italic text-[10px] text-blue-400 font-medium uppercase tracking-tight">
-                        Note: You can only maintain one primary CV in your vault. Uploading a new document will replace the existing one.
+                        Note: You can only maintain one primary resume in your profile. Uploading a new document will replace the existing one.
                     </div>
                 </div>
 
@@ -160,7 +160,7 @@ function CvContent() {
                                 <span className="material-symbols-outlined text-blue-400">lock</span>
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-widest mb-1">Encrypted Access</p>
-                                    <p className="text-[10px] text-blue-500 font-medium leading-relaxed italic">Documents are encrypted at rest and only accessible via authorized tokens.</p>
+                                    <p className="text-[10px] text-blue-500 font-medium leading-relaxed italic">Your resume is encrypted at rest and only accessible via authorized tokens.</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
@@ -180,7 +180,7 @@ function CvContent() {
 
 export default function CvManagementPage() {
     return (
-        <Suspense fallback={<div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Documents...</div>}>
+        <Suspense fallback={<div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Profile...</div>}>
             <CvContent />
         </Suspense>
     );

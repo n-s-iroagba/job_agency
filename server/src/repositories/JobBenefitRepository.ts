@@ -40,8 +40,8 @@ export class JobBenefitRepository {
     }
 
     // Maps to STK-ADM-BEN-001
-    public async update(id: number, data: any, transaction?: Transaction): Promise<[number, JobBenefit[]]> {
-        return JobBenefit.update(data, { where: { id }, returning: true, transaction });
+    public async update(id: number, data: any, transaction?: Transaction): Promise<[number]> {
+        return JobBenefit.update(data, { where: { id }, transaction });
     }
 
     // Maps to STK-ADM-BEN-001

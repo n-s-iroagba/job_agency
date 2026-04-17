@@ -40,8 +40,8 @@ export class JobConditionRepository {
     }
 
     // Maps to STK-ADM-COND-001
-    public async update(id: number, data: any, transaction?: Transaction): Promise<[number, JobCondition[]]> {
-        return JobCondition.update(data, { where: { id }, returning: true, transaction });
+    public async update(id: number, data: any, transaction?: Transaction): Promise<[number]> {
+        return JobCondition.update(data, { where: { id }, transaction });
     }
 
     // Maps to STK-ADM-COND-001

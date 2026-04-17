@@ -47,8 +47,8 @@ export class UserRepository {
     }
 
     // Maps to STK-APP-PROFILE-001
-    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number, User[]]> {
-        return User.update(updateData, { where: { id }, returning: true, transaction });
+    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number]> {
+        return User.update(updateData, { where: { id }, transaction });
     }
 
     // Maps to STK-APP-PROFILE-001 (Derived from data deletion requests REG-004)

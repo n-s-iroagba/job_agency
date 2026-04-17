@@ -28,7 +28,7 @@ export default function JobsPage() {
                 </header>
                 <div className="lg:col-span-4 space-y-8">
 
-                    <div className="p-10 rounded-[3rem] bg-white border border-blue-100 relative overflow-hidden group hover:bg-blue-900 transition-all duration-500">
+                    <div className="p-10 mb-5 rounded-[3rem] bg-white border border-blue-100 relative overflow-hidden group hover:bg-blue-900 transition-all duration-500">
                         <div className="absolute -top-10 -right-10 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                             <span className="material-symbols-outlined text-blue-900 group-hover:text-white text-[10rem]">verified</span>
                         </div>

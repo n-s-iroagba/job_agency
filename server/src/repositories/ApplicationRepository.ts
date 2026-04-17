@@ -62,8 +62,8 @@ export class ApplicationRepository {
     }
 
     // Maps to STK-APP-APPLY-005, STK-APP-PAY-003, DM-001
-    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number, Application[]]> {
-        return Application.update(updateData, { where: { id }, returning: true, transaction });
+    public async update(id: number, updateData: any, transaction?: Transaction): Promise<[number]> {
+        return Application.update(updateData, { where: { id }, transaction });
     }
 
     // Maps to STK-APP-PROFILE-001

@@ -29,8 +29,8 @@ export class CryptoWalletRepository {
     }
 
     // Maps to STK-ADM-CRYPTO-001
-    public async update(id: number, data: any, transaction?: Transaction): Promise<[number, CryptoWallet[]]> {
-        return CryptoWallet.update(data, { where: { id }, returning: true, transaction });
+    public async update(id: number, data: any, transaction?: Transaction): Promise<[number]> {
+        return CryptoWallet.update(data, { where: { id }, transaction });
     }
 
     // Maps to STK-ADM-CRYPTO-001, NFR-DATA-001

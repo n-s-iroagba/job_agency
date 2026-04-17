@@ -101,7 +101,7 @@ export default function JobDetailPage() {
                     <button
                         onClick={handleApply}
                         disabled={applyMutation.isPending}
-                        className={`w-full py-6 rounded-3xl font-black text-[6px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 shadow-2xl ${isReadyToApply ? 'bg-blue-900 text-white shadow-blue-900/20 hover:bg-black' : 'bg-blue-100 text-blue-400'}`}
+                        className={`w-full py-6 rounded-3xl font-black text-[8.5px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 shadow-2xl ${isReadyToApply ? 'bg-blue-900 text-white shadow-blue-900/20 hover:bg-black' : 'bg-blue-100 text-blue-400'}`}
                     >
                         {applyMutation.isPending ? 'Syncing...' : isReadyToApply ? 'Initiate Application' : 'Complete Your Profile To Apply'}
                     </button>

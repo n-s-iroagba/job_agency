@@ -29,8 +29,8 @@ export class BankAccountRepository {
     }
 
     // Maps to STK-ADM-BANK-001, STK-ADM-BANK-004
-    public async update(id: number, data: any, transaction?: Transaction): Promise<[number, BankAccount[]]> {
-        return BankAccount.update(data, { where: { id }, returning: true, transaction });
+    public async update(id: number, data: any, transaction?: Transaction): Promise<[number]> {
+        return BankAccount.update(data, { where: { id }, transaction });
     }
 
     // Maps to STK-ADM-BANK-001, NFR-DATA-001
