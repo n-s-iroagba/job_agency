@@ -45,34 +45,47 @@ export default function ApplicantDashboard() {
             </div>
 
             {/* Financial Alert Protocol */}
-            {pendingStages.some((app: any) => app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid')) && (
-                <div className="mb-10 animate-in slide-in-from-top-6 duration-700">
-                    <div className="bg-red-50 border-2 border-red-100 p-8 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl shadow-red-900/5">
-                        <div className="flex items-center gap-6">
-                            <div className="w-14 h-14 bg-red-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-red-500/20 animate-pulse">
-                                <span className="material-symbols-outlined font-black text-2xl">priority_high</span>
+            {pendingStages.some((app: any) => app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid')) && (() => {
+                const payApp = pendingStages.find((app: any) => app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid'));
+                return (
+                    <div className="mb-12 animate-in slide-in-from-top-6 duration-700">
+                        <div className="bg-white border border-red-100 p-8 md:p-10 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-red-900/5 relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-1.5 h-full bg-red-500" />
+                            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                                <div className="w-16 h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shrink-0 border border-red-100 shadow-inner">
+                                    <span className="material-symbols-outlined font-black text-2xl">payments</span>
+                                </div>
+                                <div className="space-y-3 text-center md:text-left">
+                                    <div>
+                                        <h4 className="text-[10px] font-black text-red-500 uppercase tracking-[0.3em] mb-1">Financial Settlement Required</h4>
+                                        <h2 className="text-xl font-black text-blue-900 uppercase tracking-tight leading-none">{payApp?.stageName || 'Recruitment Phase'}</h2>
+                                    </div>
+                                    <p className="text-[11px] font-bold text-blue-400 uppercase tracking-widest max-w-lg leading-relaxed opacity-80 italic">
+                                        {payApp?.stageDescription}
+                                    </p>
+                                    <div className="flex items-center justify-center md:justify-start gap-3 pt-2">
+                                        <span className="px-3 py-1 bg-red-50 text-red-600 text-[9px] font-black uppercase tracking-widest rounded-lg border border-red-100">
+                                            Awaiting Action
+                                        </span>
+                                        <span className="text-[10px] font-black text-blue-900 uppercase tracking-tight">
+                                            Stage completion required for pipeline progression
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <h4 className="text-[10px] font-black text-red-600 uppercase tracking-[0.3em] mb-1">Financial Notice Required</h4>
-                                <p className="text-sm font-black text-blue-900 uppercase tracking-tight">Payment is required to proceed with the recruitment proccess</p>
-                                <p className="text-sm font-black text-blue-800  tracking-tight">Recruitment Stage: {pendingStages[0].name}</p>
-                                <p className="text-sm font-black text-blue-700  tracking-tight">Recruitment Stage: {pendingStages[0].description}</p>
-
-                            </div>
+                            <button
+                                onClick={() => {
+                                    if(payApp) setSelectedPaymentApp(payApp);
+                                    setAppFilter('Payments');
+                                }}
+                                className="bg-blue-900 text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-black transition-all shadow-2xl shadow-blue-900/20 active:scale-95 whitespace-nowrap"
+                            >
+                                Process Settlement
+                            </button>
                         </div>
-                        <button
-                            onClick={() => {
-                                const payApp = pendingStages.find((app: any) => app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid'));
-                                if (payApp) setSelectedPaymentApp(payApp);
-                                setAppFilter('Payments');
-                            }}
-                            className="bg-red-500 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-red-500/20 active:scale-95 whitespace-nowrap"
-                        >
-                            Process Settlement Now
-                        </button>
                     </div>
-                </div>
-            )}
+                );
+            })()}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-20">
                 <div className="lg:col-span-2 space-y-8">
