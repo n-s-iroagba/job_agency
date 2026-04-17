@@ -5,7 +5,7 @@ import { jobConditionRepository, FindConditionOptions } from '../repositories/Jo
 import { jobBenefitRepository, FindBenefitOptions } from '../repositories/JobBenefitRepository';
 import { userRepository } from '../repositories/UserRepository';
 import { notificationRepository } from '../repositories/NotificationRepository';
-import { sendEmail } from '../utils/email';
+import { sendInfoEmail } from '../utils/email';
 import { sequelize } from '../config/database';
 import { CONSTANTS } from '../constants';
 
@@ -194,7 +194,7 @@ export class AdminService {
         const targetId = (user as any).id;
 
         // Send email — STK-ADM-APP-003
-        await sendEmail((user as any).email, subject, `<p>${message}</p>`);
+        await sendInfoEmail((user as any).email, subject, `<p>${message}</p>`);
 
         // Optionally create push notification — STK-ADM-APP-004, TRUST-008
         if (sendPushNotification) {

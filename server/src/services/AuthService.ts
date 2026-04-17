@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { userRepository } from '../repositories/UserRepository';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/token';
 import { CONSTANTS } from '../constants';
-import { sendEmail } from '../utils/email';
+import { sendAuthEmail } from '../utils/email';
 import crypto from 'crypto';
 
 
@@ -28,15 +28,17 @@ export class AuthService {
 
         // Send Verification Email
         const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`;
-        await sendEmail(
+        const content = `
+            <p>Welcome to JobNexe. We require a high-priority identity verification to activate your professional node.</p>
+            <div class="cta-block">
+                <a href="${verificationUrl}" class="button">Verify Identity</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 12px; color: #64748b;">If the button above does not work, copy and paste this link: ${verificationUrl}</p>
+        `;
+        await sendAuthEmail(
             newUser.email,
             'Verify Your Account',
-            this.getPremiumTemplate(
-                'Identity Verification',
-                'Welcome to JobNexe. We require a high-priority identity verification to activate your professional node. Please use the secure link below to proceed.',
-                'Verify Identity',
-                verificationUrl
-            )
+            content
         );
 
         const accessToken = generateAccessToken({ id: newUser.id, role: newUser.role });
@@ -93,15 +95,17 @@ export class AuthService {
         });
 
         const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
-        await sendEmail(
+        const content = `
+            <p>A cryptographic reset sequence has been initialized for your JobNexe account.</p>
+            <div class="cta-block">
+                <a href="${resetUrl}" class="button">Reset Passphrase</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 12px; color: #64748b;">If you did not trigger this protocol, please secure your node immediately.</p>
+        `;
+        await sendAuthEmail(
             user.email,
             'Password Reset Request',
-            this.getPremiumTemplate(
-                'Access Recovery',
-                'A cryptographic reset sequence has been initialized for your JobNexe account. If you did not trigger this protocol, please secure your node immediately.',
-                'Reset Passphrase',
-                resetUrl
-            )
+            content
         );
     }
 
@@ -131,15 +135,16 @@ export class AuthService {
         await userRepository.update(user.id, { verificationToken });
 
         const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`;
-        await sendEmail(
+        const content = `
+            <p>A new verification pulse has been dispatched. Please activate your professional identity using the secure link below.</p>
+            <div class="cta-block">
+                <a href="${verificationUrl}" class="button">Verify Identity</a>
+            </div>
+        `;
+        await sendAuthEmail(
             user.email,
             'Verify Your Account',
-            this.getPremiumTemplate(
-                'Relay Identity Verification',
-                'A new verification pulse has been dispatched. Please activate your professional identity using the secure link below.',
-                'Verify Identity',
-                verificationUrl
-            )
+            content
         );
     }
 
@@ -202,43 +207,6 @@ export class AuthService {
         return user;
     }
 
-    private getPremiumTemplate(title: string, message: string, buttonLabel: string, buttonUrl: string): string {
-        return `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="utf-8">
-                <style>
-                    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; line-height: 1.6; color: #1a1c1e; margin: 0; padding: 0; background-color: #f8fafc; }
-                    .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
-                    .header { background: #0f172a; padding: 48px 40px; text-align: center; }
-                    .header h1 { color: #ffffff; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.025em; text-transform: uppercase; font-style: italic; }
-                    .content { padding: 48px 40px; }
-                    .content h2 { font-size: 20px; font-weight: 800; margin-top: 0; color: #0f172a; letter-spacing: -0.01em; }
-                    .content p { font-size: 15px; color: #475569; margin-bottom: 32px; font-weight: 500; }
-                    .button { display: inline-block; background: #0f172a; color: #ffffff !important; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.2s; }
-                    .footer { padding: 32px 40px; background: #f8fafc; text-align: center; border-top: 1px solid #f1f5f9; }
-                    .footer p { margin: 0; font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em; }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>JobNexe</h1>
-                    </div>
-                    <div class="content">
-                        <h2>${title}</h2>
-                        <p>${message}</p>
-                        <a href="${buttonUrl}" target="_blank" class="button">${buttonLabel}</a>
-                    </div>
-                    <div class="footer">
-                        <p>© 2026 JobNexe · Secure Identity Management</p>
-                    </div>
-                </div>
-            </body>
-            </html>
-        `;
-    }
 }
 
 export const authService = new AuthService();

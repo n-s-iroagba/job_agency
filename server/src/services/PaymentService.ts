@@ -4,7 +4,7 @@ import { applicationRepository } from '../repositories/ApplicationRepository';
 import { notificationRepository } from '../repositories/NotificationRepository';
 import { bankAccountRepository } from '../repositories/BankAccountRepository';
 import { cryptoWalletRepository } from '../repositories/CryptoWalletRepository';
-import { sendEmail } from '../utils/email';
+import { sendInfoEmail } from '../utils/email';
 import { CONSTANTS } from '../constants';
 import { applicationService } from './ApplicationService';
 
@@ -104,7 +104,7 @@ export class PaymentService {
                 try {
                     const userEmail = (payment as any).Application?.User?.email;
                     if (userEmail) {
-                        await sendEmail(userEmail, nSubject, `<p>${nMessage}</p>`);
+                        await sendInfoEmail(userEmail, nSubject, `<p>${nMessage}</p>`);
                     }
                 } catch (_emailErr) {
                     // STK-CAP-005: graceful degradation — don't fail if email is down

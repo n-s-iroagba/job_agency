@@ -5,7 +5,7 @@ import { paymentRepository } from '../repositories/PaymentRepository';
 import { jobStageRepository } from '../repositories/JobStageRepository';
 import { notificationRepository } from '../repositories/NotificationRepository';
 import { CONSTANTS } from '../constants';
-import { sendEmail } from '../utils/email';
+import { sendInfoEmail } from '../utils/email';
 
 export class ApplicationService {
     // Maps to STK-APP-APPLIST-001
@@ -260,7 +260,7 @@ export class ApplicationService {
 
                 if (notifyEmail) {
                     if (app.User?.email) {
-                        await sendEmail(app.User.email, nSubject, `<p>${nMessage}</p>`);
+                        await sendInfoEmail(app.User.email, nSubject, `<p>${nMessage}</p>`);
                         console.log(`[ApplicationService] Email dispatch initiated for stage add: ${app.User.email}`);
                     } else {
                         console.log(`[ApplicationService] SKIP Email: User field missing or email empty for app ${applicationId}`);
@@ -324,7 +324,7 @@ export class ApplicationService {
 
         if (notifyEmail) {
             if (app.User?.email) {
-                await sendEmail(app.User.email, nSubject, `<p>${nMessage}</p>`);
+                await sendInfoEmail(app.User.email, nSubject, `<p>${nMessage}</p>`);
                 console.log(`[ApplicationService] Email dispatch initiated for stage update: ${app.User.email}`);
             } else {
                 console.log(`[ApplicationService] SKIP Email: User field missing or email empty for app ${app.id}`);
