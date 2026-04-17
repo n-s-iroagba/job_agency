@@ -6,50 +6,6 @@ export async function seedDatabase() {
     await sequelize.sync({ force: true });
     console.log('Database synced. Seeding global recruitment data with JSON pipeline templates...');
 
-    const adminPassword = await bcrypt.hash('AdminPass123!', 12);
-    const applicantPassword = await bcrypt.hash('ApplicantPass123!', 12);
-
-    // 1. Seed Core Identity
-    await User.create({
-        fullName: 'Global System Admin',
-        email: 'admin@careercurator.com',
-        passwordHash: adminPassword,
-        role: CONSTANTS.ROLES.ADMIN,
-        isVerified: true,
-    });
-
-    for (let i = 1; i <= 3; i++) {
-        await User.create({
-            fullName: `Global Applicant ${i}`,
-            email: `applicant${i}@example.com`,
-            passwordHash: applicantPassword,
-            role: CONSTANTS.ROLES.APPLICANT,
-            isVerified: true,
-        });
-    }
-
-    // 2. Seed Financial Rails
-    await BankAccount.create({
-        bankName: 'International Settlement Bank',
-        accountNumber: 'GB12ISB80000',
-        accountType: CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY,
-        routingCode: 'ISB88',
-    });
-
-    await BankAccount.create({
-        bankName: 'Global High-Yield Capital',
-        accountNumber: 'CH99GHYC5000',
-        accountType: CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL,
-        routingCode: 'GHYC22',
-    });
-
-    await CryptoWallet.create({
-        displayLabel: 'Corporate Settlement (USDT)',
-        currencyName: CONSTANTS.CRYPTO_TYPES.USDT,
-        networkType: CONSTANTS.CRYPTO_NETWORKS.TRC20,
-        walletAddress: 'TYhc6R6pS3Y1s8vX2a9zB4mN7kL3p9qR',
-        isActive: true,
-    });
 
     // 3. Seed Industrial Sectors (Categories)
     const sectors = [
@@ -160,10 +116,7 @@ export async function seedDatabase() {
 
     const genericStages = [
         { name: 'Identity & Initial Screening', description: 'Review of professional credentials and government-issued identity.', orderPosition: 1, requiresPayment: false },
-        { name: 'Background Verification Payment', description: 'Third-party investigation including criminal and credit history.', orderPosition: 2, requiresPayment: true, amount: 250 },
-        { name: 'Technical Simulation', description: 'Remote assessment of specialized skills or flight simulator session.', orderPosition: 3, requiresPayment: false },
-        { name: 'Compliance & Medical Review', description: 'Final medical clearance and visa eligibility assessment.', orderPosition: 4, requiresPayment: true, amount: 450 }
-    ];
+    ]
 
     for (const jobData of jobs) {
         const job = await JobListing.create({

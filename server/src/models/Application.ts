@@ -11,6 +11,12 @@ export class Application extends Model {
     declare completionPercentage: number;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
+
+    // Associations
+    declare User?: any;
+    declare JobListing?: any;
+    declare JobStages?: any[];
+    declare Payments?: any[];
 }
 
 Application.init({
