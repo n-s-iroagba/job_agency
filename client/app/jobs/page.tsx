@@ -64,7 +64,7 @@ export default function JobsPage() {
                             <Link
                                 href={`/jobs/${job.id}`}
                                 key={job.id}
-                                className="group bg-white border border-blue-100 p-10 rounded-[2.5rem] hover:border-blue-900 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 flex flex-col justify-between h-[380px]"
+                                className="group bg-white border border-blue-100 p-10 rounded-[2.5rem] hover:border-blue-900 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 flex flex-col justify-between min-h-[400px]"
                             >
                                 <div className="space-y-6">
                                     <div className="flex justify-between items-start">
@@ -92,7 +92,6 @@ export default function JobsPage() {
                                 </div>
                                 <div className="mt-8 pt-6 border-t border-blue-50 flex justify-between items-center">
                                     <span className="text-[9px] font-black text-blue-900 uppercase tracking-widest">{job.employmentType}</span>
-                                    <span className="text-[9px] font-black text-blue-400 uppercase tracking-widest">STK-ID: {job.id}</span>
                                 </div>
                             </Link>
                         ))}
