@@ -8,7 +8,7 @@ export class JobController {
         try {
             const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string, 10) : undefined;
             const employmentType = req.query.employmentType as string;
-            const searchQuery = req.query.searchQuery as string;
+            const searchQuery = (req.query.search || req.query.searchQuery) as string;
             const sortBy = req.query.sortBy as string;
             const sortOrder = req.query.sortOrder as 'ASC' | 'DESC';
             const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 10;
@@ -44,7 +44,7 @@ export class JobController {
             const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
             const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
             const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string, 10) : undefined;
-            const searchQuery = req.query.searchQuery as string;
+            const searchQuery = (req.query.search || req.query.searchQuery) as string;
             const sortBy = req.query.sortBy as string;
             const sortOrder = req.query.sortOrder as 'ASC' | 'DESC';
 

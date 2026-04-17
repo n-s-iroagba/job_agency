@@ -1,16 +1,25 @@
-'use client';
-
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
 import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { JobListing } from '@/types/models';
 
-export default function JobsPage() {
-    const [searchQuery, setSearchQuery] = useState('');
+function JobsContent() {
+    const searchParams = useSearchParams();
+    const initialSearch = searchParams.get('search') || '';
+    const [searchQuery, setSearchQuery] = useState(initialSearch);
     const { data, isLoading } = useApiQuery<any>(['jobs', 'active', searchQuery], `/jobs?search=${searchQuery}`);
     const jobs = data?.rows || [];
+
+    // Update local state if URL param changes (e.g. back button)
+    useEffect(() => {
+        const urlSearch = searchParams.get('search');
+        if (urlSearch !== null && urlSearch !== searchQuery) {
+            setSearchQuery(urlSearch);
+        }
+    }, [searchParams]);
 
     return (
         <div className="bg-white text-blue-900 antialiased min-h-screen flex flex-col font-sans">
@@ -101,5 +110,13 @@ export default function JobsPage() {
 
             <PublicFooter />
         </div>
+    );
+}
+
+export default function JobsPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-white" />}>
+            <JobsContent />
+        </Suspense>
     );
 }

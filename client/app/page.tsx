@@ -49,11 +49,23 @@ const PARTNERS = [
   "Microsoft", "BP Global", "Shell Africa", "Chevron", "TotalEnergies", "ExxonMobil"
 ];
 
+import { useRouter } from 'next/navigation';
+
 export default function HomePage() {
+  const router = useRouter();
   const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(['jobs', 'public'], '/jobs');
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const jobList = jobs?.rows || [];
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      router.push(`/jobs?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push('/jobs');
+    }
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -80,7 +92,6 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Search Section */}
         <div className="max-w-[700px] mx-auto mb-16 md:mb-24 px-6">
           <div className="flex flex-col sm:flex-row gap-3 p-2 bg-blue-50 rounded-2xl border border-blue-100 shadow-sm">
             <div className="flex-1 flex items-center px-4">
@@ -89,9 +100,15 @@ export default function HomePage() {
                 className="w-full bg-transparent border-none focus:ring-0 text-[10px] md:text-sm font-bold uppercase tracking-widest py-3 placeholder:text-blue-300 outline-none"
                 placeholder="Job title or keywords"
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               />
             </div>
-            <button className="bg-blue-900 text-white px-6 md:px-10 py-3.5 md:py-4 rounded-xl text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-black transition-all active:scale-95">
+            <button 
+              onClick={handleSearch}
+              className="bg-blue-900 text-white px-6 md:px-10 py-3.5 md:py-4 rounded-xl text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-black transition-all active:scale-95"
+            >
               Explore Roles
             </button>
           </div>
