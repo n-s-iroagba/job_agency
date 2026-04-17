@@ -37,7 +37,7 @@ export default function AdminApplicantDetailPage() {
                     <h1 className="text-4xl font-black italic uppercase tracking-tighter text-blue-900">{user.fullName}</h1>
                     <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">Registry ID: {user.id} · {user.email}</p>
                 </div>
-                
+
                 <div className="flex gap-3">
                     <Link
                         href={`/admin/mail?to=${user.email}`}
@@ -46,6 +46,28 @@ export default function AdminApplicantDetailPage() {
                         <span className="material-symbols-outlined text-base">mail</span>
                         Direct Message
                     </Link>
+                    <button
+                        onClick={async () => {
+                            if (confirm('CRITICAL ACTION: Permanently purge this talent identity from the global registry? This action is irreversible.')) {
+                                try {
+                                    // Note: We use the existing common delete hook if available or just window.fetch
+                                    const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
+                                    if (res.ok) {
+                                        alert('Identity purged successfully.');
+                                        window.location.href = '/admin/applicants';
+                                    } else {
+                                        alert('Purge failed: Access denied.');
+                                    }
+                                } catch (e) {
+                                    alert('Purge failed: Network error.');
+                                }
+                            }
+                        }}
+                        className="bg-red-50 text-red-600 border-2 border-red-100 px-6 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white hover:border-red-500 transition-all active:scale-95 flex items-center gap-2"
+                    >
+                        <span className="material-symbols-outlined text-base">delete_forever</span>
+                        Purge Identity
+                    </button>
                     {user.cvUrl && (
                         <a
                             href={user.cvUrl}
@@ -69,17 +91,14 @@ export default function AdminApplicantDetailPage() {
                         </div>
                         <h2 className="text-xl font-black uppercase tracking-tight text-blue-900 text-center">{user.fullName}</h2>
                         <span className="mt-2 px-3 py-1 bg-blue-50 text-blue-400 rounded-lg text-[9px] font-black uppercase tracking-widest">TALENT STATUS: VERIFIED</span>
-                        
+
                         <div className="w-full mt-10 pt-10 border-t border-blue-50 grid grid-cols-1 gap-6">
                             <DataItem label="Electronic Mail" value={user.email} />
                             <DataItem label="Primary Phone" value={user.phoneNumber} />
                         </div>
                     </div>
 
-                    <div className="bg-blue-900 p-10 rounded-[2.5rem] text-white space-y-4">
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Compliance Warning</h3>
-                        <p className="text-[11px] font-bold text-blue-100 leading-relaxed uppercase">Internal access restricted. All profile viewing is logged for security audits. Unauthorized extraction of talent data is strictly prohibited.</p>
-                    </div>
+
                 </div>
 
                 {/* Extended Biodata */}
@@ -90,7 +109,7 @@ export default function AdminApplicantDetailPage() {
                             <span className="material-symbols-outlined text-blue-900">badge</span>
                             <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900">Personnel Biodata</h2>
                         </div>
-                        
+
                         <div className="grid grid-cols-2 gap-x-8 gap-y-10">
                             <DataItem label="Nationality" value={user.nationality} />
                             <DataItem label="Gender" value={user.gender} />
@@ -104,7 +123,7 @@ export default function AdminApplicantDetailPage() {
                             <span className="material-symbols-outlined text-blue-900">location_on</span>
                             <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900">Location & Residence</h2>
                         </div>
-                        
+
                         <div className="grid grid-cols-2 gap-x-8 gap-y-10">
                             <div className="col-span-2">
                                 <DataItem label="Principal Residence Address" value={user.address} />
@@ -133,7 +152,7 @@ export default function AdminApplicantDetailPage() {
                         </div>
 
                         {isAppsLoading ? (
-                             <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Synchronizing Application Data...</div>
+                            <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Synchronizing Application Data...</div>
                         ) : applications.length === 0 ? (
                             <div className="p-12 text-center bg-blue-50 rounded-3xl">
                                 <p className="text-[9px] font-black uppercase tracking-widest text-blue-400">No active applications detected in registry.</p>
@@ -154,7 +173,7 @@ export default function AdminApplicantDetailPage() {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <Link 
+                                            <Link
                                                 href={`/admin/jobs/${app.jobId}`}
                                                 className="text-[9px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-900 flex items-center gap-1"
                                             >
@@ -163,10 +182,10 @@ export default function AdminApplicantDetailPage() {
                                             </Link>
                                         </div>
 
-                                        <ApplicationStageManager 
-                                            applicationId={app.id} 
-                                            initialStages={app.JobStages} 
-                                            onRefresh={refetchApps} 
+                                        <ApplicationStageManager
+                                            applicationId={app.id}
+                                            initialStages={app.JobStages}
+                                            onRefresh={refetchApps}
                                         />
                                     </div>
                                 ))}

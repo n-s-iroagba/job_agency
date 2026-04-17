@@ -49,7 +49,7 @@ export class ApplicationRepository {
             include: [
                 JobListing, 
                 Payment, 
-                { model: User, attributes: ['id', 'fullName', 'email'] },
+                User,
                 { model: JobStage, as: 'JobStages' }
             ],
             transaction

@@ -9,7 +9,7 @@ export class AuthController {
             this.setRefreshTokenCookie(res, refreshToken);
             res.status(CONSTANTS.HTTP_STATUS.CREATED).json({
                 message: CONSTANTS.SUCCESS_MESSAGES.REGISTER_SUCCESS,
-                user: { id: user.id, email: user.email, role: user.role, fullName: user.fullName },
+                user: { id: user.id, email: user.email, role: user.role, fullName: user.fullName, cvUrl: user.cvUrl, phoneNumber: user.phoneNumber, nationality: user.nationality },
                 accessToken
             });
         } catch (error: any) {
@@ -28,7 +28,7 @@ export class AuthController {
             this.setRefreshTokenCookie(res, refreshToken);
             res.status(CONSTANTS.HTTP_STATUS.CREATED).json({
                 message: CONSTANTS.SUCCESS_MESSAGES.REGISTER_SUCCESS,
-                user: { id: user.id, email: user.email, role: user.role, fullName: user.fullName },
+                user: { id: user.id, email: user.email, role: user.role, fullName: user.fullName, cvUrl: user.cvUrl, phoneNumber: user.phoneNumber, nationality: user.nationality },
                 accessToken
             });
         } catch (error: any) {
@@ -101,7 +101,15 @@ export class AuthController {
             this.setRefreshTokenCookie(res, refreshToken);
             res.status(CONSTANTS.HTTP_STATUS.OK).json({
                 message: CONSTANTS.SUCCESS_MESSAGES.LOGIN_SUCCESS,
-                user: { id: user.id, email: user.email, role: user.role, fullName: user.fullName },
+                user: { 
+                    id: user.id, 
+                    email: user.email, 
+                    role: user.role, 
+                    fullName: user.fullName,
+                    cvUrl: user.cvUrl,
+                    phoneNumber: user.phoneNumber,
+                    nationality: user.nationality
+                },
                 accessToken
             });
         } catch (error: any) {
@@ -154,7 +162,8 @@ export class AuthController {
                     city: user.city,
                     state: user.state,
                     country: user.country,
-                    zipCode: user.zipCode
+                    zipCode: user.zipCode,
+                    cvUrl: user.cvUrl
                 }
             });
         } catch (error: any) {
@@ -182,7 +191,8 @@ export class AuthController {
                     city: user.city,
                     state: user.state,
                     country: user.country,
-                    zipCode: user.zipCode
+                    zipCode: user.zipCode,
+                    cvUrl: user.cvUrl
                 }
             });
         } catch (error: any) {

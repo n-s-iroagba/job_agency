@@ -13,7 +13,7 @@ interface StageManagerProps {
 export function ApplicationStageManager({ applicationId, initialStages = [], onRefresh }: StageManagerProps) {
     const [isEditing, setIsEditing] = useState<number | null>(null);
     const [isAdding, setIsAdding] = useState(false);
-    const [formData, setFormData] = useState<Partial<JobStage>>({});
+    const [formData, setFormData] = useState<any>({});
 
     const addStageMutation = useApiMutation('post', '/admin/applications/:id/stages');
     const updateStageMutation = useApiMutation('put', '/admin/applications/:id/stages/:stageId');
@@ -26,7 +26,7 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
                 body: { ...formData, applicationId }
             });
             setIsAdding(false);
-            setFormData({});
+            setFormData({ shouldNotify: true });
             onRefresh();
         } catch (error) {
             alert('Critial failure during stage injection.');
@@ -40,7 +40,7 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
                 body: formData
             });
             setIsEditing(null);
-            setFormData({});
+            setFormData({ shouldNotify: true });
             onRefresh();
         } catch (error) {
             alert('Failed to reconfigure stage parameters.');
@@ -67,7 +67,7 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
                 </h3>
                 {!isAdding && (
                     <button
-                        onClick={() => { setIsAdding(true); setFormData({ orderPosition: initialStages.length + 1 }); }}
+                        onClick={() => { setIsAdding(true); setFormData({ orderPosition: initialStages.length + 1, shouldNotify: true }); }}
                         className="bg-blue-900 text-white px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-lg shadow-blue-900/10 active:scale-95 flex items-center gap-2"
                     >
                         <span className="material-symbols-outlined text-xs font-bold">add</span>
@@ -89,12 +89,22 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
                             <InputField label="Amt" type="number" value={formData.amount || ''} onChange={(v) => setFormData({ ...formData, amount: parseFloat(v) })} />
                             <InputField label="Curr" value={formData.currency || 'USD'} onChange={(v) => setFormData({ ...formData, currency: v })} />
                         </div>
-                        <div className="flex items-center gap-4">
-                            <label className="flex items-center gap-2 cursor-pointer">
+                        
+                        <div className="grid grid-cols-2 gap-4 pt-2">
+                            <label className="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-lg border border-blue-100">
+                                <input type="checkbox" checked={formData.setAsCurrent || false} onChange={(e) => setFormData({ ...formData, setAsCurrent: e.target.checked })} className="w-3 h-3 rounded text-blue-900 focus:ring-blue-900" />
+                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Activate Stage</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-lg border border-blue-100">
+                                <input type="checkbox" checked={formData.shouldNotify ?? true} onChange={(e) => setFormData({ ...formData, shouldNotify: e.target.checked })} className="w-3 h-3 rounded text-blue-900 focus:ring-blue-900" />
+                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Notify Talent</span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-lg border border-blue-100 col-span-2">
                                 <input type="checkbox" checked={formData.requiresPayment || false} onChange={(e) => setFormData({ ...formData, requiresPayment: e.target.checked })} className="w-3 h-3 rounded text-blue-900 focus:ring-blue-900" />
-                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Requires Payment</span>
+                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Requires Payment Settlement</span>
                             </label>
                         </div>
+
                         <div className="flex justify-end gap-3 pt-4 border-t border-blue-100">
                             <button onClick={() => setIsAdding(false)} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-900">Abort</button>
                             <button onClick={handleAdd} className="bg-blue-900 text-white px-6 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-black">Authorize Injection</button>

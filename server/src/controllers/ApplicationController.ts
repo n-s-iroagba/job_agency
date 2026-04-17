@@ -24,7 +24,8 @@ export class ApplicationController {
     public async advanceApplication(req: Request, res: Response): Promise<void> {
         try {
             const id = parseInt(req.params.id as string, 10);
-            const app = await applicationService.advanceApplicationStage(id);
+            const { shouldNotify } = req.body;
+            const app = await applicationService.advanceApplicationStage(id, shouldNotify !== false);
             res.status(CONSTANTS.HTTP_STATUS.OK).json(app);
         } catch (error: any) {
             console.error('[ApplicationController.advanceApplication]', error);

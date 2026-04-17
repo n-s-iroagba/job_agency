@@ -6,6 +6,7 @@ import { bankAccountRepository } from '../repositories/BankAccountRepository';
 import { cryptoWalletRepository } from '../repositories/CryptoWalletRepository';
 import { sendEmail } from '../utils/email';
 import { CONSTANTS } from '../constants';
+import { applicationService } from './ApplicationService';
 
 export class PaymentService {
     // Maps to STK-APP-PAY-001, STK-ADM-BANK-003 — display correct bank account type by amount
@@ -107,6 +108,11 @@ export class PaymentService {
                     }
                 } catch (_emailErr) {
                     // STK-CAP-005: graceful degradation — don't fail if email is down
+                }
+
+                // NEW: Automatically advance application stage on approval
+                if (isApproved) {
+                    await applicationService.advanceApplicationStage(payment.applicationId);
                 }
             }
 

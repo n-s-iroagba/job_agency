@@ -9,9 +9,9 @@ export default function ApplicantDashboard() {
     const { data: summary, isLoading, refetch } = useApiQuery<any>(['applicant', 'dashboard'], '/dashboard');
     const [selectedPaymentApp, setSelectedPaymentApp] = useState<any>(null);
     const [appFilter, setAppFilter] = useState<'All' | 'Active' | 'Completed' | 'Payments'>('All');
-    
-    const hasFinancialActivity = (summary?.allPayments?.length > 0) || 
-                               (summary?.pendingStages?.some((ap: any) => ap.requiresPayment));
+
+    const hasFinancialActivity = (summary?.allPayments?.length > 0) ||
+        (summary?.pendingStages?.some((ap: any) => ap.requiresPayment));
 
     const availableFilters = ['All', 'Active', 'Payments', 'Completed'].filter(f => {
         if (f === 'Payments') return hasFinancialActivity;
@@ -43,6 +43,33 @@ export default function ApplicantDashboard() {
                 <h1 className="text-3xl font-bold tracking-tight text-blue-900">Applicant Dashboard</h1>
                 <p className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mt-2">Overview / Application Status</p>
             </div>
+
+            {/* Financial Alert Protocol */}
+            {pendingStages.some((app: any) => app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid')) && (
+                <div className="mb-10 animate-in slide-in-from-top-6 duration-700">
+                    <div className="bg-red-50 border-2 border-red-100 p-8 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl shadow-red-900/5">
+                        <div className="flex items-center gap-6">
+                            <div className="w-14 h-14 bg-red-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-red-500/20 animate-pulse">
+                                <span className="material-symbols-outlined font-black text-2xl">priority_high</span>
+                            </div>
+                            <div>
+                                <h4 className="text-[10px] font-black text-red-600 uppercase tracking-[0.3em] mb-1">Financial Notice Required</h4>
+                                <p className="text-sm font-black text-blue-900 uppercase tracking-tight">System bottleneck detected: Pending settlement required for pipeline progression.</p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => {
+                                const payApp = pendingStages.find((app: any) => app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid'));
+                                if(payApp) setSelectedPaymentApp(payApp);
+                                setAppFilter('Payments');
+                            }}
+                            className="bg-red-500 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-red-500/20 active:scale-95 whitespace-nowrap"
+                        >
+                            Process Settlement Now
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-20">
                 <div className="lg:col-span-2 space-y-8">
@@ -89,14 +116,24 @@ export default function ApplicantDashboard() {
                                     <div className="flex items-center justify-between pt-6 border-t border-blue-50">
                                         <div className="flex items-center gap-2">
                                             {app.requiresPayment ? (
-                                                <div className="flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-xl border border-amber-100 animate-pulse">
-                                                    <span className="material-symbols-outlined text-[14px]">payments</span>
-                                                    <span className="text-[9px] font-black uppercase tracking-widest">Pending Settlement: ${app.amount}</span>
+                                                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border ${
+                                                        app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                                        app.paymentStatus === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' : 
+                                                        'bg-amber-50 text-amber-700 border-amber-100'
+                                                    }`}>
+                                                    <span className="material-symbols-outlined text-[14px]">
+                                                        {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'verified' : 
+                                                         app.paymentStatus === 'Pending' ? 'hourglass_empty' : 'payments'}
+                                                    </span>
+                                                    <span className="text-[9px] font-black uppercase tracking-widest">
+                                                        {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'Settlement Verified' :
+                                                         app.paymentStatus === 'Pending' ? 'Verification In Progress' : `Pending Settlement: $${app.amount}`}
+                                                    </span>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-xl border border-emerald-100">
-                                                    <span className="material-symbols-outlined text-[14px]">verified</span>
-                                                    <span className="text-[9px] font-black uppercase tracking-widest">Verified / Under Review</span>
+                                                    <span className="material-symbols-outlined text-[14px]">task_alt</span>
+                                                    <span className="text-[9px] font-black uppercase tracking-widest">Credential Active</span>
                                                 </div>
                                             )}
                                         </div>
@@ -106,14 +143,14 @@ export default function ApplicantDashboard() {
                                                 href={`/dashboard/applications/${app.applicationId}`}
                                                 className="px-5 py-2.5 rounded-xl text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] hover:bg-blue-50 hover:text-blue-900 transition-all"
                                             >
-                                                View Details
+                                                View details
                                             </Link>
-                                            {app.requiresPayment && (
+                                            {app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid') && (
                                                 <button
                                                     onClick={() => setSelectedPaymentApp(app)}
                                                     className="bg-blue-900 text-white px-6 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95"
                                                 >
-                                                    Process Payment
+                                                    {app.paymentStatus === 'Pending' ? 'Update Submission' : 'Process payment'}
                                                 </button>
                                             )}
                                         </div>
@@ -147,7 +184,7 @@ export default function ApplicantDashboard() {
                                         <div className="flex justify-between items-start mb-2">
                                             <p className="text-[9px] font-black text-blue-900 uppercase tracking-tight">{pay.JobStage?.name}</p>
                                             <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-lg border ${pay.status === 'Verified' || pay.status === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                                                    pay.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-red-50 text-red-600 border-red-100'
+                                                pay.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-red-50 text-red-600 border-red-100'
                                                 }`}>
                                                 {pay.status === 'Pending' ? 'Audit Pending' : pay.status}
                                             </span>
@@ -188,7 +225,7 @@ export default function ApplicantDashboard() {
                         <div className="p-8 bg-white border-b border-blue-50 flex items-center justify-between">
                             <div>
                                 <h3 className="text-xs font-black text-blue-900 uppercase tracking-widest">Payment Gateway</h3>
-                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Ref ID: #TXN-{selectedPaymentApp.applicationId.toString().padStart(5, '0')}</p>
+                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Ref ID: #TXN-{selectedPaymentApp.applicationId.toString().padStart(5, '0')}897XVB</p>
                             </div>
                             <button onClick={() => setSelectedPaymentApp(null)} className="w-10 h-10 rounded-xl hover:bg-blue-50 text-blue-400 hover:text-blue-900 transition-all flex items-center justify-center">
                                 <span className="material-symbols-outlined">close</span>

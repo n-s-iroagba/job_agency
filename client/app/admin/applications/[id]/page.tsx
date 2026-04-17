@@ -11,11 +11,16 @@ export default function ApplicationDetailPage() {
     const id = params?.id;
     const [showAddStage, setShowAddStage] = useState(false);
 
-    // Form state for new stage
-    const [newStageName, setNewStageName] = useState('');
-    const [newStageDesc, setNewStageDesc] = useState('');
+    // Form state for stage
+    const [editingStage, setEditingStage] = useState<any>(null);
+    const [stageName, setStageName] = useState('');
+    const [stageDesc, setStageDesc] = useState('');
     const [requiresPayment, setRequiresPayment] = useState(false);
     const [amount, setAmount] = useState('');
+    const [setAsCurrent, setSetAsCurrent] = useState(false);
+    const [notifyInApp, setNotifyInApp] = useState(true);
+    const [notifyEmail, setNotifyEmail] = useState(false);
+    const [verifyingPayment, setVerifyingPayment] = useState<any>(null);
 
     const { data: application, isLoading, error, refetch } = useApiQuery<any>(
         ['admin', 'applications', `${id}`],
@@ -29,212 +34,533 @@ export default function ApplicationDetailPage() {
         {
             onSuccess: () => {
                 setShowAddStage(false);
-                setNewStageName('');
-                setNewStageDesc('');
-                setRequiresPayment(false);
-                setAmount('');
+                resetStageForm();
                 refetch();
             }
         }
     );
 
-    const handleAddStage = async (e: React.FormEvent) => {
+    const updateStageMutation = useApiMutation(
+        'put',
+        `/admin/applications/${id}/stages/:stageId`,
+        {
+            onSuccess: () => {
+                setEditingStage(null);
+                resetStageForm();
+                refetch();
+            }
+        }
+    );
+
+    const deleteStageMutation = useApiMutation(
+        'delete',
+        `/admin/applications/${id}/stages/:stageId`,
+        { onSuccess: () => refetch() }
+    );
+
+    const advanceMutation = useApiMutation(
+        'post',
+        `/admin/applications/${id}/advance`,
+        { onSuccess: () => refetch() }
+    );
+
+    const verifyPaymentMutation = useApiMutation(
+        'post',
+        '/admin/payments/:paymentId/verify',
+        {
+            onSuccess: () => {
+                setVerifyingPayment(null);
+                refetch();
+            }
+        }
+    );
+
+    const resetStageForm = () => {
+        setStageName('');
+        setStageDesc('');
+        setRequiresPayment(false);
+        setAmount('');
+        setSetAsCurrent(false);
+        setNotifyInApp(true);
+        setNotifyEmail(false);
+    };
+
+    const handleSaveStage = async (e: React.FormEvent) => {
         e.preventDefault();
+        const payload = {
+            name: stageName,
+            description: stageDesc,
+            requiresPayment,
+            amount: requiresPayment ? parseFloat(amount) : null,
+            currency: requiresPayment ? 'USD' : null,
+            orderPosition: editingStage ? editingStage.orderPosition : (application?.JobStages?.length || 0) + 1,
+            setAsCurrent,
+            notifyInApp,
+            notifyEmail
+        };
+
         try {
-            await addStageMutation.mutateAsync({
-                name: newStageName,
-                description: newStageDesc,
-                requiresPayment,
-                amount: requiresPayment ? parseFloat(amount) : null,
-                currency: requiresPayment ? 'USD' : null,
-                orderPosition: (application?.JobStages?.length || 0) + 1
-            });
+            if (editingStage) {
+                await updateStageMutation.mutateAsync({
+                    params: { stageId: editingStage.id },
+                    data: payload
+                });
+            } else {
+                await addStageMutation.mutateAsync(payload);
+            }
         } catch (err) {
             console.error(err);
         }
     };
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading...</div>;
-    if (error) return <div className="p-12 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest">Error Loading Application</div>;
+    const handleEditClick = (stage: any) => {
+        setEditingStage(stage);
+        setStageName(stage.name);
+        setStageDesc(stage.description);
+        setRequiresPayment(stage.requiresPayment);
+        setAmount(stage.amount?.toString() || '');
+    };
+
+    const handleAdvance = async () => {
+        const notify = confirm('Advance applicant to next stage? Select OK to notify applicant, or Cancel to advance silently.');
+        try {
+            await advanceMutation.mutateAsync({ shouldNotify: notify });
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Pipeline Infrastructure...</div>;
+    if (error) return <div className="p-12 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest">Error Synchronizing Protocol</div>;
 
     const user = application?.User;
     const job = application?.JobListing;
     const stages = application?.JobStages || [];
+    const payments = application?.Payments || [];
+
+    const getStagePayment = (stageId: number) => {
+        return payments.find((p: any) => p.stageId === stageId);
+    };
+
+    const DataItem = ({ label, value }: { label: string, value: string | null | undefined }) => (
+        <div className="space-y-1">
+            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-blue-400">{label}</span>
+            <p className="text-[11px] font-bold text-blue-900 uppercase">{value || 'Not Disclosed'}</p>
+        </div>
+    );
 
     return (
-        <div className="font-sans">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <div className="font-sans antialiased text-blue-900 max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 pb-8 border-b border-blue-50">
                 <div>
-                    <h1 className="text-2xl font-bold text-blue-900 tracking-tight">{user?.fullName}</h1>
-                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">
-                        Application for {job?.title}
+                    <div className="flex items-center gap-3 mb-2">
+                        <Link href="/admin/applications" className="text-blue-400 hover:text-blue-900 transition-colors">
+                            <span className="material-symbols-outlined text-sm font-bold">arrow_back</span>
+                        </Link>
+                        <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">Operational Protocol / {id}</span>
+                    </div>
+                    <h1 className="text-3xl font-black italic uppercase tracking-tighter text-blue-900">{user?.fullName}</h1>
+                    <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">
+                        Application Target: {job?.title}
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <span className={`px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded-lg ${application.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-700' :
-                            application.status === 'COMPLETED' ? 'bg-blue-100 text-blue-700' :
+                    <span className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-xl border ${application.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                            application.status === 'COMPLETED' ? 'bg-blue-900 text-white shadow-lg shadow-blue-900/10' :
                                 'bg-blue-100 text-blue-600'
                         }`}>
                         {application.status}
                     </span>
                     <button
                         onClick={() => setShowAddStage(true)}
-                        className="bg-blue-900 text-white px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all"
+                        className="bg-blue-900 text-white px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95"
                     >
-                        Add Stage
+                        Inject Stage
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div className="lg:col-span-8 space-y-6">
-                    <div className="bg-white p-6 md:p-8 rounded-2xl border border-blue-100">
-                        <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-6">Pipeline</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                {/* Main Pipeline Logic */}
+                <div className="lg:col-span-8 space-y-8">
+                    <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
+                        <div className="flex items-center justify-between mb-10">
+                            <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.3em] flex items-center gap-2">
+                                <span className="material-symbols-outlined text-sm font-bold">account_tree</span>
+                                Pipeline Sequence
+                            </h3>
+                        </div>
+
                         <div className="space-y-4">
-                            {stages.map((stage: any, index: number) => {
+                            {stages.sort((a: any, b: any) => a.orderPosition - b.orderPosition).map((stage: any, index: number) => {
                                 const isCurrent = stage.id === application.currentStageId;
+                                const payment = getStagePayment(stage.id);
+
                                 return (
                                     <div
                                         key={stage.id}
-                                        className={`p-5 rounded-xl border transition-all ${isCurrent ? 'bg-blue-50 border-blue-200 shadow-sm' : 'bg-white border-blue-100'
+                                        className={`p-6 rounded-[2rem] border transition-all group ${isCurrent ? 'bg-blue-50 border-blue-200 shadow-xl shadow-blue-900/5' : 'bg-white border-blue-50'
                                             }`}
                                     >
                                         <div className="flex justify-between items-start gap-4">
-                                            <div className="flex gap-4">
-                                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold shrink-0 ${isCurrent ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-400'
+                                            <div className="flex gap-6">
+                                                <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-xs font-black italic shrink-0 transition-all ${isCurrent ? 'bg-blue-900 text-white shadow-2xl shadow-blue-900/20' : 'bg-blue-50 text-blue-300'
                                                     }`}>
                                                     {index + 1}
                                                 </div>
                                                 <div>
-                                                    <h4 className="text-sm font-bold text-blue-900 flex items-center gap-2">
+                                                    <h4 className="text-sm font-black uppercase tracking-tight text-blue-900 flex items-center gap-3">
                                                         {stage.name}
                                                         {stage.requiresPayment && (
-                                                            <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest">
-                                                                (Paid)
-                                                            </span>
+                                                            <div className="flex items-center gap-2">
+                                                                {payment ? (
+                                                                    <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest border ${payment.status === 'Verified' || payment.status === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                                                            payment.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-red-50 text-red-600 border-red-100'
+                                                                        }`}>
+                                                                        {payment.status === 'Verified' || payment.status === 'Paid' ? 'Payment Verified' :
+                                                                            payment.status === 'Pending' ? 'Review Needed' : 'Unpaid Entry'}
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="px-2 py-0.5 bg-blue-50 text-blue-400 rounded text-[8px] font-black uppercase tracking-widest border border-blue-100">
+                                                                        Settlement Node: ${stage.amount}
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                         )}
                                                     </h4>
-                                                    <p className="text-xs text-blue-500 mt-1 leading-relaxed">
+                                                    <p className="text-[11px] font-bold text-blue-400 mt-1 leading-relaxed uppercase">
                                                         {stage.description}
                                                     </p>
+
+                                                    {payment && (
+                                                        <div className="mt-6 flex items-center gap-3">
+                                                            <div className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2 border ${payment.status === 'Paid' || payment.status === 'Verified' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                                                    payment.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' : 'bg-red-50 text-red-600 border-red-100'
+                                                                }`}>
+                                                                <span className="material-symbols-outlined text-xs font-bold">payments</span>
+                                                                Settlement {payment.status}
+                                                                {payment.status === 'Pending' && (
+                                                                    <button
+                                                                        onClick={() => setVerifyingPayment(payment)}
+                                                                        className="ml-4 underline hover:text-amber-800 transition-colors"
+                                                                    >
+                                                                        Inspect Proof
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
-                                            {isCurrent && (
-                                                <span className="text-[9px] font-bold text-blue-900 uppercase tracking-widest">
-                                                    Current
-                                                </span>
-                                            )}
+                                            <div className="flex flex-col items-end gap-3">
+                                                {isCurrent && (
+                                                    <span className="text-[8px] font-black text-white uppercase tracking-widest bg-blue-900 px-3 py-1 rounded-lg shadow-lg shadow-blue-900/10">
+                                                        Active Phase
+                                                    </span>
+                                                )}
+                                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                                                    <button
+                                                        onClick={() => handleEditClick(stage)}
+                                                        className="w-8 h-8 flex items-center justify-center hover:bg-blue-100 rounded-xl text-blue-400 hover:text-blue-900 transition-all"
+                                                    >
+                                                        <span className="material-symbols-outlined text-sm">edit</span>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => { if (confirm('REMOVAL PROTOCOL: Permanently delete this stage?')) deleteStageMutation.mutate({ params: { stageId: stage.id } }); }}
+                                                        className="w-8 h-8 flex items-center justify-center hover:bg-red-50 rounded-xl text-blue-400 hover:text-red-500 transition-all"
+                                                    >
+                                                        <span className="material-symbols-outlined text-sm">delete</span>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 );
                             })}
                             {stages.length === 0 && (
-                                <div className="py-12 text-center text-[10px] font-bold text-blue-300 uppercase tracking-widest">
-                                    No stages defined
+                                <div className="py-20 text-center bg-blue-50/50 rounded-[3rem] border-2 border-dashed border-blue-100">
+                                    <span className="material-symbols-outlined text-3xl text-blue-200 mb-2">account_tree</span>
+                                    <p className="text-[9px] font-black text-blue-300 uppercase tracking-[0.3em]">No stages defined</p>
                                 </div>
                             )}
                         </div>
                     </div>
                 </div>
 
-                <div className="lg:col-span-4 space-y-6">
-                    <div className="bg-white p-6 rounded-2xl border border-blue-100">
-                        <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-4">Details</h3>
-                        <div className="space-y-4">
-                            <div>
-                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Email</p>
-                                <p className="text-xs font-medium text-blue-900 mt-1">{user?.email}</p>
-                            </div>
-                            <div className="pt-4 border-t border-blue-50">
-                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Progress</p>
-                                <div className="mt-2">
-                                    <div className="flex justify-between items-end mb-1">
-                                        <span className="text-xl font-bold text-blue-900">{application.completionPercentage}%</span>
-                                    </div>
-                                    <div className="h-1.5 bg-blue-100 rounded-full overflow-hidden">
-                                        <div
-                                            className="h-full bg-blue-900 transition-all duration-500"
-                                            style={{ width: `${application.completionPercentage}%` }}
-                                        />
-                                    </div>
+                {/* Talent Insight Sidebar */}
+                <div className="lg:col-span-4 space-y-8">
+                    {/* Bio Card */}
+                    <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
+                        <div className="flex items-center gap-4 mb-8 pb-4 border-b border-blue-50">
+                            <span className="material-symbols-outlined text-blue-900">badge</span>
+                            <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">Talent Identity</h3>
+                        </div>
+
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="w-16 h-16 rounded-2xl bg-blue-900 flex items-center justify-center text-white text-2xl font-black italic shadow-2xl shadow-blue-900/10">
+                                    {user?.fullName?.charAt(0)}
                                 </div>
+                                <div>
+                                    <p className="text-sm font-black uppercase tracking-tight text-blue-900">{user?.fullName}</p>
+                                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">{user?.email}</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-6">
+                                <DataItem label="Nationality" value={user?.nationality} />
+                                <DataItem label="Gender Orientation" value={user?.gender} />
+                                <DataItem label="Biological DOB" value={user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'} />
+                                <DataItem label="Authorized Phone" value={user?.phoneNumber} />
+                                <div className="col-span-1">
+                                    <DataItem label="Principal Residence" value={user?.address} />
+                                </div>
+                            </div>
+
+                            <div className="pt-8 border-t border-blue-50">
+                                {user?.cvUrl ? (
+                                    <a
+                                        href={user.cvUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full py-4 bg-white border-2 border-blue-900 text-blue-900 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-blue-50 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-900/5 active:scale-95"
+                                    >
+                                        <span className="material-symbols-outlined text-base font-bold">description</span>
+                                        View Master CV
+                                    </a>
+                                ) : (
+                                    <div className="p-4 bg-amber-50 rounded-xl border border-amber-100 text-center">
+                                        <p className="text-[8px] font-black text-amber-600 uppercase tracking-widest">No curriculum vitae detected</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
 
-                    <div className="bg-blue-900 p-6 rounded-2xl text-white">
-                        <div className="flex justify-between text-[9px] font-bold uppercase tracking-widest text-blue-400">
-                            <span>Applied {new Date(application.createdAt).toLocaleDateString()}</span>
-                            <span>ID #{id}</span>
+                    {/* Internal Ops Card */}
+                    <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
+                        <div className="flex items-center gap-4 mb-8 pb-4 border-b border-blue-50">
+                            <span className="material-symbols-outlined text-blue-900">settings_input_component</span>
+                            <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">Operational Pulse</h3>
+                        </div>
+
+                        <div className="space-y-8">
+                            <div>
+                                <div className="flex justify-between items-end mb-3">
+                                    <span className="text-[9px] font-black text-blue-400 uppercase tracking-widest">Completion Depth</span>
+                                    <span className="text-2xl font-black italic text-blue-900">{application.completionPercentage}%</span>
+                                </div>
+                                <div className="h-2 bg-blue-50 rounded-full overflow-hidden shadow-inner">
+                                    <div
+                                        className="h-full bg-blue-900 transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)"
+                                        style={{ width: `${application.completionPercentage}%` }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="pt-8 border-t border-blue-50 space-y-4">
+                                <button
+                                    onClick={handleAdvance}
+                                    disabled={advanceMutation.isPending || application.status === 'COMPLETED'}
+                                    className="w-full py-4 bg-blue-50 text-blue-400 border border-blue-100 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:border-blue-900 hover:text-blue-900 transition-all disabled:opacity-30 active:scale-95"
+                                >
+                                    {advanceMutation.isPending ? 'Executing Bypass...' : 'Manual Advance Stage'}
+                                </button>
+                                <p className="text-[8px] text-blue-300 text-center uppercase font-black tracking-[0.2em] italic">Authorized override only</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-blue-900 p-10 rounded-[3rem] text-white shadow-2xl shadow-blue-900/20">
+                        <div className="flex flex-col gap-2">
+                            <span className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-500">Log Timestamp</span>
+                            <span className="text-xs font-bold uppercase">{new Date(application.createdAt).toLocaleString()}</span>
+                            <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center text-[8px] font-black uppercase tracking-widest opacity-60">
+                                <span>Registry Node {id}</span>
+                                <span>SSL Secure</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {showAddStage && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-blue-900/40 backdrop-blur-sm" onClick={() => setShowAddStage(false)}></div>
-                    <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
-                        <div className="p-6 border-b border-blue-100 flex items-center justify-between">
-                            <h3 className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">Add Stage</h3>
-                            <button onClick={() => setShowAddStage(false)} className="text-blue-400 hover:text-blue-900 transition-colors">
-                                <span className="material-symbols-outlined text-lg">close</span>
+            {/* Stage Injection/Edit Modal */}
+            {(showAddStage || editingStage) && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
+                    <div className="absolute inset-0 bg-blue-900/80 backdrop-blur-xl animate-in fade-in duration-500" onClick={() => { setShowAddStage(false); setEditingStage(null); }}></div>
+                    <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
+                        <div className="p-10 border-b border-blue-50 flex items-center justify-between">
+                            <div>
+                                <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">{editingStage ? 'Reconfigure Stage' : 'Inject New Stage'}</h3>
+                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Configuring application pipeline node</p>
+                            </div>
+                            <button onClick={() => { setShowAddStage(false); setEditingStage(null); }} className="w-10 h-10 rounded-xl hover:bg-blue-50 text-blue-400 hover:text-blue-900 transition-all flex items-center justify-center">
+                                <span className="material-symbols-outlined">close</span>
                             </button>
                         </div>
-                        <form onSubmit={handleAddStage} className="p-6 space-y-6">
+                        <form onSubmit={handleSaveStage} className="p-10 space-y-8">
                             <div className="space-y-2">
-                                <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest">Title</label>
+                                <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Protocol Name</label>
                                 <input
                                     type="text"
                                     required
-                                    value={newStageName}
-                                    onChange={(e) => setNewStageName(e.target.value)}
-                                    placeholder="Stage Title"
-                                    className="w-full px-4 py-2.5 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 outline-none transition-all"
+                                    value={stageName}
+                                    onChange={(e) => setStageName(e.target.value)}
+                                    placeholder="Enter stage identifier"
+                                    className="w-full px-6 py-4 bg-blue-50 border border-transparent rounded-2xl text-sm font-bold text-blue-900 focus:bg-white focus:border-blue-900 outline-none transition-all placeholder:text-blue-200"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest">Description</label>
+                                <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Operational Brief</label>
                                 <textarea
-                                    rows={3}
+                                    rows={4}
                                     required
-                                    value={newStageDesc}
-                                    onChange={(e) => setNewStageDesc(e.target.value)}
-                                    placeholder="Describe this stage..."
-                                    className="w-full px-4 py-2.5 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 outline-none transition-all resize-none"
+                                    value={stageDesc}
+                                    onChange={(e) => setStageDesc(e.target.value)}
+                                    placeholder="Define operational requirements..."
+                                    className="w-full px-6 py-4 bg-blue-50 border border-transparent rounded-2xl text-sm font-bold text-blue-900 focus:bg-white focus:border-blue-900 outline-none transition-all resize-none placeholder:text-blue-200"
                                 />
                             </div>
-                            <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <input
-                                    type="checkbox"
-                                    id="paywall"
-                                    checked={requiresPayment}
-                                    onChange={(e) => setRequiresPayment(e.target.checked)}
-                                    className="w-4 h-4 rounded border-blue-300 text-blue-900 focus:ring-blue-900"
-                                />
-                                <label htmlFor="paywall" className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Requires Payment</label>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex items-center gap-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-50">
+                                    <div className="flex items-center h-5">
+                                        <input
+                                            type="checkbox"
+                                            id="setAsCurrent"
+                                            checked={setAsCurrent}
+                                            onChange={(e) => setSetAsCurrent(e.target.checked)}
+                                            className="w-5 h-5 rounded-lg border-blue-200 text-blue-900 focus:ring-blue-900"
+                                        />
+                                    </div>
+                                    <label htmlFor="setAsCurrent" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Set as Active</label>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex items-center gap-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-50">
+                                    <div className="flex items-center h-5">
+                                        <input
+                                            type="checkbox"
+                                            id="notifyInApp"
+                                            checked={notifyInApp}
+                                            onChange={(e) => setNotifyInApp(e.target.checked)}
+                                            className="w-5 h-5 rounded-lg border-blue-200 text-blue-900 focus:ring-blue-900"
+                                        />
+                                    </div>
+                                    <label htmlFor="notifyInApp" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Alert on Dashboard</label>
+                                </div>
+                                <div className="flex items-center gap-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-50">
+                                    <div className="flex items-center h-5">
+                                        <input
+                                            type="checkbox"
+                                            id="notifyEmail"
+                                            checked={notifyEmail}
+                                            onChange={(e) => setNotifyEmail(e.target.checked)}
+                                            className="w-5 h-5 rounded-lg border-blue-200 text-blue-900 focus:ring-blue-900"
+                                        />
+                                    </div>
+                                    <label htmlFor="notifyEmail" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Dispatch Email</label>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-50">
+                                <div className="flex items-center h-5">
+                                    <input
+                                        type="checkbox"
+                                        id="paywall"
+                                        checked={requiresPayment}
+                                        onChange={(e) => setRequiresPayment(e.target.checked)}
+                                        className="w-5 h-5 rounded-lg border-blue-200 text-blue-900 focus:ring-blue-900"
+                                    />
+                                </div>
+                                <label htmlFor="paywall" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Settlement Required</label>
                             </div>
                             {requiresPayment && (
-                                <div className="space-y-2">
-                                    <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest">Amount (USD)</label>
+                                <div className="space-y-2 animate-in slide-in-from-top-4 duration-300">
+                                    <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Target Valuation (USD)</label>
                                     <input
                                         type="number"
                                         required
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)}
                                         placeholder="0.00"
-                                        className="w-full px-4 py-2.5 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 outline-none transition-all"
+                                        className="w-full px-6 py-4 bg-blue-50 border border-transparent rounded-2xl text-sm font-bold text-blue-900 focus:bg-white focus:border-blue-900 outline-none transition-all"
                                     />
                                 </div>
                             )}
                             <button
                                 type="submit"
-                                disabled={addStageMutation.isPending}
-                                className="w-full py-3 bg-blue-900 text-white font-bold text-[10px] uppercase tracking-widest rounded-lg hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10 disabled:opacity-50"
+                                disabled={addStageMutation.isPending || updateStageMutation.isPending}
+                                className="w-full py-5 bg-blue-900 text-white font-black text-[10px] uppercase tracking-[0.4em] rounded-2xl hover:bg-black transition-all shadow-2xl shadow-blue-900/20 disabled:opacity-50 active:scale-95"
                             >
-                                {addStageMutation.isPending ? 'Saving...' : 'Save Stage'}
+                                {addStageMutation.isPending || updateStageMutation.isPending ? 'Synchronizing...' : 'Commit Protocol Configuration'}
                             </button>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Proof Verification Modal */}
+            {verifyingPayment && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
+                    <div className="absolute inset-0 bg-blue-900/90 backdrop-blur-2xl animate-in fade-in duration-500" onClick={() => setVerifyingPayment(null)}></div>
+                    <div className="relative bg-white rounded-[3.5rem] shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300 border border-white/20">
+                        <div className="p-10 border-b border-blue-50 flex items-center justify-between bg-white/50">
+                            <div>
+                                <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">Settlement Audit</h3>
+                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Verifying visual proof of transaction</p>
+                            </div>
+                            <button onClick={() => setVerifyingPayment(null)} className="w-12 h-12 rounded-2xl hover:bg-blue-50 text-blue-400 hover:text-blue-900 transition-all flex items-center justify-center">
+                                <span className="material-symbols-outlined">close</span>
+                            </button>
+                        </div>
+                        <div className="flex-1 overflow-y-auto p-12 space-y-10 custom-scrollbar">
+                            <div className="aspect-video bg-blue-50 rounded-[2.5rem] overflow-hidden border border-blue-100 relative group shadow-inner">
+                                {verifyingPayment.proofUrl ? (
+                                    <div className="w-full h-full flex items-center justify-center p-4">
+                                        <img
+                                            src={verifyingPayment.proofUrl}
+                                            alt="Payment Proof"
+                                            className="w-full h-full object-contain rounded-2xl shadow-2xl"
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center h-full text-blue-200">
+                                        <span className="material-symbols-outlined text-6xl mb-4">image_not_supported</span>
+                                        <p className="text-[10px] uppercase font-black tracking-[0.3em]">No primary proof detected</p>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="bg-blue-50/50 p-10 rounded-[2.5rem] border border-blue-100">
+                                <div className="grid grid-cols-2 gap-12 mb-10 pb-10 border-b border-blue-100">
+                                    <div>
+                                        <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">Verified Amount</p>
+                                        <p className="text-4xl font-black italic text-blue-900">${verifyingPayment.amount}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">Currency Cluster</p>
+                                        <p className="text-4xl font-black italic text-blue-900">{verifyingPayment.currency}</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col md:flex-row gap-4">
+                                    <button
+                                        onClick={() => { if (confirm('AUTHORIZE SETTLEMENT: Confirm payment and advance pipeline?')) verifyPaymentMutation.mutate({ params: { paymentId: verifyingPayment.id }, data: { isApproved: true } }); }}
+                                        className="flex-1 py-5 bg-blue-900 text-white font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-emerald-600 transition-all shadow-2xl shadow-blue-900/20 active:scale-95"
+                                    >
+                                        {verifyPaymentMutation.isPending ? 'Processing...' : 'Authorize & Advance'}
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            const note = prompt('Specify rejection parameters:');
+                                            if (note) verifyPaymentMutation.mutate({ params: { paymentId: verifyingPayment.id }, data: { isApproved: false, note } });
+                                        }}
+                                        className="py-5 px-10 bg-white text-red-500 border-2 border-red-100 font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-red-50 hover:border-red-200 transition-all active:scale-95"
+                                    >
+                                        Reject Protocol
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

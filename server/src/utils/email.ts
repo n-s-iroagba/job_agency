@@ -11,7 +11,10 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+console.log(`[EmailUtil] SMTP Transporter Initialized. Host: ${process.env.SMTP_HOST}, Port: ${process.env.SMTP_PORT}, User: ${process.env.SMTP_USER ? '***' : 'NONE'}`);
+
 export const sendEmail = async (to: string, subject: string, html: string): Promise<void> => {
+    console.log(`[EmailUtil] Attempting to dispatch email to: ${to} | Subject: ${subject}`);
     try {
         await transporter.sendMail({
             from: process.env.SMTP_FROM || '"Job Agency" <noreply@jobagency.com>',
@@ -19,11 +22,9 @@ export const sendEmail = async (to: string, subject: string, html: string): Prom
             subject,
             html,
         });
+        console.log(`[EmailUtil] Successfully dispatched email to: ${to}`);
     } catch (error) {
-        // In a production environment, this should be logged using the logger utility
-        console.error(`Failed to send email to ${to}:`, error);
-        // Depending on the strictness of the requirement, we either throw or swallow the error.
-        // StRS STK-ADM-APP-004 requires resilient queuing, so throwing helps the service layer retry.
+        console.error(`[EmailUtil] CRITICAL FAILURE sending email to ${to}:`, error);
         throw new Error('Email dispatch failed');
     }
 };

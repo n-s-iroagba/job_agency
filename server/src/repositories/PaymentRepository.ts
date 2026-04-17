@@ -6,6 +6,7 @@ export interface FindPaymentOptions {
     offset?: number;
     status?: string;
     applicationId?: number;
+    stageId?: number;
 }
 
 export class PaymentRepository {
@@ -13,6 +14,8 @@ export class PaymentRepository {
     public async findAllAdmin(options: FindPaymentOptions = {}, transaction?: Transaction): Promise<{ rows: Payment[]; count: number }> {
         const whereClause: any = {};
         if (options.status) whereClause.status = options.status;
+        if (options.applicationId) whereClause.applicationId = options.applicationId;
+        if (options.stageId) whereClause.stageId = options.stageId;
 
         return Payment.findAndCountAll({
             where: whereClause,

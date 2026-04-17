@@ -5,6 +5,7 @@ import { paymentRepository } from '../repositories/PaymentRepository';
 import { jobStageRepository } from '../repositories/JobStageRepository';
 import { notificationRepository } from '../repositories/NotificationRepository';
 import { CONSTANTS } from '../constants';
+import { sendEmail } from '../utils/email';
 
 export class ApplicationService {
     // Maps to STK-APP-APPLIST-001
@@ -24,6 +25,12 @@ export class ApplicationService {
             // Collect pending stages (active apps with a current stage)
             if (app.status === CONSTANTS.APPLICATION_STATUSES.ACTIVE && app.currentStageId) {
                 const currentStage = await jobStageRepository.findById(app.currentStageId);
+                const currentPaymentResult = await paymentRepository.findAllAdmin({
+                    applicationId: app.id,
+                    stageId: app.currentStageId,
+                });
+                const payment = currentPaymentResult.rows[0];
+
                 pendingStages.push({
                     applicationId: app.id,
                     jobTitle: app.JobListing?.title,
@@ -33,16 +40,16 @@ export class ApplicationService {
                     amount: currentStage?.amount,
                     currency: currentStage?.currency,
                     stageName: currentStage?.name,
+                    paymentStatus: payment?.status || 'Unpaid',
                 });
             }
 
             // STK-APP-DASH-001: current unpaid payments across all applications
-            const payments = await paymentRepository.findAllAdmin({
+            const unpaidPaymentsResult = await paymentRepository.findAllAdmin({
                 applicationId: app.id,
                 status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
             });
-            const payList = (payments as any).rows ?? payments;
-            unpaidPayments.push(...payList);
+            unpaidPayments.push(...unpaidPaymentsResult.rows);
         }
 
         // Collect all payments for history
@@ -84,16 +91,13 @@ export class ApplicationService {
         return app;
     }
 
-    // Maps to STK-APP-APPLY-001, TRUST-009 — Duplicate stages from JobTemplate to Application instance upfront
+    // UPDATED: Only create "Credential Screening" on application start
     public async startApplication(userId: number, jobId: number) {
         const t = await sequelize.transaction();
         try {
             const job = await jobRepository.findById(jobId, t);
             if (!job) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-            // Clone template stages from job's stages JSON array
-            const templateStages = job.stages || [];
-            
             const newApp = await applicationRepository.create({
                 userId,
                 jobId,
@@ -102,38 +106,28 @@ export class ApplicationService {
                 currentStageId: null
             }, t);
 
-            let firstStageId: number | null = null;
+            // Create singular initial stage: Credential Screening
+            const initialStage = await jobStageRepository.create({
+                applicationId: newApp.id,
+                name: 'Credential Screening',
+                description: 'Initial verification of submitted talent credentials and documentation.',
+                orderPosition: 1,
+                requiresPayment: false,
+                notifyEmail: true,
+                notifyPush: true
+            }, t);
 
-            if (templateStages.length > 0) {
-                for (const stage of templateStages) {
-                    const clonedStage = await jobStageRepository.create({
-                        applicationId: newApp.id,
-                        name: stage.name,
-                        description: stage.description,
-                        orderPosition: stage.orderPosition || stage.order,
-                        requiresPayment: stage.requiresPayment ?? stage.pay,
-                        amount: stage.amount || stage.amt,
-                        currency: stage.currency || 'USD',
-                        instructions: stage.instructions,
-                        deadlineDays: stage.deadlineDays,
-                        notifyEmail: stage.notifyEmail ?? true,
-                        notifyPush: stage.notifyPush ?? true
-                    }, t);
-                    
-                    if (clonedStage.orderPosition === 1) {
-                        firstStageId = clonedStage.id;
-                    }
-                }
-                
-                // DM-001: Set initial stage pointer
-                await applicationRepository.update(newApp.id, { currentStageId: firstStageId }, t);
-            }
+            // Set initial stage pointer
+            await applicationRepository.update(newApp.id, { 
+                currentStageId: initialStage.id,
+                completionPercentage: 10 // Start with some progress
+            }, t);
 
-            // DM-003: Immediate feedback on application start
+            // Immediate feedback on application start
             await notificationRepository.create({
                 userId,
-                subject: 'Application Started',
-                message: `You have successfully started your application for "${job.title}".`,
+                subject: 'Application Registered',
+                message: `Your application for "${job.title}" has been successfully registered. Current Phase: Credential Screening.`,
                 type: 'SYSTEM',
             }, t);
 
@@ -145,8 +139,8 @@ export class ApplicationService {
         }
     }
 
-    // Maps to DM-001 (stage progress tracker), STK-APP-APPLY-005 (draft save & resume)
-    public async advanceApplicationStage(applicationId: number) {
+    // UPDATED: Support for conditional notification
+    public async advanceApplicationStage(applicationId: number, shouldNotify: boolean = true) {
         const t = await sequelize.transaction();
         try {
             const app = await applicationRepository.findById(applicationId, t);
@@ -162,7 +156,6 @@ export class ApplicationService {
                 const currentStageIndex = stages.rows.findIndex(s => s.id === app.currentStageId);
                 if (currentStageIndex >= 0 && currentStageIndex < stages.rows.length - 1) {
                     nextStageId = stages.rows[currentStageIndex + 1].id;
-                    // DM-001: exact completion percentage
                     percentage = Math.round(((currentStageIndex + 1) / stages.rows.length) * 100);
                     status = CONSTANTS.APPLICATION_STATUSES.ACTIVE;
                 }
@@ -188,14 +181,24 @@ export class ApplicationService {
                         currency: nextStage.currency,
                     }, t);
                 }
+
+                // Notify if requested
+                if (shouldNotify && nextStage) {
+                    await notificationRepository.create({
+                        userId: app.userId,
+                        subject: 'Application Advanced',
+                        message: `Your application has moved to the next phase: "${nextStage.name}".`,
+                        type: 'SYSTEM',
+                    }, t);
+                }
             }
 
-            // DM-007: Progress motivation on final stage completion
+            // Progress motivation on final stage completion
             if (status === CONSTANTS.APPLICATION_STATUSES.COMPLETED) {
                 await notificationRepository.create({
                     userId: app.userId,
                     subject: 'Application Completed',
-                    message: `Congratulations! Your application has successfully completed all ${stages.rows.length} stages.`,
+                    message: `Congratulations! Your application has successfully completed all phases.`,
                     type: 'SYSTEM',
                 }, t);
             }
@@ -208,10 +211,12 @@ export class ApplicationService {
         }
     }
 
-    // New: Admin can inject ad-hoc stages into an application
+    // UPDATED: Support for immediate advancement, granular notification and payment auto-creation
     public async addStageToApplication(applicationId: number, stageData: any) {
         const t = await sequelize.transaction();
         try {
+            const { notifyInApp, notifyEmail, setAsCurrent, ...rest } = stageData;
+            
             const app = await applicationRepository.findById(applicationId, t);
             if (!app) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
@@ -221,10 +226,49 @@ export class ApplicationService {
                 : 1;
 
             const newStage = await jobStageRepository.create({
-                ...stageData,
+                ...rest,
                 applicationId,
-                orderPosition: stageData.orderPosition || nextPosition
+                orderPosition: rest.orderPosition || nextPosition
             }, t);
+
+            if (setAsCurrent) {
+                await applicationRepository.update(applicationId, {
+                    currentStageId: newStage.id,
+                    status: CONSTANTS.APPLICATION_STATUSES.ACTIVE
+                }, t);
+
+                // Auto-create payment if required
+                if (newStage.requiresPayment) {
+                    await paymentRepository.create({
+                        applicationId,
+                        stageId: newStage.id,
+                        status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
+                        amount: newStage.amount,
+                        currency: newStage.currency,
+                    }, t);
+                }
+
+                const nSubject = 'Process Activation';
+                const nMessage = `A new phase has been activated for your application: "${newStage.name}".`;
+
+                if (notifyInApp) {
+                    await notificationRepository.create({
+                        userId: app.userId,
+                        subject: nSubject,
+                        message: nMessage,
+                        type: 'SYSTEM'
+                    }, t);
+                }
+
+                if (notifyEmail) {
+                    if (app.User?.email) {
+                        await sendEmail(app.User.email, nSubject, `<p>${nMessage}</p>`);
+                        console.log(`[ApplicationService] Email dispatch initiated for stage add: ${app.User.email}`);
+                    } else {
+                        console.log(`[ApplicationService] SKIP Email: User field missing or email empty for app ${applicationId}`);
+                    }
+                }
+            }
 
             await t.commit();
             return newStage;
@@ -241,10 +285,55 @@ export class ApplicationService {
     }
 
     public async updateApplicationStage(stageId: number, data: any) {
+        const { notifyInApp, notifyEmail, ...rest } = data;
         const stage = await jobStageRepository.findById(stageId);
         if (!stage) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        await jobStageRepository.update(stageId, data);
-        return jobStageRepository.findById(stageId);
+
+        const app = await applicationRepository.findById(stage.applicationId);
+        if (!app) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+
+        await jobStageRepository.update(stageId, rest);
+        const updatedStage = await jobStageRepository.findById(stageId);
+
+        // If it's the current stage and requires payment, ensure payment record exists
+        if (app.currentStageId === stageId && updatedStage?.requiresPayment) {
+            const existingPayment = await paymentRepository.findAllAdmin({
+                applicationId: app.id,
+                stageId: stageId
+            });
+            if (existingPayment.count === 0) {
+                await paymentRepository.create({
+                    applicationId: app.id,
+                    stageId: stageId,
+                    status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
+                    amount: updatedStage.amount,
+                    currency: updatedStage.currency,
+                });
+            }
+        }
+
+        const nSubject = 'Phase Update';
+        const nMessage = `Details for your current phase "${updatedStage?.name}" have been updated by administration.`;
+
+        if (notifyInApp) {
+            await notificationRepository.create({
+                userId: app.userId,
+                subject: nSubject,
+                message: nMessage,
+                type: 'SYSTEM'
+            });
+        }
+
+        if (notifyEmail) {
+            if (app.User?.email) {
+                await sendEmail(app.User.email, nSubject, `<p>${nMessage}</p>`);
+                console.log(`[ApplicationService] Email dispatch initiated for stage update: ${app.User.email}`);
+            } else {
+                console.log(`[ApplicationService] SKIP Email: User field missing or email empty for app ${app.id}`);
+            }
+        }
+
+        return updatedStage;
     }
 
     public async deleteApplicationStage(stageId: number) {
