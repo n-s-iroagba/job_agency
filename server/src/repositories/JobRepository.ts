@@ -21,7 +21,9 @@ export class JobRepository {
         if (options.searchQuery) {
             whereClause[Op.or] = [
                 { title: { [Op.like]: `%${options.searchQuery}%` } },
-                { location: { [Op.like]: `%${options.searchQuery}%` } }
+                { location: { [Op.like]: `%${options.searchQuery}%` } },
+                { company: { [Op.like]: `%${options.searchQuery}%` } },
+                { description: { [Op.like]: `%${options.searchQuery}%` } }
             ];
         }
 
@@ -50,7 +52,9 @@ export class JobRepository {
         if (options.searchQuery) {
             whereClause[Op.or] = [
                 { title: { [Op.like]: `%${options.searchQuery}%` } },
-                { location: { [Op.like]: `%${options.searchQuery}%` } }
+                { location: { [Op.like]: `%${options.searchQuery}%` } },
+                { company: { [Op.like]: `%${options.searchQuery}%` } },
+                { description: { [Op.like]: `%${options.searchQuery}%` } }
             ];
         }
 

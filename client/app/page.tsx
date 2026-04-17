@@ -53,9 +53,12 @@ import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
   const router = useRouter();
-  const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(['jobs', 'public'], '/jobs');
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(
+    ['jobs', 'public', searchQuery], 
+    `/jobs?search=${encodeURIComponent(searchQuery)}`
+  );
 
   const jobList = jobs?.rows || [];
 
@@ -150,8 +153,15 @@ export default function HomePage() {
                 <div key={i} className="bg-blue-50 border border-blue-100 p-8 rounded-[2.5rem] h-80 animate-pulse" />
               ))
             ) : jobList.length === 0 ? (
-              <div className="col-span-full py-24 text-center bg-blue-50 rounded-[3rem] border border-blue-100">
-                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">The registry is currently being updated.</p>
+              <div className="col-span-full py-24 text-center bg-blue-50/50 rounded-[3rem] border border-dashed border-blue-200">
+                <span className="material-symbols-outlined text-4xl text-blue-200 mb-4">search_off</span>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">No roles matching "{searchQuery}" in current featured registry.</p>
+                <button 
+                  onClick={() => setSearchQuery('')}
+                  className="mt-6 text-[8px] font-black text-blue-900 uppercase tracking-widest border-b-2 border-blue-900 pb-1"
+                >
+                  Clear Protocol
+                </button>
               </div>
             ) : (
               jobList.slice(0, 6).map((job: JobListing) => (

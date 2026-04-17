@@ -11,7 +11,10 @@ function JobsContent() {
     const searchParams = useSearchParams();
     const initialSearch = searchParams.get('search') || '';
     const [searchQuery, setSearchQuery] = useState(initialSearch);
-    const { data, isLoading } = useApiQuery<any>(['jobs', 'active', searchQuery], `/jobs?search=${searchQuery}`);
+    const { data, isLoading } = useApiQuery<any>(
+        ['jobs', 'active', searchQuery], 
+        `/jobs?search=${encodeURIComponent(searchQuery)}`
+    );
     const jobs = data?.rows || [];
 
     // Update local state if URL param changes (e.g. back button)
