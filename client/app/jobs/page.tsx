@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect, Suspense } from 'react';
 import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
