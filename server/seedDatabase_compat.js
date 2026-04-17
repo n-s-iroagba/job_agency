@@ -36,7 +36,9 @@ function parseCSV(content) {
 
 async function seedDatabase() {
     try {
+        await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
         await sequelize.sync({ force: true });
+        await sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
         console.log('Database synced. Seeding global recruitment data from CSV...');
 
         const adminPassword = await bcrypt.hash('AdminPass123!', 12);
