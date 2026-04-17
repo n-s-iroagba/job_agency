@@ -113,14 +113,23 @@ export default function ApplicantDashboard() {
                                                 </div>
                                             </div>
 
-                                            <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-50 mb-6 group-hover:bg-white group-hover:border-blue-100 transition-all">
-                                                <div className="flex items-center gap-2 mb-2">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-900 animate-pulse" />
-                                                    <span className="text-[9px] font-black text-blue-900 uppercase tracking-[0.2em]">{app.stageName}</span>
+                                            <div className="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-50 mb-6 group-hover:bg-white group-hover:border-blue-100 transition-all border-l-4 border-l-blue-900">
+                                                <div className="flex items-center justify-between mb-3">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-blue-900 animate-pulse" />
+                                                        <span className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">{app.stageName}</span>
+                                                    </div>
+                                                    <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded border ${app.requiresPayment ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-emerald-50 text-emerald-600 border-emerald-100'}`}>
+                                                        {app.requiresPayment ? 'Settlement Required' : 'Administrative Review'}
+                                                    </span>
                                                 </div>
-                                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-tight leading-relaxed line-clamp-2 italic opacity-80">
+                                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-tight leading-relaxed italic opacity-90 mb-4 whitespace-pre-wrap">
                                                     {app.stageDescription}
                                                 </p>
+                                                <div className="flex items-center gap-3 pt-4 border-t border-blue-100/50">
+                                                    <span className="text-[8px] font-black text-blue-300 uppercase tracking-[0.2em]">Operational Status:</span>
+                                                    <span className="text-[8px] font-bold text-blue-900 uppercase">Awaiting {app.requiresPayment && app.paymentStatus !== 'Paid' && app.paymentStatus !== 'Verified' ? 'Applicant Action' : 'Internal Audit'}</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="text-right">
@@ -151,9 +160,9 @@ export default function ApplicantDashboard() {
                                                     </span>
                                                 </div>
                                             ) : (
-                                                <div className="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-xl border border-emerald-100">
+                                                <div className="flex items-center gap-2 bg-emerald-50/50 text-emerald-600 px-3 py-1.5 rounded-xl border border-emerald-100">
                                                     <span className="material-symbols-outlined text-[14px]">task_alt</span>
-                                                    <span className="text-[9px] font-black uppercase tracking-widest">Credential Active</span>
+                                                    <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Complimentary Access</span>
                                                 </div>
                                             )}
                                         </div>

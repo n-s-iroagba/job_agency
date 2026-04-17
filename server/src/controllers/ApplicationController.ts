@@ -163,6 +163,21 @@ export class ApplicationController {
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
+
+    public async completeApplication(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            const app = await applicationService.completeApplication(id);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(app);
+        } catch (error: any) {
+            console.error('[ApplicationController.completeApplication]', error);
+            if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
+                res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
+                return;
+            }
+            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
 }
 
 export const applicationController = new ApplicationController();

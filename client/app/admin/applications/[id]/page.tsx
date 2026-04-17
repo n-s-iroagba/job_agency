@@ -74,6 +74,16 @@ export default function ApplicationDetailPage() {
             }
         }
     );
+    
+    const completeApplicationMutation = useApiMutation(
+        'post',
+        `/admin/applications/${id}/complete`,
+        {
+            onSuccess: () => {
+                refetch();
+            }
+        }
+    );
 
     const resetStageForm = () => {
         setStageName('');
@@ -127,6 +137,16 @@ export default function ApplicationDetailPage() {
             await advanceMutation.mutateAsync({ shouldNotify: notify });
         } catch (err) {
             console.error(err);
+        }
+    };
+
+    const handleComplete = async () => {
+        if (confirm('FINAL CLOSURE PROTOCOL: Are you sure you want to mark this application as COMPLETED? This will notify the applicant and finalize the process.')) {
+            try {
+                await completeApplicationMutation.mutateAsync({});
+            } catch (err) {
+                console.error(err);
+            }
         }
     };
 
@@ -366,6 +386,15 @@ export default function ApplicationDetailPage() {
                                 >
                                     {advanceMutation.isPending ? 'Executing Bypass...' : 'Manual Advance Stage'}
                                 </button>
+                                {application.status === 'ACTIVE' && (
+                                    <button
+                                        onClick={handleComplete}
+                                        disabled={completeApplicationMutation.isPending}
+                                        className="w-full py-4 bg-blue-900 text-white rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95 animate-in fade-in slide-in-from-bottom-2 duration-500"
+                                    >
+                                        {completeApplicationMutation.isPending ? 'Finalizing Protocol...' : 'Mark as Completed'}
+                                    </button>
+                                )}
                                 <p className="text-[8px] text-blue-300 text-center uppercase font-black tracking-[0.2em] italic">Authorized override only</p>
                             </div>
                         </div>

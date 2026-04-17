@@ -152,16 +152,18 @@ export class ApplicationService {
 
             const stages = await jobStageRepository.findByApplicationId(applicationId, t);
 
-            let nextStageId: number | null = null;
-            let percentage = 100;
-            let status = CONSTANTS.APPLICATION_STATUSES.COMPLETED;
+            let nextStageId: number | null = app.currentStageId;
+            let percentage = app.completionPercentage;
+            let status = CONSTANTS.APPLICATION_STATUSES.ACTIVE;
 
             if (app.currentStageId) {
                 const currentStageIndex = stages.rows.findIndex(s => s.id === app.currentStageId);
                 if (currentStageIndex >= 0 && currentStageIndex < stages.rows.length - 1) {
                     nextStageId = stages.rows[currentStageIndex + 1].id;
                     percentage = Math.round(((currentStageIndex + 1) / stages.rows.length) * 100);
-                    status = CONSTANTS.APPLICATION_STATUSES.ACTIVE;
+                } else {
+                    // Capped at 100% but remains ACTIVE for explicit completion
+                    percentage = 100;
                 }
             }
 
@@ -197,15 +199,7 @@ export class ApplicationService {
                 }
             }
 
-            // Progress motivation on final stage completion
-            if (status === CONSTANTS.APPLICATION_STATUSES.COMPLETED) {
-                await notificationRepository.create({
-                    userId: app.userId,
-                    subject: 'Application Completed',
-                    message: `Congratulations! Your application has successfully completed all phases.`,
-                    type: 'SYSTEM',
-                }, t);
-            }
+            // Note: Final completion notification moved to completeApplication method
 
             await t.commit();
             return updatedApp;
@@ -338,6 +332,25 @@ export class ApplicationService {
         }
 
         return updatedStage;
+    }
+
+    public async completeApplication(applicationId: number) {
+        const app = await applicationRepository.findById(applicationId);
+        if (!app) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+
+        await applicationRepository.update(applicationId, {
+            status: CONSTANTS.APPLICATION_STATUSES.COMPLETED,
+            completionPercentage: 100
+        });
+
+        await notificationRepository.create({
+            userId: app.userId,
+            subject: 'Application Completed',
+            message: `Congratulations! Your application for "${app.JobListing?.title}" has successfully completed all phases.`,
+            type: 'SYSTEM',
+        });
+
+        return applicationRepository.findById(applicationId);
     }
 
     public async deleteApplicationStage(stageId: number) {
