@@ -316,12 +316,20 @@ export class AdminController {
     public async sendMailToApplicant(req: Request, res: Response): Promise<void> {
         try {
             const { applicantId, subject, message, sendPushNotification, email } = req.body;
+            
+            // Map multer files to Nodemailer attachments
+            const attachments = (req.files as any[])?.map(file => ({
+                filename: file.originalname,
+                content: file.buffer
+            })) || [];
+
             const result = await adminService.sendMailToApplicant(
-                applicantId,
+                applicantId ? parseInt(applicantId as string, 10) : undefined,
                 subject,
                 message,
-                sendPushNotification ?? false,
-                email
+                sendPushNotification === 'true' || sendPushNotification === true,
+                email,
+                attachments
             );
             res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
         } catch (error: any) {

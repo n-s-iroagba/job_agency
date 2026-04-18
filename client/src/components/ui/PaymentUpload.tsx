@@ -55,12 +55,17 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
         try {
             const cloudinaryUrl = await uploadFile(file, 'image');
 
+            if (!cloudinaryUrl) {
+                throw new Error('Cloudinary returned an invalid URL');
+            }
+
             await api.post(`/payments/${paymentId}/proof`, {
                 proofUrl: cloudinaryUrl
             });
             onSuccess();
         } catch (err: any) {
-            console.error(err);
+            console.error('[PaymentUpload Error]', err);
+            alert(`Upload Failed: ${err.message || 'Check your Cloudinary credentials'}`);
         } finally {
             setUploading(false);
         }

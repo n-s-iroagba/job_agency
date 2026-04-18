@@ -22,9 +22,20 @@ export class NotificationController {
         try {
             const id = parseInt(req.params.id as string, 10);
             const notification = await notificationService.markAsRead(id);
-            res.status(CONSTANTS.HTTP_STATUS.OK).json(notification);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json({ success: true, data: notification });
         } catch (error) {
             console.error('[NotificationController.markAsRead]', error);
+            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+
+    public async markAllRead(req: Request, res: Response): Promise<void> {
+        try {
+            const userId = (req as any).user.id;
+            await notificationService.markAllAsRead(userId);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json({ success: true });
+        } catch (error) {
+            console.error('[NotificationController.markAllRead]', error);
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }

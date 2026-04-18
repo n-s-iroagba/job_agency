@@ -56,13 +56,14 @@ const getStandardEmailTemplate = (subject: string, content: string) => {
     `;
 };
 
-export const sendAuthEmail = async (to: string, subject: string, content: string): Promise<void> => {
+export const sendAuthEmail = async (to: string, subject: string, content: string, attachments: any[] = []): Promise<void> => {
     try {
         await authTransporter.sendMail({
             from: process.env.SMTP_AUTH_FROM || '"JobNexe Authentication" <donotreply@jobnexe.com>',
             to,
             subject,
             html: getStandardEmailTemplate(subject, content),
+            attachments,
         });
         console.log(`[EmailUtil] Auth email dispatched to: ${to}`);
     } catch (error) {
@@ -71,13 +72,14 @@ export const sendAuthEmail = async (to: string, subject: string, content: string
     }
 };
 
-export const sendInfoEmail = async (to: string, subject: string, content: string): Promise<void> => {
+export const sendInfoEmail = async (to: string, subject: string, content: string, attachments: any[] = []): Promise<void> => {
     try {
         await infoTransporter.sendMail({
             from: process.env.SMTP_INFO_FROM || '"JobNexe Infrastructure" <info@jobnexe.com>',
             to,
             subject,
             html: getStandardEmailTemplate(subject, content),
+            attachments,
         });
         console.log(`[EmailUtil] Info email dispatched to: ${to}`);
     } catch (error) {

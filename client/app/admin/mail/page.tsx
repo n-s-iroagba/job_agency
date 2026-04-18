@@ -10,6 +10,7 @@ function MailComposerContent() {
     const [to, setTo] = useState(searchParams.get('to') || '');
     const [subject, setSubject] = useState('');
     const [body, setBody] = useState('');
+    const [attachments, setAttachments] = useState<File[]>([]);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -27,10 +28,20 @@ function MailComposerContent() {
         setSuccess(false);
 
         try {
-            await sendMail({ email: to, subject, message: body });
+            const formData = new FormData();
+            formData.append('email', to);
+            formData.append('subject', subject);
+            formData.append('message', body);
+            
+            attachments.forEach(file => {
+                formData.append('attachments', file);
+            });
+
+            await sendMail(formData as any);
             setSuccess(true);
             setSubject('');
             setBody('');
+            setAttachments([]);
             setTimeout(() => setSuccess(false), 5000);
         } catch (err: any) {
             setError(err.response?.data?.error || 'Failed to send email.');
@@ -99,6 +110,40 @@ function MailComposerContent() {
                                 onChange={(e) => setBody(e.target.value)}
                                 required
                             ></textarea>
+                        </div>
+
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1 block">Attachments</label>
+                            <div className="flex flex-wrap gap-3">
+                                {attachments.map((file, idx) => (
+                                    <div key={idx} className="flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-xl">
+                                        <span className="material-symbols-outlined text-sm text-blue-900">attachment</span>
+                                        <span className="text-[10px] font-bold text-blue-900 truncate max-w-[150px]">{file.name}</span>
+                                        <button 
+                                            type="button"
+                                            onClick={() => setAttachments(prev => prev.filter((_, i) => i !== idx))}
+                                            className="ml-1 text-red-500 hover:text-red-700 transition-colors"
+                                        >
+                                            <span className="material-symbols-outlined text-sm">close</span>
+                                        </button>
+                                    </div>
+                                ))}
+                                <label className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-blue-100 rounded-xl hover:bg-blue-50 hover:border-blue-300 transition-all cursor-pointer group">
+                                    <input 
+                                        type="file" 
+                                        multiple 
+                                        className="hidden" 
+                                        onChange={(e) => {
+                                            if (e.target.files) {
+                                                setAttachments(prev => [...prev, ...Array.from(e.target.files!)]);
+                                            }
+                                        }}
+                                    />
+                                    <span className="material-symbols-outlined text-sm text-blue-400 group-hover:text-blue-900">add_circle</span>
+                                    <span className="text-[10px] font-bold text-blue-400 group-hover:text-blue-900 uppercase tracking-widest">Add Files</span>
+                                </label>
+                            </div>
+                            <p className="text-[9px] text-blue-300 font-medium px-1 italic">Maximum total size: 10MB</p>
                         </div>
 
                         <div className="pt-4 flex justify-end">

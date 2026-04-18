@@ -10,6 +10,12 @@ import { requireAuth } from '../middleware/auth';
 import { requireRole } from '../middleware/rbac';
 import { apiLimiter, authLimiter } from '../utils/rateLimiter';
 import { CONSTANTS } from '../constants';
+import multer from 'multer';
+
+const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit per file
+});
 
 const router = Router();
 
@@ -65,6 +71,7 @@ router.post('/payments/:id/proof', ...applicantMW, paymentController.uploadProof
 
 // STK-APP-NOTIF-001..003, TRUST-008: notifications
 router.get('/notifications', ...applicantMW, notificationController.getUserNotifications.bind(notificationController));
+router.put('/notifications/read', ...applicantMW, notificationController.markAllRead.bind(notificationController));
 router.put('/notifications/:id/read', ...applicantMW, notificationController.markAsRead.bind(notificationController));
 
 // =======================
@@ -80,7 +87,7 @@ router.get('/admin/applications', ...adminMW, applicationController.getAdminAppl
 // STK-ADM-APP-002: draft applications
 router.get('/admin/applications/drafts', ...adminMW, applicationController.getDraftApplications.bind(applicationController));
 // STK-ADM-APP-003, STK-ADM-APP-004: send mail/push to applicant
-router.post('/admin/mail', ...adminMW, adminController.sendMailToApplicant.bind(adminController));
+router.post('/admin/mail', ...adminMW, upload.array('attachments'), adminController.sendMailToApplicant.bind(adminController));
 
 // New: manage ad-hoc stages for specific applications
 router.post('/admin/applications/:id/stages', ...adminMW, applicationController.addStage.bind(applicationController));

@@ -18,12 +18,16 @@ export default function NotificationsPage() {
         '/notifications'
     );
 
-    const markReadMutation = useApiMutation('put', '/notifications', {
+    const markAllReadMutation = useApiMutation('put', '/notifications/read', {
+        onSuccess: () => refetch()
+    });
+
+    const markSingleReadMutation = useApiMutation('put', '/notifications/:id/read', {
         onSuccess: () => refetch()
     });
 
     const handleMarkAllRead = () => {
-        markReadMutation.mutate({ all: true });
+        markAllReadMutation.mutate({});
     };
 
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Updates...</div>;
@@ -72,7 +76,7 @@ export default function NotificationsPage() {
                                     <p className="text-sm text-blue-600 font-medium leading-relaxed mb-4">{n.message}</p>
                                     {!n.isRead && (
                                         <button
-                                            onClick={() => markReadMutation.mutate({ id: n.id, isRead: true })}
+                                            onClick={() => markSingleReadMutation.mutate({ params: { id: n.id } })}
                                             className="text-[9px] font-bold text-blue-900 uppercase tracking-widest hover:underline"
                                         >
                                             Mark as Read

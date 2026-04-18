@@ -180,26 +180,31 @@ export class AdminService {
         subject: string,
         message: string,
         sendPushNotification: boolean = false,
-        email?: string
+        email?: string,
+        attachments: any[] = []
     ) {
         let user;
+        let targetEmail = email;
+
         if (applicantId) {
             user = await userRepository.findById(applicantId);
+            if (user) targetEmail = (user as any).email;
         } else if (email) {
             user = await userRepository.findByEmail(email);
         }
 
-        if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        // Allow sending even if user is not in DB if we have a target email
+        if (!user && !targetEmail) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-        const targetId = (user as any).id;
+        // Send email — STK-ADM-APP-003 (Always send if we have an email)
+        if (targetEmail) {
+            await sendInfoEmail(targetEmail, subject, `<p>${message}</p>`, attachments);
+        }
 
-        // Send email — STK-ADM-APP-003
-        await sendInfoEmail((user as any).email, subject, `<p>${message}</p>`);
-
-        // Optionally create push notification — STK-ADM-APP-004, TRUST-008
-        if (sendPushNotification) {
+        // Optionally create push notification — ONLY if a user record exists
+        if (sendPushNotification && user) {
             await notificationRepository.create({
-                userId: targetId,
+                userId: (user as any).id,
                 subject,
                 message,
                 type: 'ADMIN',

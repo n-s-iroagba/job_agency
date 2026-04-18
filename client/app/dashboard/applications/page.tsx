@@ -66,12 +66,7 @@ export default function ApplicationsListPage() {
                                     </div>
                                     <h3 className="text-lg font-bold text-blue-900 tracking-tight group-hover:text-blue-600 transition-colors uppercase">{app.JobListing.title}</h3>
 
-                                    <div className="mt-4 flex items-center gap-4">
-                                        <div className="w-full max-w-[200px] h-1 bg-blue-50 rounded-full overflow-hidden">
-                                            <div className="h-full bg-blue-900" style={{ width: `${app.completionPercentage}%` }} />
-                                        </div>
-                                        <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">{app.completionPercentage}%</span>
-                                    </div>
+
                                 </div>
 
                                 <div className="flex md:flex-col items-end gap-2 shrink-0">

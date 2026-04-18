@@ -21,6 +21,10 @@ export class NotificationService {
         await notificationRepository.markAsRead(id);
         return Notification.findByPk(id);
     }
+
+    public async markAllAsRead(userId: number) {
+        return notificationRepository.markAllAsRead(userId);
+    }
 }
 
 export const notificationService = new NotificationService();
