@@ -7,7 +7,7 @@ export async function seedDatabase() {
     console.log('Starting idempotent seeding process...');
 
     // 1. Initialize Tables (Safe Sync)
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
 
 
 

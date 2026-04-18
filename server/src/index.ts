@@ -5,6 +5,7 @@ import { logger } from './utils/logger';
 
 // Initializes Associations Mapping
 import './models';
+import { seedDatabase } from './seedDatabase';
 
 
 
@@ -14,10 +15,10 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
     try {
         await connectDB();
-        // await seedDatabase().catch(err => {
-        //     console.error('Failed to seed database:', err);
-        //     process.exit(1);
-        // });
+        await seedDatabase().catch(err => {
+            console.error('Failed to seed database:', err);
+            process.exit(1);
+        });
 
         if (process.env.NODE_ENV !== 'production') {
             //

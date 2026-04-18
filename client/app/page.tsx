@@ -60,6 +60,19 @@ const PARTNERS = [
   { name: "Eni S.p.A.", industry: "Energy", icon: "token" }
 ];
 
+const GALLERY_IMAGES = [
+  { src: "/images/gallery/rig_worker.png", role: "Offshore Specialist", description: "Precision on the frontiers.", span: "md:col-span-2 md:row-span-2" },
+  { src: "/images/gallery/nurse.png", role: "Remote Medical Care", description: "Compassion without borders.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/machinery.png", role: "Heavy Ops Lead", description: "Power, controlled.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/geologist.png", role: "Exploration Scientist", description: "Decoding the earth's legacy.", span: "md:col-span-1 md:row-span-2" },
+  { src: "/images/gallery/wind_tech.png", role: "Renewables Engineer", description: "Sustainable heights.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/marine_engineer.png", role: "Marine Systems Chief", description: "Mastery of the high seas.", span: "md:col-span-2 md:row-span-1" },
+  { src: "/images/gallery/chef.png", role: "Executive Camp Chef", description: "Culinary excellence at the edge.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/safety_officer.png", role: "HSE Superintendent", description: "Integrity in every step.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/surveyor.png", role: "Geospatial Analyst", description: "Mapping future infrastructure.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/it_architect.png", role: "Infrastructure Architect", description: "The backbone of remote ops.", span: "md:col-span-1 md:row-span-1" },
+];
+
 import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
@@ -149,6 +162,39 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Inspirational Gallery */}
+        <section className="mb-40 px-6 max-w-[1440px] mx-auto">
+          <div className="text-center mb-20">
+            <span className="text-[10px] font-black text-blue-500 uppercase tracking-[0.4em] block mb-6 animate-fade-in">Visualizing Success</span>
+            <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter text-blue-900 leading-none">
+              The Faces of <br />Industry Excellence.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
+            {GALLERY_IMAGES.map((img, i) => (
+              <div 
+                key={i} 
+                className={`group relative overflow-hidden rounded-[3rem] border border-blue-50 shadow-sm hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-700 ${img.span}`}
+              >
+                <img 
+                  src={img.src} 
+                  alt={img.role} 
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-10 backdrop-blur-[2px] group-hover:backdrop-blur-none">
+                  <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{img.role}</span>
+                  <h4 className="text-2xl font-black text-white italic tracking-tighter translate-y-4 group-hover:translate-y-0 transition-transform duration-700 delay-75">{img.description}</h4>
+                </div>
+                {/* Minimal Overlay Badge */}
+                <div className="absolute top-8 left-8 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+                   <span className="text-[8px] font-bold text-white uppercase tracking-widest">{img.role.split(' ')[0]}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
