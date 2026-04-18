@@ -25,6 +25,8 @@ function ProfileContent() {
         zipCode: ''
     });
 
+    const [errors, setErrors] = useState<Record<string, string>>({});
+
     useEffect(() => {
         if (data?.user) {
             const user = data.user;
@@ -62,10 +64,61 @@ function ProfileContent() {
 
     const handleInputChange = (field: string, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
+        // Clear error when user starts typing
+        if (errors[field]) {
+            setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[field];
+                return newErrors;
+            });
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors: Record<string, string> = {};
+        
+        if (!formData.fullName.trim() || formData.fullName.length < 3) {
+            newErrors.fullName = 'Legal Full Name must be at least 3 characters.';
+        }
+        
+        if (!formData.phoneNumber.trim()) {
+            newErrors.phoneNumber = 'Phone number is required.';
+        } else {
+            const phoneRegex = /^[\d\s+\-()]{7,20}$/;
+            if (!phoneRegex.test(formData.phoneNumber)) {
+                newErrors.phoneNumber = 'Invalid phone number format.';
+            }
+        }
+
+        if (!formData.dateOfBirth) {
+            newErrors.dateOfBirth = 'Date of birth is required.';
+        }
+
+        if (!formData.gender) newErrors.gender = 'Please select a gender.';
+        if (!formData.nationality) newErrors.nationality = 'Nationality is required.';
+        if (!formData.address.trim()) newErrors.address = 'Residential address is required.';
+        if (!formData.city.trim()) newErrors.city = 'City is required.';
+        if (!formData.state.trim()) newErrors.state = 'State/Province is required.';
+        if (!formData.country.trim()) newErrors.country = 'Country is required.';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSave = () => {
-        updateProfileMutation.mutate(formData);
+        if (validateForm()) {
+            const submissionData = {
+                ...formData,
+                zipCode: formData.zipCode.trim() || '0000'
+            };
+            updateProfileMutation.mutate(submissionData);
+        } else {
+            // Scroll to first error
+            const firstErrorField = Object.keys(errors)[0];
+            if (firstErrorField) {
+                console.log('Validation failed for:', firstErrorField);
+            }
+        }
     };
 
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Profile...</div>;
@@ -108,10 +161,10 @@ function ProfileContent() {
                             </div>
                         </div>
 
-                        <InputField label="Legal Full Name" value={formData.fullName} onChange={(v: string) => handleInputChange('fullName', v)} />
-                        <InputField label="Date of Birth" value={formData.dateOfBirth} onChange={(v: string) => handleInputChange('dateOfBirth', v)} type="date" />
-                        <InputField label="Gender" value={formData.gender} onChange={(v: string) => handleInputChange('gender', v)} options={['Male', 'Female', 'Other']} />
-                        <InputField label="Nationality" value={formData.nationality} onChange={(v: string) => handleInputChange('nationality', v)} placeholder="e.g. United Kingdom" />
+                        <InputField label="Legal Full Name" value={formData.fullName} onChange={(v: string) => handleInputChange('fullName', v)} error={errors.fullName} />
+                        <InputField label="Date of Birth" value={formData.dateOfBirth} onChange={(v: string) => handleInputChange('dateOfBirth', v)} type="date" error={errors.dateOfBirth} />
+                        <InputField label="Gender" value={formData.gender} onChange={(v: string) => handleInputChange('gender', v)} options={['Male', 'Female', 'Other']} error={errors.gender} />
+                        <InputField label="Nationality" value={formData.nationality} onChange={(v: string) => handleInputChange('nationality', v)} placeholder="e.g. United Kingdom" error={errors.nationality} />
                     </div>
                 </section>
 
@@ -126,7 +179,7 @@ function ProfileContent() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <InputField label="Registered Email" value={user.email || ''} onChange={() => { }} type="email" placeholder={user.email} readOnly />
-                        <InputField label="Phone Number" value={formData.phoneNumber} onChange={(v: string) => handleInputChange('phoneNumber', v)} placeholder="+1 (555) 000-0000" />
+                        <InputField label="Phone Number" value={formData.phoneNumber} onChange={(v: string) => handleInputChange('phoneNumber', v)} placeholder="+1 (555) 000-0000" error={errors.phoneNumber} />
                     </div>
                 </section>
 
@@ -141,11 +194,11 @@ function ProfileContent() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="md:col-span-2">
-                            <InputField label="Residential Address" value={formData.address} onChange={(v: string) => handleInputChange('address', v)} placeholder="123 Career St, Industrial Park" />
+                            <InputField label="Residential Address" value={formData.address} onChange={(v: string) => handleInputChange('address', v)} placeholder="123 Career St, Industrial Park" error={errors.address} />
                         </div>
-                        <InputField label="City" value={formData.city} onChange={(v: string) => handleInputChange('city', v)} />
-                        <InputField label="State / Province" value={formData.state} onChange={(v: string) => handleInputChange('state', v)} />
-                        <InputField label="Country" value={formData.country} onChange={(v: string) => handleInputChange('country', v)} />
+                        <InputField label="City" value={formData.city} onChange={(v: string) => handleInputChange('city', v)} error={errors.city} />
+                        <InputField label="State / Province" value={formData.state} onChange={(v: string) => handleInputChange('state', v)} error={errors.state} />
+                        <InputField label="Country" value={formData.country} onChange={(v: string) => handleInputChange('country', v)} error={errors.country} />
                         <InputField label="Zip / Postal Code" value={formData.zipCode} onChange={(v: string) => handleInputChange('zipCode', v)} />
                     </div>
                 </section>
@@ -174,6 +227,7 @@ interface InputFieldProps {
     placeholder?: string;
     readOnly?: boolean;
     options?: string[] | null;
+    error?: string;
 }
 
 const InputField = ({
@@ -183,13 +237,14 @@ const InputField = ({
     type = "text",
     placeholder = "",
     readOnly = false,
-    options = null
+    options = null,
+    error = ""
 }: InputFieldProps) => (
     <div className="space-y-2">
-        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">{label}</label>
+        <label className={`text-[10px] font-bold uppercase tracking-widest px-1 transition-colors ${error ? 'text-red-500' : 'text-blue-400'}`}>{label}</label>
         {options ? (
             <select
-                className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 text-sm font-bold text-blue-900 focus:bg-white outline-none focus:ring-2 focus:ring-blue-900/5 transition-all appearance-none"
+                className={`w-full bg-blue-50 border rounded-lg px-4 py-3 text-sm font-bold transition-all appearance-none ${error ? 'border-red-300 text-red-900 focus:ring-red-500/10' : 'border-blue-200 text-blue-900 focus:bg-white focus:ring-blue-900/5'} outline-none focus:ring-2`}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
             >
@@ -200,7 +255,7 @@ const InputField = ({
             </select>
         ) : (
             <input
-                className={`w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 text-sm font-bold text-blue-900 focus:bg-white outline-none focus:ring-2 focus:ring-blue-900/5 transition-all ${readOnly ? 'opacity-60 cursor-not-allowed' : ''}`}
+                className={`w-full bg-blue-50 border rounded-lg px-4 py-3 text-sm font-bold transition-all outline-none focus:ring-2 ${readOnly ? 'opacity-60 cursor-not-allowed border-blue-200' : ''} ${error ? 'border-red-300 text-red-900 focus:ring-red-500/10' : 'border-blue-200 text-blue-900 focus:bg-white focus:ring-blue-900/5'}`}
                 type={type}
                 placeholder={placeholder}
                 value={value}
@@ -208,6 +263,7 @@ const InputField = ({
                 readOnly={readOnly}
             />
         )}
+        {error && <p className="text-[9px] font-bold text-red-500 uppercase tracking-widest px-1 mt-1 animate-in fade-in slide-in-from-top-1">{error}</p>}
     </div>
 );
 

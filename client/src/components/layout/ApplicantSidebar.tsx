@@ -113,7 +113,7 @@ export function ApplicantSidebar({
                                 <span className={`material-symbols-outlined transition-transform group-hover:scale-110 relative ${active ? 'font-bold' : ''}`} style={{ fontSize: '20px' }}>
                                     {item.icon}
                                     {item.label === 'Notifications' && hasUnread && (
-                                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-600 rounded-full border border-white animate-pulse" />
+                                        <span className="absolute top-0 right-0 w-2 h-2 bg-red-600 rounded-full border border-white animate-pulse" />
                                     )}
                                 </span>
                                 <span className={`font-bold uppercase tracking-[0.05em] transition-all duration-300 text-center ${isCollapsed

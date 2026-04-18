@@ -2,6 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 import { ApplicantSidebar } from '@/components/layout/ApplicantSidebar';
+import { useApiQuery } from '@/lib/hooks';
+
+function NotificationIndicator() {
+    const { data: notifications } = useApiQuery<any>(
+        ['notifications', 'sidebar'], 
+        '/notifications', 
+        { refetchInterval: 60000 }
+    );
+    const hasUnread = notifications?.rows?.some((n: any) => !n.isRead);
+    
+    if (!hasUnread) return null;
+    
+    return (
+        <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-600 rounded-full border-2 border-white animate-pulse" />
+    );
+}
 
 export default function ApplicantLayout({ children }: { children: React.ReactNode }) {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -27,9 +43,10 @@ export default function ApplicantLayout({ children }: { children: React.ReactNod
                 <span className="text-lg font-black italic uppercase tracking-widest">JobNexe</span>
                 <button
                     onClick={() => setIsMobileOpen(true)}
-                    className="w-10 h-10 flex items-center justify-center text-blue-400"
+                    className="w-10 h-10 flex items-center justify-center text-blue-400 relative"
                 >
                     <span className="material-symbols-outlined">menu</span>
+                    <NotificationIndicator />
                 </button>
             </header>
 

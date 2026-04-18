@@ -71,7 +71,7 @@ router.post('/payments/:id/proof', ...applicantMW, paymentController.uploadProof
 
 // STK-APP-NOTIF-001..003, TRUST-008: notifications
 router.get('/notifications', ...applicantMW, notificationController.getUserNotifications.bind(notificationController));
-router.put('/notifications/read', ...applicantMW, notificationController.markAllRead.bind(notificationController));
+router.put('/notifications/mark-all-read', ...applicantMW, notificationController.markAllRead.bind(notificationController));
 router.put('/notifications/:id/read', ...applicantMW, notificationController.markAsRead.bind(notificationController));
 
 // =======================

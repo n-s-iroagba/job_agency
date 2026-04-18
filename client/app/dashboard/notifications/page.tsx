@@ -18,7 +18,7 @@ export default function NotificationsPage() {
         '/notifications'
     );
 
-    const markAllReadMutation = useApiMutation('put', '/notifications/read', {
+    const markAllReadMutation = useApiMutation('put', '/notifications/mark-all-read', {
         onSuccess: () => refetch()
     });
 
