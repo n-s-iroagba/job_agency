@@ -65,7 +65,7 @@ export function AdminSidebar({
                             <div className="w-10 h-10 bg-white text-blue-900 rounded-xl flex items-center justify-center font-black text-xl italic shadow-lg shadow-white/10 group-hover:scale-105 transition-transform">J</div>
                             <div className={`flex flex-col transition-all duration-300 ${isCollapsed ? 'items-center' : 'items-start'}`}>
                                 <span className={`font-black italic uppercase tracking-[0.1em] text-white transition-all ${isCollapsed ? 'text-[8px]' : 'text-xl'}`}>JobNexe</span>
-                                <span className={`font-bold text-blue-500 uppercase tracking-widest transition-all ${isCollapsed ? 'text-[6px] mt-0' : 'text-[9px] mt-1'}`}>Infrastructure</span>
+                                <span className={`font-bold text-blue-500 uppercase tracking-widest transition-all ${isCollapsed ? 'text-[6px] mt-0' : 'text-[9px] mt-1'}`}>Management Dashboard</span>
                             </div>
                         </div>
                     </Link>
@@ -132,7 +132,7 @@ export function AdminSidebar({
                                 <p className="text-[11px] font-bold text-white truncate">
                                     {user?.fullName || 'Admin'}
                                 </p>
-                                <p className="text-[9px] text-blue-500 uppercase font-bold tracking-widest mt-0.5">Operator</p>
+                                <p className="text-[9px] text-blue-500 uppercase font-bold tracking-widest mt-0.5">Administrator</p>
                             </div>
                         )}
                     </div>

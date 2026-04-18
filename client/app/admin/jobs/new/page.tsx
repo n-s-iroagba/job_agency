@@ -12,7 +12,7 @@ export default function JobListingNewPage() {
                     <Link href="/admin/jobs" className="text-blue-400 hover:text-blue-900 transition-colors">
                         <span className="material-symbols-outlined text-lg">arrow_back</span>
                     </Link>
-                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Job Registry / New</span>
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Job Postings / New</span>
                 </div>
                 <h1 className="text-3xl font-bold text-blue-900 tracking-tight">Create Listing</h1>
             </div>

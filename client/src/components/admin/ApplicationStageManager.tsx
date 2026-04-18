@@ -29,7 +29,7 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
             setFormData({ shouldNotify: true });
             onRefresh();
         } catch (error) {
-            alert('Critial failure during stage injection.');
+            alert('Failure adding stage.');
         }
     };
 
@@ -43,17 +43,17 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
             setFormData({ shouldNotify: true });
             onRefresh();
         } catch (error) {
-            alert('Failed to reconfigure stage parameters.');
+            alert('Failed to update stage details.');
         }
     };
 
     const handleDelete = async (stageId: number) => {
-        if (confirm('REMOVAL PROTOCOL: Permanently delete this stage from the application pipeline?')) {
+        if (confirm('Permanently delete this stage from the application workflow?')) {
             try {
                 await deleteStageMutation.mutateAsync({ params: { id: applicationId, stageId } });
                 onRefresh();
             } catch (error) {
-                alert('Deletion abort: system dependency or access violation.');
+                alert('Deletion failed: system dependency or access error.');
             }
         }
     };
@@ -63,7 +63,7 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
             <div className="flex justify-between items-center mb-6">
                 <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900 flex items-center gap-2">
                     <span className="material-symbols-outlined text-sm font-bold">account_tree</span>
-                    Pipeline Configuration
+                    Process Configuration
                 </h3>
                 {!isAdding && (
                     <button
@@ -71,7 +71,7 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
                         className="bg-blue-900 text-white px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-lg shadow-blue-900/10 active:scale-95 flex items-center gap-2"
                     >
                         <span className="material-symbols-outlined text-xs font-bold">add</span>
-                        Inject Stage
+                        Add Stage
                     </button>
                 )}
             </div>
@@ -97,17 +97,17 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
                             </label>
                             <label className="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-lg border border-blue-100">
                                 <input type="checkbox" checked={formData.shouldNotify ?? true} onChange={(e) => setFormData({ ...formData, shouldNotify: e.target.checked })} className="w-3 h-3 rounded text-blue-900 focus:ring-blue-900" />
-                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Notify Talent</span>
+                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Notify Applicant</span>
                             </label>
                             <label className="flex items-center gap-2 cursor-pointer p-2 bg-white rounded-lg border border-blue-100 col-span-2">
                                 <input type="checkbox" checked={formData.requiresPayment || false} onChange={(e) => setFormData({ ...formData, requiresPayment: e.target.checked })} className="w-3 h-3 rounded text-blue-900 focus:ring-blue-900" />
-                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Requires Payment Settlement</span>
+                                <span className="text-[9px] font-black uppercase tracking-widest text-blue-900">Requires Payment</span>
                             </label>
                         </div>
 
                         <div className="flex justify-end gap-3 pt-4 border-t border-blue-100">
-                            <button onClick={() => setIsAdding(false)} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-900">Abort</button>
-                            <button onClick={handleAdd} className="bg-blue-900 text-white px-6 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-black">Authorize Injection</button>
+                            <button onClick={() => setIsAdding(false)} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-900">Cancel</button>
+                            <button onClick={handleAdd} className="bg-blue-900 text-white px-6 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-black">Confirm Add</button>
                         </div>
                     </div>
                 )}
@@ -127,8 +127,8 @@ export function ApplicationStageManager({ applicationId, initialStages = [], onR
                                     <InputField label="Curr" value={formData.currency || 'USD'} onChange={(v) => setFormData({ ...formData, currency: v })} />
                                 </div>
                                 <div className="flex justify-end gap-3 pt-4 border-t border-blue-100">
-                                    <button onClick={() => setIsEditing(null)} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-blue-400">Abort</button>
-                                    <button onClick={() => handleUpdate(stage.id)} className="bg-blue-900 text-white px-6 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest">Commit Changes</button>
+                                    <button onClick={() => setIsEditing(null)} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-blue-400">Cancel</button>
+                                    <button onClick={() => handleUpdate(stage.id)} className="bg-blue-900 text-white px-6 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest">Save Changes</button>
                                 </div>
                             </div>
                         ) : (

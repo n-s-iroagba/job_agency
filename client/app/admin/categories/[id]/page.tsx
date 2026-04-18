@@ -24,7 +24,7 @@ export default function CategoryViewPage() {
                         <Link href="/admin/categories" className="text-blue-400 hover:text-blue-900 transition-colors">
                             <span className="material-symbols-outlined text-lg">arrow_back</span>
                         </Link>
-                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Category Registry / {id}</span>
+                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Category Details / {id}</span>
                     </div>
                     <h1 className="text-3xl font-bold text-blue-900 tracking-tight">{category?.name}</h1>
                 </div>

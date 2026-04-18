@@ -68,8 +68,8 @@ export default function AdminJobsPage() {
         <div className="font-sans">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-blue-900 tracking-tight">Jobs</h1>
-                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Manage all active job listings</p>
+                    <h1 className="text-2xl font-bold text-blue-900 tracking-tight">Job Postings</h1>
+                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Overview of all active job listings</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <input

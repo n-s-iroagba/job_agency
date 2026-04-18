@@ -40,20 +40,20 @@ export default function SystemHealthDashboardPage() {
                 </div>
                 <div className="flex items-center gap-3 px-6 py-2 bg-blue-50 border border-blue-100 rounded-lg">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">Active</span>
+                    <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">System Online</span>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
-                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-6">CPU Performance</span>
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-6">Processor Usage</span>
                     <div className="flex items-baseline gap-1">
                         <span className="text-4xl font-bold text-blue-900 tracking-tight">{metrics.cpu.usage}%</span>
                     </div>
                 </div>
 
                 <div className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
-                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-6">Memory Allocation</span>
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-6">Memory Usage</span>
                     <div className="flex items-baseline gap-1">
                         <span className="text-4xl font-bold text-blue-900 tracking-tight">{metrics.ram.usage}GB</span>
                         <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">/ {metrics.ram.total}GB</span>
@@ -69,7 +69,7 @@ export default function SystemHealthDashboardPage() {
                 </div>
 
                 <div className="bg-blue-900 text-white p-8 rounded-2xl shadow-xl shadow-blue-900/10">
-                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-6">API Throughput</span>
+                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-6">Server Traffic</span>
                     <div className="flex flex-col">
                         <span className="text-4xl font-bold tracking-tight">{metrics.requests.active}</span>
                         <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mt-2">{metrics.requests.rate} REQ/S</span>
@@ -79,12 +79,12 @@ export default function SystemHealthDashboardPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <section className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm lg:col-span-2">
-                    <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-8 pb-4 border-b border-blue-50">Infrastructure Status</h3>
+                    <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-8 pb-4 border-b border-blue-50">System Status</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {[
-                            { name: 'Primary DB', role: 'Storage', status: metrics.db === 'Connected' ? 'Healthy' : 'Disconnected' },
-                            { name: 'Worker Layer', role: 'Node.js', status: 'Healthy' },
-                            { name: 'CDN Gateway', role: 'Edge', status: 'Optimized' }
+                            { name: 'Database', role: 'Storage', status: metrics.db === 'Connected' ? 'Healthy' : 'Disconnected' },
+                            { name: 'Server Logic', role: 'Node.js', status: 'Healthy' },
+                            { name: 'Content Delivery', role: 'Edge', status: 'Optimized' }
                         ].map((node, i) => (
                             <div key={i} className="p-6 rounded-xl bg-blue-50 border border-blue-100">
                                 <span className={`w-2 h-2 rounded-full inline-block mb-3 ${node.status === 'Healthy' || node.status === 'Optimized' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-red-400'}`}></span>
@@ -99,11 +99,11 @@ export default function SystemHealthDashboardPage() {
                     <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-8 pb-4 border-b border-blue-200">System Information</h3>
                     <div className="space-y-6">
                         <div>
-                            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-1">Architecture</span>
+                            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-1">System Architecture</span>
                             <span className="text-xs font-bold text-blue-900 uppercase">x64 Node v20.10</span>
                         </div>
                         <div>
-                            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-1">Environment</span>
+                            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-1">Deployment Environment</span>
                             <span className="text-xs font-bold text-blue-900 uppercase">Production Gateway</span>
                         </div>
                     </div>

@@ -28,7 +28,7 @@ export default function BankAccountsPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-blue-900 tracking-tight">Bank Accounts</h1>
-                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Manage institutional payment channels</p>
+                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Manage company payment accounts</p>
                 </div>
                 <Link href="/admin/bank-accounts/new">
                     <button className="bg-blue-900 text-white px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10">

@@ -20,7 +20,7 @@ export default function CategoryManagementPage() {
     });
 
     const handleDelete = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this vertical? All associated metadata will be affected.')) return;
+        if (!confirm('Are you sure you want to delete this industry? All associated information will be affected.')) return;
         try {
             await deleteMutation.mutateAsync(id);
         } catch (err) { console.error(err); }
@@ -37,7 +37,7 @@ export default function CategoryManagementPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-blue-900 tracking-tight">Categories</h1>
-                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Manage job verticals</p>
+                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Manage job industries and categories</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <input

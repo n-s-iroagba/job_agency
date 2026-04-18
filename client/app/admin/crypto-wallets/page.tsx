@@ -13,7 +13,7 @@ export default function CryptoWalletsPage() {
     });
 
     const handleDelete = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this crypto wallet?')) return;
+        if (!confirm('Are you sure you want to remove this payment destination?')) return;
         try {
             await deleteMutation.mutateAsync(id);
         } catch (err) { console.error(err); }
@@ -21,18 +21,18 @@ export default function CryptoWalletsPage() {
 
     const walletList = wallets?.rows || [];
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Wallets...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Payment Destinations...</div>;
 
     return (
         <div className="font-sans">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-blue-900 tracking-tight">Crypto Wallets</h1>
-                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Institutional payment repositories</p>
+                    <h1 className="text-2xl font-bold text-blue-900 tracking-tight">Payment Destinations</h1>
+                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Company payment addresses and payment accounts</p>
                 </div>
                 <Link href="/admin/crypto-wallets/new">
                     <button className="bg-blue-900 text-white px-5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10">
-                        Add Wallet
+                        Add Destination
                     </button>
                 </Link>
             </div>
@@ -42,7 +42,7 @@ export default function CryptoWalletsPage() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-blue-50 border-b border-blue-100">
-                                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400">Label / Currency</th>
+                                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400">Label / Asset</th>
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400">Address / Network</th>
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400 text-center">Status</th>
                                 <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-blue-400 text-right">Actions</th>
@@ -70,7 +70,7 @@ export default function CryptoWalletsPage() {
                                     </td>
                                     <td className="px-6 py-5 text-center">
                                         <span className={`px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest ${wallet.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-500'}`}>
-                                            {wallet.isActive ? 'Active' : 'Inactive'}
+                                            {wallet.isActive ? 'Enabled' : 'Disabled'}
                                         </span>
                                     </td>
                                     <td className="px-6 py-5 text-right">
@@ -85,7 +85,7 @@ export default function CryptoWalletsPage() {
                                                 onClick={() => handleDelete(wallet.id)}
                                                 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-red-500 transition-colors"
                                             >
-                                                Delete
+                                                Remove
                                             </button>
                                         </div>
                                     </td>
@@ -94,7 +94,7 @@ export default function CryptoWalletsPage() {
                             {walletList.length === 0 && (
                                 <tr>
                                     <td colSpan={4} className="px-6 py-12 text-center">
-                                        <p className="text-[10px] font-bold uppercase tracking-widest text-blue-300">No wallets configured</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-widest text-blue-300">No payment destinations configured</p>
                                     </td>
                                 </tr>
                             )}

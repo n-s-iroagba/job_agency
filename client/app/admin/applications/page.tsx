@@ -13,13 +13,13 @@ export default function AdminApplicationsPage() {
     const { data: apps, isLoading } = useApiQuery<ApplicationsResponse>(['admin', 'applications', 'all'], '/admin/applications');
     const appList = apps?.rows || [];
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Pipeline Infrastructure...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Applications...</div>;
 
     return (
         <div className="font-sans antialiased text-blue-900">
             <div className="mb-12">
-                <h1 className="text-3xl font-bold tracking-tight uppercase leading-tight">Operational Pipelines</h1>
-                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Oversee global talent acquisitions and real-time application processing</p>
+                <h1 className="text-3xl font-bold tracking-tight uppercase leading-tight">Application Management</h1>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Manage candidate applications and recruitment workflows</p>
             </div>
 
             <div className="bg-white rounded-[2rem] border border-blue-100 overflow-hidden shadow-2xl shadow-blue-900/5">
@@ -27,10 +27,10 @@ export default function AdminApplicationsPage() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-blue-50 border-b border-blue-100">
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Personnel</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Project / Role</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Protocol Status</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Operations</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Applicant</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Job / Role</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Application Status</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-blue-50">
@@ -65,7 +65,7 @@ export default function AdminApplicationsPage() {
                                             href={`/admin/applications/${app.id}`}
                                             className="inline-flex items-center gap-2 bg-white border border-blue-100 px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm active:scale-95"
                                         >
-                                            Inspect Pipeline
+                                            View Details
                                         </Link>
                                     </td>
                                 </tr>
@@ -77,13 +77,13 @@ export default function AdminApplicationsPage() {
 
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="bg-blue-900 p-8 rounded-[2rem] text-white shadow-2xl shadow-blue-900/10">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-4">Pipeline Load</h3>
-                    <p className="text-3xl font-black italic uppercase tracking-tighter">{appList.length} Active Protocols</p>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-4">Current Applications</h3>
+                    <p className="text-3xl font-black italic uppercase tracking-tighter">{appList.length} Active Applications</p>
                 </div>
 
                 <div className="bg-white p-8 rounded-[2rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
                     <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-4">Real-Time Sync</h3>
-                    <p className="text-3xl font-black italic uppercase tracking-tighter">Operational</p>
+                    <p className="text-3xl font-black italic uppercase tracking-tighter">Online</p>
                 </div>
             </div>
         </div>

@@ -141,7 +141,7 @@ export default function ApplicationDetailPage() {
     };
 
     const handleComplete = async () => {
-        if (confirm('FINAL CLOSURE PROTOCOL: Are you sure you want to mark this application as COMPLETED? This will notify the applicant and finalize the process.')) {
+        if (confirm('Finalize Application: Are you sure you want to mark this application as COMPLETED? This will notify the applicant and finalize the process.')) {
             try {
                 await completeApplicationMutation.mutateAsync({});
             } catch (err) {
@@ -150,8 +150,8 @@ export default function ApplicationDetailPage() {
         }
     };
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Pipeline Infrastructure...</div>;
-    if (error) return <div className="p-12 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest">Error Synchronizing Protocol</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Application Status...</div>;
+    if (error) return <div className="p-12 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest">Error Loading Application Data</div>;
 
     const user = application?.User;
     const job = application?.JobListing;
@@ -177,7 +177,7 @@ export default function ApplicationDetailPage() {
                         <Link href="/admin/applications" className="text-blue-400 hover:text-blue-900 transition-colors">
                             <span className="material-symbols-outlined text-sm font-bold">arrow_back</span>
                         </Link>
-                        <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">Operational Protocol / {id}</span>
+                        <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">Application Management / {id}</span>
                     </div>
                     <h1 className="text-3xl font-black italic uppercase tracking-tighter text-blue-900">{user?.fullName}</h1>
                     <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">
@@ -195,19 +195,19 @@ export default function ApplicationDetailPage() {
                         onClick={() => setShowAddStage(true)}
                         className="bg-blue-900 text-white px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95"
                     >
-                        Inject Stage
+                        Add Workflow Stage
                     </button>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                {/* Main Pipeline Logic */}
+                {/* Main Process Logic */}
                 <div className="lg:col-span-8 space-y-8">
                     <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
                         <div className="flex items-center justify-between mb-10">
                             <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.3em] flex items-center gap-2">
                                 <span className="material-symbols-outlined text-sm font-bold">account_tree</span>
-                                Pipeline Sequence
+                                Application Process
                             </h3>
                         </div>
 
@@ -242,7 +242,7 @@ export default function ApplicationDetailPage() {
                                                                     </span>
                                                                 ) : (
                                                                     <span className="px-2 py-0.5 bg-blue-50 text-blue-400 rounded text-[8px] font-black uppercase tracking-widest border border-blue-100">
-                                                                        Settlement Node: ${stage.amount}
+                                                                        Payment Due: ${stage.amount}
                                                                     </span>
                                                                 )}
                                                             </div>
@@ -258,7 +258,7 @@ export default function ApplicationDetailPage() {
                                                                     payment.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' : 'bg-red-50 text-red-600 border-red-100'
                                                                 }`}>
                                                                 <span className="material-symbols-outlined text-xs font-bold">payments</span>
-                                                                Settlement {payment.status}
+                                                                Payment {payment.status}
                                                                 {payment.status === 'Pending' && (
                                                                     <button
                                                                         onClick={() => setVerifyingPayment(payment)}
@@ -275,7 +275,7 @@ export default function ApplicationDetailPage() {
                                             <div className="flex flex-col items-end gap-3">
                                                 {isCurrent && (
                                                     <span className="text-[8px] font-black text-white uppercase tracking-widest bg-blue-900 px-3 py-1 rounded-lg shadow-lg shadow-blue-900/10">
-                                                        Active Phase
+                                                        Current Stage
                                                     </span>
                                                 )}
                                                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
@@ -286,7 +286,7 @@ export default function ApplicationDetailPage() {
                                                         <span className="material-symbols-outlined text-sm">edit</span>
                                                     </button>
                                                     <button
-                                                        onClick={() => { if (confirm('REMOVAL PROTOCOL: Permanently delete this stage?')) deleteStageMutation.mutate({ params: { stageId: stage.id } }); }}
+                                                        onClick={() => { if (confirm('Delete Stage: Permanently delete this stage?')) deleteStageMutation.mutate({ params: { stageId: stage.id } }); }}
                                                         className="w-8 h-8 flex items-center justify-center hover:bg-red-50 rounded-xl text-blue-400 hover:text-red-500 transition-all"
                                                     >
                                                         <span className="material-symbols-outlined text-sm">delete</span>
@@ -307,13 +307,13 @@ export default function ApplicationDetailPage() {
                     </div>
                 </div>
 
-                {/* Talent Insight Sidebar */}
+                {/* Applicant Overview Sidebar */}
                 <div className="lg:col-span-4 space-y-8">
                     {/* Bio Card */}
                     <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
                         <div className="flex items-center gap-4 mb-8 pb-4 border-b border-blue-50">
                             <span className="material-symbols-outlined text-blue-900">badge</span>
-                            <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">Talent Identity</h3>
+                            <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">Applicant Profile</h3>
                         </div>
 
                         <div className="space-y-6">
@@ -329,11 +329,11 @@ export default function ApplicationDetailPage() {
 
                             <div className="grid grid-cols-1 gap-6">
                                 <DataItem label="Nationality" value={user?.nationality} />
-                                <DataItem label="Gender Orientation" value={user?.gender} />
-                                <DataItem label="Biological DOB" value={user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'} />
-                                <DataItem label="Authorized Phone" value={user?.phoneNumber} />
+                                <DataItem label="Gender" value={user?.gender} />
+                                <DataItem label="Date of Birth" value={user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'} />
+                                <DataItem label="Phone Number" value={user?.phoneNumber} />
                                 <div className="col-span-1">
-                                    <DataItem label="Principal Residence" value={user?.address} />
+                                    <DataItem label="Residential Address" value={user?.address} />
                                 </div>
                             </div>
 
@@ -346,11 +346,11 @@ export default function ApplicationDetailPage() {
                                         className="w-full py-4 bg-white border-2 border-blue-900 text-blue-900 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-blue-50 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-900/5 active:scale-95"
                                     >
                                         <span className="material-symbols-outlined text-base font-bold">description</span>
-                                        View Master CV
+                                        View Resume
                                     </a>
                                 ) : (
                                     <div className="p-4 bg-amber-50 rounded-xl border border-amber-100 text-center">
-                                        <p className="text-[8px] font-black text-amber-600 uppercase tracking-widest">No curriculum vitae detected</p>
+                                        <p className="text-[8px] font-black text-amber-600 uppercase tracking-widest">No resume detected</p>
                                     </div>
                                 )}
                             </div>
@@ -361,13 +361,13 @@ export default function ApplicationDetailPage() {
                     <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
                         <div className="flex items-center gap-4 mb-8 pb-4 border-b border-blue-50">
                             <span className="material-symbols-outlined text-blue-900">settings_input_component</span>
-                            <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">Operational Pulse</h3>
+                            <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">Process Status</h3>
                         </div>
 
                         <div className="space-y-8">
                             <div>
                                 <div className="flex justify-between items-end mb-3">
-                                    <span className="text-[9px] font-black text-blue-400 uppercase tracking-widest">Completion Depth</span>
+                                    <span className="text-[9px] font-black text-blue-400 uppercase tracking-widest">Overall Progress</span>
                                     <span className="text-2xl font-black italic text-blue-900">{application.completionPercentage}%</span>
                                 </div>
                                 <div className="h-2 bg-blue-50 rounded-full overflow-hidden shadow-inner">
@@ -384,7 +384,7 @@ export default function ApplicationDetailPage() {
                                     disabled={advanceMutation.isPending || application.status === 'COMPLETED'}
                                     className="w-full py-4 bg-blue-50 text-blue-400 border border-blue-100 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:border-blue-900 hover:text-blue-900 transition-all disabled:opacity-30 active:scale-95"
                                 >
-                                    {advanceMutation.isPending ? 'Executing Bypass...' : 'Manual Advance Stage'}
+                                    {advanceMutation.isPending ? 'Advancing Status...' : 'Advance to Next Stage'}
                                 </button>
                                 {application.status === 'ACTIVE' && (
                                     <button
@@ -392,7 +392,7 @@ export default function ApplicationDetailPage() {
                                         disabled={completeApplicationMutation.isPending}
                                         className="w-full py-4 bg-blue-900 text-white rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95 animate-in fade-in slide-in-from-bottom-2 duration-500"
                                     >
-                                        {completeApplicationMutation.isPending ? 'Finalizing Protocol...' : 'Mark as Completed'}
+                                        {completeApplicationMutation.isPending ? 'Completing Application...' : 'Mark as Completed'}
                                     </button>
                                 )}
                                 <p className="text-[8px] text-blue-300 text-center uppercase font-black tracking-[0.2em] italic">Authorized override only</p>
@@ -405,7 +405,7 @@ export default function ApplicationDetailPage() {
                             <span className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-500">Log Timestamp</span>
                             <span className="text-xs font-bold uppercase">{new Date(application.createdAt).toLocaleString()}</span>
                             <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center text-[8px] font-black uppercase tracking-widest opacity-60">
-                                <span>Registry Node {id}</span>
+                                <span>Application ID {id}</span>
                                 <span>SSL Secure</span>
                             </div>
                         </div>
@@ -413,15 +413,15 @@ export default function ApplicationDetailPage() {
                 </div>
             </div>
 
-            {/* Stage Injection/Edit Modal */}
+            {/* Stage Addition/Edit Modal */}
             {(showAddStage || editingStage) && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
                     <div className="absolute inset-0 bg-blue-900/80 backdrop-blur-xl animate-in fade-in duration-500" onClick={() => { setShowAddStage(false); setEditingStage(null); }}></div>
                     <div className="relative bg-white rounded-[3rem] shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-300">
                         <div className="p-10 border-b border-blue-50 flex items-center justify-between shrink-0">
                             <div>
-                                <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">{editingStage ? 'Reconfigure Stage' : 'Inject New Stage'}</h3>
-                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Configuring application pipeline node</p>
+                                <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">{editingStage ? 'Edit Stage' : 'Add New Stage'}</h3>
+                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Configuring application process stage</p>
                             </div>
                             <button onClick={() => { setShowAddStage(false); setEditingStage(null); }} className="w-10 h-10 rounded-xl hover:bg-blue-50 text-blue-400 hover:text-blue-900 transition-all flex items-center justify-center">
                                 <span className="material-symbols-outlined">close</span>
@@ -429,7 +429,7 @@ export default function ApplicationDetailPage() {
                         </div>
                         <form onSubmit={handleSaveStage} className="p-10 space-y-8 overflow-y-auto custom-scrollbar">
                             <div className="space-y-2">
-                                <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Protocol Name</label>
+                                <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Stage Name</label>
                                 <input
                                     type="text"
                                     required
@@ -440,13 +440,13 @@ export default function ApplicationDetailPage() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Operational Brief</label>
+                                <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Stage Description</label>
                                 <textarea
                                     rows={4}
                                     required
                                     value={stageDesc}
                                     onChange={(e) => setStageDesc(e.target.value)}
-                                    placeholder="Define operational requirements..."
+                                    placeholder="Define stage requirements..."
                                     className="w-full px-6 py-4 bg-blue-50 border border-transparent rounded-2xl text-sm font-bold text-blue-900 focus:bg-white focus:border-blue-900 outline-none transition-all resize-none placeholder:text-blue-200"
                                 />
                             </div>
@@ -462,7 +462,7 @@ export default function ApplicationDetailPage() {
                                             className="w-5 h-5 rounded-lg border-blue-200 text-blue-900 focus:ring-blue-900"
                                         />
                                     </div>
-                                    <label htmlFor="setAsCurrent" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Set as Active</label>
+                                    <label htmlFor="setAsCurrent" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Mark as Current Stage</label>
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
@@ -502,11 +502,11 @@ export default function ApplicationDetailPage() {
                                         className="w-5 h-5 rounded-lg border-blue-200 text-blue-900 focus:ring-blue-900"
                                     />
                                 </div>
-                                <label htmlFor="paywall" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Settlement Required</label>
+                                <label htmlFor="paywall" className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] cursor-pointer">Payment Required</label>
                             </div>
                             {requiresPayment && (
                                 <div className="space-y-2 animate-in slide-in-from-top-4 duration-300">
-                                    <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Target Valuation (USD)</label>
+                                    <label className="block text-[9px] font-black text-blue-400 uppercase tracking-widest">Requested Amount (USD)</label>
                                     <input
                                         type="number"
                                         required
@@ -522,7 +522,7 @@ export default function ApplicationDetailPage() {
                                 disabled={addStageMutation.isPending || updateStageMutation.isPending}
                                 className="w-full py-5 bg-blue-900 text-white font-black text-[10px] uppercase tracking-[0.4em] rounded-2xl hover:bg-black transition-all shadow-2xl shadow-blue-900/20 disabled:opacity-50 active:scale-95"
                             >
-                                {addStageMutation.isPending || updateStageMutation.isPending ? 'Synchronizing...' : 'Commit Protocol Configuration'}
+                                {addStageMutation.isPending || updateStageMutation.isPending ? 'Loading...' : 'Save Stage Configuration'}
                             </button>
                         </form>
                     </div>
@@ -536,8 +536,8 @@ export default function ApplicationDetailPage() {
                     <div className="relative bg-white rounded-[3.5rem] shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300 border border-white/20">
                         <div className="p-10 border-b border-blue-50 flex items-center justify-between bg-white/50">
                             <div>
-                                <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">Settlement Audit</h3>
-                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Verifying visual proof of transaction</p>
+                                <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">Payment Verification</h3>
+                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Reviewing visual proof of transaction</p>
                             </div>
                             <button onClick={() => setVerifyingPayment(null)} className="w-12 h-12 rounded-2xl hover:bg-blue-50 text-blue-400 hover:text-blue-900 transition-all flex items-center justify-center">
                                 <span className="material-symbols-outlined">close</span>
@@ -556,7 +556,7 @@ export default function ApplicationDetailPage() {
                                 ) : (
                                     <div className="flex flex-col items-center justify-center h-full text-blue-200">
                                         <span className="material-symbols-outlined text-6xl mb-4">image_not_supported</span>
-                                        <p className="text-[10px] uppercase font-black tracking-[0.3em]">No primary proof detected</p>
+                                        <p className="text-[10px] uppercase font-black tracking-[0.3em]">No receipt detected</p>
                                     </div>
                                 )}
                             </div>
@@ -567,31 +567,24 @@ export default function ApplicationDetailPage() {
                                         <p className="text-4xl font-black italic text-blue-900">${verifyingPayment.amount}</p>
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">Currency Cluster</p>
+                                        <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">Currency</p>
                                         <p className="text-4xl font-black italic text-blue-900">{verifyingPayment.currency}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col md:flex-row gap-4">
                                     <button
-                                        onClick={() => { if (confirm('AUTHORIZE SETTLEMENT: Confirm payment and advance pipeline?')) verifyPaymentMutation.mutate({ params: { paymentId: verifyingPayment.id }, data: { isApproved: true } }); }}
+                                        onClick={() => { if (confirm('Approve Payment: Confirm payment and advance application?')) verifyPaymentMutation.mutate({ params: { paymentId: verifyingPayment.id }, data: { isApproved: true } }); }}
                                         className="flex-1 py-5 bg-blue-900 text-white font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-emerald-600 transition-all shadow-2xl shadow-blue-900/20 active:scale-95"
                                     >
-                                        {verifyPaymentMutation.isPending ? 'Processing...' : 'Authorize & Advance'}
+                                        {verifyPaymentMutation.isPending ? 'Updating...' : 'Approve & Advance'}
                                     </button>
                                     <button
                                         onClick={() => {
-                                            const note = prompt('Specify rejection parameters:');
+                                            const note = prompt('Specify rejection details:');
                                             if (note) verifyPaymentMutation.mutate({ params: { paymentId: verifyingPayment.id }, data: { isApproved: false, note } });
                                         }}
                                         className="py-5 px-10 bg-white text-red-500 border-2 border-red-100 font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-red-50 hover:border-red-200 transition-all active:scale-95"
                                     >
-                                        Reject Protocol
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             )}
         </div>
     );

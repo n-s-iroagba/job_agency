@@ -9,15 +9,15 @@ export default function UnpaidPaymentsPage() {
         '/admin/payments/unpaid'
     );
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Scanning Financial Compliance...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Pending Payments...</div>;
 
     const paymentList = payments?.rows || [];
 
     return (
         <div className="font-sans antialiased text-blue-900">
             <div className="mb-12">
-                <h1 className="text-3xl font-bold tracking-tight uppercase leading-tight">Delinquent Protocols</h1>
-                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Track applications stalled at settlement nodes without documentary evidence</p>
+                <h1 className="text-3xl font-bold tracking-tight uppercase leading-tight">Pending Payments</h1>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Track applications awaiting payment processing</p>
             </div>
 
             <div className="bg-white rounded-[2rem] border border-blue-100 overflow-hidden shadow-2xl shadow-blue-900/5">
@@ -29,7 +29,7 @@ export default function UnpaidPaymentsPage() {
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Target Role</th>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Payment Stage</th>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Amount Due</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Action</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-blue-50">
@@ -56,7 +56,7 @@ export default function UnpaidPaymentsPage() {
                                             href={`/admin/applications/${pay.applicationId}`}
                                             className="inline-flex items-center gap-2 bg-white border border-blue-100 px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm active:scale-95"
                                         >
-                                            Inspect Application
+                                            View Application
                                         </Link>
                                     </td>
                                 </tr>
@@ -64,7 +64,7 @@ export default function UnpaidPaymentsPage() {
                             {paymentList.length === 0 && (
                                 <tr>
                                     <td colSpan={5} className="px-8 py-12 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300 italic">
-                                        Total compliance: No unpaid nodes detected
+                                        No pending payments detected
                                     </td>
                                 </tr>
                             )}

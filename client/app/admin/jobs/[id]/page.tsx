@@ -24,7 +24,7 @@ export default function JobViewPage() {
                         <Link href="/admin/jobs" className="text-blue-400 hover:text-blue-900 transition-colors">
                             <span className="material-symbols-outlined text-lg">arrow_back</span>
                         </Link>
-                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Job Registry / {id}</span>
+                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Job Postings / {id}</span>
                     </div>
                     <h1 className="text-3xl font-bold text-blue-900 tracking-tight">{job?.title}</h1>
                 </div>
@@ -87,7 +87,7 @@ export default function JobViewPage() {
 
                 <div className="space-y-8">
                     <section className="bg-blue-900 text-white p-8 rounded-2xl shadow-xl shadow-blue-900/10">
-                        <h3 className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-6 pb-4 border-b border-blue-800">Job Metadata</h3>
+                        <h3 className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-6 pb-4 border-b border-blue-800">Job Information</h3>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
                                 <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Category</span>

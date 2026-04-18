@@ -25,7 +25,7 @@ export default function BankAccountViewPage() {
                         <span className="material-symbols-outlined text-xl">arrow_back</span>
                     </Link>
                     <div>
-                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-1">Financials</span>
+                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-1">Bank Details</span>
                         <h1 className="text-xl font-bold text-blue-900 tracking-tight">Bank Account</h1>
                     </div>
                 </div>

@@ -22,7 +22,7 @@ export default function UnverifiedPaymentsPage() {
         }
     });
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Auditing Settlement Proofs...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Verifying Payment Receipts...</div>;
 
     const paymentList = payments?.rows || [];
 
@@ -30,7 +30,7 @@ export default function UnverifiedPaymentsPage() {
         <div className="font-sans antialiased text-blue-900">
             <div className="mb-12">
                 <h1 className="text-3xl font-bold tracking-tight uppercase leading-tight">Verification Queue</h1>
-                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Audit and clear documentary evidence for processing fees</p>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Verify and approve payment receipts for processing fees</p>
             </div>
 
             <div className="bg-white rounded-[2rem] border border-blue-100 overflow-hidden shadow-2xl shadow-blue-900/5">
@@ -40,8 +40,8 @@ export default function UnverifiedPaymentsPage() {
                             <tr className="bg-blue-50 border-b border-blue-100">
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Applicant</th>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Stage / Fee</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Proof Evidence</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Operations</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Verification Document</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-blue-50">
@@ -71,7 +71,7 @@ export default function UnverifiedPaymentsPage() {
                                             onClick={() => setSelectedPayment(pay)}
                                             className="bg-blue-900 text-white px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-lg shadow-blue-900/10 active:scale-95"
                                         >
-                                            Audit Pass
+                                            Approve Payment
                                         </button>
                                     </td>
                                 </tr>
@@ -79,7 +79,7 @@ export default function UnverifiedPaymentsPage() {
                             {paymentList.length === 0 && (
                                 <tr>
                                     <td colSpan={4} className="px-8 py-12 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300 italic">
-                                        No unverified nodes detected
+                                        No unverified payments detected
                                     </td>
                                 </tr>
                             )}
@@ -93,8 +93,8 @@ export default function UnverifiedPaymentsPage() {
                     <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-xl overflow-hidden border border-white/20">
                         <div className="p-8 border-b border-blue-50 flex justify-between items-center">
                             <div>
-                                <h3 className="text-lg font-bold text-blue-900 uppercase tracking-tight">Settlement Audit</h3>
-                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Protocol #CC-{selectedPayment.id.toString().padStart(5, '0')}</p>
+                                <h3 className="text-lg font-bold text-blue-900 uppercase tracking-tight">Payment Verification</h3>
+                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Payment Reference #CC-{selectedPayment.id.toString().padStart(5, '0')}</p>
                             </div>
                             <button onClick={() => setSelectedPayment(null)} className="text-blue-400 hover:text-blue-900 transition-colors">
                                 <span className="material-symbols-outlined">close</span>
@@ -112,11 +112,11 @@ export default function UnverifiedPaymentsPage() {
                             </div>
 
                             <div className="space-y-4">
-                                <label className="text-[10px] font-black text-blue-400 uppercase tracking-widest px-1">Internal Note / Rejection Reason</label>
+                                <label className="text-[10px] font-black text-blue-400 uppercase tracking-widest px-1">Internal Note / Disapproval Reason</label>
                                 <textarea
                                     value={note}
                                     onChange={(e) => setNote(e.target.value)}
-                                    placeholder="Enter audit notes or rejection details..."
+                                    placeholder="Enter verification notes or disapproval details..."
                                     className="w-full bg-blue-50 border border-blue-100 rounded-2xl p-5 text-sm font-medium text-blue-900 focus:bg-white outline-none focus:ring-4 focus:ring-blue-100 transition-all h-32 resize-none"
                                 />
                             </div>
@@ -127,14 +127,14 @@ export default function UnverifiedPaymentsPage() {
                                     disabled={verifyMutation.isPending}
                                     className="py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-red-50 text-red-600 hover:bg-red-100 transition-all active:scale-95"
                                 >
-                                    {verifyMutation.isPending ? 'Processing...' : 'Fail Audit'}
+                                    {verifyMutation.isPending ? 'Processing...' : 'Disapprove Payment'}
                                 </button>
                                 <button
                                     onClick={() => verifyMutation.mutate({ isApproved: true, note })}
                                     disabled={verifyMutation.isPending}
                                     className="py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest bg-blue-900 text-white shadow-xl shadow-blue-900/10 hover:bg-black transition-all active:scale-95"
                                 >
-                                    {verifyMutation.isPending ? 'Processing...' : 'Approve Node'}
+                                    {verifyMutation.isPending ? 'Processing...' : 'Approve Payment'}
                                 </button>
                             </div>
                         </div>
