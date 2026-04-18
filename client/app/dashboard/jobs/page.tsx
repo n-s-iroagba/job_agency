@@ -42,7 +42,7 @@ export default function BrowseJobsPage() {
                         <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-blue-700 to-blue-400">career milestone</span>
                     </h1>
                     <p className="text-sm md:text-base text-blue-500 font-medium leading-relaxed max-w-xl mx-auto md:mx-0">
-                        Curated high-impact roles for specialized talent. Navigate verified opportunities within the global recruitment pipeline.
+                        Curated high-impact roles for specialized talent. Navigate verified opportunities within the global recruitment process.
                     </p>
                 </div>
                 
@@ -170,13 +170,13 @@ export default function BrowseJobsPage() {
 
                                 <div className="flex flex-col justify-between items-center md:items-end gap-8 pt-8 md:pt-0 md:border-l border-blue-50 md:pl-10 min-w-[200px]">
                                     <div className="text-center md:text-right">
-                                        <p className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Settlement Depth</p>
+                                        <p className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Salary / Package</p>
                                         <span className="text-2xl font-bold text-blue-900 tracking-tighter">
                                             {job.salary || 'Executive Rate'}
                                         </span>
                                     </div>
                                     <div className="w-full flex items-center justify-center gap-3 bg-blue-900 text-white py-4 px-8 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transform transition-all group-hover:scale-105 group-active:scale-95 shadow-xl shadow-blue-900/10">
-                                        Pipeline Access
+                                        View Details
                                         <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                     </div>
                                 </div>
@@ -189,8 +189,8 @@ export default function BrowseJobsPage() {
                             <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
                                 <span className="material-symbols-outlined text-4xl text-blue-200">search_off</span>
                             </div>
-                            <h3 className="text-xl font-bold text-blue-900 uppercase tracking-tight mb-2">Zero Matching Vectors</h3>
-                            <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Adjust your filtration parameters to resume talent synchronisation.</p>
+                            <h3 className="text-xl font-bold text-blue-900 uppercase tracking-tight mb-2">No Matching Opportunities</h3>
+                            <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Refine your filters to find more opportunities.</p>
                         </div>
                     )}
                 </div>

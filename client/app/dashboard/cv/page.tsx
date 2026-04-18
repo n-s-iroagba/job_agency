@@ -79,7 +79,7 @@ function CvContent() {
     return (
         <div className="font-sans text-blue-900 pb-24">
             <header className="mb-12">
-                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-2">Portfolio</span>
+                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-2">Career Profile</span>
                 <h1 className="text-3xl font-bold text-blue-900 tracking-tight">Professional Resume</h1>
             </header>
 
@@ -163,8 +163,8 @@ function CvContent() {
                             <div className="flex items-start gap-4">
                                 <span className="material-symbols-outlined text-blue-400">lock</span>
                                 <div>
-                                    <p className="text-[10px] font-bold uppercase tracking-widest mb-1">Encrypted Access</p>
-                                    <p className="text-[10px] text-blue-500 font-medium leading-relaxed italic">Your resume is encrypted at rest and only accessible via authorized tokens.</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-widest mb-1">Secure Access</p>
+                                    <p className="text-[10px] text-blue-500 font-medium leading-relaxed italic">Your resume is encrypted at rest and only accessible via secure recruitment protocols.</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">

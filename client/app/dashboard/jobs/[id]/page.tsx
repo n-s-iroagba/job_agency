@@ -59,8 +59,8 @@ export default function JobDetailPage() {
     if (!job) return (
         <div className="py-20 text-center bg-red-50 rounded-[3rem] border border-red-100 mt-12">
             <span className="material-symbols-outlined text-red-200 text-6xl mb-6">error</span>
-            <h2 className="text-xl font-bold text-red-900 uppercase tracking-widest">Entry Not Found</h2>
-            <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mt-2">The requested job listing does not exist in our active registry.</p>
+            <h2 className="text-xl font-bold text-red-900 uppercase tracking-widest">Listing Not Found</h2>
+            <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mt-2">The requested job listing does not exist in our active listings.</p>
             <Link href="/dashboard/jobs" className="inline-block mt-8 text-[10px] font-black text-red-900 uppercase tracking-[0.3em] underline underline-offset-8">Return to Jobs</Link>
         </div>
     );
@@ -103,7 +103,7 @@ export default function JobDetailPage() {
                         disabled={applyMutation.isPending}
                         className={`w-full py-6 rounded-3xl font-black text-[8.5px] uppercase tracking-[0.4em] transition-all active:scale-95 disabled:opacity-50 shadow-2xl ${isReadyToApply ? 'bg-blue-900 text-white shadow-blue-900/20 hover:bg-black' : 'bg-blue-100 text-blue-400'}`}
                     >
-                        {applyMutation.isPending ? 'Syncing...' : isReadyToApply ? 'Initiate Application' : 'Complete Your Profile To Apply'}
+                        {applyMutation.isPending ? 'Processing...' : isReadyToApply ? 'Submit Application' : 'Complete Your Profile To Apply'}
                     </button>
 
                     <div className="bg-white p-8 rounded-[2.5rem] border border-blue-100 shadow-sm space-y-6">

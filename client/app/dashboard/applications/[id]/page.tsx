@@ -73,7 +73,7 @@ export default function ApplicationDetailPage() {
                 <div className="flex gap-4">
                     <div className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border-2 ${app.status === 'ACTIVE' ? 'bg-blue-900 text-white border-blue-900 shadow-xl shadow-blue-900/10' : 'bg-white text-blue-400 border-blue-50'
                         }`}>
-                        Pipeline Status: {app.status}
+                        Application Status: {app.status}
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@ export default function ApplicationDetailPage() {
                     <section className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-sm">
                         <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-8 pb-4 border-b border-blue-50 flex items-center gap-3">
                             <span className="material-symbols-outlined text-sm">description</span>
-                            Primary Job Specification
+                            Detailed Job Description
                         </h2>
                         <div className="prose prose-blue max-w-none">
                             <p className="text-sm font-medium text-blue-700 leading-relaxed uppercase tracking-tight opacity-80 whitespace-pre-wrap">
@@ -93,7 +93,7 @@ export default function ApplicationDetailPage() {
                         </div>
                     </section>
 
-                    {/* Financial Gateway Section */}
+                    {/* Required Actions Section */}
                     {currentStage?.requiresPayment && currentPayment?.status !== 'Verified' && currentPayment?.status !== 'Paid' && (
                         <section className="bg-blue-900 rounded-[2.5rem] p-10 relative overflow-hidden text-white shadow-2xl shadow-blue-900/20">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-800 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2" />
@@ -105,7 +105,7 @@ export default function ApplicationDetailPage() {
                                         </div>
                                         <h3 className="text-2xl font-bold tracking-tight mb-4 uppercase tracking-[0.1em]">Verification In Progress</h3>
                                         <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.25em] max-w-[450px] mx-auto leading-loose italic">
-                                            The Audit Protocol has been initiated. Our administrative specialists are currently authenticating your settlement proof against global clearing records.
+                                            The verification process has been initiated. Our recruitment team is currently reviewing your payment confirmation against our records.
                                         </p>
                                     </div>
                                 ) : (
@@ -116,9 +116,9 @@ export default function ApplicationDetailPage() {
                                             </div>
                                             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Required Financial Action</span>
                                         </div>
-                                        <h3 className="text-3xl font-bold tracking-tight mb-4 uppercase">Settlement Threshold Required</h3>
+                                        <h3 className="text-3xl font-bold tracking-tight mb-4 uppercase">Payment Required to Proceed</h3>
                                         <p className="text-[11px] font-bold text-blue-400 uppercase tracking-widest mb-10 max-w-[500px] leading-relaxed">
-                                            To continue progressing through the recruitment pipeline, a security/processing fee of <span className="text-white text-lg ml-1">${currentStage.amount} {currentStage.currency}</span> is pending.
+                                            To continue with your application, a required processing fee of <span className="text-white text-lg ml-1">${currentStage.amount} {currentStage.currency}</span> is pending.
                                         </p>
 
                                         <div className="bg-white rounded-3xl p-8 shadow-2xl">
@@ -136,8 +136,8 @@ export default function ApplicationDetailPage() {
 
                     <section className="space-y-6">
                         <div className="flex items-center justify-between px-2">
-                            <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">Recruitment Phase Sequence</h2>
-                            <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest">Read Only Flow</span>
+                            <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">Your Application Journey</h2>
+                            <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest">Official Status</span>
                         </div>
                         <div className="space-y-4">
                             {stages.map((stage: any, index: number) => {
@@ -157,7 +157,7 @@ export default function ApplicationDetailPage() {
                                                 <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg ${isCompleted ? 'bg-emerald-50 text-emerald-600' :
                                                     isActive ? (isPendingVerification ? 'bg-amber-50 text-amber-600' : 'bg-blue-900 text-white') : 'bg-blue-100 text-blue-400'
                                                     }`}>
-                                                    {isCompleted ? 'Verified' : isActive ? (isPendingVerification ? 'Audit Required' : 'Current active phase') : 'Locked Phase'}
+                                                    {isCompleted ? 'Completed' : isActive ? (isPendingVerification ? 'Reviewing' : 'Current Stage') : 'Upcoming Stage'}
                                                 </span>
                                             </div>
                                             <h4 className="font-bold text-blue-900 uppercase tracking-tight text-lg mb-2">{stage.name}</h4>
@@ -194,10 +194,10 @@ export default function ApplicationDetailPage() {
                 <div className="space-y-10">
                     <section className="bg-white p-10 rounded-[3rem] border border-blue-100 shadow-sm relative overflow-hidden">
                         <div className="relative z-10">
-                            <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-10 pb-4 border-b border-blue-50">Audit Overview</h2>
+                            <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-10 pb-4 border-b border-blue-50">Progress Summary</h2>
                             <div className="space-y-8">
                                 <div className="flex justify-between items-center group">
-                                    <span className="text-[10px] font-black text-blue-300 uppercase tracking-widest">Registry Depth</span>
+                                    <span className="text-[10px] font-black text-blue-300 uppercase tracking-widest">Overall Progress</span>
                                     <span className="text-xl font-bold font-mono text-blue-900 group-hover:scale-110 transition-transform">{app.completionPercentage}%</span>
                                 </div>
                                 <div className="h-1 bg-blue-50 rounded-full overflow-hidden">
@@ -222,7 +222,7 @@ export default function ApplicationDetailPage() {
                                     <div className="flex justify-between items-center">
                                         <div className="flex items-center gap-2">
                                             <span className="material-symbols-outlined text-amber-500 text-sm">update</span>
-                                            <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">Last Sync</span>
+                                            <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">Last Updated</span>
                                         </div>
                                         <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest italic font-mono">Realtime</span>
                                     </div>
@@ -234,10 +234,10 @@ export default function ApplicationDetailPage() {
                     <section className="bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100 border-dashed">
                         <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                             <span className="material-symbols-outlined text-sm">info</span>
-                            Candidate Notice
+                            Applicant Notice
                         </h4>
                         <p className="text-[10px] text-blue-600 font-bold uppercase tracking-tight leading-loose opacity-60 italic">
-                            All phase transitions on this dashboard are strictly maintained by the administrative audit department. Applicants are notified automatically upon each successful verification event.
+                            All updates on this dashboard are strictly maintained by our recruitment team. Applicants are notified automatically upon each successful verification.
                         </p>
                     </section>
                 </div>

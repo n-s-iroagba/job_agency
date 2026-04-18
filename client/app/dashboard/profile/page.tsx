@@ -77,7 +77,7 @@ function ProfileContent() {
             <header className="mb-12">
                 <span className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] block mb-2">Account Settings</span>
                 <h1 className="text-4xl font-bold text-blue-900 tracking-tight">Professional Profile</h1>
-                <p className="text-blue-500 text-sm mt-2 font-medium">Manage your personal information and biodata for applications.</p>
+                <p className="text-blue-500 text-sm mt-2 font-medium">Manage your personal information and profile details for applications.</p>
             </header>
 
             {successMessage && (

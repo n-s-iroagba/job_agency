@@ -22,13 +22,13 @@ export default function AdminDashboardPage() {
             <header className="h-20 px-6 md:px-12 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-40 border-b border-blue-50/50">
                 <div className="min-w-0">
                     <h2 className="text-lg md:text-xl font-black tracking-tight text-blue-900 uppercase italic">Control Terminal</h2>
-                    <p className="text-blue-400 text-[9px] font-bold uppercase tracking-[0.3em] truncate opacity-80">Infrastructure & Registry Monitoring</p>
+                    <p className="text-blue-400 text-[9px] font-bold uppercase tracking-[0.3em] truncate opacity-80">System & Database Status</p>
                 </div>
                 <div className="flex items-center gap-4 shrink-0">
                     <div className="flex items-center gap-2.5 bg-white px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-blue-100 shadow-sm">
                         <span className={`w-2 h-2 rounded-full ${health?.database?.status === 'Connected' ? 'bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-red-500'}`}></span>
                         <span className="text-[9px] font-black uppercase tracking-widest text-blue-900 hidden md:block">
-                            {health?.database?.status === 'Connected' ? 'Node Secured' : 'Node Disrupted'}
+                            {health?.database?.status === 'Connected' ? 'Database Online' : 'Database Offline'}
                         </span>
                         <span className="text-[9px] font-black uppercase tracking-widest text-blue-900 md:hidden">Live</span>
                     </div>
@@ -44,7 +44,7 @@ export default function AdminDashboardPage() {
                             <span className="material-symbols-outlined text-8xl font-black">inventory_2</span>
                         </div>
                         <div className="relative z-10">
-                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] block mb-2">Talent Registry</span>
+                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] block mb-2">Applicant Records</span>
                             <h3 className="text-5xl font-black tracking-tighter text-blue-900 italic leading-none">{appCount.toString().padStart(2, '0')}</h3>
                         </div>
                         <div className="mt-auto flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-blue-400">
@@ -59,7 +59,7 @@ export default function AdminDashboardPage() {
                             <span className="material-symbols-outlined text-8xl font-black">payments</span>
                         </div>
                         <div className="relative z-10">
-                            <span className="text-[10px] font-black text-red-400 uppercase tracking-[0.3em] block mb-2">Settlement Queue</span>
+                            <span className="text-[10px] font-black text-red-400 uppercase tracking-[0.3em] block mb-2">Payment Queue</span>
                             <h3 className="text-5xl font-black tracking-tighter text-blue-900 italic leading-none">{unpaidCount.toString().padStart(2, '0')}</h3>
                         </div>
                         <div className="mt-auto flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-red-400">
@@ -74,7 +74,7 @@ export default function AdminDashboardPage() {
                             <span className="material-symbols-outlined text-8xl font-black">gavel</span>
                         </div>
                         <div className="relative z-10">
-                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] block mb-2">Audit Queue</span>
+                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] block mb-2">Verification Queue</span>
                             <h3 className="text-5xl font-black tracking-tighter text-blue-900 italic leading-none">{unverifiedCount.toString().padStart(2, '0')}</h3>
                         </div>
                         <div className="mt-auto flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-blue-400">
@@ -97,9 +97,9 @@ export default function AdminDashboardPage() {
                             {/* Sync Status */}
                             <div className="space-y-4">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Database Synchronization</span>
+                                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Database Status</span>
                                     <span className={`text-[10px] font-black uppercase italic ${health?.database?.status === 'Connected' ? 'text-emerald-500' : 'text-red-500'}`}>
-                                        {health?.database?.status === 'Connected' ? 'Optimized' : 'Desynced'}
+                                        {health?.database?.status === 'Connected' ? 'Active' : 'Disconnected'}
                                     </span>
                                 </div>
                                 <div className="h-1 w-full bg-blue-50 rounded-full overflow-hidden">
@@ -126,7 +126,7 @@ export default function AdminDashboardPage() {
                             {/* Uptime */}
                             <div className="space-y-4">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Registry Uptime</span>
+                                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">System Uptime</span>
                                     <span className="text-[10px] font-black uppercase text-blue-900 italic">
                                         {health?.serverUptime ? `${(health.serverUptime / 3600).toFixed(1)}h Active` : 'Online'}
                                     </span>
@@ -143,7 +143,7 @@ export default function AdminDashboardPage() {
                         <div className="flex items-center justify-between mb-10">
                             <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900 flex items-center gap-3">
                                 <span className="material-symbols-outlined text-xl text-blue-400">monitoring</span>
-                                Real-time Logic Stream
+                                Real-time Activity Stream
                             </h4>
                         </div>
                         
@@ -155,13 +155,13 @@ export default function AdminDashboardPage() {
                                         <div key={app.id} className="relative pl-10 pb-10 last:pb-0 group">
                                             <div className="absolute left-0 top-0 w-3 h-3 rounded-full border-2 border-white bg-blue-100 group-hover:bg-blue-900 transition-colors z-10 shadow-sm"></div>
                                             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
-                                                <p className="text-[11px] font-black text-blue-900 uppercase tracking-tight">Application protocol initialized</p>
+                                                <p className="text-[11px] font-black text-blue-900 uppercase tracking-tight">Application received</p>
                                                 <span className="text-[8px] font-bold text-blue-400 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded">
                                                     {new Date(app.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </span>
                                             </div>
                                             <p className="text-[12px] text-blue-500 font-medium leading-relaxed max-w-2xl">
-                                                User <span className="text-blue-900 font-bold italic">{app.User?.fullName}</span> has submitted a new placement request for <span className="text-blue-900 font-bold underline decoration-blue-100 underline-offset-4">{app.JobListing?.title}</span>.
+                                                User <span className="text-blue-900 font-bold italic">{app.User?.fullName}</span> has submitted a new job application for <span className="text-blue-900 font-bold underline decoration-blue-100 underline-offset-4">{app.JobListing?.title}</span>.
                                             </p>
                                         </div>
                                     ))}
@@ -182,7 +182,7 @@ export default function AdminDashboardPage() {
                     <div className="relative z-10 max-w-2xl">
                         <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em] block mb-6">Executive Summary</span>
                         <h4 className="text-2xl md:text-3xl font-black text-white italic tracking-tighter mb-8 leading-tight">
-                            Infrastructure maintaining {appCount} high-fidelity placement sequences across {totalUsers} registered candidates.
+                            System managing {appCount} active job applications across {totalUsers} registered candidates.
                         </h4>
                         <div className="flex flex-wrap gap-8">
                             <div className="space-y-1">
@@ -190,7 +190,7 @@ export default function AdminDashboardPage() {
                                 <p className="text-sm font-black text-white uppercase tracking-widest">{unverifiedCount > 0 ? `${unverifiedCount} UNVERIFIED` : 'ALL CLEAR'}</p>
                             </div>
                             <div className="space-y-1">
-                                <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Finance Integrity</p>
+                                <p className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">Payment Status</p>
                                 <p className="text-sm font-black text-white uppercase tracking-widest">{unpaidCount > 0 ? `${unpaidCount} PENDING` : 'SETTLED'}</p>
                             </div>
                         </div>

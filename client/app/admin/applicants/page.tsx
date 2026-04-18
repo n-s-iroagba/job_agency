@@ -12,23 +12,23 @@ export default function AdminApplicantsPage() {
     const userList = users?.rows || [];
 
     const handleDelete = async (id: number) => {
-        if (confirm('CAUTION: This will permanently purge this talent identity and all associated dossiers. Continue?')) {
+        if (confirm('CAUTION: This will permanently delete this applicant profile and all associated data. Continue?')) {
             try {
                 await deleteMutation.mutateAsync({ params: { id } });
                 refetch();
             } catch (error) {
-                alert('Purge failed: Access denied or system conflict.');
+                alert('Delete failed: Access denied or system error.');
             }
         }
     };
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Synchronizing Registry...</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Refreshing Database...</div>;
 
     return (
         <div className="font-sans antialiased text-blue-900">
             <div className="mb-12">
-                <h1 className="text-3xl font-bold tracking-tight uppercase">Registry: Personnel</h1>
-                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Manage authorized system controllers and talent profiles</p>
+                <h1 className="text-3xl font-bold tracking-tight uppercase">Applicant Database</h1>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.3em] mt-2">Manage administrator and applicant profiles</p>
             </div>
 
             <div className="bg-white rounded-[2rem] border border-blue-100 overflow-hidden shadow-2xl shadow-blue-900/5">
@@ -36,10 +36,10 @@ export default function AdminApplicantsPage() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-blue-50 border-b border-blue-100">
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Identity</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Electronic Mail</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Access Tier</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Operations</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Name</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Email Address</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Role</th>
+                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-blue-50">
@@ -58,7 +58,7 @@ export default function AdminApplicantsPage() {
                                     </td>
                                     <td className="px-8 py-6">
                                         <span className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest ${u.role === 'ADMIN' ? 'bg-blue-900 text-white shadow-lg shadow-blue-900/10' : 'bg-blue-100 text-blue-500'}`}>
-                                            {u.role === 'ADMIN' ? 'Controller' : 'Talent'}
+                                            {u.role === 'ADMIN' ? 'Admin' : 'Applicant'}
                                         </span>
                                     </td>
                                     <td className="px-8 py-6 text-right">
@@ -82,7 +82,7 @@ export default function AdminApplicantsPage() {
                                                 className="inline-flex items-center gap-2 bg-white border border-red-100 px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-[0.2em] text-red-400 hover:text-white hover:bg-red-500 hover:border-red-500 transition-all shadow-sm active:scale-95"
                                             >
                                                 <span className="material-symbols-outlined text-sm font-bold">delete</span>
-                                                Purge
+                                                Delete
                                             </button>
                                         </div>
                                     </td>
@@ -95,11 +95,11 @@ export default function AdminApplicantsPage() {
 
             <div className="mt-12 p-8 bg-blue-900 rounded-[2rem] text-white flex items-center justify-between shadow-2xl shadow-blue-900/10">
                 <div>
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-2">Registry Statistics</h3>
-                    <p className="text-2xl font-black italic uppercase tracking-tighter">{userList.length} Total Verified Identities</p>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-2">Database Summary</h3>
+                    <p className="text-2xl font-black italic uppercase tracking-tighter">{userList.length} Total Registered Users</p>
                 </div>
                 <div className="flex gap-4">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-blue-500">Global Oversight Active</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-blue-500">System Monitoring Active</span>
                 </div>
             </div>
         </div>

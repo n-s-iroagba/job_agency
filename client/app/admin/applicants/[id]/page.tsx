@@ -14,8 +14,8 @@ export default function AdminApplicantDetailPage() {
     const user = userData?.user;
     const applications = appsData?.rows || [];
 
-    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Retrieving Talent Dossier...</div>;
-    if (!user) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-red-500">Applicant Node Not Found</div>;
+    if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Applicant Profile...</div>;
+    if (!user) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-red-500">Applicant Record Not Found</div>;
 
     const DataItem = ({ label, value }: { label: string, value: string | null | undefined }) => (
         <div className="space-y-1">
@@ -32,10 +32,10 @@ export default function AdminApplicantDetailPage() {
                         <Link href="/admin/applicants" className="p-2 rounded-xl bg-blue-50 text-blue-400 hover:bg-blue-900 hover:text-white transition-all shadow-sm">
                             <span className="material-symbols-outlined text-sm font-bold">arrow_back</span>
                         </Link>
-                        <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">Personnel Profile</span>
+                        <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">Applicant Profile</span>
                     </div>
                     <h1 className="text-4xl font-black italic uppercase tracking-tighter text-blue-900">{user.fullName}</h1>
-                    <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">Registry ID: {user.id} · {user.email}</p>
+                    <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">Record ID: {user.id} · {user.email}</p>
                 </div>
 
                 <div className="flex gap-3">
@@ -48,25 +48,25 @@ export default function AdminApplicantDetailPage() {
                     </Link>
                     <button
                         onClick={async () => {
-                            if (confirm('CRITICAL ACTION: Permanently purge this talent identity from the global registry? This action is irreversible.')) {
+                            if (confirm('DANGER: This will permanently delete this applicant profile from the system. This action is irreversible.')) {
                                 try {
                                     // Note: We use the existing common delete hook if available or just window.fetch
                                     const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
                                     if (res.ok) {
-                                        alert('Identity purged successfully.');
+                                        alert('Profile deleted successfully.');
                                         window.location.href = '/admin/applicants';
                                     } else {
-                                        alert('Purge failed: Access denied.');
+                                        alert('Delete failed: Access denied.');
                                     }
                                 } catch (e) {
-                                    alert('Purge failed: Network error.');
+                                    alert('Delete failed: Network error.');
                                 }
                             }
                         }}
                         className="bg-red-50 text-red-600 border-2 border-red-100 px-6 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white hover:border-red-500 transition-all active:scale-95 flex items-center gap-2"
                     >
                         <span className="material-symbols-outlined text-base">delete_forever</span>
-                        Purge Identity
+                        Delete Profile
                     </button>
                     {user.cvUrl && (
                         <a
@@ -76,7 +76,7 @@ export default function AdminApplicantDetailPage() {
                             className="bg-white border-2 border-blue-900 text-blue-900 px-6 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-blue-50 transition-all active:scale-95 flex items-center gap-2"
                         >
                             <span className="material-symbols-outlined text-base">description</span>
-                            View Document (CV)
+                            View Resume
                         </a>
                     )}
                 </div>
@@ -90,10 +90,10 @@ export default function AdminApplicantDetailPage() {
                             {user.fullName.charAt(0)}
                         </div>
                         <h2 className="text-xl font-black uppercase tracking-tight text-blue-900 text-center">{user.fullName}</h2>
-                        <span className="mt-2 px-3 py-1 bg-blue-50 text-blue-400 rounded-lg text-[9px] font-black uppercase tracking-widest">TALENT STATUS: VERIFIED</span>
+                        <span className="mt-2 px-3 py-1 bg-blue-50 text-blue-400 rounded-lg text-[9px] font-black uppercase tracking-widest">APPLICANT STATUS: VERIFIED</span>
 
                         <div className="w-full mt-10 pt-10 border-t border-blue-50 grid grid-cols-1 gap-6">
-                            <DataItem label="Electronic Mail" value={user.email} />
+                            <DataItem label="Email Address" value={user.email} />
                             <DataItem label="Primary Phone" value={user.phoneNumber} />
                         </div>
                     </div>
@@ -107,7 +107,7 @@ export default function AdminApplicantDetailPage() {
                     <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
                         <div className="flex items-center gap-4 mb-10 pb-4 border-b border-blue-50">
                             <span className="material-symbols-outlined text-blue-900">badge</span>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900">Personnel Biodata</h2>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900">Personal Information</h2>
                         </div>
 
                         <div className="grid grid-cols-2 gap-x-8 gap-y-10">
@@ -135,27 +135,27 @@ export default function AdminApplicantDetailPage() {
                         </div>
                     </div>
 
-                    {/* Document Management */}
+                    {/* Documentation Summary */}
                     {!user.cvUrl && (
                         <div className="p-10 rounded-[2.5rem] bg-amber-50 border-2 border-dashed border-amber-200 text-center">
                             <span className="material-symbols-outlined text-amber-500 mb-2">warning</span>
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-700">Missing Documentation</h3>
-                            <p className="text-[11px] font-bold text-amber-600 mt-1 uppercase">No curriculum vitae has been synchronized with this profile.</p>
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-700">Missing Information</h3>
+                            <p className="text-[11px] font-bold text-amber-600 mt-1 uppercase">No resume has been uploaded to this profile.</p>
                         </div>
                     )}
 
-                    {/* Talent Pipeline - Active Applications */}
+                    {/* Application History - Active Applications */}
                     <div className="bg-white p-10 rounded-[2.5rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
                         <div className="flex items-center gap-4 mb-10 pb-4 border-b border-blue-50">
                             <span className="material-symbols-outlined text-blue-900">analytics</span>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900">Talent Pipeline</h2>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900">Application History</h2>
                         </div>
 
                         {isAppsLoading ? (
-                            <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Synchronizing Application Data...</div>
+                            <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Applications...</div>
                         ) : applications.length === 0 ? (
                             <div className="p-12 text-center bg-blue-50 rounded-3xl">
-                                <p className="text-[9px] font-black uppercase tracking-widest text-blue-400">No active applications detected in registry.</p>
+                                <p className="text-[9px] font-black uppercase tracking-widest text-blue-400">No application history found.</p>
                             </div>
                         ) : (
                             <div className="space-y-12">
@@ -177,7 +177,7 @@ export default function AdminApplicantDetailPage() {
                                                 href={`/admin/jobs/${app.jobId}`}
                                                 className="text-[9px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-900 flex items-center gap-1"
                                             >
-                                                View Original Brief
+                                                View Job Details
                                                 <span className="material-symbols-outlined text-xs">arrow_forward</span>
                                             </Link>
                                         </div>
