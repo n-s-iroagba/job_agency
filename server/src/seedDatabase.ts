@@ -125,7 +125,7 @@ export async function seedDatabase() {
             location: 'Dubai / Remote Flex',
             employmentType: 'Full-Time',
             requirements: 'Expertise in Azure/AWS; Multi-regional network design experience.',
-            company: 'NexaCore Global',
+            company: 'NexeCore Global',
             salary: '$140,000 - $175,000',
             visaSponsorship: true,
             category: 'Technology & Innovation'

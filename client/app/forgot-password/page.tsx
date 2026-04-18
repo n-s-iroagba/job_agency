@@ -103,7 +103,7 @@ export default function ForgotPasswordPage() {
 
             <footer className="mt-20 py-12 px-8 border-t border-blue-50 w-full max-w-[1440px]">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] font-bold text-blue-400 uppercase tracking-widest">
-                    <p>© 2026 JOBNEXA ENTERPRISE</p>
+                    <p>© 2026 JOBNEXE ENTERPRISE</p>
                     <p>System Security Protocol Enabled</p>
                 </div>
             </footer>

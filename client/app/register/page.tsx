@@ -208,7 +208,7 @@ export default function RegisterPage() {
 
             <footer className="py-12 px-8 border-t border-blue-50 mt-auto">
                 <div className="flex flex-col md:flex-row justify-between items-center max-w-[1440px] mx-auto gap-6 text-[9px] font-bold text-blue-400 uppercase tracking-widest">
-                    <p>© 2026 JOBNEXA ENTERPRISE</p>
+                    <p>© 2026 JOBNEXE ENTERPRISE</p>
                     <div className="flex gap-10">
                         <Link className="hover:text-blue-900 transition-colors" href={CONSTANTS.ROUTES.PRIVACY}>Data Protection</Link>
                         <a className="hover:text-blue-900 transition-colors" href="#">Support</a>

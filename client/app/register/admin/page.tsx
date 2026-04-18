@@ -171,7 +171,7 @@ export default function AdminRegisterPage() {
             </main>
 
             <footer className="py-12 flex items-center justify-center border-t border-blue-100 bg-white">
-                <p className="text-blue-400 text-[9px] font-bold uppercase tracking-[0.3em]">© 2026 JOBNEXA ENTERPRISE • ADMINISTRATIVE ZONE</p>
+                <p className="text-blue-400 text-[9px] font-bold uppercase tracking-[0.3em]">© 2026 JOBNEXE ENTERPRISE • ADMINISTRATIVE ZONE</p>
             </footer>
         </div>
     );
