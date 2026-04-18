@@ -75,7 +75,7 @@ export default function ApplicantDashboard() {
                             </div>
                             <button
                                 onClick={() => {
-                                    if(payApp) setSelectedPaymentApp(payApp);
+                                    if (payApp) setSelectedPaymentApp(payApp);
                                     setAppFilter('Payments');
                                 }}
                                 className="w-full md:w-auto bg-blue-900 text-white px-8 md:px-10 py-4 md:py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-black transition-all shadow-2xl shadow-blue-900/20 active:scale-95 shrink-0"
@@ -234,8 +234,8 @@ export default function ApplicantDashboard() {
                                             </span>
                                         </div>
                                         <div className="flex justify-between items-center text-[8px] text-blue-400 font-black uppercase tracking-widest">
-                                            <span>Val: ${pay.amount}</span>
-                                            <span>#CC-{pay.id.toString().padStart(4, '0')}</span>
+                                            <span>Amount: ${pay.amount}</span>
+                                            <span>Ref: #{pay.id.toString().padStart(4, '0')}</span>
                                         </div>
                                     </div>
                                 ))}
