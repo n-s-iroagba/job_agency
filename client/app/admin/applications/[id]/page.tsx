@@ -74,7 +74,7 @@ export default function ApplicationDetailPage() {
             }
         }
     );
-    
+
     const completeApplicationMutation = useApiMutation(
         'post',
         `/admin/applications/${id}/complete`,
@@ -186,8 +186,8 @@ export default function ApplicationDetailPage() {
                 </div>
                 <div className="flex items-center gap-3">
                     <span className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-xl border ${application.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                            application.status === 'COMPLETED' ? 'bg-blue-900 text-white shadow-lg shadow-blue-900/10' :
-                                'bg-blue-100 text-blue-600'
+                        application.status === 'COMPLETED' ? 'bg-blue-900 text-white shadow-lg shadow-blue-900/10' :
+                            'bg-blue-100 text-blue-600'
                         }`}>
                         {application.status}
                     </span>
@@ -235,7 +235,7 @@ export default function ApplicationDetailPage() {
                                                             <div className="flex items-center gap-2">
                                                                 {payment ? (
                                                                     <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest border ${payment.status === 'Verified' || payment.status === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                                                                            payment.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-red-50 text-red-600 border-red-100'
+                                                                        payment.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-red-50 text-red-600 border-red-100'
                                                                         }`}>
                                                                         {payment.status === 'Verified' || payment.status === 'Paid' ? 'Payment Verified' :
                                                                             payment.status === 'Pending' ? 'Review Needed' : 'Unpaid Entry'}
@@ -255,7 +255,7 @@ export default function ApplicationDetailPage() {
                                                     {payment && (
                                                         <div className="mt-6 flex items-center gap-3">
                                                             <div className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center gap-2 border ${payment.status === 'Paid' || payment.status === 'Verified' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                                                                    payment.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' : 'bg-red-50 text-red-600 border-red-100'
+                                                                payment.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' : 'bg-red-50 text-red-600 border-red-100'
                                                                 }`}>
                                                                 <span className="material-symbols-outlined text-xs font-bold">payments</span>
                                                                 Payment {payment.status}
@@ -585,7 +585,16 @@ export default function ApplicationDetailPage() {
                                         }}
                                         className="py-5 px-10 bg-white text-red-500 border-2 border-red-100 font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-red-50 hover:border-red-200 transition-all active:scale-95"
                                     >
+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
+
         </div>
+
     );
 }
