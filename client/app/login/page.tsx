@@ -19,7 +19,7 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 function LoginContent() {
     const router = useRouter();
-    const { login } = useAuth();
+    const { user, login, logout } = useAuth();
     const searchParams = useSearchParams();
     const requestedRedirect = searchParams.get('redirect');
     const [loginError, setLoginError] = useState<string | null>(null);
@@ -82,7 +82,42 @@ function LoginContent() {
                     </div>
 
                     {/* Form Section */}
-                    {isUnverified ? (
+                    {user ? (
+                        <div className="space-y-8 py-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                           <div className="text-center space-y-4">
+                                <div className="w-20 h-20 bg-blue-900 text-white rounded-3xl mx-auto flex items-center justify-center shadow-xl shadow-blue-900/10">
+                                    <span className="material-symbols-outlined text-4xl">how_to_reg</span>
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold text-blue-900 uppercase tracking-tight">Session Detected</h2>
+                                    <p className="text-blue-500 text-[10px] uppercase font-black tracking-widest mt-1">Logged in as {user.fullName}</p>
+                                </div>
+                                <p className="text-blue-400 text-xs leading-relaxed max-w-[280px] mx-auto uppercase tracking-widest font-bold italic">
+                                    An active protocol is already initialized. Would you like to proceed or switch nodes?
+                                </p>
+                            </div>
+
+                            <div className="space-y-4">
+                                <button
+                                    onClick={() => {
+                                        const target = user.role === CONSTANTS.ROLES.ADMIN 
+                                            ? CONSTANTS.ROUTES.ADMIN.DASHBOARD 
+                                            : CONSTANTS.ROUTES.DASHBOARD;
+                                        router.push(target);
+                                    }}
+                                    className="w-full py-4 bg-blue-900 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-lg hover:bg-blue-800 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-blue-900/10"
+                                >
+                                    Continue to Dashboard
+                                </button>
+                                <button
+                                    onClick={() => logout()}
+                                    className="w-full py-4 bg-white border-2 border-red-100 text-red-600 font-bold text-[10px] uppercase tracking-[0.2em] rounded-lg hover:bg-red-50 hover:border-red-200 transition-all active:scale-[0.98]"
+                                >
+                                    Sign Out and Switch
+                                </button>
+                            </div>
+                        </div>
+                    ) : isUnverified ? (
                         <div className="space-y-8 py-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="text-center space-y-4">
                                 <div className="w-20 h-20 bg-blue-50 text-blue-900 rounded-3xl mx-auto flex items-center justify-center shadow-xl shadow-blue-900/5">

@@ -97,13 +97,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     router.push(CONSTANTS.ROUTES.LOGIN);
                 }
             } else {
-                // Logged in: Handle cross-role protection and auth route redirection
-                if (isAuthRoute) {
-                    const dashboard = user.role === CONSTANTS.ROLES.ADMIN 
-                        ? CONSTANTS.ROUTES.ADMIN.DASHBOARD 
-                        : CONSTANTS.ROUTES.DASHBOARD;
-                    router.push(dashboard);
-                } else if (user.role === CONSTANTS.ROLES.APPLICANT && isAdminRoute) {
+                // Logged in: Handle cross-role protection
+                // Removed auto-redirect from isAuthRoute to allow user control on Login page
+                if (user.role === CONSTANTS.ROLES.APPLICANT && isAdminRoute) {
                     router.push(CONSTANTS.ROUTES.DASHBOARD);
                 } else if (user.role === CONSTANTS.ROLES.ADMIN && isDashboardRoute) {
                     router.push(CONSTANTS.ROUTES.ADMIN.DASHBOARD);
