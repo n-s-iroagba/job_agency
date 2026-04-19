@@ -80,12 +80,16 @@ export const CONSTANTS = {
         BTC: 'BTC',
         ETH: 'ETH',
         USDT: 'USDT',
+        USDC: 'USDC',
+        SOL: 'SOL',
     },
 
     CRYPTO_NETWORKS: {
+        BTC: 'BTC',
         ERC20: 'ERC20',
         TRC20: 'TRC20',
         BEP20: 'BEP20',
+        SOLANA: 'SOLANA',
     },
 
     // File Constraints

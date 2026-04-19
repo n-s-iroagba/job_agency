@@ -11,6 +11,24 @@ interface CryptoWalletFormProps {
     isEdit?: boolean;
 }
 
+const NETWORK_MAPPING: Record<string, { label: string; value: string }[]> = {
+    BTC: [{ label: 'Bitcoin Network', value: 'BTC' }],
+    ETH: [
+        { label: 'Ethereum (ERC20)', value: 'ERC20' },
+        { label: 'BNB Chain (BEP20)', value: 'BEP20' }
+    ],
+    USDT: [
+        { label: 'Ethereum (ERC20)', value: 'ERC20' },
+        { label: 'Tron (TRC20)', value: 'TRC20' },
+        { label: 'BNB Chain (BEP20)', value: 'BEP20' }
+    ],
+    USDC: [
+        { label: 'Ethereum (ERC20)', value: 'ERC20' },
+        { label: 'BNB Chain (BEP20)', value: 'BEP20' }
+    ],
+    SOL: [{ label: 'Solana Network', value: 'SOLANA' }]
+};
+
 export default function CryptoWalletForm({ initialData, isEdit = false }: CryptoWalletFormProps) {
     const router = useRouter();
     const [label, setLabel] = useState(initialData?.displayLabel || '');
@@ -28,6 +46,15 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
             setIsActive(initialData.isActive);
         }
     }, [initialData]);
+
+    // Handle network dependency
+    useEffect(() => {
+        const available = NETWORK_MAPPING[cryptoType] || [];
+        // If current network is not valid for the new crypto type, reset it
+        if (!available.find(n => n.value === network)) {
+            setNetwork(available[0]?.value || '');
+        }
+    }, [cryptoType]);
 
     const mutation = useApiMutation(
         isEdit ? 'put' : 'post',
@@ -107,10 +134,11 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
                             value={network}
                             onChange={(e) => setNetwork(e.target.value)}
                         >
-                            <option value="ERC20">Ethereum (ERC20)</option>
-                            <option value="BEP20">BNB Chain (BEP20)</option>
-                            <option value="TRC20">Tron (TRC20)</option>
-                            <option value="POLYGON">Polygon Network</option>
+                            {(NETWORK_MAPPING[cryptoType] || []).map((net) => (
+                                <option key={net.value} value={net.value}>
+                                    {net.label}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>
