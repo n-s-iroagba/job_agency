@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 const REFRESH_SECRET = process.env.REFRESH_SECRET || 'refresh_secret_fallback_prod';
 
 export const generateAccessToken = (payload: object): string => {
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: '3h' });
 };
 
 export const generateRefreshToken = (payload: object): string => {

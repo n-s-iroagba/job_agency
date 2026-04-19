@@ -18,6 +18,21 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+// Queue system for handling simultaneous refreshes
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+    failedQueue.forEach((prom) => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+    failedQueue = [];
+};
+
 // Response interceptor for auth errors
 api.interceptors.response.use(
     (response) => response,
@@ -25,18 +40,41 @@ api.interceptors.response.use(
         const originalRequest = error.config;
 
         if (error.response?.status === 401 && !originalRequest._retry) {
+            if (isRefreshing) {
+                // If already refreshing, add to queue and wait
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then((token) => {
+                        originalRequest.headers.Authorization = `Bearer ${token}`;
+                        return api(originalRequest);
+                    })
+                    .catch((err) => Promise.reject(err));
+            }
+
             originalRequest._retry = true;
+            isRefreshing = true;
+
             try {
                 const { data } = await axios.post(`${CONSTANTS.API_BASE_URL}/auth/refresh`, {}, { withCredentials: true });
-                localStorage.setItem('accessToken', data.accessToken);
-                api.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+                const newToken = data.accessToken;
+                
+                localStorage.setItem('accessToken', newToken);
+                api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+                originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                
+                processQueue(null, newToken);
                 return api(originalRequest);
             } catch (refreshError) {
+                processQueue(refreshError, null);
                 if (typeof window !== 'undefined') {
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('user');
                     window.location.href = CONSTANTS.ROUTES.LOGIN;
                 }
+                return Promise.reject(refreshError);
+            } finally {
+                isRefreshing = false;
             }
         }
         return Promise.reject(error);

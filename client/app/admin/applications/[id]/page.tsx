@@ -364,40 +364,7 @@ export default function ApplicationDetailPage() {
                             <h3 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">Process Status</h3>
                         </div>
 
-                        <div className="space-y-8">
-                            <div>
-                                <div className="flex justify-between items-end mb-3">
-                                    <span className="text-[9px] font-black text-blue-400 uppercase tracking-widest">Overall Progress</span>
-                                    <span className="text-2xl font-black italic text-blue-900">{application.completionPercentage}%</span>
-                                </div>
-                                <div className="h-2 bg-blue-50 rounded-full overflow-hidden shadow-inner">
-                                    <div
-                                        className="h-full bg-blue-900 transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)"
-                                        style={{ width: `${application.completionPercentage}%` }}
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="pt-8 border-t border-blue-50 space-y-4">
-                                <button
-                                    onClick={handleAdvance}
-                                    disabled={advanceMutation.isPending || application.status === 'COMPLETED'}
-                                    className="w-full py-4 bg-blue-50 text-blue-400 border border-blue-100 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:border-blue-900 hover:text-blue-900 transition-all disabled:opacity-30 active:scale-95"
-                                >
-                                    {advanceMutation.isPending ? 'Advancing Status...' : 'Advance to Next Stage'}
-                                </button>
-                                {application.status === 'ACTIVE' && (
-                                    <button
-                                        onClick={handleComplete}
-                                        disabled={completeApplicationMutation.isPending}
-                                        className="w-full py-4 bg-blue-900 text-white rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95 animate-in fade-in slide-in-from-bottom-2 duration-500"
-                                    >
-                                        {completeApplicationMutation.isPending ? 'Completing Application...' : 'Mark as Completed'}
-                                    </button>
-                                )}
-                                <p className="text-[8px] text-blue-300 text-center uppercase font-black tracking-[0.2em] italic">Authorized override only</p>
-                            </div>
-                        </div>
                     </div>
 
                     <div className="bg-blue-900 p-10 rounded-[3rem] text-white shadow-2xl shadow-blue-900/20">

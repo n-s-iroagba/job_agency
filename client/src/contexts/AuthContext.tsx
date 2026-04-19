@@ -60,10 +60,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const { data } = await api.get('/auth/me');
             setUser(data.user);
             localStorage.setItem('user', JSON.stringify(data.user));
-        } catch (error) {
-            setUser(null);
-            localStorage.removeItem('user');
-            localStorage.removeItem('accessToken');
+        } catch (error: any) {
+            // Only clear session if it's an explicit authentication error (401/403)
+            // Transient errors (like network timeouts or 500s) should not trigger a logout
+            if (error.response?.status === 401 || error.response?.status === 403) {
+                console.warn('[AuthContext] Explicit auth error detected. Clearing session.');
+                setUser(null);
+                localStorage.removeItem('user');
+                localStorage.removeItem('accessToken');
+            } else {
+                console.warn('[AuthContext] Transient refresh error. Session preserved.', error.message);
+            }
         } finally {
             setIsLoading(false);
         }
