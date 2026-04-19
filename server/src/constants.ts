@@ -85,11 +85,15 @@ export const CONSTANTS = {
     },
 
     CRYPTO_NETWORKS: {
-        BTC: 'BTC',
-        ERC20: 'ERC20',
+        MAINNET: 'MAINNET',
+        BASE: 'BASE',
+        ARBITRUM: 'ARBITRUM',
+        OPTIMISM: 'OPTIMISM',
+        POLYGON: 'POLYGON',
         TRC20: 'TRC20',
         BEP20: 'BEP20',
         SOLANA: 'SOLANA',
+        LIGHTNING: 'LIGHTNING',
     },
 
     // File Constraints

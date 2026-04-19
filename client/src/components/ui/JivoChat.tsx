@@ -9,17 +9,18 @@ import Script from 'next/script';
  */
 export default function JivoChat() {
     const pathname = usePathname();
-    
+
     // Check if the current route is administrative
     const isAdminRoute = pathname?.startsWith('/admin');
-    
+
     // Only render for public and applicant (/dashboard) routes
     if (isAdminRoute) return null;
 
     return (
         <Script
-            src="//code.jivosite.com/widget/bX7Ub0qih0"
+            src="//code.jivosite.com/widget/bB4cO4DGRO"
             strategy="afterInteractive"
         />
     );
 }
+

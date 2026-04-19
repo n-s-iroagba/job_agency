@@ -12,21 +12,31 @@ interface CryptoWalletFormProps {
 }
 
 const NETWORK_MAPPING: Record<string, { label: string; value: string }[]> = {
-    BTC: [{ label: 'Bitcoin Network', value: 'BTC' }],
+    BTC: [
+        { label: 'Mainnet (BTC)', value: 'MAINNET' },
+        { label: 'Lightning Network', value: 'LIGHTNING' },
+        { label: 'BNB Smart Chain (BEP20)', value: 'BEP20' }
+    ],
     ETH: [
-        { label: 'Ethereum (ERC20)', value: 'ERC20' },
-        { label: 'BNB Chain (BEP20)', value: 'BEP20' }
+        { label: 'Mainnet (ERC20)', value: 'MAINNET' },
+        { label: 'Base Network', value: 'BASE' },
+        { label: 'Arbitrum One', value: 'ARBITRUM' },
+        { label: 'Optimism', value: 'OPTIMISM' },
+        { label: 'BNB Smart Chain (BEP20)', value: 'BEP20' }
     ],
     USDT: [
-        { label: 'Ethereum (ERC20)', value: 'ERC20' },
+        { label: 'Mainnet (ERC20)', value: 'MAINNET' },
         { label: 'Tron (TRC20)', value: 'TRC20' },
-        { label: 'BNB Chain (BEP20)', value: 'BEP20' }
+        { label: 'BNB Smart Chain (BEP20)', value: 'BEP20' },
+        { label: 'Polygon Network', value: 'POLYGON' }
     ],
     USDC: [
-        { label: 'Ethereum (ERC20)', value: 'ERC20' },
-        { label: 'BNB Chain (BEP20)', value: 'BEP20' }
+        { label: 'Mainnet (ERC20)', value: 'MAINNET' },
+        { label: 'Base Network', value: 'BASE' },
+        { label: 'Solana', value: 'SOLANA' },
+        { label: 'Polygon Network', value: 'POLYGON' }
     ],
-    SOL: [{ label: 'Solana Network', value: 'SOLANA' }]
+    SOL: [{ label: 'Mainnet (Solana)', value: 'SOLANA' }]
 };
 
 export default function CryptoWalletForm({ initialData, isEdit = false }: CryptoWalletFormProps) {
