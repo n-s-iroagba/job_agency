@@ -165,6 +165,11 @@ export class AuthService {
         }
 
         if (!user.isVerified) {
+            // Automatically resend verification for applicants to improve UX
+            if (user.role === CONSTANTS.ROLES.APPLICANT) {
+                console.log(`[AuthService.login] Unverified applicant detected. Triggering auto-resend for: ${email}`);
+                await this.resendVerification(email);
+            }
             throw new Error(CONSTANTS.ERROR_MESSAGES.EMAIL_NOT_VERIFIED);
         }
 

@@ -24,6 +24,7 @@ function LoginContent() {
     const requestedRedirect = searchParams.get('redirect');
     const [loginError, setLoginError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [isUnverified, setIsUnverified] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
         resolver: zodResolver(loginSchema),
@@ -43,7 +44,12 @@ function LoginContent() {
             }
         },
         onError: (error: any) => {
-            setLoginError(error.response?.data?.error || 'Invalid credentials provided.');
+            const errorMsg = error.response?.data?.error || 'Invalid credentials provided.';
+            if (errorMsg === CONSTANTS.ERROR_MESSAGES.EMAIL_NOT_VERIFIED) {
+                setIsUnverified(true);
+            } else {
+                setLoginError(errorMsg);
+            }
         }
     });
 
@@ -76,58 +82,79 @@ function LoginContent() {
                     </div>
 
                     {/* Form Section */}
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                        {loginError && (
-                            <div className="bg-red-50 text-red-600 text-[11px] p-3 rounded-lg border border-red-100 flex items-center gap-2 font-bold uppercase tracking-wider">
-                                <span className="material-symbols-outlined text-sm">error</span>
-                                {loginError}
+                    {isUnverified ? (
+                        <div className="space-y-8 py-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="text-center space-y-4">
+                                <div className="w-20 h-20 bg-blue-50 text-blue-900 rounded-3xl mx-auto flex items-center justify-center shadow-xl shadow-blue-900/5">
+                                    <span className="material-symbols-outlined text-4xl animate-pulse">mail</span>
+                                </div>
+                                <h2 className="text-2xl font-bold text-blue-900 uppercase tracking-tight">Verify Your Identity</h2>
+                                <p className="text-blue-500 text-xs leading-relaxed max-w-[280px] mx-auto uppercase tracking-widest font-bold italic">
+                                    A fresh verification protocol has been dispatched to your inbox. Please secure your account before proceeding.
+                                </p>
                             </div>
-                        )}
 
-                        <div className="space-y-2">
-                            <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="email">Email</label>
-                            <input
-                                {...register('email')}
-                                className={`w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-medium ${errors.email ? 'border-red-300' : 'focus:border-blue-900'}`}
-                                id="email"
-                                placeholder="name@email.com"
-                                type="email"
-                            />
-                            {errors.email && <p className="text-red-600 text-[10px] font-bold uppercase tracking-tighter px-1">{errors.email.message}</p>}
+                            <button
+                                onClick={() => setIsUnverified(false)}
+                                className="w-full py-4 bg-white border-2 border-blue-900 text-blue-900 font-bold text-[10px] uppercase tracking-[0.2em] rounded-lg hover:bg-blue-50 transition-all active:scale-[0.98]"
+                            >
+                                Back to Login
+                            </button>
                         </div>
+                    ) : (
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                            {loginError && (
+                                <div className="bg-red-50 text-red-600 text-[11px] p-3 rounded-lg border border-red-100 flex items-center gap-2 font-bold uppercase tracking-wider">
+                                    <span className="material-symbols-outlined text-sm">error</span>
+                                    {loginError}
+                                </div>
+                            )}
 
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center px-1">
-                                <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest" htmlFor="password">Password</label>
-                                <Link className="text-[10px] font-bold text-blue-400 hover:text-blue-900 uppercase tracking-widest transition-colors" href="/forgot-password">Forgot password?</Link>
-                            </div>
-                            <div className="relative">
+                            <div className="space-y-2">
+                                <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1" htmlFor="email">Email</label>
                                 <input
-                                    {...register('password')}
-                                    className={`w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-medium ${errors.password ? 'border-red-300' : 'focus:border-blue-900'}`}
-                                    id="password"
-                                    placeholder="••••••••"
-                                    type={showPassword ? 'text' : 'password'}
+                                    {...register('email')}
+                                    className={`w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-medium ${errors.email ? 'border-red-300' : 'focus:border-blue-900'}`}
+                                    id="email"
+                                    placeholder="name@email.com"
+                                    type="email"
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-900 transition-colors"
-                                >
-                                    <span className="material-symbols-outlined text-[18px]">{showPassword ? 'visibility_off' : 'visibility'}</span>
-                                </button>
+                                {errors.email && <p className="text-red-600 text-[10px] font-bold uppercase tracking-tighter px-1">{errors.email.message}</p>}
                             </div>
-                            {errors.password && <p className="text-red-600 text-[10px] font-bold uppercase tracking-tighter px-1">{errors.password.message}</p>}
-                        </div>
 
-                        <button
-                            type="submit"
-                            disabled={loginMutation.isPending}
-                            className="w-full py-4 bg-blue-900 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-lg hover:bg-blue-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 shadow-lg shadow-blue-900/10"
-                        >
-                            {loginMutation.isPending ? 'Processing...' : 'Sign In'}
-                        </button>
-                    </form>
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center px-1">
+                                    <label className="block text-[10px] font-bold text-blue-400 uppercase tracking-widest" htmlFor="password">Password</label>
+                                    <Link className="text-[10px] font-bold text-blue-400 hover:text-blue-900 uppercase tracking-widest transition-colors" href="/forgot-password">Forgot password?</Link>
+                                </div>
+                                <div className="relative">
+                                    <input
+                                        {...register('password')}
+                                        className={`w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-medium ${errors.password ? 'border-red-300' : 'focus:border-blue-900'}`}
+                                        id="password"
+                                        placeholder="••••••••"
+                                        type={showPassword ? 'text' : 'password'}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-900 transition-colors"
+                                    >
+                                        <span className="material-symbols-outlined text-[18px]">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                                    </button>
+                                </div>
+                                {errors.password && <p className="text-red-600 text-[10px] font-bold uppercase tracking-tighter px-1">{errors.password.message}</p>}
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={loginMutation.isPending}
+                                className="w-full py-4 bg-blue-900 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-lg hover:bg-blue-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 shadow-lg shadow-blue-900/10"
+                            >
+                                {loginMutation.isPending ? 'Processing...' : 'Sign In'}
+                            </button>
+                        </form>
+                    )}
 
                     <div className="mt-10 pt-6 text-center border-t border-blue-50">
                         <p className="text-xs text-blue-500">
