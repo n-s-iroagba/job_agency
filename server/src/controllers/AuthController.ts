@@ -201,6 +201,24 @@ export class AuthController {
         }
     }
 
+    public async changePassword(req: Request, res: Response): Promise<void> {
+        try {
+            const userId = (req as any).user.id;
+            const { currentPassword, newPassword } = req.body;
+            await authService.changePassword(userId, currentPassword, newPassword);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json({
+                message: 'Passphrase successfully updated.'
+            });
+        } catch (error: any) {
+            console.error('[AuthController.changePassword]', error);
+            if (error.message === CONSTANTS.ERROR_MESSAGES.INVALID_CREDENTIALS) {
+                res.status(CONSTANTS.HTTP_STATUS.UNAUTHORIZED).json({ error: 'Verification of current passphrase failed.' });
+                return;
+            }
+            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+
     public async logout(req: Request, res: Response): Promise<void> {
         res.clearCookie('refreshToken', {
             httpOnly: true,

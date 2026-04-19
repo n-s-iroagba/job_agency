@@ -176,7 +176,7 @@ export class AdminService {
     // Admin Communication — STK-ADM-APP-003, STK-ADM-APP-004
     // ==========================
     public async sendMailToApplicant(
-        applicantId: number,
+        applicantId: number | undefined,
         subject: string,
         message: string,
         sendPushNotification: boolean = false,

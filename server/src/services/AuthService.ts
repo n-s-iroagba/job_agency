@@ -79,7 +79,8 @@ export class AuthService {
     }
 
     public async forgotPassword(email: string): Promise<void> {
-        const user = await userRepository.findByEmail(email);
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await userRepository.findByEmail(normalizedEmail);
         if (!user) {
             // We don't want to leak if a user exists or not, but for admin we might.
             // Requirement says "forgot password with email", so we'll just return if not found.
@@ -94,7 +95,10 @@ export class AuthService {
             resetPasswordExpires: resetExpires
         });
 
-        const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
+        console.log(`[AuthService] Reset token generated for user ID ${user.id}: ${resetToken}`);
+
+        const baseUrl = (process.env.CLIENT_URL || 'http://localhost:3000').replace(/\/$/, '');
+        const resetUrl = `${baseUrl}/reset-password?token=${resetToken}`;
         const content = `
             <p>A cryptographic reset sequence has been initialized for your JobNexe account.</p>
             <div class="cta-block">
@@ -205,6 +209,23 @@ export class AuthService {
             throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND);
         }
         return user;
+    }
+
+    public async changePassword(userId: number, currentPass: string, newPass: string): Promise<void> {
+        const user = await userRepository.findById(userId);
+        if (!user) {
+            throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND);
+        }
+
+        const isMatch = await bcrypt.compare(currentPass, user.passwordHash);
+        if (!isMatch) {
+            throw new Error(CONSTANTS.ERROR_MESSAGES.INVALID_CREDENTIALS);
+        }
+
+        const hashedNewPass = await bcrypt.hash(newPass, 12);
+        await userRepository.update(userId, {
+            passwordHash: hashedNewPass
+        });
     }
 
 }

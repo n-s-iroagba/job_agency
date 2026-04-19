@@ -12,6 +12,8 @@ function VerifyEmailContent() {
     const token = searchParams.get('token');
     const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
     const [message, setMessage] = useState('Synchronizing Verification Tokens...');
+    const [email, setEmail] = useState('');
+    const [resendStatus, setResendStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const { data, error } = useApiQuery<any>(
         ['auth', 'verify-email', token || ''],
@@ -39,6 +41,23 @@ function VerifyEmailContent() {
         }
     }, [data, error, token, router]);
 
+    const resendMutation = useApiMutation<any, any>('post', '/auth/resend-verification', {
+        onSuccess: () => {
+            setResendStatus('success');
+            setMessage('A new verification protocol has been dispatched to your email.');
+        },
+        onError: (err: any) => {
+            setResendStatus('error');
+            setMessage(err.response?.data?.error || 'Failed to dispatch new link.');
+        }
+    });
+
+    const handleResend = () => {
+        if (!email.trim()) return;
+        setResendStatus('loading');
+        resendMutation.mutate({ email });
+    };
+
     return (
         <main className="max-w-[448px] w-full space-y-12 text-center">
             <div className="space-y-6">
@@ -64,6 +83,28 @@ function VerifyEmailContent() {
                 <p className="text-[9px] font-black text-blue-900 uppercase tracking-widest animate-pulse">
                     Routing to Authentication Gateway...
                 </p>
+            )}
+
+            {status === 'error' && resendStatus !== 'success' && (
+                <div className="space-y-6 pt-4 animate-in fade-in slide-in-from-bottom-4">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1 text-left block">Recovery Email</label>
+                        <input
+                            type="email"
+                            placeholder="operator@domain.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
+                        />
+                    </div>
+                    <button
+                        onClick={handleResend}
+                        disabled={resendStatus === 'loading' || !email.trim()}
+                        className="w-full py-4 bg-white border-2 border-blue-900 text-blue-900 rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-blue-50 transition-all active:scale-[0.98] disabled:opacity-50"
+                    >
+                        {resendStatus === 'loading' ? 'Dispatching...' : 'Request New Link'}
+                    </button>
+                </div>
             )}
 
             {(status === 'error' || status === 'success') && (

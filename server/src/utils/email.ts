@@ -15,6 +15,23 @@ const createTransporter = (user: string | undefined, pass: string | undefined) =
 const authTransporter = createTransporter(process.env.SMTP_AUTH_USER, process.env.SMTP_AUTH_PASS);
 const infoTransporter = createTransporter(process.env.SMTP_INFO_USER, process.env.SMTP_INFO_PASS);
 
+// Self-Diagnostic: Verify connection on startup
+authTransporter.verify((error, success) => {
+    if (error) {
+        console.error('[EmailUtil] Auth Transporter Connection Error:', error);
+    } else {
+        console.log('[EmailUtil] Auth Transporter ready to dispatch.');
+    }
+});
+
+infoTransporter.verify((error, success) => {
+    if (error) {
+        console.error('[EmailUtil] Info Transporter Connection Error:', error);
+    } else {
+        console.log('[EmailUtil] Info Transporter ready to dispatch.');
+    }
+});
+
 console.log(`[EmailUtil] SMTP Decoupled Transporters Initialized.`);
 
 const getStandardEmailTemplate = (subject: string, content: string) => {
@@ -66,8 +83,13 @@ export const sendAuthEmail = async (to: string, subject: string, content: string
             attachments,
         });
         console.log(`[EmailUtil] Auth email dispatched to: ${to}`);
-    } catch (error) {
-        console.error(`[EmailUtil] Auth email failed:`, error);
+    } catch (error: any) {
+        console.error(`[EmailUtil] Auth email failed to ${to}:`, {
+            message: error.message,
+            code: error.code,
+            command: error.command,
+            responseCode: error.responseCode
+        });
         throw new Error('Auth email dispatch failed');
     }
 };

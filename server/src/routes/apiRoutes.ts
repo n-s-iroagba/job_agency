@@ -35,6 +35,7 @@ router.get('/auth/verify-email', authController.verifyEmail.bind(authController)
 router.post('/auth/forgot-password', authController.forgotPassword.bind(authController));
 router.post('/auth/reset-password', authController.resetPassword.bind(authController));
 router.post('/auth/resend-verification', authController.resendVerification.bind(authController));
+router.put('/auth/change-password', requireAuth, authController.changePassword.bind(authController));
 
 // STK-APP-AUTH-001, STK-ADM-JOB-004: public job listings
 router.use('/jobs', apiLimiter);
