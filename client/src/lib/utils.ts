@@ -7,8 +7,10 @@ export const uploadFile = async (
         formData.append('file', file);
         formData.append('upload_preset', 'amafor');
         
-        // Use 'auto' resource type to let Cloudinary determine the best storage method
-        const cloudUrl = `https://api.cloudinary.com/v1_1/dh2cpesxu/auto/upload`;
+        // Explicitly determine resource type to bypass image-specific security filters
+        const isImage = file.type.startsWith('image/');
+        const resourceType = isImage ? 'image' : 'raw';
+        const cloudUrl = `https://api.cloudinary.com/v1_1/dh2cpesxu/${resourceType}/upload`;
         
         const uploadRes = await fetch(cloudUrl, { method: 'POST', body: formData });
         const data = await uploadRes.json();
