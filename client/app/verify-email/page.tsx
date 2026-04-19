@@ -85,8 +85,14 @@ function VerifyEmailContent() {
                 </p>
             )}
 
-            {status === 'error' && resendStatus !== 'success' && (
+            {status === 'error' && (
                 <div className="space-y-6 pt-4 animate-in fade-in slide-in-from-bottom-4">
+                    {resendStatus === 'success' && (
+                        <div className="p-4 bg-green-50 border border-green-100 rounded-xl text-green-600 text-[10px] font-bold uppercase tracking-widest flex items-center gap-3">
+                            <span className="material-symbols-outlined text-base">check_circle</span>
+                            A new pulse has been dispatched. Check your inbox.
+                        </div>
+                    )}
                     <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1 text-left block">Recovery Email</label>
                         <input
