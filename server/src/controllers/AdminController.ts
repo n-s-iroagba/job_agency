@@ -317,10 +317,14 @@ export class AdminController {
         try {
             const { applicantId, subject, message, sendPushNotification, email } = req.body;
             
-            // Map multer files to Nodemailer attachments
-            const attachments = (req.files as any[])?.map(file => ({
+            // Map multer files to Nodemailer attachments with explicit contentType for delivery success
+            const rawFiles = req.files as Express.Multer.File[];
+            console.log(`[AdminController.sendMailToApplicant] Received files: ${rawFiles?.length || 0}`);
+            
+            const attachments = rawFiles?.map(file => ({
                 filename: file.originalname,
-                content: file.buffer
+                content: file.buffer,
+                contentType: file.mimetype
             })) || [];
 
             const result = await adminService.sendMailToApplicant(

@@ -45,7 +45,7 @@ function LoginContent() {
         },
         onError: (error: any) => {
             const errorMsg = error.response?.data?.error || 'Invalid credentials provided.';
-            if (errorMsg === CONSTANTS.ERROR_MESSAGES.EMAIL_NOT_VERIFIED) {
+            if (errorMsg === 'Email not verified') {
                 setIsUnverified(true);
             } else {
                 setLoginError(errorMsg);
@@ -84,7 +84,7 @@ function LoginContent() {
                     {/* Form Section */}
                     {user ? (
                         <div className="space-y-8 py-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                           <div className="text-center space-y-4">
+                            <div className="text-center space-y-4">
                                 <div className="w-20 h-20 bg-blue-900 text-white rounded-3xl mx-auto flex items-center justify-center shadow-xl shadow-blue-900/10">
                                     <span className="material-symbols-outlined text-4xl">how_to_reg</span>
                                 </div>
@@ -100,8 +100,8 @@ function LoginContent() {
                             <div className="space-y-4">
                                 <button
                                     onClick={() => {
-                                        const target = user.role === CONSTANTS.ROLES.ADMIN 
-                                            ? CONSTANTS.ROUTES.ADMIN.DASHBOARD 
+                                        const target = user.role === CONSTANTS.ROLES.ADMIN
+                                            ? CONSTANTS.ROUTES.ADMIN.DASHBOARD
                                             : CONSTANTS.ROUTES.DASHBOARD;
                                         router.push(target);
                                     }}

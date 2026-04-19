@@ -14,7 +14,7 @@ function MailComposerContent() {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const { mutateAsync: sendMail, isPending: sending } = useApiMutation<{ email: string, subject: string, message: string }, any>('post', '/admin/mail');
+    const { mutateAsync: sendMail, isPending: sending } = useApiMutation<any, any>('post', '/admin/mail');
 
     // Disable activity query as backend doesn't support it yet
     const recentActivity: any[] = [];
@@ -37,7 +37,12 @@ function MailComposerContent() {
                 formData.append('attachments', file);
             });
 
-            await sendMail(formData as any);
+            // We pass an empty headers object to allow Axios to automatically detect
+            // the FormData and set the correct 'Content-Type' with its boundary.
+            await sendMail({ 
+                data: formData,
+                headers: { 'Content-Type': undefined } 
+            });
             setSuccess(true);
             setSubject('');
             setBody('');
