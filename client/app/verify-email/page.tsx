@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useApiQuery } from '@/lib/hooks';
+import { useApiMutation, useApiQuery } from '@/lib/hooks';
 import { CONSTANTS } from '@/constants';
 import Link from 'next/link';
 
