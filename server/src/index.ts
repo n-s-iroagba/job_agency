@@ -14,7 +14,7 @@ import { run } from './runMigration';
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
-    await run()
+
     try {
         await connectDB();
         // await seedDatabase().catch(err => {

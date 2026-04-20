@@ -29,12 +29,12 @@ export default function ApplicantDashboard() {
         if (appFilter === 'All') return true;
         if (appFilter === 'Active') return !app.requiresPayment || app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid';
         if (appFilter === 'Payments') return app.requiresPayment && app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid';
-        if (appFilter === 'Completed') return false; 
+        if (appFilter === 'Completed') return false;
         return true;
     });
 
     const getPaymentForApp = (app: any) => {
-        return summary?.allPayments?.find(
+        return summary?.unpaidPayments?.find(
             (p: any) => p.applicationId === app.applicationId && p.stageId === app.stageId
         );
     };
@@ -60,7 +60,7 @@ export default function ApplicantDashboard() {
                                 <div className="space-y-3 text-center md:text-left flex-1 min-w-0">
                                     <div className="max-w-full">
                                         <h4 className="text-[9px] md:text-[10px] font-black text-red-500 uppercase tracking-[0.3em] mb-1">Action Required</h4>
-                                        <h2 className="text-lg md:text-xl font-black text-blue-900 uppercase tracking-tight leading-none truncate">{payApp?.stageName || 'Recruitment Phase'}</h2>
+                                        <h2 className="text-lg md:text-xl font-black text-blue-900 uppercase tracking-tight leading-none break-words">{payApp?.stageName || 'Recruitment Phase'}</h2>
                                     </div>
                                     <p className="text-[10px] md:text-[11px] font-bold text-blue-400 uppercase tracking-widest max-w-lg leading-relaxed opacity-80 italic line-clamp-2 md:line-clamp-none">
                                         {payApp?.stageDescription}
@@ -114,19 +114,19 @@ export default function ApplicantDashboard() {
                             {appFilter === 'Completed' ? (
                                 completedGroups.map((group: any) => (
                                     <div key={group.applicationId} className="bg-white p-6 rounded-[2rem] border border-blue-100 shadow-sm transition-all hover:shadow-xl">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest bg-blue-50 px-2 py-1 rounded">#{group.applicationId}</span>
-                                            <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-1 rounded">{group.jobCompany}</span>
+                                        <div className="flex flex-wrap items-center gap-3 mb-4">
+                                            <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest bg-blue-50 px-2 py-1 rounded break-all">#{group.applicationId}</span>
+                                            <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-1 rounded break-words">{group.jobCompany}</span>
                                         </div>
-                                        <h3 className="text-lg font-bold text-blue-900 tracking-tight leading-tight mb-4">{group.jobTitle}</h3>
+                                        <h3 className="text-lg font-bold text-blue-900 tracking-tight leading-tight mb-4 break-words">{group.jobTitle}</h3>
                                         <div className="space-y-3">
                                             {group.stages.map((stage: any, index: number) => (
                                                 <div key={stage.stageId} className="bg-blue-50/50 p-4 rounded-2xl border-l-4 border-l-emerald-500 border border-blue-50 group-hover:bg-white group-hover:border-blue-100 transition-all flex items-start gap-4">
                                                     <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                                                         <span className="material-symbols-outlined text-sm font-bold">check</span>
                                                     </div>
-                                                    <div>
-                                                        <h4 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">{stage.stageName}</h4>
+                                                    <div className="min-w-0 flex-1">
+                                                        <h4 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] break-words leading-relaxed">{stage.stageName}</h4>
                                                         <p className="text-[9px] font-bold text-blue-400 mt-1 uppercase opacity-80">{new Date(stage.completedAt).toLocaleString()}</p>
                                                     </div>
                                                 </div>
@@ -136,92 +136,92 @@ export default function ApplicantDashboard() {
                                 ))
                             ) : (
                                 filteredStages.map((app: any) => (
-                                <div key={app.applicationId} className="bg-white p-6 rounded-[2rem] border border-blue-100 shadow-sm transition-all hover:shadow-xl hover:shadow-blue-900/5 hover:border-blue-900/20">
-                                    <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-8">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest leading-none bg-blue-50 px-2 py-1 rounded">#{app.applicationId}</span>
-                                                <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest leading-none bg-emerald-50 px-2 py-1 rounded">{app.jobCompany}</span>
-                                            </div>
-                                            <h3 className="text-xl font-bold text-blue-900 tracking-tight leading-tight mb-2">{app.jobTitle}</h3>
-                                            <div className="flex items-center gap-4 mb-6">
-                                                <div className="flex items-center gap-1.5">
-                                                    <span className="material-symbols-outlined text-[14px] text-blue-300">location_on</span>
-                                                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">{app.jobLocation}</span>
+                                    <div key={app.applicationId} className="bg-white p-6 rounded-[2rem] border border-blue-100 shadow-sm transition-all hover:shadow-xl hover:shadow-blue-900/5 hover:border-blue-900/20">
+                                        <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-8">
+                                            <div className="flex-1">
+                                                <div className="flex flex-wrap items-center gap-3 mb-2">
+                                                    <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest leading-none bg-blue-50 px-2 py-1 rounded break-all">#{app.applicationId}</span>
+                                                    <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest leading-none bg-emerald-50 px-2 py-1 rounded break-words">{app.jobCompany}</span>
                                                 </div>
-                                                <div className="flex items-center gap-1.5 text-blue-400">
-                                                    <span className="material-symbols-outlined text-[14px] text-blue-300">payments</span>
-                                                    <span className="text-[10px] font-bold uppercase tracking-widest">{app.jobSalary}</span>
-                                                </div>
-                                            </div>
-
-                                            <div className="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-50 mb-6 group-hover:bg-white group-hover:border-blue-100 transition-all border-l-4 border-l-blue-900">
-                                                <div className="flex items-center justify-between mb-3">
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-blue-900 animate-pulse" />
-                                                        <span className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">{app.stageName}</span>
+                                                <h3 className="text-xl font-bold text-blue-900 tracking-tight leading-tight mb-2 break-words">{app.jobTitle}</h3>
+                                                <div className="flex flex-wrap items-center gap-4 mb-6">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <span className="material-symbols-outlined text-[14px] text-blue-300">location_on</span>
+                                                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">{app.jobLocation}</span>
                                                     </div>
-                                                    <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded border ${app.requiresPayment ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-emerald-50 text-emerald-600 border-emerald-100'}`}>
-                                                        {app.requiresPayment ? 'Payment Required' : 'Under Review'}
-                                                    </span>
+                                                    <div className="flex items-center gap-1.5 text-blue-400">
+                                                        <span className="material-symbols-outlined text-[14px] text-blue-300">payments</span>
+                                                        <span className="text-[10px] font-bold uppercase tracking-widest">{app.jobSalary}</span>
+                                                    </div>
                                                 </div>
-                                                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-tight leading-relaxed italic opacity-90 mb-4 whitespace-pre-wrap line-clamp-3">
-                                                    {app.stageDescription}
-                                                </p>
-                                                <div className="flex items-center gap-3 pt-4 border-t border-blue-100/50">
-                                                    <span className="text-[8px] font-black text-blue-300 uppercase tracking-[0.2em]">Application Status:</span>
-                                                    <span className="text-[8px] font-bold text-blue-900 uppercase">Awaiting {app.requiresPayment && app.paymentStatus !== 'Paid' && app.paymentStatus !== 'Verified' ? 'Your Action' : 'Final Review'}</span>
+
+                                                <div className="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-50 mb-6 group-hover:bg-white group-hover:border-blue-100 transition-all border-l-4 border-l-blue-900">
+                                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-2 mb-3">
+                                                        <div className="flex items-start sm:items-center gap-2">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-900 animate-pulse mt-1.5 sm:mt-0 shrink-0" />
+                                                            <span className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] break-words">{app.stageName}</span>
+                                                        </div>
+                                                        <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded border whitespace-nowrap self-start ${app.requiresPayment ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-emerald-50 text-emerald-600 border-emerald-100'}`}>
+                                                            {app.requiresPayment ? 'Payment Required' : 'Under Review'}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-[10px] font-bold text-blue-400 uppercase tracking-tight leading-relaxed italic opacity-90 mb-4 whitespace-pre-wrap line-clamp-3">
+                                                        {app.stageDescription}
+                                                    </p>
+                                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 pt-4 border-t border-blue-100/50">
+                                                        <span className="text-[8px] font-black text-blue-300 uppercase tracking-[0.2em]">Application Status:</span>
+                                                        <span className="text-[8px] font-bold text-blue-900 uppercase">Awaiting {app.requiresPayment && app.paymentStatus !== 'Paid' && app.paymentStatus !== 'Verified' ? 'Your Action' : 'Final Review'}</span>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
-                                    </div>
 
 
+                                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-6 border-t border-blue-50 gap-4">
+                                            <div className="flex items-center gap-2">
+                                                {app.requiresPayment ? (
+                                                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border ${app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                                        app.paymentStatus === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' :
+                                                            'bg-amber-50 text-amber-700 border-amber-100'
+                                                        }`}>
+                                                        <span className="material-symbols-outlined text-[14px]">
+                                                            {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'verified' :
+                                                                app.paymentStatus === 'Pending' ? 'hourglass_empty' : 'payments'}
+                                                        </span>
+                                                        <span className="text-[9px] font-black uppercase tracking-widest whitespace-normal sm:whitespace-nowrap leading-tight text-left">
+                                                            {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'Verified' :
+                                                                app.paymentStatus === 'Pending' ? 'Review in Progress' : `Due: $${app.amount}`}
+                                                        </span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex items-center gap-2 bg-emerald-50/50 text-emerald-600 px-3 py-1.5 rounded-xl border border-emerald-100">
+                                                        <span className="material-symbols-outlined text-[14px]">task_alt</span>
+                                                        <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Complimentary</span>
+                                                    </div>
+                                                )}
+                                            </div>
 
-                                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-6 border-t border-blue-50 gap-4">
-                                        <div className="flex items-center gap-2">
-                                            {app.requiresPayment ? (
-                                                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border ${app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                                                    app.paymentStatus === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' :
-                                                        'bg-amber-50 text-amber-700 border-amber-100'
-                                                    }`}>
-                                                    <span className="material-symbols-outlined text-[14px]">
-                                                        {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'verified' :
-                                                            app.paymentStatus === 'Pending' ? 'hourglass_empty' : 'payments'}
-                                                    </span>
-                                                    <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">
-                                                        {app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid' ? 'Verified' :
-                                                            app.paymentStatus === 'Pending' ? 'Review in Progress' : `Due: $${app.amount}`}
-                                                    </span>
-                                                </div>
-                                            ) : (
-                                                <div className="flex items-center gap-2 bg-emerald-50/50 text-emerald-600 px-3 py-1.5 rounded-xl border border-emerald-100">
-                                                    <span className="material-symbols-outlined text-[14px]">task_alt</span>
-                                                    <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Complimentary</span>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <div className="flex flex-col sm:flex-row gap-2">
-                                            <Link
-                                                href={`/dashboard/applications/${app.applicationId}`}
-                                                className="px-5 py-2.5 rounded-xl text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] hover:bg-blue-50 hover:text-blue-900 transition-all text-center border border-transparent hover:border-blue-100"
-                                            >
-                                                Details
-                                            </Link>
-                                            {app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid') && (
-                                                <button
-                                                    onClick={() => setSelectedPaymentApp(app)}
-                                                    className="bg-blue-900 text-white px-6 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95 whitespace-nowrap"
+                                            <div className="flex flex-col sm:flex-row gap-2">
+                                                <Link
+                                                    href={`/dashboard/applications/${app.applicationId}`}
+                                                    className="px-5 py-2.5 rounded-xl text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] hover:bg-blue-50 hover:text-blue-900 transition-all text-center border border-transparent hover:border-blue-100"
                                                 >
-                                                    {app.paymentStatus === 'Pending' ? 'Update Proof' : 'Process settlement'}
-                                                </button>
-                                            )}
+                                                    Details
+                                                </Link>
+                                                {app.requiresPayment && (app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid') && (
+                                                    <button
+                                                        onClick={() => setSelectedPaymentApp(app)}
+                                                        className="bg-blue-900 text-white px-6 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/10 active:scale-95 whitespace-nowrap"
+                                                    >
+                                                        {app.paymentStatus === 'Pending' ? 'Update Proof' : 'Process settlement'}
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )))}
+                                )))}
 
                             {(appFilter === 'Completed' ? completedGroups.length === 0 : filteredStages.length === 0) && (
                                 <div className="py-20 text-center bg-blue-50/50 rounded-[3rem] border-2 border-dashed border-blue-100">
@@ -246,8 +246,8 @@ export default function ApplicantDashboard() {
                             <div className="space-y-3">
                                 {summary.allPayments.map((pay: any) => (
                                     <div key={pay.id} className="p-4 bg-blue-50/50 border border-blue-100 rounded-2xl group hover:bg-white hover:shadow-lg hover:shadow-blue-900/5 transition-all">
-                                        <div className="flex justify-between items-start gap-2 mb-2">
-                                            <p className="text-[9px] font-black text-blue-900 uppercase tracking-tight truncate flex-1" title={pay.JobStage?.name}>{pay.JobStage?.name}</p>
+                                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4 mb-2">
+                                            <p className="text-[9px] font-black text-blue-900 uppercase tracking-tight break-words flex-1 leading-relaxed" title={pay.JobStage?.name}>{pay.JobStage?.name}</p>
                                             <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-lg border shrink-0 ${pay.status === 'Verified' || pay.status === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
                                                 pay.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-red-50 text-red-600 border-red-100'
                                                 }`}>
