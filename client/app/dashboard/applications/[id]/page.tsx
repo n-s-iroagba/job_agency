@@ -171,7 +171,7 @@ export default function ApplicationDetailPage() {
                                                     <span className="text-sm font-bold text-blue-900">${stage.amount} {stage.currency}</span>
                                                     {payment && (
                                                         <div className={`text-[8px] font-black uppercase mt-1 tracking-widest ${payment.status === 'Verified' || payment.status === 'Paid' ? 'text-emerald-500' :
-                                                                payment.status === 'Pending' ? 'text-amber-500' : 'text-red-400'
+                                                            payment.status === 'Pending' ? 'text-amber-500' : 'text-red-400'
                                                             }`}>
                                                             {payment.status === 'Verified' || payment.status === 'Paid' ? 'Receipt Verified' : `Status: ${payment.status}`}
                                                         </div>
@@ -196,13 +196,8 @@ export default function ApplicationDetailPage() {
                         <div className="relative z-10">
                             <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-10 pb-4 border-b border-blue-50">Progress Summary</h2>
                             <div className="space-y-8">
-                                <div className="flex justify-between items-center group">
-                                    <span className="text-[10px] font-black text-blue-300 uppercase tracking-widest">Overall Progress</span>
-                                    <span className="text-xl font-bold font-mono text-blue-900 group-hover:scale-110 transition-transform">{app.completionPercentage}%</span>
-                                </div>
-                                <div className="h-1 bg-blue-50 rounded-full overflow-hidden">
-                                    <div className="h-full bg-blue-900 transition-all duration-1000" style={{ width: `${app.completionPercentage}%` }} />
-                                </div>
+
+
 
                                 <div className="pt-8 space-y-6 border-t border-blue-50">
                                     <div className="flex justify-between items-center">
