@@ -148,10 +148,7 @@ export default function ApplicantDashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="text-right">
-                                            <div className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Overall Progress</div>
-                                            <div className="text-2xl font-bold font-mono text-blue-900 tracking-tighter">{app.stages.length} application stages</div>
-                                        </div>
+
                                     </div>
 
 
