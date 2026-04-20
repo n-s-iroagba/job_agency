@@ -150,13 +150,11 @@ export default function ApplicantDashboard() {
                                         </div>
                                         <div className="text-right">
                                             <div className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-1">Overall Progress</div>
-                                            <div className="text-2xl font-bold font-mono text-blue-900 tracking-tighter">{app.completionPercentage}%</div>
+                                            <div className="text-2xl font-bold font-mono text-blue-900 tracking-tighter">{app.stages.length} application stages</div>
                                         </div>
                                     </div>
 
-                                    <div className="h-1.5 bg-blue-50 rounded-full overflow-hidden mb-8">
-                                        <div className="h-full bg-blue-900 transition-all duration-700 ease-out" style={{ width: `${app.completionPercentage}%` }} />
-                                    </div>
+
 
                                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-6 border-t border-blue-50 gap-4">
                                         <div className="flex items-center gap-2">

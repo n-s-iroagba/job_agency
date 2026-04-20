@@ -61,16 +61,16 @@ const PARTNERS = [
 ];
 
 const GALLERY_IMAGES = [
-  { src: "/images/gallery/rig_worker.png", role: "Offshore Specialist", description: "Precision on the frontiers.", span: "md:col-span-2 md:row-span-2" },
-  { src: "/images/gallery/nurse.png", role: "Remote Medical Care", description: "Compassion without borders.", span: "md:col-span-1 md:row-span-1" },
-  { src: "/images/gallery/machinery.png", role: "Heavy Ops Lead", description: "Power, controlled.", span: "md:col-span-1 md:row-span-1" },
-  { src: "/images/gallery/geologist.png", role: "Exploration Scientist", description: "Decoding the earth's legacy.", span: "md:col-span-1 md:row-span-2" },
-  { src: "/images/gallery/wind_tech.png", role: "Renewables Engineer", description: "Sustainable heights.", span: "md:col-span-1 md:row-span-1" },
-  { src: "/images/gallery/marine_engineer.png", role: "Marine Systems Chief", description: "Mastery of the high seas.", span: "md:col-span-2 md:row-span-1" },
+  { src: "/images/gallery/offshore-rig.png", role: "Offshore Specialist", description: "Precision on the frontiers.", span: "md:col-span-2 md:row-span-2" },
+  { src: "/images/gallery/nurse.png", role: "Health Care Professional", description: "Compassion without borders.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/electrician.png", role: "Electrician", description: "Power, controlled.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/remote-worker.png", role: "Remote Worker", description: "Remote Freelancer.", span: "md:col-span-1 md:row-span-2" },
+  { src: "/images/gallery/chemical_engineer.png", role: "Chemical Engineer", description: "Engineering the future.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/marine_technician.png", role: "Marine Systems Chief", description: "Mastery of the high seas.", span: "md:col-span-2 md:row-span-1" },
   { src: "/images/gallery/chef.png", role: "Executive Camp Chef", description: "Culinary excellence at the edge.", span: "md:col-span-1 md:row-span-1" },
-  { src: "/images/gallery/safety_officer.png", role: "HSE Superintendent", description: "Integrity in every step.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/construction-worker.png", role: "Construction Worker", description: "Building the future.", span: "md:col-span-1 md:row-span-1" },
   { src: "/images/gallery/surveyor.png", role: "Geospatial Analyst", description: "Mapping future infrastructure.", span: "md:col-span-1 md:row-span-1" },
-  { src: "/images/gallery/it_architect.png", role: "Infrastructure Architect", description: "The backbone of remote ops.", span: "md:col-span-1 md:row-span-1" },
+  { src: "/images/gallery/oilrig.png", role: "Oil Rig Worker", description: "Powering the world.", span: "md:col-span-1 md:row-span-1" },
 ];
 
 import { useRouter } from 'next/navigation';
@@ -80,7 +80,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
   const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(
-    ['jobs', 'public', searchQuery], 
+    ['jobs', 'public', searchQuery],
     `/jobs?search=${encodeURIComponent(searchQuery)}`
   );
 
@@ -132,7 +132,7 @@ export default function HomePage() {
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               />
             </div>
-            <button 
+            <button
               onClick={handleSearch}
               className="bg-blue-900 text-white px-6 md:px-10 py-3.5 md:py-4 rounded-xl text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-black transition-all active:scale-95"
             >
@@ -176,13 +176,13 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
             {GALLERY_IMAGES.map((img, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className={`group relative overflow-hidden rounded-[3rem] border border-blue-50 shadow-sm hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-700 ${img.span}`}
               >
-                <img 
-                  src={img.src} 
-                  alt={img.role} 
+                <img
+                  src={img.src}
+                  alt={img.role}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-10 backdrop-blur-[2px] group-hover:backdrop-blur-none">
@@ -191,7 +191,7 @@ export default function HomePage() {
                 </div>
                 {/* Minimal Overlay Badge */}
                 <div className="absolute top-8 left-8 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full opacity-100 group-hover:opacity-0 transition-opacity duration-300">
-                   <span className="text-[8px] font-bold text-white uppercase tracking-widest">{img.role.split(' ')[0]}</span>
+                  <span className="text-[8px] font-bold text-white uppercase tracking-widest">{img.role.split(' ')[0]}</span>
                 </div>
               </div>
             ))}
@@ -220,7 +220,7 @@ export default function HomePage() {
               <div className="col-span-full py-24 text-center bg-blue-50/50 rounded-[3rem] border border-dashed border-blue-200">
                 <span className="material-symbols-outlined text-4xl text-blue-200 mb-4">search_off</span>
                 <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">No roles matching "{searchQuery}" in current featured registry.</p>
-                <button 
+                <button
                   onClick={() => setSearchQuery('')}
                   className="mt-6 text-[8px] font-black text-blue-900 uppercase tracking-widest border-b-2 border-blue-900 pb-1"
                 >
