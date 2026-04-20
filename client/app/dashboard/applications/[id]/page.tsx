@@ -11,7 +11,7 @@ import { JobStage } from '@/types/models';
 interface Application {
     id: number;
     status: string;
-    completionPercentage: number;
+
     currentStageId: number | null;
     JobListing: {
         id: number;

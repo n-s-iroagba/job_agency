@@ -8,7 +8,7 @@ import Link from 'next/link';
 interface Application {
     id: number;
     status: string;
-    completionPercentage: number;
+
     updatedAt: string;
     JobListing: { title: string };
 }

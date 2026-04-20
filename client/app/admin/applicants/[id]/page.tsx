@@ -168,9 +168,7 @@ export default function AdminApplicantDetailPage() {
                                                     <span className={`px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest ${app.status === 'COMPLETED' ? 'bg-green-500 text-white' : 'bg-blue-900 text-white'}`}>
                                                         {app.status}
                                                     </span>
-                                                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">
-                                                        Progress: {app.completionPercentage}%
-                                                    </span>
+
                                                 </div>
                                             </div>
                                             <Link
