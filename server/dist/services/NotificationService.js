@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.notificationService = exports.NotificationService = void 0;
+const models_1 = require("../models");
 const NotificationRepository_1 = require("../repositories/NotificationRepository");
 class NotificationService {
     // Maps to TRUST-008
@@ -17,8 +18,11 @@ class NotificationService {
         });
     }
     async markAsRead(id) {
-        const [updatedCount, notifications] = await NotificationRepository_1.notificationRepository.markAsRead(id);
-        return notifications[0];
+        await NotificationRepository_1.notificationRepository.markAsRead(id);
+        return models_1.Notification.findByPk(id);
+    }
+    async markAllAsRead(userId) {
+        return NotificationRepository_1.notificationRepository.markAllAsRead(userId);
     }
 }
 exports.NotificationService = NotificationService;

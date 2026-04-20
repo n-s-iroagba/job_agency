@@ -178,6 +178,21 @@ export class ApplicationController {
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
+
+    public async completeApplicationStage(req: Request, res: Response): Promise<void> {
+        try {
+            const stageId = parseInt(req.params.stageId as string, 10);
+            const stage = await applicationService.completeApplicationStage(stageId);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(stage);
+        } catch (error: any) {
+            console.error('[ApplicationController.completeApplicationStage]', error);
+            if (error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
+                res.status(CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
+                return;
+            }
+            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
 }
 
 export const applicationController = new ApplicationController();

@@ -12,6 +12,8 @@ class PaymentController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(details);
         }
         catch (error) {
+            console.error('[PaymentController.getPaymentDetails]', error);
+            console.error('[PaymentController.getPaymentDetails]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -31,6 +33,8 @@ class PaymentController {
             });
         }
         catch (error) {
+            console.error('[PaymentController.uploadProof]', error);
+            console.error('[PaymentController.uploadProof]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -47,6 +51,8 @@ class PaymentController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(payments);
         }
         catch (error) {
+            console.error('[PaymentController.getPendingPaymentsAdmin]', error);
+            console.error('[PaymentController.getPendingPaymentsAdmin]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -59,6 +65,8 @@ class PaymentController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(payments);
         }
         catch (error) {
+            console.error('[PaymentController.getUnverifiedPaymentsAdmin]', error);
+            console.error('[PaymentController.getUnverifiedPaymentsAdmin]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -75,6 +83,8 @@ class PaymentController {
             });
         }
         catch (error) {
+            console.error('[PaymentController.verifyPayment]', error);
+            console.error('[PaymentController.verifyPayment]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;

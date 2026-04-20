@@ -38,6 +38,58 @@ User.init({
     isVerified: {
         type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: false,
+    },
+    cvUrl: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    verificationToken: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    resetPasswordToken: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    resetPasswordExpires: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: true,
+    },
+    phoneNumber: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    dateOfBirth: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: true,
+    },
+    gender: {
+        type: sequelize_1.DataTypes.ENUM('Male', 'Female', 'Other'),
+        allowNull: true,
+    },
+    nationality: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    address: {
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: true,
+    },
+    city: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    state: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    country: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    zipCode: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
     }
 }, {
     sequelize: database_1.sequelize,

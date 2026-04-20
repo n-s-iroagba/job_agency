@@ -12,6 +12,24 @@ JobListing.init({
         autoIncrement: true,
         primaryKey: true,
     },
+    benefitIds: {
+        type: sequelize_1.DataTypes.JSON
+    },
+    conditionIds: {
+        type: sequelize_1.DataTypes.JSON
+    },
+    stages: {
+        type: sequelize_1.DataTypes.JSON,
+        allowNull: true,
+    },
+    company: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    visaSponsorship: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: false,
+    },
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
@@ -39,6 +57,10 @@ JobListing.init({
     isActive: {
         type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: true,
+    },
+    salary: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
     }
 }, {
     sequelize: database_1.sequelize,

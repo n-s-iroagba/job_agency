@@ -95,6 +95,7 @@ router.post('/admin/applications/:id/stages', ...adminMW, applicationController.
 router.get('/admin/applications/:id/stages/:stageId', ...adminMW, applicationController.getStageDetails.bind(applicationController));
 router.put('/admin/applications/:id/stages/:stageId', ...adminMW, applicationController.updateStage.bind(applicationController));
 router.delete('/admin/applications/:id/stages/:stageId', ...adminMW, applicationController.deleteStage.bind(applicationController));
+router.post('/admin/applications/:id/stages/:stageId/complete', ...adminMW, applicationController.completeApplicationStage.bind(applicationController));
 router.post('/admin/applications/:id/complete', ...adminMW, applicationController.completeApplication.bind(applicationController));
 router.get('/admin/applications/:id', ...adminMW, applicationController.getApplicationDetails.bind(applicationController));
 

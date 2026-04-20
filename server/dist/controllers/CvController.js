@@ -16,6 +16,7 @@ class CvController {
             });
         }
         catch (error) {
+            console.error('[CvController.uploadCv]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.VALIDATION_ERROR) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
                 return;
@@ -31,6 +32,7 @@ class CvController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(cv);
         }
         catch (error) {
+            console.error('[CvController.getCv]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -50,6 +52,7 @@ class CvController {
             });
         }
         catch (error) {
+            console.error('[CvController.updateCv]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.VALIDATION_ERROR) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.BAD_REQUEST).json({ error: error.message });
                 return;
@@ -65,6 +68,7 @@ class CvController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json({ message: constants_1.CONSTANTS.SUCCESS_MESSAGES.DELETED });
         }
         catch (error) {
+            console.error('[CvController.deleteCv]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;

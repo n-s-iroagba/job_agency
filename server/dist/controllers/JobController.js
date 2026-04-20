@@ -9,13 +9,16 @@ class JobController {
         try {
             const categoryId = req.query.categoryId ? parseInt(req.query.categoryId, 10) : undefined;
             const employmentType = req.query.employmentType;
-            const searchQuery = req.query.searchQuery;
+            const searchQuery = (req.query.search || req.query.searchQuery);
+            const sortBy = req.query.sortBy;
+            const sortOrder = req.query.sortOrder;
             const limit = req.query.limit ? parseInt(req.query.limit, 10) : 10;
             const offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
-            const result = await JobService_1.jobService.getActiveJobs(limit, offset, categoryId, employmentType, searchQuery);
+            const result = await JobService_1.jobService.getActiveJobs(limit, offset, categoryId, employmentType, searchQuery, sortBy, sortOrder);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(result);
         }
         catch (error) {
+            console.error('[JobController.getActiveJobs]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -27,6 +30,7 @@ class JobController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(job);
         }
         catch (error) {
+            console.error('[JobController.getJobDetails]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -39,10 +43,25 @@ class JobController {
         try {
             const limit = req.query.limit ? parseInt(req.query.limit, 10) : 20;
             const offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
-            const result = await JobService_1.jobService.getAllJobsAdmin(limit, offset);
+            const categoryId = req.query.categoryId ? parseInt(req.query.categoryId, 10) : undefined;
+            const searchQuery = (req.query.search || req.query.searchQuery);
+            const sortBy = req.query.sortBy;
+            const sortOrder = req.query.sortOrder;
+            const result = await JobService_1.jobService.getAllJobsAdmin({ limit, offset, categoryId, searchQuery, sortBy, sortOrder });
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(result);
         }
         catch (error) {
+            console.error('[JobController.getAllJobsAdmin]', error);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+    async getJobStats(req, res) {
+        try {
+            const stats = await JobService_1.jobService.getJobStats();
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(stats);
+        }
+        catch (error) {
+            console.error('[JobController.getJobStats]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -54,6 +73,7 @@ class JobController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.CREATED).json(job);
         }
         catch (error) {
+            console.error('[JobController.createJob]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -66,6 +86,7 @@ class JobController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(job);
         }
         catch (error) {
+            console.error('[JobController.updateJob]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -81,51 +102,7 @@ class JobController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json({ message: constants_1.CONSTANTS.SUCCESS_MESSAGES.DELETED });
         }
         catch (error) {
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
-    // Stage Management (STK-ADM-STAGE-001..005)
-    async getJobStages(req, res) {
-        try {
-            const jobId = parseInt(req.params.id, 10);
-            const stages = await JobService_1.jobService.getStagesByJob(jobId);
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(stages);
-        }
-        catch (error) {
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
-    async createJobStage(req, res) {
-        try {
-            const jobId = parseInt(req.params.id, 10);
-            const stage = await JobService_1.jobService.createStage(jobId, req.body);
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.CREATED).json(stage);
-        }
-        catch (error) {
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
-    async updateJobStage(req, res) {
-        try {
-            const stageId = parseInt(req.params.stageId, 10);
-            const stage = await JobService_1.jobService.updateStage(stageId, req.body);
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(stage);
-        }
-        catch (error) {
-            if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
-                res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
-                return;
-            }
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
-        }
-    }
-    async deleteJobStage(req, res) {
-        try {
-            const stageId = parseInt(req.params.stageId, 10);
-            await JobService_1.jobService.deleteStage(stageId);
-            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json({ message: constants_1.CONSTANTS.SUCCESS_MESSAGES.DELETED });
-        }
-        catch (error) {
+            console.error('[JobController.deleteJob]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }

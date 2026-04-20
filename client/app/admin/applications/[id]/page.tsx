@@ -64,6 +64,12 @@ export default function ApplicationDetailPage() {
         { onSuccess: () => refetch() }
     );
 
+    const completeStageMutation = useApiMutation(
+        'post',
+        `/admin/applications/${id}/stages/:stageId/complete`,
+        { onSuccess: () => refetch() }
+    );
+
     const verifyPaymentMutation = useApiMutation(
         'post',
         '/admin/payments/:paymentId/verify',
@@ -137,6 +143,16 @@ export default function ApplicationDetailPage() {
             await advanceMutation.mutateAsync({ shouldNotify: notify });
         } catch (err) {
             console.error(err);
+        }
+    };
+
+    const handleMarkStageComplete = async (stageId: number) => {
+        if (confirm('Mark Stage Complete: This will mark this specific stage as completed. Confirm?')) {
+            try {
+                await completeStageMutation.mutateAsync({ params: { stageId } });
+            } catch (err) {
+                console.error(err);
+            }
         }
     };
 
@@ -278,7 +294,21 @@ export default function ApplicationDetailPage() {
                                                         Current Stage
                                                     </span>
                                                 )}
-                                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                                                {stage.isCompleted && (
+                                                    <span className="text-[8px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-lg flex items-center gap-1">
+                                                        <span className="material-symbols-outlined text-[10px] font-bold">check</span>
+                                                        Completed
+                                                    </span>
+                                                )}
+                                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all items-center">
+                                                    {!stage.isCompleted && (
+                                                        <button
+                                                            onClick={() => handleMarkStageComplete(stage.id)}
+                                                            className="px-3 py-1 flex items-center gap-1 text-[8px] font-black uppercase text-emerald-500 hover:bg-emerald-50 rounded-xl transition-all"
+                                                        >
+                                                            <span className="material-symbols-outlined text-[12px]">done_all</span> Mark Complete
+                                                        </button>
+                                                    )}
                                                     <button
                                                         onClick={() => handleEditClick(stage)}
                                                         className="w-8 h-8 flex items-center justify-center hover:bg-blue-100 rounded-xl text-blue-400 hover:text-blue-900 transition-all"

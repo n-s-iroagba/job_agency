@@ -14,33 +14,60 @@ class JobRepository {
         if (options.searchQuery) {
             whereClause[sequelize_1.Op.or] = [
                 { title: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } },
-                { location: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } }
+                { location: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } },
+                { company: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } },
+                { description: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } }
             ];
+        }
+        const order = [];
+        if (options.sortBy) {
+            order.push([options.sortBy, options.sortOrder || 'DESC']);
+        }
+        else {
+            order.push(['createdAt', 'DESC']);
         }
         return models_1.JobListing.findAndCountAll({
             where: whereClause,
             limit: options.limit || 10,
             offset: options.offset || 0,
-            include: [models_1.JobCategory, models_1.JobBenefit, models_1.JobCondition, models_1.JobStage],
-            order: [['createdAt', 'DESC']]
+            include: [models_1.JobCategory, models_1.JobBenefit, models_1.JobCondition],
+            order
         });
     }
     // Maps to STK-ADM-JOB-001, NFR-PERF-004
     async findAllAdmin(options = {}) {
+        const whereClause = {};
+        if (options.categoryId)
+            whereClause.categoryId = options.categoryId;
+        if (options.employmentType)
+            whereClause.employmentType = options.employmentType;
+        if (options.searchQuery) {
+            whereClause[sequelize_1.Op.or] = [
+                { title: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } },
+                { location: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } },
+                { company: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } },
+                { description: { [sequelize_1.Op.like]: `%${options.searchQuery}%` } }
+            ];
+        }
+        const order = [];
+        if (options.sortBy) {
+            order.push([options.sortBy, options.sortOrder || 'DESC']);
+        }
+        else {
+            order.push(['createdAt', 'DESC']);
+        }
         return models_1.JobListing.findAndCountAll({
+            where: whereClause,
             limit: options.limit || 20,
             offset: options.offset || 0,
             include: [models_1.JobCategory],
-            order: [['createdAt', 'DESC']]
+            order
         });
     }
     // Maps to STK-APP-APPLY-001, STK-APP-PAY-001
     async findById(id, transaction) {
         return models_1.JobListing.findByPk(id, {
-            include: [models_1.JobCategory, models_1.JobBenefit, models_1.JobCondition, {
-                    model: models_1.JobStage,
-                    order: [['orderPosition', 'ASC']]
-                }],
+            include: [models_1.JobCategory, models_1.JobBenefit, models_1.JobCondition],
             transaction
         });
     }
@@ -50,7 +77,8 @@ class JobRepository {
     }
     // Maps to STK-ADM-JOB-001, STK-ADM-JOB-005
     async update(id, updateData, transaction) {
-        return models_1.JobListing.update(updateData, { where: { id }, returning: true, transaction });
+        const [updatedCount] = await models_1.JobListing.update(updateData, { where: { id }, transaction });
+        return [updatedCount]; // Handled by Service layer fetching the record
     }
     // Maps to STK-ADM-JOB-001
     async delete(id, transaction) {

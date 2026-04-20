@@ -3,10 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.jobStageRepository = exports.JobStageRepository = void 0;
 const models_1 = require("../models");
 class JobStageRepository {
-    // Maps to STK-ADM-STAGE-001, STK-ADM-STAGE-005, SCR-ADM-STAGE-001
-    async findByJobId(jobId, transaction) {
+    async findByApplicationId(applicationId, transaction) {
         return models_1.JobStage.findAndCountAll({
-            where: { jobId },
+            where: { applicationId },
             order: [['orderPosition', 'ASC']],
             transaction
         });
@@ -20,7 +19,7 @@ class JobStageRepository {
     }
     // Maps to STK-ADM-STAGE-001, STK-ADM-STAGE-003, STK-ADM-STAGE-004
     async update(id, data, transaction) {
-        return models_1.JobStage.update(data, { where: { id }, returning: true, transaction });
+        return models_1.JobStage.update(data, { where: { id }, transaction });
     }
     // Maps to STK-ADM-STAGE-001
     async delete(id, transaction) {

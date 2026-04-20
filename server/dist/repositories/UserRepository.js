@@ -15,6 +15,12 @@ class UserRepository {
     async findById(id, transaction) {
         return models_1.User.findByPk(id, { transaction });
     }
+    async findByVerificationToken(token, transaction) {
+        return models_1.User.findOne({ where: { verificationToken: token }, transaction });
+    }
+    async findByResetToken(token, transaction) {
+        return models_1.User.findOne({ where: { resetPasswordToken: token }, transaction });
+    }
     // Maps to STK-ADM-USERS-001 (Derived Admin View)
     async findAndCountAll(options = {}) {
         const whereClause = {};
@@ -31,7 +37,7 @@ class UserRepository {
     }
     // Maps to STK-APP-PROFILE-001
     async update(id, updateData, transaction) {
-        return models_1.User.update(updateData, { where: { id }, returning: true, transaction });
+        return models_1.User.update(updateData, { where: { id }, transaction });
     }
     // Maps to STK-APP-PROFILE-001 (Derived from data deletion requests REG-004)
     async delete(id, transaction) {

@@ -8,6 +8,10 @@ class PaymentRepository {
         const whereClause = {};
         if (options.status)
             whereClause.status = options.status;
+        if (options.applicationId)
+            whereClause.applicationId = options.applicationId;
+        if (options.stageId)
+            whereClause.stageId = options.stageId;
         return models_1.Payment.findAndCountAll({
             where: whereClause,
             limit: options.limit || 20,
@@ -36,7 +40,7 @@ class PaymentRepository {
     }
     // Maps to STK-ADM-PAY-001, STK-ADM-PAY-002, SCR-ADM-UNVERIFIED-001
     async update(id, updateData, transaction) {
-        return models_1.Payment.update(updateData, { where: { id }, returning: true, transaction });
+        return models_1.Payment.update(updateData, { where: { id }, transaction });
     }
     async findById(id, transaction) {
         return models_1.Payment.findByPk(id, {

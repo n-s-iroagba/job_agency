@@ -27,7 +27,7 @@ class CryptoWalletRepository {
     }
     // Maps to STK-ADM-CRYPTO-001
     async update(id, data, transaction) {
-        return models_1.CryptoWallet.update(data, { where: { id }, returning: true, transaction });
+        return models_1.CryptoWallet.update(data, { where: { id }, transaction });
     }
     // Maps to STK-ADM-CRYPTO-001, NFR-DATA-001
     async delete(id, transaction) {

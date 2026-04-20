@@ -15,15 +15,23 @@ class CvService {
         const user = await UserRepository_1.userRepository.findById(userId);
         if (!user)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        const [, updatedUsers] = await UserRepository_1.userRepository.update(userId, { cvUrl });
-        return updatedUsers[0];
+        await UserRepository_1.userRepository.update(userId, { cvUrl });
+        return UserRepository_1.userRepository.findById(userId);
     }
     // Maps to STK-APP-CV-001 (Read)
     async getCv(userId) {
         const user = await UserRepository_1.userRepository.findById(userId);
-        if (!user)
-            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return { cvUrl: user.cvUrl };
+        if (!user || !user.cvUrl)
+            return null;
+        const cvUrl = user.cvUrl;
+        // Basic Metadata derivation
+        return {
+            id: user.id,
+            fileUrl: cvUrl,
+            fileName: cvUrl.split('/').pop() || 'resume.pdf',
+            fileSize: 1024 * 1024 * 1.2, // Fallback placeholder (1.2MB)
+            createdAt: user.updatedAt || new Date()
+        };
     }
     // Maps to STK-APP-CV-001 (Update) — STK-APP-CV-004: replaces existing CV for all linked applications
     async updateCv(userId, cvUrl, fileType, fileSizeMb) {

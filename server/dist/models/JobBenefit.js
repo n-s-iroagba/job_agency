@@ -23,6 +23,10 @@ JobBenefit.init({
     value: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,
+    },
+    categoryId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
     }
 }, {
     sequelize: database_1.sequelize,

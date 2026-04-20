@@ -3,32 +3,115 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendEmail = void 0;
+exports.sendEmail = exports.sendInfoEmail = exports.sendAuthEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
-const transporter = nodemailer_1.default.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.example.com',
-    port: parseInt(process.env.SMTP_PORT || '587', 10),
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
+const createTransporter = (user, pass) => {
+    return nodemailer_1.default.createTransport({
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT || '465', 10),
+        secure: process.env.SMTP_SECURE === 'true',
+        auth: {
+            user: user,
+            pass: pass,
+        },
+    });
+};
+const authTransporter = createTransporter(process.env.SMTP_AUTH_USER, process.env.SMTP_AUTH_PASS);
+const infoTransporter = createTransporter(process.env.SMTP_INFO_USER, process.env.SMTP_INFO_PASS);
+// Self-Diagnostic: Verify connection on startup
+authTransporter.verify((error, success) => {
+    if (error) {
+        console.error('[EmailUtil] Auth Transporter Connection Error:', error);
+    }
+    else {
+        console.log('[EmailUtil] Auth Transporter ready to dispatch.');
+    }
 });
-const sendEmail = async (to, subject, html) => {
+infoTransporter.verify((error, success) => {
+    if (error) {
+        console.error('[EmailUtil] Info Transporter Connection Error:', error);
+    }
+    else {
+        console.log('[EmailUtil] Info Transporter ready to dispatch.');
+    }
+});
+console.log(`[EmailUtil] SMTP Decoupled Transporters Initialized.`);
+const getStandardEmailTemplate = (subject, content) => {
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8fafc; margin: 0; padding: 0; }
+            .container { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(30, 58, 138, 0.05); border: 1px solid #e2e8f0; }
+            .header { background-color: #1e3a8a; padding: 40px; text-align: center; }
+            .logo { color: #ffffff; font-size: 24px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; font-style: italic; }
+            .content { padding: 40px; color: #1e293b; line-height: 1.6; }
+            .footer { padding: 30px; text-align: center; color: #64748b; font-size: 11px; border-top: 1px solid #f1f5f9; background-color: #fcfcfc; }
+            h1 { color: #1e3a8a; font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; border-bottom: 2px solid #3b82f6; display: inline-block; padding-bottom: 8px; }
+            p { margin-bottom: 20px; }
+            .cta-block { margin-top: 30px; text-align: center; }
+            .button { display: inline-block; padding: 14px 30px; background-color: #1e3a8a; color: #ffffff !important; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.2); }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="logo">JobNexe</div>
+            </div>
+            <div class="content">
+                <h1>${subject}</h1>
+                <div style="font-size: 14px; font-weight: 500;">
+                    ${content}
+                </div>
+            </div>
+            <div class="footer">
+                &copy; 2026 JobNexe Infrastructure. All rights reserved.<br>
+                <span style="font-weight: 700; color: #1e3a8a; margin-top: 10px; display: block;">SECURE RECRUITMENT PIPELINE PROTOCOL</span>
+            </div>
+        </div>
+    </body>
+    </html>
+    `;
+};
+const sendAuthEmail = async (to, subject, content, attachments = []) => {
     try {
-        await transporter.sendMail({
-            from: process.env.SMTP_FROM || '"Job Agency" <noreply@jobagency.com>',
+        await authTransporter.sendMail({
+            from: process.env.SMTP_AUTH_FROM || '"JobNexe Authentication" <donotreply@jobnexe.com>',
             to,
             subject,
-            html,
+            html: getStandardEmailTemplate(subject, content),
+            attachments,
         });
+        console.log(`[EmailUtil] Auth email dispatched to: ${to}`);
     }
     catch (error) {
-        // In a production environment, this should be logged using the logger utility
-        console.error(`Failed to send email to ${to}:`, error);
-        // Depending on the strictness of the requirement, we either throw or swallow the error.
-        // StRS STK-ADM-APP-004 requires resilient queuing, so throwing helps the service layer retry.
-        throw new Error('Email dispatch failed');
+        console.error(`[EmailUtil] Auth email failed to ${to}:`, {
+            message: error.message,
+            code: error.code,
+            command: error.command,
+            responseCode: error.responseCode
+        });
+        throw new Error('Auth email dispatch failed');
     }
 };
-exports.sendEmail = sendEmail;
+exports.sendAuthEmail = sendAuthEmail;
+const sendInfoEmail = async (to, subject, content, attachments = []) => {
+    try {
+        await infoTransporter.sendMail({
+            from: process.env.SMTP_INFO_FROM || '"JobNexe Infrastructure" <info@jobnexe.com>',
+            to,
+            subject,
+            html: getStandardEmailTemplate(subject, content),
+            attachments,
+        });
+        console.log(`[EmailUtil] Info email dispatched to: ${to}`);
+    }
+    catch (error) {
+        console.error(`[EmailUtil] Info email failed:`, error);
+        throw new Error('Info email dispatch failed');
+    }
+};
+exports.sendInfoEmail = sendInfoEmail;
+// Backward compatibility or generic usage
+exports.sendEmail = exports.sendInfoEmail;

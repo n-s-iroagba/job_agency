@@ -28,9 +28,15 @@ Object.defineProperty(exports, "Notification", { enumerable: true, get: function
 // Job Category <-> Job Listing
 JobCategory_1.JobCategory.hasMany(JobListing_1.JobListing, { foreignKey: 'categoryId' });
 JobListing_1.JobListing.belongsTo(JobCategory_1.JobCategory, { foreignKey: 'categoryId' });
-// Job Listing <-> Job Stage
-JobListing_1.JobListing.hasMany(JobStage_1.JobStage, { foreignKey: 'jobId' });
-JobStage_1.JobStage.belongsTo(JobListing_1.JobListing, { foreignKey: 'jobId' });
+// Job Category <-> Job Benefit
+JobCategory_1.JobCategory.hasMany(JobBenefit_1.JobBenefit, { foreignKey: 'categoryId' });
+JobBenefit_1.JobBenefit.belongsTo(JobCategory_1.JobCategory, { foreignKey: 'categoryId' });
+// Job Category <-> Job Condition
+JobCategory_1.JobCategory.hasMany(JobCondition_1.JobCondition, { foreignKey: 'categoryId' });
+JobCondition_1.JobCondition.belongsTo(JobCategory_1.JobCategory, { foreignKey: 'categoryId' });
+// Application <-> Job Stage
+Application_1.Application.hasMany(JobStage_1.JobStage, { foreignKey: 'applicationId', as: 'JobStages', onDelete: 'CASCADE', hooks: true });
+JobStage_1.JobStage.belongsTo(Application_1.Application, { foreignKey: 'applicationId' });
 // JobListing <-> JobBenefit (M:N)
 JobListing_1.JobListing.belongsToMany(JobBenefit_1.JobBenefit, { through: 'ListingBenefits', foreignKey: 'jobId', otherKey: 'benefitId' });
 JobBenefit_1.JobBenefit.belongsToMany(JobListing_1.JobListing, { through: 'ListingBenefits', foreignKey: 'benefitId', otherKey: 'jobId' });
@@ -38,19 +44,20 @@ JobBenefit_1.JobBenefit.belongsToMany(JobListing_1.JobListing, { through: 'Listi
 JobListing_1.JobListing.belongsToMany(JobCondition_1.JobCondition, { through: 'ListingConditions', foreignKey: 'jobId', otherKey: 'conditionId' });
 JobCondition_1.JobCondition.belongsToMany(JobListing_1.JobListing, { through: 'ListingConditions', foreignKey: 'conditionId', otherKey: 'jobId' });
 // User <-> Application
-User_1.User.hasMany(Application_1.Application, { foreignKey: 'userId' });
+User_1.User.hasMany(Application_1.Application, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
 Application_1.Application.belongsTo(User_1.User, { foreignKey: 'userId' });
 // JobListing <-> Application
 JobListing_1.JobListing.hasMany(Application_1.Application, { foreignKey: 'jobId' });
 Application_1.Application.belongsTo(JobListing_1.JobListing, { foreignKey: 'jobId' });
+// JobListing <-> JobStage (Template Stages)
 // Application <-> Payment
-Application_1.Application.hasMany(Payment_1.Payment, { foreignKey: 'applicationId' });
+Application_1.Application.hasMany(Payment_1.Payment, { foreignKey: 'applicationId', onDelete: 'CASCADE', hooks: true });
 Payment_1.Payment.belongsTo(Application_1.Application, { foreignKey: 'applicationId' });
 // JobStage <-> Payment
-JobStage_1.JobStage.hasMany(Payment_1.Payment, { foreignKey: 'stageId' });
+JobStage_1.JobStage.hasMany(Payment_1.Payment, { foreignKey: 'stageId', onDelete: 'CASCADE', hooks: true });
 Payment_1.Payment.belongsTo(JobStage_1.JobStage, { foreignKey: 'stageId' });
 // User <-> Notification
-User_1.User.hasMany(Notification_1.Notification, { foreignKey: 'userId' });
+User_1.User.hasMany(Notification_1.Notification, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
 Notification_1.Notification.belongsTo(User_1.User, { foreignKey: 'userId' });
 // Admin who verified payment
 User_1.User.hasMany(Payment_1.Payment, { foreignKey: 'verifiedById', as: 'VerifiedPayments' });

@@ -29,9 +29,14 @@ Application.init({
         type: sequelize_1.DataTypes.ENUM(constants_1.CONSTANTS.APPLICATION_STATUSES.DRAFT, constants_1.CONSTANTS.APPLICATION_STATUSES.ACTIVE, constants_1.CONSTANTS.APPLICATION_STATUSES.COMPLETED, constants_1.CONSTANTS.APPLICATION_STATUSES.REJECTED),
         defaultValue: constants_1.CONSTANTS.APPLICATION_STATUSES.DRAFT,
     },
-    completionPercentage: {
-        type: sequelize_1.DataTypes.INTEGER,
-        defaultValue: 0,
+    isPaid: {
+        type: sequelize_1.DataTypes.VIRTUAL,
+        get() {
+            const payments = this.Payments;
+            if (!payments || !Array.isArray(payments))
+                return false;
+            return payments.some((p) => p.status === constants_1.CONSTANTS.PAYMENT_STATUSES.VERIFIED);
+        }
     }
 }, {
     sequelize: database_1.sequelize,

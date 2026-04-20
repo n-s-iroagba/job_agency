@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CONSTANTS = void 0;
 exports.CONSTANTS = {
+    APP_NAME: 'Job Agency',
     // HTTP Methods
     HTTP_METHOD: {
         GET: 'GET',
@@ -28,6 +29,10 @@ exports.CONSTANTS = {
         VALIDATION_ERROR: 'Validation failed.',
         INTERNAL_ERROR: 'An internal server error occurred.',
         RATE_LIMIT_EXCEEDED: 'Rate limit exceeded.',
+        EMAIL_EXISTS: 'User already exists',
+        INVALID_TOKEN: 'Invalid or expired token.',
+        USER_NOT_FOUND: 'User not found.',
+        EMAIL_NOT_VERIFIED: 'Please verify your email address before logging in.',
     },
     // Success Messages
     SUCCESS_MESSAGES: {
@@ -35,7 +40,10 @@ exports.CONSTANTS = {
         UPDATED: 'Resource updated successfully.',
         DELETED: 'Resource deleted successfully.',
         LOGIN_SUCCESS: 'Logged in successfully.',
-        REGISTER_SUCCESS: 'Registered successfully.',
+        REGISTER_SUCCESS: 'Registered successfully. Please check your email to verify your account.',
+        VERIFY_SUCCESS: 'Email verified successfully.',
+        FORGOT_PASSWORD_SUCCESS: 'Password reset link sent to your email.',
+        RESET_PASSWORD_SUCCESS: 'Password reset successfully.',
     },
     // Bank Account Types
     BANK_ACCOUNT_TYPES: {
@@ -67,11 +75,19 @@ exports.CONSTANTS = {
         BTC: 'BTC',
         ETH: 'ETH',
         USDT: 'USDT',
+        USDC: 'USDC',
+        SOL: 'SOL',
     },
     CRYPTO_NETWORKS: {
-        ERC20: 'ERC20',
+        MAINNET: 'MAINNET',
+        BASE: 'BASE',
+        ARBITRUM: 'ARBITRUM',
+        OPTIMISM: 'OPTIMISM',
+        POLYGON: 'POLYGON',
         TRC20: 'TRC20',
         BEP20: 'BEP20',
+        SOLANA: 'SOLANA',
+        LIGHTNING: 'LIGHTNING',
     },
     // File Constraints
     FILE_CONSTRAINTS: {
@@ -82,6 +98,6 @@ exports.CONSTANTS = {
     },
     // Default Seeding Values
     SEED_DEFAULTS: {
-        HIGH_VALUE_THRESHOLD: 4999, // $4,999 threshold constraint mapping to StRS
+        HIGH_VALUE_THRESHOLD: 5000, // $5,000 threshold mapping
     }
 };

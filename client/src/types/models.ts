@@ -85,6 +85,7 @@ export interface JobStage {
     deadlineDays: number | null;
     notifyEmail: boolean;
     notifyPush: boolean;
+    isCompleted: boolean;
     createdAt: string;
     updatedAt: string;
 }
@@ -95,7 +96,6 @@ export interface Application {
     jobId: number;
     currentStageId: number | null;
     status: string;
-    completionPercentage: number;
     createdAt: string;
     updatedAt: string;
     User?: User;

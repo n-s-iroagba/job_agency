@@ -12,7 +12,7 @@ JobStage.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    jobId: {
+    applicationId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
@@ -22,7 +22,7 @@ JobStage.init({
     },
     description: {
         type: sequelize_1.DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
     orderPosition: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -38,7 +38,7 @@ JobStage.init({
     },
     currency: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: true,
+        defaultValue: 'USD',
     },
     instructions: {
         type: sequelize_1.DataTypes.TEXT,
@@ -55,6 +55,10 @@ JobStage.init({
     notifyPush: {
         type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: true,
+    },
+    isCompleted: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 }, {
     sequelize: database_1.sequelize,

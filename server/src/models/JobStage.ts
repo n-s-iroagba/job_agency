@@ -14,6 +14,7 @@ export class JobStage extends Model {
     declare deadlineDays: number | null;
     declare notifyEmail: boolean;
     declare notifyPush: boolean;
+    declare isCompleted: boolean;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 }
@@ -67,6 +68,10 @@ JobStage.init({
     notifyPush: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+    },
+    isCompleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 }, {
     sequelize,

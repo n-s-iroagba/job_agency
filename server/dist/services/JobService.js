@@ -2,17 +2,31 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.jobService = exports.JobService = void 0;
 const JobRepository_1 = require("../repositories/JobRepository");
-const JobStageRepository_1 = require("../repositories/JobStageRepository");
 const constants_1 = require("../constants");
 const database_1 = require("../config/database");
+const models_1 = require("../models");
 class JobService {
     // Maps to STK-APP-DASH-001
-    async getActiveJobs(limit, offset, categoryId, employmentType, searchQuery) {
-        return JobRepository_1.jobRepository.findAllActive({ limit, offset, categoryId, employmentType, searchQuery });
+    async getActiveJobs(limit, offset, categoryId, employmentType, searchQuery, sortBy, sortOrder) {
+        return JobRepository_1.jobRepository.findAllActive({ limit, offset, categoryId, employmentType, searchQuery, sortBy, sortOrder });
     }
     // Maps to STK-ADM-JOB-004
-    async getAllJobsAdmin(limit, offset) {
-        return JobRepository_1.jobRepository.findAllAdmin({ limit, offset });
+    async getAllJobsAdmin(options = {}) {
+        return JobRepository_1.jobRepository.findAllAdmin(options);
+    }
+    async getJobStats() {
+        const totalListing = await models_1.JobListing.count();
+        const activeRoles = await models_1.JobListing.count({ where: { isActive: true } });
+        const inReview = await models_1.JobListing.count({ where: { isActive: false } });
+        const appVolume = await models_1.Application.count();
+        const categoryCount = await models_1.JobCategory.count();
+        return {
+            totalListing,
+            activeRoles,
+            inReview,
+            appVolume,
+            categoryCount
+        };
     }
     // Maps to STK-APP-APPLY-001
     async getJobDetails(id) {
@@ -42,10 +56,13 @@ class JobService {
     async updateJob(id, data, benefitsIds, conditionsIds) {
         const t = await database_1.sequelize.transaction();
         try {
-            const [updatedCount, updatedJobs] = await JobRepository_1.jobRepository.update(id, data, t);
-            if (updatedCount === 0)
+            let job = await JobRepository_1.jobRepository.findById(id, t);
+            if (!job)
                 throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-            const job = updatedJobs[0];
+            await JobRepository_1.jobRepository.update(id, data, t);
+            job = await JobRepository_1.jobRepository.findById(id, t);
+            if (!job)
+                throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
             if (benefitsIds)
                 await job.setJobBenefits(benefitsIds, { transaction: t });
             if (conditionsIds)
@@ -60,25 +77,6 @@ class JobService {
     }
     async deleteJob(id) {
         await JobRepository_1.jobRepository.delete(id);
-    }
-    // ==========================
-    // Stage Configuration Sub-logic
-    // ==========================
-    // Maps to STK-ADM-STAGE-002, SCR-ADM-STAGEFORM-001
-    async createStage(jobId, data) {
-        return JobStageRepository_1.jobStageRepository.create({ ...data, jobId });
-    }
-    async getStagesByJob(jobId) {
-        return JobStageRepository_1.jobStageRepository.findByJobId(jobId);
-    }
-    async updateStage(stageId, data) {
-        const [updatedCount, stages] = await JobStageRepository_1.jobStageRepository.update(stageId, data);
-        if (!updatedCount)
-            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return stages[0];
-    }
-    async deleteStage(stageId) {
-        await JobStageRepository_1.jobStageRepository.delete(stageId);
     }
 }
 exports.JobService = JobService;

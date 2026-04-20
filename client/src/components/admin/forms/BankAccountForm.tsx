@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApiMutation } from '@/lib/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { CONSTANTS } from '@/constants';
 import { BankAccount } from '@/types/models';
@@ -14,11 +15,13 @@ interface BankAccountFormProps {
 
 export default function BankAccountForm({ initialData, isEdit = false }: BankAccountFormProps) {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const [bankName, setBankName] = useState(initialData?.bankName || '');
     const [accountNumber, setAccountNumber] = useState(initialData?.accountNumber || '');
     const [accountType, setAccountType] = useState(initialData?.accountType || CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL);
     const [routingCode, setRoutingCode] = useState(initialData?.routingCode || '');
     const [currency, setCurrency] = useState(initialData?.currency || 'USD');
+    const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
 
 
     useEffect(() => {
@@ -28,6 +31,7 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
             setAccountType(initialData.accountType);
             setRoutingCode(initialData.routingCode || '');
             setCurrency(initialData.currency);
+            setIsActive(initialData.isActive);
 
         }
     }, [initialData]);
@@ -37,8 +41,8 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
         isEdit ? `/admin/bank-accounts/${initialData?.id}` : '/admin/bank-accounts',
         {
             onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: ['admin', 'bank-accounts'] });
                 router.push('/admin/bank-accounts');
-                router.refresh();
             }
         }
     );
@@ -52,6 +56,7 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
                 accountType,
                 routingCode,
                 currency,
+                isActive,
             });
         } catch (err) {
             console.error(err);
@@ -130,6 +135,22 @@ export default function BankAccountForm({ initialData, isEdit = false }: BankAcc
 
                             </select>
                         </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-100">
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-900">Active Status</h4>
+                            <p className="text-[9px] font-bold text-blue-400 uppercase tracking-[0.2em] mt-1">Enable for public usage</p>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                                className="sr-only peer"
+                                type="checkbox"
+                                checked={isActive}
+                                onChange={() => setIsActive(!isActive)}
+                            />
+                            <div className="w-11 h-6 bg-blue-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-900 transition-all after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                        </label>
                     </div>
 
 

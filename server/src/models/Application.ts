@@ -8,7 +8,6 @@ export class Application extends Model {
     declare jobId: number;
     declare currentStageId: number | null;
     declare status: string;
-    declare completionPercentage: number;
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 
@@ -45,10 +44,6 @@ Application.init({
             CONSTANTS.APPLICATION_STATUSES.REJECTED
         ),
         defaultValue: CONSTANTS.APPLICATION_STATUSES.DRAFT,
-    },
-    completionPercentage: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
     },
     isPaid: {
         type: DataTypes.VIRTUAL,

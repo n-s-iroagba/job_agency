@@ -61,7 +61,19 @@ class AdminService {
         };
     }
     async getAllBankAccounts() { return BankAccountRepository_1.bankAccountRepository.findAll(); }
+    async getBankAccountById(id) {
+        const account = await BankAccountRepository_1.bankAccountRepository.findById(id);
+        if (!account)
+            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return account;
+    }
     async getAllCryptoWallets() { return CryptoWalletRepository_1.cryptoWalletRepository.findAll(); }
+    async getCryptoWalletById(id) {
+        const wallet = await CryptoWalletRepository_1.cryptoWalletRepository.findById(id);
+        if (!wallet)
+            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return wallet;
+    }
     // STK-ADM-BANK-003: get bank account by amount threshold
     async getBankAccountForAmount(amount) {
         const result = await BankAccountRepository_1.bankAccountRepository.findAll();
@@ -73,19 +85,21 @@ class AdminService {
     // Bank Account CRUD — STK-ADM-BANK-001
     async createBankAccount(data) { return BankAccountRepository_1.bankAccountRepository.create(data); }
     async updateBankAccount(id, data) {
-        const [updatedCount, accounts] = await BankAccountRepository_1.bankAccountRepository.update(id, data);
-        if (!updatedCount)
+        const account = await BankAccountRepository_1.bankAccountRepository.findById(id);
+        if (!account)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return accounts[0];
+        await BankAccountRepository_1.bankAccountRepository.update(id, data);
+        return BankAccountRepository_1.bankAccountRepository.findById(id);
     }
     async deleteBankAccount(id) { await BankAccountRepository_1.bankAccountRepository.delete(id); }
     // Crypto Wallet CRUD — STK-ADM-CRYPTO-001
     async createCryptoWallet(data) { return CryptoWalletRepository_1.cryptoWalletRepository.create(data); }
     async updateCryptoWallet(id, data) {
-        const [updatedCount, wallets] = await CryptoWalletRepository_1.cryptoWalletRepository.update(id, data);
-        if (!updatedCount)
+        const wallet = await CryptoWalletRepository_1.cryptoWalletRepository.findById(id);
+        if (!wallet)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return wallets[0];
+        await CryptoWalletRepository_1.cryptoWalletRepository.update(id, data);
+        return CryptoWalletRepository_1.cryptoWalletRepository.findById(id);
     }
     async deleteCryptoWallet(id) { await CryptoWalletRepository_1.cryptoWalletRepository.delete(id); }
     // Active crypto wallets for display — STK-ADM-CRYPTO-003
@@ -97,58 +111,91 @@ class AdminService {
     // Job Configurations
     // ==========================
     async getJobConfigurations() {
-        const cats = await JobCategoryRepository_1.jobCategoryRepository.findAll();
-        const conds = await JobConditionRepository_1.jobConditionRepository.findAll();
-        const bens = await JobBenefitRepository_1.jobBenefitRepository.findAll();
+        const cats = await JobCategoryRepository_1.jobCategoryRepository.findAll({ limit: 100 });
+        const conds = await JobConditionRepository_1.jobConditionRepository.findAll({ limit: 100 });
+        const bens = await JobBenefitRepository_1.jobBenefitRepository.findAll({ limit: 100 });
         return {
             categories: cats.rows,
             conditions: conds.rows,
             benefits: bens.rows,
         };
     }
-    async getAllCategories() { return JobCategoryRepository_1.jobCategoryRepository.findAll(); }
-    async getAllConditions() { return JobConditionRepository_1.jobConditionRepository.findAll(); }
-    async getAllBenefits() { return JobBenefitRepository_1.jobBenefitRepository.findAll(); }
+    async getAllCategories(options = {}) { return JobCategoryRepository_1.jobCategoryRepository.findAll(options); }
+    async getCategoryById(id) {
+        const category = await JobCategoryRepository_1.jobCategoryRepository.findById(id);
+        if (!category)
+            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return category;
+    }
+    async getAllConditions(options = {}) { return JobConditionRepository_1.jobConditionRepository.findAll(options); }
+    async getConditionById(id) {
+        const condition = await JobConditionRepository_1.jobConditionRepository.findById(id);
+        if (!condition)
+            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return condition;
+    }
+    async getAllBenefits(options = {}) { return JobBenefitRepository_1.jobBenefitRepository.findAll(options); }
+    async getBenefitById(id) {
+        const benefit = await JobBenefitRepository_1.jobBenefitRepository.findById(id);
+        if (!benefit)
+            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        return benefit;
+    }
     // Category CRUD — STK-ADM-CAT-001
     async createCategory(data) { return JobCategoryRepository_1.jobCategoryRepository.create(data); }
     async updateCategory(id, data) {
-        const [updatedCount, records] = await JobCategoryRepository_1.jobCategoryRepository.update(id, data);
-        if (!updatedCount)
+        const category = await JobCategoryRepository_1.jobCategoryRepository.findById(id);
+        if (!category)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return records[0];
+        await JobCategoryRepository_1.jobCategoryRepository.update(id, data);
+        return JobCategoryRepository_1.jobCategoryRepository.findById(id);
     }
     async deleteCategory(id) { await JobCategoryRepository_1.jobCategoryRepository.delete(id); }
     // Condition CRUD — STK-ADM-COND-001
     async createCondition(data) { return JobConditionRepository_1.jobConditionRepository.create(data); }
     async updateCondition(id, data) {
-        const [updatedCount, records] = await JobConditionRepository_1.jobConditionRepository.update(id, data);
-        if (!updatedCount)
+        const condition = await JobConditionRepository_1.jobConditionRepository.findById(id);
+        if (!condition)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return records[0];
+        await JobConditionRepository_1.jobConditionRepository.update(id, data);
+        return JobConditionRepository_1.jobConditionRepository.findById(id);
     }
     async deleteCondition(id) { await JobConditionRepository_1.jobConditionRepository.delete(id); }
     // Benefit CRUD — STK-ADM-BEN-001
     async createBenefit(data) { return JobBenefitRepository_1.jobBenefitRepository.create(data); }
     async updateBenefit(id, data) {
-        const [updatedCount, records] = await JobBenefitRepository_1.jobBenefitRepository.update(id, data);
-        if (!updatedCount)
+        const benefit = await JobBenefitRepository_1.jobBenefitRepository.findById(id);
+        if (!benefit)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        return records[0];
+        await JobBenefitRepository_1.jobBenefitRepository.update(id, data);
+        return JobBenefitRepository_1.jobBenefitRepository.findById(id);
     }
     async deleteBenefit(id) { await JobBenefitRepository_1.jobBenefitRepository.delete(id); }
     // ==========================
     // Admin Communication — STK-ADM-APP-003, STK-ADM-APP-004
     // ==========================
-    async sendMailToApplicant(applicantId, subject, message, sendPushNotification = false) {
-        const user = await UserRepository_1.userRepository.findById(applicantId);
-        if (!user)
+    async sendMailToApplicant(applicantId, subject, message, sendPushNotification = false, email, attachments = []) {
+        let user;
+        let targetEmail = email;
+        if (applicantId) {
+            user = await UserRepository_1.userRepository.findById(applicantId);
+            if (user)
+                targetEmail = user.email;
+        }
+        else if (email) {
+            user = await UserRepository_1.userRepository.findByEmail(email);
+        }
+        // Allow sending even if user is not in DB if we have a target email
+        if (!user && !targetEmail)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        // Send email — STK-ADM-APP-003
-        await (0, email_1.sendEmail)(user.email, subject, `<p>${message}</p>`);
-        // Optionally create push notification — STK-ADM-APP-004, TRUST-008
-        if (sendPushNotification) {
+        // Send email — STK-ADM-APP-003 (Always send if we have an email)
+        if (targetEmail) {
+            await (0, email_1.sendInfoEmail)(targetEmail, subject, `<p>${message}</p>`, attachments);
+        }
+        // Optionally create push notification — ONLY if a user record exists
+        if (sendPushNotification && user) {
             await NotificationRepository_1.notificationRepository.create({
-                userId: applicantId,
+                userId: user.id,
                 subject,
                 message,
                 type: 'ADMIN',
@@ -159,8 +206,22 @@ class AdminService {
     // ==========================
     // User Management — REG-004 (right to data deletion)
     // ==========================
+    async getApplicantById(id) {
+        const user = await UserRepository_1.userRepository.findById(id);
+        if (!user || user.role !== constants_1.CONSTANTS.ROLES.APPLICANT) {
+            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        }
+        return user;
+    }
     async getAllApplicants(limit, offset) {
         return UserRepository_1.userRepository.findAndCountAll({ role: constants_1.CONSTANTS.ROLES.APPLICANT, limit, offset });
+    }
+    async deleteApplicant(id) {
+        const user = await UserRepository_1.userRepository.findById(id);
+        if (!user || user.role !== constants_1.CONSTANTS.ROLES.APPLICANT) {
+            throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        }
+        await UserRepository_1.userRepository.delete(id);
     }
 }
 exports.AdminService = AdminService;

@@ -13,6 +13,7 @@ class ApplicationController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.CREATED).json(application);
         }
         catch (error) {
+            console.error('[ApplicationController.startApplication]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -24,10 +25,12 @@ class ApplicationController {
     async advanceApplication(req, res) {
         try {
             const id = parseInt(req.params.id, 10);
-            const app = await ApplicationService_1.applicationService.advanceApplicationStage(id);
+            const { shouldNotify } = req.body;
+            const app = await ApplicationService_1.applicationService.advanceApplicationStage(id, shouldNotify !== false);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(app);
         }
         catch (error) {
+            console.error('[ApplicationController.advanceApplication]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -45,6 +48,7 @@ class ApplicationController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(applications);
         }
         catch (error) {
+            console.error('[ApplicationController.getUserApplications]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -56,6 +60,7 @@ class ApplicationController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(app);
         }
         catch (error) {
+            console.error('[ApplicationController.getApplicationDetails]', error);
             if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
                 res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
                 return;
@@ -71,6 +76,7 @@ class ApplicationController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(summary);
         }
         catch (error) {
+            console.error('[ApplicationController.getDashboardSummary]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -78,12 +84,14 @@ class ApplicationController {
     async getAdminApplications(req, res) {
         try {
             const status = req.query.status;
+            const userId = req.query.userId ? parseInt(req.query.userId, 10) : undefined;
             const limit = req.query.limit ? parseInt(req.query.limit, 10) : 20;
             const offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
-            const applications = await ApplicationService_1.applicationService.getApplicationsByStatus(status, limit, offset);
+            const applications = await ApplicationService_1.applicationService.getApplicationsByStatus(status, limit, offset, userId);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(applications);
         }
         catch (error) {
+            console.error('[ApplicationController.getAdminApplications]', error);
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
@@ -96,6 +104,94 @@ class ApplicationController {
             res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(drafts);
         }
         catch (error) {
+            console.error('[ApplicationController.getDraftApplications]', error);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+    // Admin: inject ad-hoc stage into application pipeline
+    async addStage(req, res) {
+        try {
+            const id = parseInt(req.params.id, 10);
+            const stage = await ApplicationService_1.applicationService.addStageToApplication(id, req.body);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.CREATED).json(stage);
+        }
+        catch (error) {
+            console.error('[ApplicationController.addStage]', error);
+            if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
+                res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
+                return;
+            }
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+    async getStageDetails(req, res) {
+        try {
+            const stageId = parseInt(req.params.stageId, 10);
+            const stage = await ApplicationService_1.applicationService.getApplicationStage(stageId);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(stage);
+        }
+        catch (error) {
+            console.error('[ApplicationController.getStageDetails]', error);
+            if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
+                res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
+                return;
+            }
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+    async updateStage(req, res) {
+        try {
+            const stageId = parseInt(req.params.stageId, 10);
+            const stage = await ApplicationService_1.applicationService.updateApplicationStage(stageId, req.body);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(stage);
+        }
+        catch (error) {
+            console.error('[ApplicationController.updateStage]', error);
+            if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
+                res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
+                return;
+            }
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+    async deleteStage(req, res) {
+        try {
+            const stageId = parseInt(req.params.stageId, 10);
+            await ApplicationService_1.applicationService.deleteApplicationStage(stageId);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json({ message: constants_1.CONSTANTS.SUCCESS_MESSAGES.DELETED });
+        }
+        catch (error) {
+            console.error('[ApplicationController.deleteStage]', error);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+    async completeApplication(req, res) {
+        try {
+            const id = parseInt(req.params.id, 10);
+            const app = await ApplicationService_1.applicationService.completeApplication(id);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(app);
+        }
+        catch (error) {
+            console.error('[ApplicationController.completeApplication]', error);
+            if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
+                res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
+                return;
+            }
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
+    async completeApplicationStage(req, res) {
+        try {
+            const stageId = parseInt(req.params.stageId, 10);
+            const stage = await ApplicationService_1.applicationService.completeApplicationStage(stageId);
+            res.status(constants_1.CONSTANTS.HTTP_STATUS.OK).json(stage);
+        }
+        catch (error) {
+            console.error('[ApplicationController.completeApplicationStage]', error);
+            if (error.message === constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND) {
+                res.status(constants_1.CONSTANTS.HTTP_STATUS.NOT_FOUND).json({ error: error.message });
+                return;
+            }
             res.status(constants_1.CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: constants_1.CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }

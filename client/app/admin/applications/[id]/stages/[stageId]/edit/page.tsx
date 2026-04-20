@@ -41,7 +41,8 @@ export default function EditApplicationStagePage() {
         deadlineDays: '',
         notifyEmail: true,
         notifyPush: true,
-        orderPosition: ''
+        orderPosition: '',
+        isCompleted: false
     });
 
     useEffect(() => {
@@ -56,7 +57,8 @@ export default function EditApplicationStagePage() {
                 deadlineDays: stage.deadlineDays || '',
                 notifyEmail: stage.notifyEmail !== undefined ? stage.notifyEmail : true,
                 notifyPush: stage.notifyPush !== undefined ? stage.notifyPush : true,
-                orderPosition: stage.orderPosition || ''
+                orderPosition: stage.orderPosition || '',
+                isCompleted: stage.isCompleted || false
             });
         }
     }, [stage]);
@@ -218,6 +220,19 @@ export default function EditApplicationStagePage() {
                                         className="w-4 h-4 rounded border-blue-300 text-blue-900 focus:ring-blue-900 transition-all cursor-pointer"
                                     />
                                 </div>
+                            </div>
+                            <div className="p-4 bg-emerald-50/50 rounded-lg border border-emerald-100 flex items-center justify-between mt-4">
+                                <div>
+                                    <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-1">Stage Completed</span>
+                                    <span className="text-[9px] text-emerald-500 uppercase">Manually override completion status</span>
+                                </div>
+                                <input
+                                    type="checkbox"
+                                    name="isCompleted"
+                                    checked={form.isCompleted}
+                                    onChange={handleChange}
+                                    className="w-4 h-4 rounded border-emerald-300 text-emerald-600 focus:ring-emerald-600 transition-all cursor-pointer"
+                                />
                             </div>
                         </div>
 

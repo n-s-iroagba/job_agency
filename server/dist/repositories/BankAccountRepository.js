@@ -27,7 +27,7 @@ class BankAccountRepository {
     }
     // Maps to STK-ADM-BANK-001, STK-ADM-BANK-004
     async update(id, data, transaction) {
-        return models_1.BankAccount.update(data, { where: { id }, returning: true, transaction });
+        return models_1.BankAccount.update(data, { where: { id }, transaction });
     }
     // Maps to STK-ADM-BANK-001, NFR-DATA-001
     async delete(id, transaction) {

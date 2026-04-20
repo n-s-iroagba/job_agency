@@ -10,7 +10,7 @@ class ApplicationRepository {
             limit: options.limit || 10,
             offset: options.offset || 0,
             include: [
-                { model: models_1.JobListing, attributes: ['id', 'title'] }
+                { model: models_1.JobListing, attributes: ['id', 'title', 'company', 'location', 'salary'] }
             ],
             order: [['updatedAt', 'DESC']],
             transaction
@@ -21,6 +21,8 @@ class ApplicationRepository {
         const whereClause = {};
         if (options.status)
             whereClause.status = options.status;
+        if (options.userId)
+            whereClause.userId = options.userId;
         return models_1.Application.findAndCountAll({
             where: whereClause,
             limit: options.limit || 20,
@@ -37,7 +39,12 @@ class ApplicationRepository {
     // Maps to STK-APP-APPLY-002, SCR-APP-JOBAPPLY-001
     async findById(id, transaction) {
         return models_1.Application.findByPk(id, {
-            include: [models_1.JobListing, models_1.Payment, { model: models_1.User, attributes: ['id', 'fullName', 'email'] }],
+            include: [
+                models_1.JobListing,
+                models_1.Payment,
+                models_1.User,
+                { model: models_1.JobStage, as: 'JobStages' }
+            ],
             transaction
         });
     }
@@ -47,7 +54,7 @@ class ApplicationRepository {
     }
     // Maps to STK-APP-APPLY-005, STK-APP-PAY-003, DM-001
     async update(id, updateData, transaction) {
-        return models_1.Application.update(updateData, { where: { id }, returning: true, transaction });
+        return models_1.Application.update(updateData, { where: { id }, transaction });
     }
     // Maps to STK-APP-PROFILE-001
     async delete(id, transaction) {

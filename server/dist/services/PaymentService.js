@@ -8,19 +8,25 @@ const BankAccountRepository_1 = require("../repositories/BankAccountRepository")
 const CryptoWalletRepository_1 = require("../repositories/CryptoWalletRepository");
 const email_1 = require("../utils/email");
 const constants_1 = require("../constants");
+const ApplicationService_1 = require("./ApplicationService");
 class PaymentService {
     // Maps to STK-APP-PAY-001, STK-ADM-BANK-003 — display correct bank account type by amount
     async getPaymentDetails(paymentId) {
         const payment = await PaymentRepository_1.paymentRepository.findById(paymentId);
         if (!payment)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        const amount = payment.amount || 0;
+        const amountStr = payment.amount || 0;
+        const amount = typeof amountStr === 'string' ? parseFloat(amountStr) : amountStr;
         // STK-ADM-BANK-003, Scenario 3: High-value routing
         const bankType = amount >= constants_1.CONSTANTS.SEED_DEFAULTS.HIGH_VALUE_THRESHOLD
             ? constants_1.CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL
             : constants_1.CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY;
-        const allBankAccounts = await BankAccountRepository_1.bankAccountRepository.findAll();
-        const relevantBankAccounts = allBankAccounts.rows.filter(a => a.accountType === bankType);
+        const activeBankAccounts = await BankAccountRepository_1.bankAccountRepository.findAllActive();
+        let relevantBankAccounts = activeBankAccounts.filter(a => a.accountType === bankType);
+        // Fallback: If strict type matching yields nothing, return all active bank accounts
+        if (relevantBankAccounts.length === 0) {
+            relevantBankAccounts = activeBankAccounts;
+        }
         const allWallets = await CryptoWalletRepository_1.cryptoWalletRepository.findAll();
         const activeCryptoWallets = allWallets.rows.filter(w => w.isActive);
         return {
@@ -35,10 +41,11 @@ class PaymentService {
         const payment = await PaymentRepository_1.paymentRepository.findById(paymentId);
         if (!payment)
             throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-        const [, updatedPayments] = await PaymentRepository_1.paymentRepository.update(paymentId, {
+        await PaymentRepository_1.paymentRepository.update(paymentId, {
             proofUrl,
             status: constants_1.CONSTANTS.PAYMENT_STATUSES.PENDING,
         });
+        const updatedPayment = await PaymentRepository_1.paymentRepository.findById(paymentId);
         // TRUST-007: Notify applicant that proof was received
         await NotificationRepository_1.notificationRepository.create({
             userId: payment.Application?.userId,
@@ -46,7 +53,7 @@ class PaymentService {
             message: 'Your payment screenshot has been received and is currently in the verification queue.',
             type: 'SYSTEM',
         });
-        return updatedPayments[0];
+        return updatedPayment;
     }
     // Maps to STK-ADM-PAY-003 — unpaid payments view
     async getPendingPayments(limit, offset) {
@@ -64,11 +71,12 @@ class PaymentService {
             if (!payment)
                 throw new Error(constants_1.CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
             const status = isApproved ? constants_1.CONSTANTS.PAYMENT_STATUSES.PAID : constants_1.CONSTANTS.PAYMENT_STATUSES.REJECTED;
-            const [, updatedPayments] = await PaymentRepository_1.paymentRepository.update(paymentId, {
+            await PaymentRepository_1.paymentRepository.update(paymentId, {
                 status,
                 verifiedById: adminId,
                 adminNote: note,
             }, t);
+            const updatedPayment = await PaymentRepository_1.paymentRepository.findById(paymentId, t);
             const applicantUserId = payment.Application?.userId;
             if (applicantUserId) {
                 const nSubject = isApproved ? 'Payment Verified' : 'Payment Rejected';
@@ -86,15 +94,19 @@ class PaymentService {
                 try {
                     const userEmail = payment.Application?.User?.email;
                     if (userEmail) {
-                        await (0, email_1.sendEmail)(userEmail, nSubject, `<p>${nMessage}</p>`);
+                        await (0, email_1.sendInfoEmail)(userEmail, nSubject, `<p>${nMessage}</p>`);
                     }
                 }
                 catch (_emailErr) {
                     // STK-CAP-005: graceful degradation — don't fail if email is down
                 }
+                // NEW: Automatically advance application stage on approval
+                if (isApproved) {
+                    await ApplicationService_1.applicationService.advanceApplicationStage(payment.applicationId);
+                }
             }
             await t.commit();
-            return updatedPayments[0];
+            return updatedPayment;
         }
         catch (error) {
             await t.rollback();

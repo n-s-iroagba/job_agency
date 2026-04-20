@@ -23,11 +23,13 @@ export default function ApplicantDashboard() {
     const pendingStages = summary?.pendingStages || [];
     const activeJobs = summary?.activeJobs?.rows || summary?.activeJobs || [];
 
+    const completedGroups = summary?.completedGroups || [];
+
     const filteredStages = pendingStages.filter((app: any) => {
         if (appFilter === 'All') return true;
-        if (appFilter === 'Active') return app.completionPercentage < 100 && !app.requiresPayment;
-        if (appFilter === 'Payments') return app.requiresPayment;
-        if (appFilter === 'Completed') return app.completionPercentage === 100;
+        if (appFilter === 'Active') return !app.requiresPayment || app.paymentStatus === 'Verified' || app.paymentStatus === 'Paid';
+        if (appFilter === 'Payments') return app.requiresPayment && app.paymentStatus !== 'Verified' && app.paymentStatus !== 'Paid';
+        if (appFilter === 'Completed') return false; 
         return true;
     });
 
@@ -109,7 +111,31 @@ export default function ApplicantDashboard() {
                         </div>
 
                         <div className="space-y-4">
-                            {filteredStages.map((app: any) => (
+                            {appFilter === 'Completed' ? (
+                                completedGroups.map((group: any) => (
+                                    <div key={group.applicationId} className="bg-white p-6 rounded-[2rem] border border-blue-100 shadow-sm transition-all hover:shadow-xl">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest bg-blue-50 px-2 py-1 rounded">#{group.applicationId}</span>
+                                            <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-1 rounded">{group.jobCompany}</span>
+                                        </div>
+                                        <h3 className="text-lg font-bold text-blue-900 tracking-tight leading-tight mb-4">{group.jobTitle}</h3>
+                                        <div className="space-y-3">
+                                            {group.stages.map((stage: any, index: number) => (
+                                                <div key={stage.stageId} className="bg-blue-50/50 p-4 rounded-2xl border-l-4 border-l-emerald-500 border border-blue-50 group-hover:bg-white group-hover:border-blue-100 transition-all flex items-start gap-4">
+                                                    <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                                                        <span className="material-symbols-outlined text-sm font-bold">check</span>
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em]">{stage.stageName}</h4>
+                                                        <p className="text-[9px] font-bold text-blue-400 mt-1 uppercase opacity-80">{new Date(stage.completedAt).toLocaleString()}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                filteredStages.map((app: any) => (
                                 <div key={app.applicationId} className="bg-white p-6 rounded-[2rem] border border-blue-100 shadow-sm transition-all hover:shadow-xl hover:shadow-blue-900/5 hover:border-blue-900/20">
                                     <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-8">
                                         <div className="flex-1">
@@ -195,9 +221,9 @@ export default function ApplicantDashboard() {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            )))}
 
-                            {filteredStages.length === 0 && (
+                            {(appFilter === 'Completed' ? completedGroups.length === 0 : filteredStages.length === 0) && (
                                 <div className="py-20 text-center bg-blue-50/50 rounded-[3rem] border-2 border-dashed border-blue-100">
                                     <span className="material-symbols-outlined text-4xl text-blue-200 mb-4">clinical_notes</span>
                                     <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">No applications found in this filter</p>

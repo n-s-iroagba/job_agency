@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApiMutation } from '@/lib/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { CryptoWallet } from '@/types/models';
 
@@ -41,9 +42,10 @@ const NETWORK_MAPPING: Record<string, { label: string; value: string }[]> = {
 
 export default function CryptoWalletForm({ initialData, isEdit = false }: CryptoWalletFormProps) {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const [label, setLabel] = useState(initialData?.displayLabel || '');
     const [cryptoType, setCryptoType] = useState(initialData?.currencyName || 'ETH');
-    const [network, setNetwork] = useState(initialData?.networkType || 'ERC20');
+    const [network, setNetwork] = useState(initialData?.networkType || 'MAINNET');
     const [address, setAddress] = useState(initialData?.walletAddress || '');
     const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
 
@@ -71,8 +73,8 @@ export default function CryptoWalletForm({ initialData, isEdit = false }: Crypto
         isEdit ? `/admin/crypto-wallets/${initialData?.id}` : '/admin/crypto-wallets',
         {
             onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: ['admin', 'crypto-wallets'] });
                 router.push('/admin/crypto-wallets');
-                router.refresh();
             }
         }
     );

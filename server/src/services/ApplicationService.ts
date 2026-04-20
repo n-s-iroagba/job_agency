@@ -20,6 +20,7 @@ export class ApplicationService {
 
         const pendingStages: any[] = [];
         const unpaidPayments: any[] = [];
+        const completedGroups: any[] = [];
 
         for (const app of appsList) {
             // Collect pending stages (active apps with a current stage)
@@ -38,13 +39,33 @@ export class ApplicationService {
                     jobLocation: app.JobListing?.location,
                     jobSalary: app.JobListing?.salary,
                     stageId: app.currentStageId,
-                    completionPercentage: app.completionPercentage,
                     requiresPayment: currentStage?.requiresPayment || false,
-                    amount: currentStage?.amount,
-                    currency: currentStage?.currency,
+                    amount: payment?.amount ?? currentStage?.amount,
+                    currency: payment?.currency ?? currentStage?.currency,
                     stageName: currentStage?.name,
                     stageDescription: currentStage?.description,
                     paymentStatus: payment?.status || 'Unpaid',
+                });
+            }
+
+            // Gather completed stages for this application
+            const stages = await jobStageRepository.findByApplicationId(app.id);
+            const appCompletedStages = (stages.rows || []).filter((s: any) => s.isCompleted);
+            
+            if (appCompletedStages.length > 0) {
+                completedGroups.push({
+                    applicationId: app.id,
+                    jobTitle: app.JobListing?.title,
+                    jobCompany: app.JobListing?.company,
+                    jobLocation: app.JobListing?.location,
+                    jobSalary: app.JobListing?.salary,
+                    appStatus: app.status,
+                    stages: appCompletedStages.map((s: any) => ({
+                        stageId: s.id,
+                        stageName: s.name,
+                        stageDescription: s.description,
+                        completedAt: s.updatedAt
+                    }))
                 });
             }
 
@@ -66,11 +87,12 @@ export class ApplicationService {
         const activeJobs = await jobRepository.findAllActive({ limit: 5 });
 
         return {
-            pendingStages,      // STK-APP-DASH-001
-            unpaidPayments,     // STK-APP-DASH-001
-            allPayments,        // New: Support for full settlement history view
-            activeJobs,         // STK-APP-DASH-001
-            applicationCount: appsList.length,   // STK-APP-DASH-002
+            pendingStages,
+            unpaidPayments,
+            allPayments,
+            activeJobs,
+            completedGroups,
+            applicationCount: appsList.length,
         };
     }
 
@@ -106,7 +128,6 @@ export class ApplicationService {
                 userId,
                 jobId,
                 status: CONSTANTS.APPLICATION_STATUSES.ACTIVE,
-                completionPercentage: 0,
                 currentStageId: null
             }, t);
 
@@ -123,8 +144,7 @@ export class ApplicationService {
 
             // Set initial stage pointer
             await applicationRepository.update(newApp.id, { 
-                currentStageId: initialStage.id,
-                completionPercentage: 10 // Start with some progress
+                currentStageId: initialStage.id
             }, t);
 
             // Immediate feedback on application start
@@ -153,23 +173,17 @@ export class ApplicationService {
             const stages = await jobStageRepository.findByApplicationId(applicationId, t);
 
             let nextStageId: number | null = app.currentStageId;
-            let percentage = app.completionPercentage;
             let status = CONSTANTS.APPLICATION_STATUSES.ACTIVE;
 
             if (app.currentStageId) {
                 const currentStageIndex = stages.rows.findIndex(s => s.id === app.currentStageId);
                 if (currentStageIndex >= 0 && currentStageIndex < stages.rows.length - 1) {
                     nextStageId = stages.rows[currentStageIndex + 1].id;
-                    percentage = Math.round(((currentStageIndex + 1) / stages.rows.length) * 100);
-                } else {
-                    // Capped at 100% but remains ACTIVE for explicit completion
-                    percentage = 100;
                 }
             }
 
             await applicationRepository.update(applicationId, {
                 currentStageId: nextStageId,
-                completionPercentage: percentage,
                 status,
             }, t);
             
@@ -307,6 +321,14 @@ export class ApplicationService {
                     amount: updatedStage.amount,
                     currency: updatedStage.currency,
                 });
+            } else {
+                const pendingPayment = existingPayment.rows[0];
+                if (pendingPayment && (pendingPayment.status === CONSTANTS.PAYMENT_STATUSES.UNPAID || pendingPayment.status === CONSTANTS.PAYMENT_STATUSES.PENDING)) {
+                    await paymentRepository.update(pendingPayment.id, {
+                        amount: updatedStage.amount,
+                        currency: updatedStage.currency,
+                    });
+                }
             }
         }
 
@@ -339,8 +361,7 @@ export class ApplicationService {
         if (!app) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
         await applicationRepository.update(applicationId, {
-            status: CONSTANTS.APPLICATION_STATUSES.COMPLETED,
-            completionPercentage: 100
+            status: CONSTANTS.APPLICATION_STATUSES.COMPLETED
         });
 
         await notificationRepository.create({
@@ -355,6 +376,24 @@ export class ApplicationService {
 
     public async deleteApplicationStage(stageId: number) {
         await jobStageRepository.delete(stageId);
+    }
+
+    public async completeApplicationStage(stageId: number) {
+        const stage = await jobStageRepository.findById(stageId);
+        if (!stage) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+
+        await jobStageRepository.update(stageId, { isCompleted: true });
+
+        const app = await applicationRepository.findById(stage.applicationId);
+        if (app) {
+            await notificationRepository.create({
+                userId: app.userId,
+                subject: 'Phase Completed',
+                message: `Congratulations, your application phase "${stage.name}" has been marked as complete.`,
+                type: 'SYSTEM'
+            });
+        }
+        return jobStageRepository.findById(stageId);
     }
 }
 

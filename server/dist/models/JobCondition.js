@@ -19,6 +19,10 @@ JobCondition.init({
     description: {
         type: sequelize_1.DataTypes.TEXT,
         allowNull: false,
+    },
+    categoryId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
     }
 }, {
     sequelize: database_1.sequelize,

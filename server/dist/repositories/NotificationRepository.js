@@ -16,7 +16,10 @@ class NotificationRepository {
         return models_1.Notification.create(data, { transaction });
     }
     async markAsRead(id, transaction) {
-        return models_1.Notification.update({ isRead: true }, { where: { id }, returning: true, transaction });
+        return models_1.Notification.update({ isRead: true }, { where: { id }, transaction });
+    }
+    async markAllAsRead(userId, transaction) {
+        return models_1.Notification.update({ isRead: true }, { where: { userId, isRead: false }, transaction });
     }
 }
 exports.NotificationRepository = NotificationRepository;

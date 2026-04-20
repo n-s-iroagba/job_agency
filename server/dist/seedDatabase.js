@@ -1,118 +1,101 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const bcrypt_1 = __importDefault(require("bcrypt"));
+exports.seedDatabase = seedDatabase;
 const models_1 = require("./models");
-const constants_1 = require("./constants");
-const seedDatabase = async () => {
-    try {
-        await models_1.sequelize.authenticate();
-        console.log('Database connected.');
-        // 1. Synchronize (with safety)
-        const isForce = process.argv.includes('--force');
-        const userCount = await models_1.User.count();
-        if (userCount > 0 && !isForce) {
-            console.log('Database already contains data. Use --force to reseed.');
-            process.exit(0);
-        }
-        if (isForce) {
-            await models_1.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
-            await models_1.sequelize.sync({ force: true });
-            await models_1.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
-            console.log('Database recreated (FORCED).');
-        }
-        else {
-            await models_1.sequelize.sync();
-            console.log('Database synced (safe mode).');
-        }
-        // 2. Add Users
-        const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@elite.com';
-        const adminPass = process.env.SEED_ADMIN_PASSWORD || 'admin123';
-        const passwordHash = await bcrypt_1.default.hash(adminPass, 10);
-        const admin = await models_1.User.create({
-            fullName: 'Admin User',
-            email: adminEmail,
-            passwordHash,
-            role: constants_1.CONSTANTS.ROLES.ADMIN,
-            isVerified: true,
+const fifoJobs_1 = require("./data/fifoJobs");
+async function seedDatabase() {
+    console.log('Starting idempotent seeding process...');
+    // 1. Initialize Tables (Safe Sync)
+    await models_1.sequelize.sync({ force: true });
+    // 4. Seed Categories
+    const categoryMap = {};
+    const sectors = [
+        { name: 'Mining Operations', description: 'Technical and physical operations in mine sites.' },
+        { name: 'Mobile Plant Operations', description: 'Operation of heavy machinery and earthmoving equipment.' },
+        { name: 'Drilling & Blasting', description: 'Specialized drilling, exploration, and blast hole operations.' },
+        { name: 'Processing / Fixed Plant / Plant Operations', description: 'Mineral processing and refinery operations.' },
+        { name: 'Shutdowns / Maintenance', description: 'Critical maintenance and project-based shutdown works.' },
+        { name: 'Mechanical Trades', description: 'Diesel fitting, mechanical fitting, and heavy equipment maintenance.' },
+        { name: 'Electrical / Instrumentation', description: 'HV electrical, instrumentation, and control systems.' },
+        { name: 'Construction & Civil', description: 'Industrial construction and civil engineering projects.' },
+        { name: 'Oil & Gas / Energy / Power', description: 'Power generation and hydrocarbons extraction.' },
+        { name: 'HSE / Safety / Quality', description: 'Health, Safety, and Environment management.' },
+        { name: 'Engineering / Technical', description: 'Engineering design, planning, and technical oversight.' },
+        { name: 'Geology / Exploration', description: 'Mineral exploration and geological mapping.' },
+        { name: 'Laboratory / Sampling', description: 'Assay operations and mineral analysis.' },
+        { name: 'Transport / Logistics / Heavy Haulage', description: 'Heavy vehicle operation and site logistics.' },
+        { name: 'Warehousing / Stores / Supply', description: 'Inventory management and supply chain operations.' },
+        { name: 'Camp / Village / Utilities', description: 'Village management and site lifestyle services.' },
+        { name: 'Catering / Hospitality / Housekeeping', description: 'Catering and camp cleaning services.' },
+        { name: 'Medical / Emergency Response', description: 'Remote medicine and site emergency services.' },
+        { name: 'Administration / Site Administration / Payroll / Document Control', description: 'Site support and business administration.' },
+        { name: 'HR / Recruitment / Training', description: 'Personnel management and compliance training.' },
+        { name: 'IT / Communications', description: 'Network infrastructure and site IT support.' },
+        { name: 'Security', description: 'Site access control and asset protection.' },
+        { name: 'Supervisory / Leadership / Management', description: 'Site leadership and departmental management.' },
+        { name: 'Entry-Level / Utility / Traineeship / Trades Assistant', description: 'Entry pathways into the resources sector.' }
+    ];
+    for (const sector of sectors) {
+        const [cat] = await models_1.JobCategory.findOrCreate({
+            where: { name: sector.name },
+            defaults: sector
         });
-        const appPasswordHash = await bcrypt_1.default.hash('applicant123', 10);
-        const applicant = await models_1.User.create({
-            fullName: 'Marcus Sterling',
-            email: 'm.sterling@example.com',
-            passwordHash: appPasswordHash,
-            role: constants_1.CONSTANTS.ROLES.APPLICANT,
-            isVerified: true,
-        });
-        // 3. System Finance
-        await models_1.CryptoWallet.create({
-            currencyName: constants_1.CONSTANTS.CRYPTO_TYPES.USDT,
-            networkType: constants_1.CONSTANTS.CRYPTO_NETWORKS.TRC20,
-            walletAddress: 'T9yD14Nj9j7xAB4dbzL...',
-            displayLabel: 'Primary Treasury Wallet USDT (TRC20)',
-            isActive: true,
-        });
-        await models_1.BankAccount.create({
-            bankName: 'Global Heritage Bank',
-            accountNumber: '92837492019',
-            accountType: constants_1.CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY,
-            routingCode: 'CHASUS33XX',
-            currency: 'USD',
-            isActive: true,
-        });
-        // 4. Categories
-        const engCat = await models_1.JobCategory.create({ name: 'Engineering' });
-        const designCat = await models_1.JobCategory.create({ name: 'Design & Creative' });
-        // 5. Conditions & Benefits
-        const benefitRemote = await models_1.JobBenefit.create({ benefitType: 'WORK_LIFE', description: 'Fully Remote Workflow' });
-        const condRelo = await models_1.JobCondition.create({ name: 'Relocation Required', description: 'Available within 30 days.' });
-        // 6. Job Listing
-        const job = await models_1.JobListing.create({
-            title: 'Senior UX Architect',
-            description: 'Craft a compelling narrative for your next role.',
-            location: 'London, UK or Remote',
-            employmentType: 'Full-time',
-            requirements: '5+ years UX research experience',
-            categoryId: designCat.id,
-        });
-        // Add relationships
-        // @ts-ignore
-        await job.addJobBenefits([benefitRemote]);
-        // @ts-ignore
-        await job.addJobConditions([condRelo]);
-        // 7. Stages
-        const stage1 = await models_1.JobStage.create({
-            jobId: job.id,
-            name: 'Portfolio Review',
-            description: 'Submit your best designs',
-            orderPosition: 1,
-            requiresPayment: true,
-            amount: 50.00,
-            currency: 'USD',
-        });
-        // 8. Application
-        const app = await models_1.Application.create({
-            userId: applicant.id,
-            jobId: job.id,
-            currentStageId: stage1.id,
-            status: constants_1.CONSTANTS.APPLICATION_STATUSES.ACTIVE,
-            completionPercentage: 85,
-        });
-        await models_1.Payment.create({
-            applicationId: app.id,
-            stageId: stage1.id,
-            amount: 50.00,
-            currency: 'USD',
-            status: constants_1.CONSTANTS.PAYMENT_STATUSES.UNPAID
-        });
-        console.log('Seeding Complete! 🎉');
-        process.exit(0);
+        categoryMap[sector.name] = cat;
     }
-    catch (e) {
-        console.error('Seeding failed: ', e);
+    console.log(`Checking/Importing ${fifoJobs_1.fifoJobs.length} FIFO jobs...`);
+    for (const jobData of fifoJobs_1.fifoJobs) {
+        const category = categoryMap[jobData.category];
+        if (!category) {
+            console.warn(`Category ${jobData.category} not found for job ${jobData.title}. Skipping.`);
+            continue;
+        }
+        const [job] = await models_1.JobListing.findOrCreate({
+            where: {
+                title: jobData.title,
+                categoryId: category.id
+            },
+            defaults: {
+                description: `Join Australian Resource Group as a ${jobData.title}. This role offers a competitive salary of ${jobData.salary} and a stable shift roster within the ${jobData.category} sector.`,
+                location: 'Remote WA/QLD (FIFO)',
+                employmentType: 'Full-Time (FIFO)',
+                requirements: jobData.requirements.join(', '),
+                company: 'Australian Resource Group',
+                salary: jobData.salary,
+                visaSponsorship: false,
+                isActive: true,
+                stages: []
+            }
+        });
+        // 6. Link Benefits
+        for (const benefitDesc of jobData.benefits) {
+            const [benefit] = await models_1.JobBenefit.findOrCreate({
+                where: { description: benefitDesc },
+                defaults: {
+                    benefitType: 'Employment Benefit',
+                    description: benefitDesc,
+                    categoryId: category.id
+                }
+            });
+            await job.addJobBenefit(benefit);
+        }
+        // 7. Link Conditions
+        for (const condDesc of jobData.requirements) {
+            const [condition] = await models_1.JobCondition.findOrCreate({
+                where: { description: condDesc },
+                defaults: {
+                    name: 'Site Requirement',
+                    description: condDesc,
+                    categoryId: category.id
+                }
+            });
+            await job.addJobCondition(condition);
+        }
+    }
+    console.log('Idempotent seeding completed successfully!');
+}
+if (require.main === module) {
+    seedDatabase().catch(err => {
+        console.error('Seeding failed:', err);
         process.exit(1);
-    }
-};
-void seedDatabase();
+    });
+}

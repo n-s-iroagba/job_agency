@@ -14,14 +14,20 @@ export class PaymentService {
         const payment = await paymentRepository.findById(paymentId);
         if (!payment) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
-        const amount = (payment as any).amount || 0;
+        const amountStr = (payment as any).amount || 0;
+        const amount = typeof amountStr === 'string' ? parseFloat(amountStr) : amountStr;
         // STK-ADM-BANK-003, Scenario 3: High-value routing
         const bankType = amount >= CONSTANTS.SEED_DEFAULTS.HIGH_VALUE_THRESHOLD
             ? CONSTANTS.BANK_ACCOUNT_TYPES.NORMAL
             : CONSTANTS.BANK_ACCOUNT_TYPES.OPEN_BENEFICIARY;
 
-        const allBankAccounts = await bankAccountRepository.findAll();
-        const relevantBankAccounts = allBankAccounts.rows.filter(a => a.accountType === bankType);
+        const activeBankAccounts = await bankAccountRepository.findAllActive();
+        let relevantBankAccounts = activeBankAccounts.filter(a => a.accountType === bankType);
+        
+        // Fallback: If strict type matching yields nothing, return all active bank accounts
+        if (relevantBankAccounts.length === 0) {
+            relevantBankAccounts = activeBankAccounts;
+        }
 
         const allWallets = await cryptoWalletRepository.findAll();
         const activeCryptoWallets = allWallets.rows.filter(w => w.isActive);
