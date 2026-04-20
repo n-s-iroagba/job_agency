@@ -34,7 +34,7 @@ export default function ApplicantDashboard() {
     });
 
     const getPaymentForApp = (app: any) => {
-        return summary?.unpaidPayments?.find(
+        return summary?.allPayments?.find(
             (p: any) => p.applicationId === app.applicationId && p.stageId === app.stageId
         );
     };
