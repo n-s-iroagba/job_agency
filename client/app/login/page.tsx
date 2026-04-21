@@ -44,7 +44,7 @@ function LoginContent() {
             }
         },
         onError: (error: any) => {
-            const errorMsg = error.response?.data?.error || 'Invalid credentials provided.';
+            const errorMsg = error.response?.data?.error || 'An unexpected error occurred. Please try again.';
             if (errorMsg === 'Email not verified') {
                 setIsUnverified(true);
             } else {

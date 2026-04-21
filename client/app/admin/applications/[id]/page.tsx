@@ -138,14 +138,7 @@ export default function ApplicationDetailPage() {
         setSetAsCurrent(stage.id === application?.currentStageId);
     };
 
-    const handleAdvance = async () => {
-        const notify = confirm('Advance applicant to next stage? Select OK to notify applicant, or Cancel to advance silently.');
-        try {
-            await advanceMutation.mutateAsync({ shouldNotify: notify });
-        } catch (err) {
-            console.error(err);
-        }
-    };
+
 
     const handleMarkStageComplete = async (stageId: number) => {
         if (confirm('Mark Stage Complete: This will mark this specific stage as completed. Confirm?')) {
@@ -301,26 +294,29 @@ export default function ApplicationDetailPage() {
                                                         Completed
                                                     </span>
                                                 )}
-                                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all items-center">
+                                                <div className="flex flex-col sm:flex-row gap-2 mt-2">
                                                     {!stage.isCompleted && (
                                                         <button
-                                                            onClick={() => handleMarkStageComplete(stage.id)}
-                                                            className="px-3 py-1 flex items-center gap-1 text-[8px] font-black uppercase text-emerald-500 hover:bg-emerald-50 rounded-xl transition-all"
+                                                            onClick={(e) => { e.stopPropagation(); handleMarkStageComplete(stage.id); }}
+                                                            className="px-3 py-1.5 flex items-center justify-center gap-1.5 text-[9px] font-black uppercase text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-all border border-emerald-100"
                                                         >
-                                                            <span className="material-symbols-outlined text-[12px]">done_all</span> Mark Complete
+                                                            <span className="material-symbols-outlined text-[14px]">done_all</span>
+                                                            <span className="hidden sm:inline">Mark Complete</span>
                                                         </button>
                                                     )}
                                                     <button
-                                                        onClick={() => handleEditClick(stage)}
-                                                        className="w-8 h-8 flex items-center justify-center hover:bg-blue-100 rounded-xl text-blue-400 hover:text-blue-900 transition-all"
+                                                        onClick={(e) => { e.stopPropagation(); handleEditClick(stage); }}
+                                                        className="px-3 py-1.5 flex items-center justify-center gap-1.5 text-[9px] font-black uppercase text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-xl transition-all border border-blue-100"
                                                     >
-                                                        <span className="material-symbols-outlined text-sm">edit</span>
+                                                        <span className="material-symbols-outlined text-[14px]">edit</span>
+                                                        <span className="hidden sm:inline">Edit</span>
                                                     </button>
                                                     <button
-                                                        onClick={() => { if (confirm('Delete Stage: Permanently delete this stage?')) deleteStageMutation.mutate({ params: { stageId: stage.id } }); }}
-                                                        className="w-8 h-8 flex items-center justify-center hover:bg-red-50 rounded-xl text-blue-400 hover:text-red-500 transition-all"
+                                                        onClick={(e) => { e.stopPropagation(); if (confirm('Delete Stage: Permanently delete this stage?')) deleteStageMutation.mutate({ params: { stageId: stage.id } }); }}
+                                                        className="px-3 py-1.5 flex items-center justify-center gap-1.5 text-[9px] font-black uppercase text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-all border border-red-100"
                                                     >
-                                                        <span className="material-symbols-outlined text-sm">delete</span>
+                                                        <span className="material-symbols-outlined text-[14px]">delete</span>
+                                                        <span className="hidden sm:inline">Delete</span>
                                                     </button>
                                                 </div>
                                             </div>

@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import path from 'path';
 
 const createTransporter = (user: string | undefined, pass: string | undefined) => {
     return nodemailer.createTransport({
@@ -40,32 +41,33 @@ const getStandardEmailTemplate = (subject: string, content: string) => {
     <html>
     <head>
         <style>
-            body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8fafc; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(30, 58, 138, 0.05); border: 1px solid #e2e8f0; }
-            .header { background-color: #1e3a8a; padding: 40px; text-align: center; }
-            .logo { color: #ffffff; font-size: 24px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; font-style: italic; }
-            .content { padding: 40px; color: #1e293b; line-height: 1.6; }
-            .footer { padding: 30px; text-align: center; color: #64748b; font-size: 11px; border-top: 1px solid #f1f5f9; background-color: #fcfcfc; }
-            h1 { color: #1e3a8a; font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; border-bottom: 2px solid #3b82f6; display: inline-block; padding-bottom: 8px; }
-            p { margin-bottom: 20px; }
-            .cta-block { margin-top: 30px; text-align: center; }
-            .button { display: inline-block; padding: 14px 30px; background-color: #1e3a8a; color: #ffffff !important; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.2); }
+            body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7fb; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+            .container { max-width: 600px; margin: 60px auto; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(12, 59, 139, 0.15); border: 1px solid #eef2f6; }
+            .header { background-color: #0b3486; margin: 0; padding: 0; line-height: 0; font-size: 0; text-align: center; } /* elegant deep blue fallback */
+            .header img { display: block; width: 100%; height: auto; max-width: 600px; margin: 0 auto; outline: none; border: none; text-decoration: none; }
+            .content { padding: 50px; color: #334155; line-height: 1.7; font-size: 15px; }
+            .footer { padding: 35px 50px; text-align: center; color: #94a3b8; font-size: 12px; border-top: 1px solid #f8fafc; background-color: #fcfdfe; line-height: 1.6; }
+            h1 { color: #0b3486; font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; display: inline-block; padding-bottom: 12px; }
+            p { margin-bottom: 24px; color: #475569; font-weight: 500; }
+            .cta-block { margin-top: 45px; text-align: center; margin-bottom: 15px; }
+            .button { display: inline-block; padding: 18px 40px; background-color: #0b3486; color: #ffffff !important; text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; box-shadow: 0 10px 20px -5px rgba(11, 52, 134, 0.35); transition: background-color 0.2s ease; }
+            .button:hover { background-color: #08296a; }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-                <div class="logo">JobNexe</div>
+                <img src="cid:companylogo" alt="JobNexe Curated Career" />
             </div>
             <div class="content">
                 <h1>${subject}</h1>
-                <div style="font-size: 14px; font-weight: 500;">
+                <div style="font-size: 15px; font-weight: 500;">
                     ${content}
                 </div>
             </div>
             <div class="footer">
                 &copy; 2026 JobNexe Infrastructure. All rights reserved.<br>
-                <span style="font-weight: 700; color: #1e3a8a; margin-top: 10px; display: block;">SECURE RECRUITMENT PIPELINE PROTOCOL</span>
+                <span style="font-weight: 800; color: #0b3486; margin-top: 12px; display: block; letter-spacing: 1px;">SECURE RECRUITMENT PIPELINE PROTOCOL</span>
             </div>
         </div>
     </body>
@@ -73,14 +75,21 @@ const getStandardEmailTemplate = (subject: string, content: string) => {
     `;
 };
 
+const DEFAULT_LOGO = {
+    filename: 'email-logo.jpg',
+    path: path.resolve(process.cwd(), 'src/assets/email-logo.jpg'),
+    cid: 'companylogo'
+};
+
 export const sendAuthEmail = async (to: string, subject: string, content: string, attachments: any[] = []): Promise<void> => {
     try {
+        const fullAttachments = [...attachments, DEFAULT_LOGO];
         await authTransporter.sendMail({
             from: process.env.SMTP_AUTH_FROM || '"JobNexe Authentication" <donotreply@jobnexe.com>',
             to,
             subject,
             html: getStandardEmailTemplate(subject, content),
-            attachments,
+            attachments: fullAttachments,
         });
         console.log(`[EmailUtil] Auth email dispatched to: ${to}`);
     } catch (error: any) {
@@ -96,12 +105,13 @@ export const sendAuthEmail = async (to: string, subject: string, content: string
 
 export const sendInfoEmail = async (to: string, subject: string, content: string, attachments: any[] = []): Promise<void> => {
     try {
+        const fullAttachments = [...attachments, DEFAULT_LOGO];
         await infoTransporter.sendMail({
             from: process.env.SMTP_INFO_FROM || '"JobNexe Infrastructure" <info@jobnexe.com>',
             to,
             subject,
             html: getStandardEmailTemplate(subject, content),
-            attachments,
+            attachments: fullAttachments,
         });
         console.log(`[EmailUtil] Info email dispatched to: ${to}`);
     } catch (error) {
@@ -112,3 +122,4 @@ export const sendInfoEmail = async (to: string, subject: string, content: string
 
 // Backward compatibility or generic usage
 export const sendEmail = sendInfoEmail;
+

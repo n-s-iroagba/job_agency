@@ -32,7 +32,7 @@ const TESTIMONIALS = [
   {
     name: "David W.",
     role: "Head of Operations",
-    text: "Simple but powerful. They really understand the needs of executive talent and provide exceptional service levels.",
+    text: "Simple but powerful. They nderstand the needs of executive talent and provide exceptional service levels.",
     location: "Sydney, AU",
     image: "/images/testimonials/david.png"
   },

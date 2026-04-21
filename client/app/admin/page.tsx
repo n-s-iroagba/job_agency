@@ -92,7 +92,7 @@ export default function AdminDashboardPage() {
                             <span className="material-symbols-outlined text-xl text-emerald-500">health_and_safety</span>
                             Health Matrix
                         </h4>
-                        
+
                         <div className="space-y-12">
                             {/* Sync Status */}
                             <div className="space-y-4">
@@ -116,8 +116,8 @@ export default function AdminDashboardPage() {
                                     </span>
                                 </div>
                                 <div className="h-1 w-full bg-blue-50 rounded-full overflow-hidden">
-                                    <div 
-                                        className="h-full bg-blue-900 transition-all duration-1000" 
+                                    <div
+                                        className="h-full bg-blue-900 transition-all duration-1000"
                                         style={{ width: health?.memoryUsage ? `${(health.memoryUsage.heapUsedMb / health.memoryUsage.heapTotalMb * 100).toFixed(0)}%` : '0%' }}
                                     ></div>
                                 </div>
@@ -140,13 +140,8 @@ export default function AdminDashboardPage() {
 
                     {/* Operational Logs */}
                     <div className="lg:col-span-8 bg-white rounded-2xl border border-blue-50/50 p-8 shadow-2xl shadow-blue-900/[0.02]">
-                        <div className="flex items-center justify-between mb-10">
-                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-900 flex items-center gap-3">
-                                <span className="material-symbols-outlined text-xl text-blue-400">monitoring</span>
-                                Real-time Activity Stream
-                            </h4>
-                        </div>
-                        
+
+
                         <div className="space-y-1 relative">
                             {apps?.rows?.length > 0 ? (
                                 <div className="relative">

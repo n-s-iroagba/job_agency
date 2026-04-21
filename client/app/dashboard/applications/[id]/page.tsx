@@ -143,89 +143,57 @@ export default function ApplicationDetailPage() {
                             {stages
                                 .filter((stage: any) => stage.isCompleted || stage.id === app.currentStageId)
                                 .map((stage: any, index: number) => {
-                                const isActive = stage.id === app.currentStageId;
-                                const isCompleted = stage.isCompleted;
-                                const payment = getStagePayment(stage.id);
+                                    const isActive = stage.id === app.currentStageId;
+                                    const isCompleted = stage.isCompleted;
+                                    const payment = getStagePayment(stage.id);
 
-                                return (
-                                    <div key={stage.id} className={`p-8 rounded-[2.5rem] border transition-all flex flex-col md:flex-row md:items-center justify-between gap-8 bg-white border-blue-100 shadow-sm`}>
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-4 mb-4">
-                                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black ${isCompleted ? 'bg-emerald-500 text-white' : isActive ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-400'
-                                                    }`}>
-                                                    {isCompleted ? <span className="material-symbols-outlined text-sm">done</span> : <span className="material-symbols-outlined text-sm">pending</span>}
+                                    return (
+                                        <div key={stage.id} className={`p-8 rounded-[2.5rem] border transition-all flex flex-col md:flex-row md:items-center justify-between gap-8 bg-white border-blue-100 shadow-sm`}>
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-4 mb-4">
+                                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black ${isCompleted ? 'bg-emerald-500 text-white' : isActive ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-400'
+                                                        }`}>
+                                                        {isCompleted ? <span className="material-symbols-outlined text-sm">done</span> : <span className="material-symbols-outlined text-sm">pending</span>}
+                                                    </div>
+                                                    <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg ${isCompleted ? 'bg-emerald-50 text-emerald-600' :
+                                                        isActive ? (isPendingVerification ? 'bg-amber-50 text-amber-600' : 'bg-blue-900 text-white') : 'bg-blue-100 text-blue-400'
+                                                        }`}>
+                                                        {isCompleted ? 'Completed' : isActive ? (isPendingVerification ? 'Reviewing' : 'Current Stage') : 'Pending'}
+                                                    </span>
                                                 </div>
-                                                <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg ${isCompleted ? 'bg-emerald-50 text-emerald-600' :
-                                                    isActive ? (isPendingVerification ? 'bg-amber-50 text-amber-600' : 'bg-blue-900 text-white') : 'bg-blue-100 text-blue-400'
-                                                    }`}>
-                                                    {isCompleted ? 'Completed' : isActive ? (isPendingVerification ? 'Reviewing' : 'Current Stage') : 'Pending'}
-                                                </span>
+                                                <h4 className="font-bold text-blue-900 uppercase tracking-tight text-lg mb-2">{stage.name}</h4>
+                                                <p className="text-[10px] text-blue-400 font-black uppercase tracking-widest leading-relaxed line-clamp-2 max-w-[400px]">{stage.description}</p>
                                             </div>
-                                            <h4 className="font-bold text-blue-900 uppercase tracking-tight text-lg mb-2">{stage.name}</h4>
-                                            <p className="text-[10px] text-blue-400 font-black uppercase tracking-widest leading-relaxed line-clamp-2 max-w-[400px]">{stage.description}</p>
-                                        </div>
 
-                                        <div className="flex flex-col items-end md:min-w-[150px] pt-6 md:pt-0 border-t md:border-t-0 border-blue-50">
-                                            <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-2">Requirement Status</span>
-                                            {stage.requiresPayment ? (
-                                                <div className="text-right">
-                                                    <span className="text-sm font-bold text-blue-900">${stage.amount} {stage.currency}</span>
-                                                    {payment && (
-                                                        <div className={`text-[8px] font-black uppercase mt-1 tracking-widest ${payment.status === 'Verified' || payment.status === 'Paid' ? 'text-emerald-500' :
-                                                            payment.status === 'Pending' ? 'text-amber-500' : 'text-red-400'
-                                                            }`}>
-                                                            {payment.status === 'Verified' || payment.status === 'Paid' ? 'Receipt Verified' : `Status: ${payment.status}`}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            ) : (
-                                                <div className="flex items-center gap-2 text-emerald-500 font-bold">
-                                                    <span className="material-symbols-outlined text-sm">check_circle</span>
-                                                    <span className="text-[9px] uppercase tracking-widest">Included</span>
-                                                </div>
-                                            )}
+                                            <div className="flex flex-col items-end md:min-w-[150px] pt-6 md:pt-0 border-t md:border-t-0 border-blue-50">
+                                                <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest mb-2">Requirement Status</span>
+                                                {stage.requiresPayment ? (
+                                                    <div className="text-right">
+                                                        <span className="text-sm font-bold text-blue-900">${stage.amount} {stage.currency}</span>
+                                                        {payment && (
+                                                            <div className={`text-[8px] font-black uppercase mt-1 tracking-widest ${payment.status === 'Verified' || payment.status === 'Paid' ? 'text-emerald-500' :
+                                                                payment.status === 'Pending' ? 'text-amber-500' : 'text-red-400'
+                                                                }`}>
+                                                                {payment.status === 'Verified' || payment.status === 'Paid' ? 'Receipt Verified' : `Status: ${payment.status}`}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex items-center gap-2 text-emerald-500 font-bold">
+                                                        <span className="material-symbols-outlined text-sm">check_circle</span>
+                                                        <span className="text-[9px] uppercase tracking-widest">Included</span>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
                         </div>
                     </section>
                 </div>
 
                 <div className="space-y-10">
-                    <section className="bg-white p-10 rounded-[3rem] border border-blue-100 shadow-sm relative overflow-hidden">
-                        <div className="relative z-10">
-                            <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-10 pb-4 border-b border-blue-50">Progress Summary</h2>
-                            <div className="space-y-8">
 
-
-
-                                <div className="pt-8 space-y-6 border-t border-blue-50">
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-emerald-500 text-sm">shield</span>
-                                            <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">Data Security</span>
-                                        </div>
-                                        <span className="text-[8px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-0.5 rounded">Active</span>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-blue-300 text-sm">verified</span>
-                                            <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">Identity Match</span>
-                                        </div>
-                                        <span className="text-[8px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded">Verified</span>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-amber-500 text-sm">update</span>
-                                            <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">Last Updated</span>
-                                        </div>
-                                        <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest italic font-mono">Realtime</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
 
                     <section className="bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100 border-dashed">
                         <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
