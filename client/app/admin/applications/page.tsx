@@ -81,10 +81,7 @@ export default function AdminApplicationsPage() {
                     <p className="text-3xl font-black italic uppercase tracking-tighter">{appList.length} Active Applications</p>
                 </div>
 
-                <div className="bg-white p-8 rounded-[2rem] border border-blue-100 shadow-2xl shadow-blue-900/5">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-4">Real-Time Sync</h3>
-                    <p className="text-3xl font-black italic uppercase tracking-tighter">Online</p>
-                </div>
+                
             </div>
         </div>
     );
