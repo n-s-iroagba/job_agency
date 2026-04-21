@@ -40,6 +40,7 @@ export class ApplicationService {
                     jobSalary: app.JobListing?.salary,
                     stageId: app.currentStageId,
                     requiresPayment: currentStage?.requiresPayment || false,
+                    isCompleted: currentStage?.isCompleted || false,
                     amount: payment?.amount ?? currentStage?.amount,
                     currency: payment?.currency ?? currentStage?.currency,
                     stageName: currentStage?.name,
@@ -131,11 +132,11 @@ export class ApplicationService {
                 currentStageId: null
             }, t);
 
-            // Create singular initial stage: Credential Screening
+            // Create singular initial stage: Application Review in Progress
             const initialStage = await jobStageRepository.create({
                 applicationId: newApp.id,
-                name: 'Credential Screening',
-                description: 'Initial verification of submitted talent credentials and documentation.',
+                name: 'Application Review in Progress',
+                description: 'Your application has been received and is currently under review by our recruitment team.',
                 orderPosition: 1,
                 requiresPayment: false,
                 notifyEmail: true,
@@ -151,7 +152,7 @@ export class ApplicationService {
             await notificationRepository.create({
                 userId,
                 subject: 'Application Registered',
-                message: `Your application for "${job.title}" has been successfully registered. Current Phase: Credential Screening.`,
+                message: `Your application for "${job.title}" has been successfully registered. Current Phase: Application Review in Progress.`,
                 type: 'SYSTEM',
             }, t);
 
@@ -297,7 +298,7 @@ export class ApplicationService {
     }
 
     public async updateApplicationStage(stageId: number, data: any) {
-        const { notifyInApp, notifyEmail, ...rest } = data;
+        const { notifyInApp, notifyEmail, setAsCurrent, ...rest } = data;
         const stage = await jobStageRepository.findById(stageId);
         if (!stage) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
@@ -307,8 +308,17 @@ export class ApplicationService {
         await jobStageRepository.update(stageId, rest);
         const updatedStage = await jobStageRepository.findById(stageId);
 
-        // If it's the current stage and requires payment, ensure payment record exists
-        if (app.currentStageId === stageId && updatedStage?.requiresPayment) {
+        // Handle "set as current" — update the application pointer
+        if (setAsCurrent) {
+            await applicationRepository.update(stage.applicationId, {
+                currentStageId: stageId,
+                status: CONSTANTS.APPLICATION_STATUSES.ACTIVE
+            });
+        }
+
+        // If this stage is (or just became) the current stage and requires payment, ensure payment record exists
+        const isCurrentStage = setAsCurrent || app.currentStageId === stageId;
+        if (isCurrentStage && updatedStage?.requiresPayment) {
             const existingPayment = await paymentRepository.findAllAdmin({
                 applicationId: app.id,
                 stageId: stageId
@@ -332,8 +342,10 @@ export class ApplicationService {
             }
         }
 
-        const nSubject = 'Phase Update';
-        const nMessage = `Details for your current phase "${updatedStage?.name}" have been updated by administration.`;
+        const nSubject = setAsCurrent ? 'Process Activation' : 'Phase Update';
+        const nMessage = setAsCurrent
+            ? `A phase has been activated for your application: "${updatedStage?.name}".`
+            : `Details for your current phase "${updatedStage?.name}" have been updated by administration.`;
 
         if (notifyInApp) {
             await notificationRepository.create({

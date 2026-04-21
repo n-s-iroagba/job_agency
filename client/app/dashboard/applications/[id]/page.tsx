@@ -140,24 +140,25 @@ export default function ApplicationDetailPage() {
                             <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest">Official Status</span>
                         </div>
                         <div className="space-y-4">
-                            {stages.map((stage: any, index: number) => {
-                                const isCompleted = index < currentStageIndex;
-                                const isActive = index === currentStageIndex;
+                            {stages
+                                .filter((stage: any) => stage.isCompleted || stage.id === app.currentStageId)
+                                .map((stage: any, index: number) => {
+                                const isActive = stage.id === app.currentStageId;
+                                const isCompleted = stage.isCompleted;
                                 const payment = getStagePayment(stage.id);
 
                                 return (
-                                    <div key={stage.id} className={`p-8 rounded-[2.5rem] border transition-all flex flex-col md:flex-row md:items-center justify-between gap-8 ${index <= currentStageIndex ? 'bg-white border-blue-100 shadow-sm' : 'bg-blue-50/50 border-transparent opacity-40'
-                                        }`}>
+                                    <div key={stage.id} className={`p-8 rounded-[2.5rem] border transition-all flex flex-col md:flex-row md:items-center justify-between gap-8 bg-white border-blue-100 shadow-sm`}>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-4 mb-4">
                                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black ${isCompleted ? 'bg-emerald-500 text-white' : isActive ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-400'
                                                     }`}>
-                                                    {isCompleted ? <span className="material-symbols-outlined text-sm">done</span> : index + 1}
+                                                    {isCompleted ? <span className="material-symbols-outlined text-sm">done</span> : <span className="material-symbols-outlined text-sm">pending</span>}
                                                 </div>
                                                 <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-lg ${isCompleted ? 'bg-emerald-50 text-emerald-600' :
                                                     isActive ? (isPendingVerification ? 'bg-amber-50 text-amber-600' : 'bg-blue-900 text-white') : 'bg-blue-100 text-blue-400'
                                                     }`}>
-                                                    {isCompleted ? 'Completed' : isActive ? (isPendingVerification ? 'Reviewing' : 'Current Stage') : 'Upcoming Stage'}
+                                                    {isCompleted ? 'Completed' : isActive ? (isPendingVerification ? 'Reviewing' : 'Current Stage') : 'Pending'}
                                                 </span>
                                             </div>
                                             <h4 className="font-bold text-blue-900 uppercase tracking-tight text-lg mb-2">{stage.name}</h4>

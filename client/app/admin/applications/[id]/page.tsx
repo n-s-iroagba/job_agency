@@ -135,6 +135,7 @@ export default function ApplicationDetailPage() {
         setStageDesc(stage.description);
         setRequiresPayment(stage.requiresPayment);
         setAmount(stage.amount?.toString() || '');
+        setSetAsCurrent(stage.id === application?.currentStageId);
     };
 
     const handleAdvance = async () => {
