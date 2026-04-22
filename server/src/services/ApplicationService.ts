@@ -190,17 +190,30 @@ export class ApplicationService {
             
             const updatedApp = await applicationRepository.findById(applicationId, t);
 
+            // Guard: If we are already at the last stage, do not execute advancement side effects
+            if (nextStageId === app.currentStageId) {
+                await t.commit();
+                return updatedApp;
+            }
+
             // Create unpaid payment record when next stage requires payment
             if (nextStageId) {
                 const nextStage = stages.rows.find(s => s.id === nextStageId);
                 if (nextStage && nextStage.requiresPayment) {
-                    await paymentRepository.create({
+                    const existingPayment = await paymentRepository.findAllAdmin({
                         applicationId,
-                        stageId: nextStage.id,
-                        status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
-                        amount: nextStage.amount,
-                        currency: nextStage.currency,
+                        stageId: nextStage.id
                     }, t);
+
+                    if (existingPayment.count === 0) {
+                        await paymentRepository.create({
+                            applicationId,
+                            stageId: nextStage.id,
+                            status: CONSTANTS.PAYMENT_STATUSES.UNPAID,
+                            amount: nextStage.amount,
+                            currency: nextStage.currency,
+                        }, t);
+                    }
                 }
 
                 // Notify if requested

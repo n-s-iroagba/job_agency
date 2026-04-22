@@ -21,6 +21,7 @@ RUN npm ci --only=production --ignore-scripts
 RUN mkdir -p logs && chown -R nodejs:nodejs logs
 
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nodejs:nodejs /app/src/assets ./src/assets
 
 USER nodejs
 EXPOSE 5000

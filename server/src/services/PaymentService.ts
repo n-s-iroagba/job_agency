@@ -117,7 +117,8 @@ export class PaymentService {
                 }
 
                 // NEW: Automatically advance application stage on approval
-                if (isApproved) {
+                const appCurrentStageId = (payment as any).Application?.currentStageId;
+                if (isApproved && appCurrentStageId === payment.stageId) {
                     await applicationService.advanceApplicationStage(payment.applicationId);
                 }
             }
