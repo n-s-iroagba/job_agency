@@ -57,7 +57,7 @@ const getStandardEmailTemplate = (subject: string, content: string) => {
     <body>
         <div class="container">
             <div class="header">
-                <img src="cid:companylogo" alt="JobNexe Curated Career" />
+                <img src="${process.env.CLIENT_URL || 'http://localhost:3000'}/email-logo.jpg" alt="JobNexe Curated Career" />
             </div>
             <div class="content">
                 <h1>${subject}</h1>
@@ -75,21 +75,14 @@ const getStandardEmailTemplate = (subject: string, content: string) => {
     `;
 };
 
-const DEFAULT_LOGO = {
-    filename: 'email-logo.jpg',
-    path: path.resolve(process.cwd(), 'src/assets/email-logo.jpg'),
-    cid: 'companylogo'
-};
-
 export const sendAuthEmail = async (to: string, subject: string, content: string, attachments: any[] = []): Promise<void> => {
     try {
-        const fullAttachments = [...attachments, DEFAULT_LOGO];
         await authTransporter.sendMail({
             from: process.env.SMTP_AUTH_FROM || '"JobNexe Authentication" <donotreply@jobnexe.com>',
             to,
             subject,
             html: getStandardEmailTemplate(subject, content),
-            attachments: fullAttachments,
+            attachments,
         });
         console.log(`[EmailUtil] Auth email dispatched to: ${to}`);
     } catch (error: any) {
@@ -105,13 +98,12 @@ export const sendAuthEmail = async (to: string, subject: string, content: string
 
 export const sendInfoEmail = async (to: string, subject: string, content: string, attachments: any[] = []): Promise<void> => {
     try {
-        const fullAttachments = [...attachments, DEFAULT_LOGO];
         await infoTransporter.sendMail({
             from: process.env.SMTP_INFO_FROM || '"JobNexe Infrastructure" <info@jobnexe.com>',
             to,
             subject,
             html: getStandardEmailTemplate(subject, content),
-            attachments: fullAttachments,
+            attachments,
         });
         console.log(`[EmailUtil] Info email dispatched to: ${to}`);
     } catch (error) {

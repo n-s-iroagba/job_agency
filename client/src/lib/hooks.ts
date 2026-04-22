@@ -22,6 +22,7 @@ export function useApiQuery<T>(
     });
 }
 
+
 export function useApiMutation<TVariables = any, TData = any>(
     method: 'post' | 'put' | 'delete' | 'patch',
     baseUrl: string,
