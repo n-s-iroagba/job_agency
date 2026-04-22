@@ -17,6 +17,7 @@ const startServer = async () => {
 
     try {
         await connectDB();
+        await run(); // Execute migrations
         // await seedDatabase().catch(err => {
         //     console.error('Failed to seed database:', err);
         //     process.exit(1);

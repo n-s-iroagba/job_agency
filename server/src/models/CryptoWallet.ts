@@ -37,11 +37,11 @@ CryptoWallet.init(
             primaryKey: true,
         },
         currencyName: {
-            type: DataTypes.ENUM(...(Object.values(CONSTANTS.CRYPTO_TYPES) as string[])),
+            type: DataTypes.STRING,
             allowNull: false,
         },
         networkType: {
-            type: DataTypes.ENUM(...(Object.values(CONSTANTS.CRYPTO_NETWORKS) as string[])),
+            type: DataTypes.STRING,
             allowNull: false,
         },
         walletAddress: {
