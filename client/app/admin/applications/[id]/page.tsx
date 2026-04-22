@@ -525,61 +525,87 @@ export default function ApplicationDetailPage() {
 
             {/* Proof Verification Modal */}
             {verifyingPayment && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
-                    <div className="absolute inset-0 bg-blue-900/90 backdrop-blur-2xl animate-in fade-in duration-500" onClick={() => setVerifyingPayment(null)}></div>
-                    <div className="relative bg-white rounded-[3.5rem] shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300 border border-white/20">
-                        <div className="p-10 border-b border-blue-50 flex items-center justify-between bg-white/50">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8">
+                    <div className="absolute inset-0 bg-blue-900/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setVerifyingPayment(null)}></div>
+                    <div className="relative bg-white rounded-[2.5rem] shadow-2xl shadow-blue-900/20 w-full max-w-5xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300">
+                        {/* Header */}
+                        <div className="p-6 md:px-10 md:py-8 border-b border-blue-50 flex items-center justify-between bg-white/50 shrink-0">
                             <div>
                                 <h3 className="text-xs font-black text-blue-900 uppercase tracking-[0.3em]">Payment Verification</h3>
-                                <p className="text-[9px] font-bold text-blue-400 uppercase mt-1">Reviewing visual proof of transaction</p>
+                                <p className="text-[10px] font-bold text-blue-400 uppercase mt-1">Reviewing visual proof of transaction</p>
                             </div>
-                            <button onClick={() => setVerifyingPayment(null)} className="w-12 h-12 rounded-2xl hover:bg-blue-50 text-blue-400 hover:text-blue-900 transition-all flex items-center justify-center">
+                            <button onClick={() => setVerifyingPayment(null)} className="w-10 h-10 rounded-full hover:bg-blue-50 text-blue-400 hover:text-blue-900 transition-all flex items-center justify-center border border-transparent hover:border-blue-100">
                                 <span className="material-symbols-outlined">close</span>
                             </button>
                         </div>
-                        <div className="flex-1 overflow-y-auto p-12 space-y-10 custom-scrollbar">
-                            <div className="aspect-video bg-blue-50 rounded-[2.5rem] overflow-hidden border border-blue-100 relative group shadow-inner">
+                        
+                        {/* Content Area */}
+                        <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+                            {/* Receipt Viewer Column */}
+                            <div className="flex-1 bg-blue-50/30 p-6 md:p-10 flex items-start justify-center overflow-y-auto custom-scrollbar border-b md:border-b-0 md:border-r border-blue-50">
                                 {verifyingPayment.proofUrl ? (
-                                    <div className="w-full h-full flex items-center justify-center p-4">
-                                        <img
-                                            src={verifyingPayment.proofUrl}
-                                            alt="Payment Proof"
-                                            className="w-full h-full object-contain rounded-2xl shadow-2xl"
-                                        />
-                                    </div>
+                                    <img
+                                        src={verifyingPayment.proofUrl}
+                                        alt="Payment Proof"
+                                        className="max-w-full h-auto rounded-2xl shadow-xl shadow-blue-900/10 border border-blue-100"
+                                    />
                                 ) : (
-                                    <div className="flex flex-col items-center justify-center h-full text-blue-200">
+                                    <div className="flex flex-col items-center justify-center h-full text-blue-200 mt-20 md:mt-0">
                                         <span className="material-symbols-outlined text-6xl mb-4">image_not_supported</span>
                                         <p className="text-[10px] uppercase font-black tracking-[0.3em]">No receipt detected</p>
                                     </div>
                                 )}
                             </div>
-                            <div className="bg-blue-50/50 p-10 rounded-[2.5rem] border border-blue-100">
-                                <div className="grid grid-cols-2 gap-12 mb-10 pb-10 border-b border-blue-100">
+                            
+                            {/* Actions Column */}
+                            <div className="w-full md:w-[380px] p-6 md:p-10 bg-white flex flex-col shrink-0 overflow-y-auto custom-scrollbar">
+                                <div className="space-y-8 flex-1">
                                     <div>
-                                        <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">Verified Amount</p>
-                                        <p className="text-4xl font-black italic text-blue-900">${verifyingPayment.amount}</p>
+                                        <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-1.5">Target Requirement</p>
+                                        <p className="text-sm font-bold text-blue-900 uppercase">{verifyingPayment.JobStage?.name || 'Application Stage'}</p>
                                     </div>
+                                    
+                                    <div className="grid grid-cols-2 gap-6 bg-blue-50/50 p-6 rounded-[1.5rem] border border-blue-50">
+                                        <div>
+                                            <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-1">Expected Amount</p>
+                                            <p className="text-2xl font-black text-blue-900">${verifyingPayment.amount}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-1">Currency</p>
+                                            <p className="text-2xl font-black text-blue-900">{verifyingPayment.currency}</p>
+                                        </div>
+                                    </div>
+
                                     <div>
-                                        <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">Currency</p>
-                                        <p className="text-4xl font-black italic text-blue-900">{verifyingPayment.currency}</p>
+                                        <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2">Current Status</p>
+                                        <span className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest border ${
+                                            verifyingPayment.status === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                            verifyingPayment.status === 'Rejected' ? 'bg-red-50 text-red-600 border-red-100' :
+                                            'bg-amber-50 text-amber-600 border-amber-100'
+                                        }`}>
+                                            {verifyingPayment.status}
+                                        </span>
                                     </div>
                                 </div>
-                                <div className="flex flex-col md:flex-row gap-4">
+                                
+                                {/* Buttons at bottom */}
+                                <div className="mt-10 flex flex-col gap-3 pt-6 border-t border-blue-50">
                                     <button
                                         onClick={() => { if (confirm('Approve Payment: Confirm payment and advance application?')) verifyPaymentMutation.mutate({ params: { paymentId: verifyingPayment.id }, data: { isApproved: true } }); }}
-                                        className="flex-1 py-5 bg-blue-900 text-white font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-emerald-600 transition-all shadow-2xl shadow-blue-900/20 active:scale-95"
+                                        disabled={verifyPaymentMutation.isPending || verifyingPayment.status === 'Paid'}
+                                        className="w-full py-4 bg-emerald-600 text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-900/20 active:scale-95 disabled:opacity-50 disabled:active:scale-100"
                                     >
-                                        {verifyPaymentMutation.isPending ? 'Updating...' : 'Approve & Advance'}
+                                        {verifyPaymentMutation.isPending ? 'Processing...' : 'Approve Payment'}
                                     </button>
                                     <button
                                         onClick={() => {
-                                            const note = prompt('Specify rejection details:');
+                                            const note = prompt('Specify rejection details (required):');
                                             if (note) verifyPaymentMutation.mutate({ params: { paymentId: verifyingPayment.id }, data: { isApproved: false, note } });
                                         }}
-                                        className="py-5 px-10 bg-white text-red-500 border-2 border-red-100 font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-red-50 hover:border-red-200 transition-all active:scale-95"
+                                        disabled={verifyPaymentMutation.isPending || verifyingPayment.status === 'Paid'}
+                                        className="w-full py-4 bg-white text-red-500 border-2 border-red-100 font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-red-50 hover:border-red-200 transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100"
                                     >
-
+                                        Reject & Request Redo
                                     </button>
                                 </div>
                             </div>
