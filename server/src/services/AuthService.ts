@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { userRepository } from '../repositories/UserRepository';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/token';
 import { CONSTANTS } from '../constants';
-import { sendAuthEmail } from '../utils/email';
+import { sendAuthEmail, sendInfoEmail } from '../utils/email';
 import crypto from 'crypto';
 
 
@@ -40,6 +40,21 @@ export class AuthService {
             'Verify Your Account',
             content
         );
+        
+        // Notify Admin of New Applicant
+        const adminEmail = process.env.SMTP_INFO_FROM?.match(/<(.+)>/)?.[1] || process.env.SMTP_INFO_USER || 'admin@jobnexe.com';
+        await sendInfoEmail(
+            adminEmail,
+            'New Applicant Registered',
+            `
+            <p>A new professional identity has entered the recruitment pipeline.</p>
+            <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #eef2f6;">
+                <p><strong>Name:</strong> ${newUser.fullName}</p>
+                <p><strong>Email:</strong> ${newUser.email}</p>
+                <p><strong>Role:</strong> APPLICANT</p>
+            </div>
+            `
+        ).catch(err => console.error('[AuthService] Admin notification failed:', err));
 
         const accessToken = generateAccessToken({ id: newUser.id, role: newUser.role });
         const refreshToken = generateRefreshToken({ id: newUser.id, role: newUser.role });
