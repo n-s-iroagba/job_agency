@@ -19,11 +19,13 @@ export class JobRepository {
         if (options.categoryId) whereClause.categoryId = options.categoryId;
         if (options.employmentType) whereClause.employmentType = options.employmentType;
         if (options.searchQuery) {
+            const searchPattern = `%${options.searchQuery}%`;
             whereClause[Op.or] = [
-                { title: { [Op.like]: `%${options.searchQuery}%` } },
-                { location: { [Op.like]: `%${options.searchQuery}%` } },
-                { company: { [Op.like]: `%${options.searchQuery}%` } },
-                { description: { [Op.like]: `%${options.searchQuery}%` } }
+                { title: { [Op.like]: searchPattern } },
+                { location: { [Op.like]: searchPattern } },
+                { company: { [Op.like]: searchPattern } },
+                { description: { [Op.like]: searchPattern } },
+                { '$JobCategory.name$': { [Op.like]: searchPattern } }
             ];
         }
 
@@ -50,11 +52,13 @@ export class JobRepository {
         if (options.categoryId) whereClause.categoryId = options.categoryId;
         if (options.employmentType) whereClause.employmentType = options.employmentType;
         if (options.searchQuery) {
+            const searchPattern = `%${options.searchQuery}%`;
             whereClause[Op.or] = [
-                { title: { [Op.like]: `%${options.searchQuery}%` } },
-                { location: { [Op.like]: `%${options.searchQuery}%` } },
-                { company: { [Op.like]: `%${options.searchQuery}%` } },
-                { description: { [Op.like]: `%${options.searchQuery}%` } }
+                { title: { [Op.like]: searchPattern } },
+                { location: { [Op.like]: searchPattern } },
+                { company: { [Op.like]: searchPattern } },
+                { description: { [Op.like]: searchPattern } },
+                { '$JobCategory.name$': { [Op.like]: searchPattern } }
             ];
         }
 

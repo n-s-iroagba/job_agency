@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import Link from 'next/link';
 import { JobListing, JobCategory } from '@/types/models';
@@ -9,19 +9,27 @@ import { useQueryClient } from '@tanstack/react-query';
 export default function AdminJobsPage() {
     const queryClient = useQueryClient();
     const [searchQuery, setSearchQuery] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
     const [page, setPage] = useState(1);
     const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined);
     const [sortBy, setSortBy] = useState<string>('createdAt');
     const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('DESC');
     const limit = 10;
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchQuery);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
     const { data: stats } = useApiQuery<any>(['admin', 'jobs', 'stats'], '/admin/jobs/stats');
     const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories', 'all'], '/admin/categories');
     const categories = categoriesResult?.rows || [];
 
     const { data: jobs, isLoading, refetch } = useApiQuery<{ rows: JobListing[], count: number }>(
-        ['admin', 'jobs', 'list', String(page), searchQuery, selectedCategory, sortBy, sortOrder],
-        `/admin/jobs?limit=${limit}&offset=${(page - 1) * limit}${searchQuery ? `&searchQuery=${encodeURIComponent(searchQuery)}` : ''}${selectedCategory ? `&categoryId=${selectedCategory}` : ''}${sortBy ? `&sortBy=${sortBy}&sortOrder=${sortOrder}` : ''}`
+        ['admin', 'jobs', 'list', String(page), debouncedSearch, selectedCategory, sortBy, sortOrder],
+        `/admin/jobs?limit=${limit}&offset=${(page - 1) * limit}${debouncedSearch ? `&searchQuery=${encodeURIComponent(debouncedSearch.trim())}` : ''}${selectedCategory ? `&categoryId=${selectedCategory}` : ''}${sortBy ? `&sortBy=${sortBy}&sortOrder=${sortOrder}` : ''}`
     );
 
     const toggleStatusMutation = useApiMutation<any, any>('put', '/admin/jobs/:id', {
