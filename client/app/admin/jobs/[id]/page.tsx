@@ -55,30 +55,45 @@ export default function JobViewPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <section className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm">
                             <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-4">Benefits</h3>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="space-y-3">
                                 {job?.JobBenefits?.length > 0 ? (
                                     job.JobBenefits.map((b: any) => (
-                                        <span key={b.id} className="text-[9px] font-bold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-lg uppercase tracking-widest">
-                                            {b.benefitType}
-                                        </span>
+                                        <div key={b.id} className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 flex flex-col gap-1">
+                                            <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest leading-none mb-1">
+                                                {b.benefitType} {b.value ? `(${b.value})` : ''}
+                                            </span>
+                                            <span className="text-sm font-medium text-blue-900 leading-tight">
+                                                {b.description}
+                                            </span>
+                                        </div>
                                     ))
                                 ) : (
-                                    <span className="text-[10px] text-blue-400 uppercase font-bold tracking-widest">None</span>
+                                    <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-50 text-center">
+                                        <span className="text-[10px] text-blue-400 uppercase font-bold tracking-widest">No Benefits Configured</span>
+                                    </div>
                                 )}
                             </div>
                         </section>
 
                         <section className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm">
                             <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-4">Conditions</h3>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="space-y-3">
                                 {job?.JobConditions?.length > 0 ? (
                                     job.JobConditions.map((c: any) => (
-                                        <span key={c.id} className="text-[9px] font-bold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-lg uppercase tracking-widest">
-                                            {c.name}
-                                        </span>
+                                        <div key={c.id} className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 flex flex-col gap-1">
+                                            <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest leading-none mb-1">
+                                                Requirement Node
+                                            </span>
+                                            <div className="flex flex-col gap-0.5">
+                                                <span className="text-[11px] font-bold text-blue-900 uppercase tracking-wider">{c.name}</span>
+                                                <span className="text-sm font-medium text-blue-600 leading-tight">{c.description}</span>
+                                            </div>
+                                        </div>
                                     ))
                                 ) : (
-                                    <span className="text-[10px] text-blue-400 uppercase font-bold tracking-widest">None</span>
+                                    <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-50 text-center">
+                                        <span className="text-[10px] text-blue-400 uppercase font-bold tracking-widest">No Special Conditions</span>
+                                    </div>
                                 )}
                             </div>
                         </section>
