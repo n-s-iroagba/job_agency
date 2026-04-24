@@ -420,6 +420,10 @@ export class ApplicationService {
         }
         return jobStageRepository.findById(stageId);
     }
+
+    public async deleteApplication(id: number) {
+        await applicationRepository.delete(id);
+    }
 }
 
 export const applicationService = new ApplicationService();

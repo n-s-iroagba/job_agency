@@ -1,7 +1,7 @@
 'use client';
 
 import { Application } from '@/types/models';
-import { useApiQuery } from '@/lib/hooks';
+import { useApiQuery, useApiMutation } from '@/lib/hooks';
 import Link from 'next/link';
 
 interface ApplicationsResponse {
@@ -10,7 +10,8 @@ interface ApplicationsResponse {
 }
 
 export default function AdminApplicationsPage() {
-    const { data: apps, isLoading } = useApiQuery<ApplicationsResponse>(['admin', 'applications', 'all'], '/admin/applications');
+    const { data: apps, isLoading, refetch } = useApiQuery<ApplicationsResponse>(['admin', 'applications', 'all'], '/admin/applications');
+    const deleteMutation = useApiMutation('delete', '/admin/applications');
     const appList = apps?.rows || [];
 
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Applications...</div>;
@@ -61,12 +62,30 @@ export default function AdminApplicationsPage() {
                                     </td>
 
                                     <td className="px-8 py-6 text-right">
-                                        <Link
-                                            href={`/admin/applications/${app.id}`}
-                                            className="inline-flex items-center gap-2 bg-white border border-blue-100 px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm active:scale-95"
-                                        >
-                                            View Details
-                                        </Link>
+                                        <div className="flex items-center justify-end gap-3">
+                                            <Link
+                                                href={`/admin/applications/${app.id}`}
+                                                className="inline-flex items-center gap-2 bg-white border border-blue-100 px-5 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] text-blue-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm active:scale-95"
+                                            >
+                                                View Details
+                                            </Link>
+                                            <button
+                                                onClick={async () => {
+                                                    if (confirm('Are you sure you want to permanently delete this application? This will also remove all associated stages and payments.')) {
+                                                        try {
+                                                            await deleteMutation.mutateAsync(app.id);
+                                                            refetch();
+                                                        } catch (err) {
+                                                            console.error('Delete failed:', err);
+                                                        }
+                                                    }
+                                                }}
+                                                className="p-2.5 text-blue-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                                                title="Delete Application"
+                                            >
+                                                <span className="material-symbols-outlined text-lg">delete</span>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

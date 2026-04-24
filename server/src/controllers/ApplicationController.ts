@@ -193,6 +193,17 @@ export class ApplicationController {
             res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
         }
     }
+
+    public async deleteApplication(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            await applicationService.deleteApplication(id);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json({ message: CONSTANTS.SUCCESS_MESSAGES.DELETED });
+        } catch (error) {
+            console.error('[ApplicationController.deleteApplication]', error);
+            res.status(CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: CONSTANTS.ERROR_MESSAGES.INTERNAL_ERROR });
+        }
+    }
 }
 
 export const applicationController = new ApplicationController();
