@@ -165,17 +165,17 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     />
                 </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Location</label>
-                        <input
-                            className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
-                            placeholder="City, Country or Remote"
-                            type="text"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            required
-                        />
-                    </div>
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Location</label>
+                    <input
+                        className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 placeholder:text-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none"
+                        placeholder="City, Country or Remote"
+                        type="text"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        required
+                    />
+                </div>
 
 
                 <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
