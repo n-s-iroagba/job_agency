@@ -176,7 +176,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                             required
                         />
                     </div>
-                </div>
+
 
                 <div className="bg-white p-6 md:p-10 rounded-2xl border border-blue-100 space-y-6">
                     <div className="space-y-2">
@@ -264,7 +264,6 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     </div>
                 </div>
             </div>
-
 
             <div className="lg:col-span-4 space-y-6">
                 <div className="bg-blue-50 p-6 md:p-8 rounded-2xl border border-blue-100 space-y-8 sticky top-24">
