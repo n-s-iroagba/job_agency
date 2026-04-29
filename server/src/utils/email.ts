@@ -189,14 +189,19 @@ export const sendWelcomeEmail = async (to: string, userName: string): Promise<vo
     `;
 
     const templatePath = path.resolve(process.cwd(), 'Universal Applicant CV Template.docx');
-    const attachments = [
-        {
+    const fs = require('fs');
+    const attachments = [];
+    
+    if (fs.existsSync(templatePath)) {
+        attachments.push({
             filename: 'Universal Applicant CV Template.docx',
             path: templatePath
-        }
-    ];
+        });
+    } else {
+        console.warn(`[EmailUtil] CV Template not found at ${templatePath}. Sending welcome mail without attachment.`);
+    }
 
-    await sendInfoEmail(to, subject, content, attachments);
+    await sendAuthEmail(to, subject, content, attachments);
 };
 
 // Backward compatibility or generic usage

@@ -5,7 +5,7 @@ import { jobConditionRepository, FindConditionOptions } from '../repositories/Jo
 import { jobBenefitRepository, FindBenefitOptions } from '../repositories/JobBenefitRepository';
 import { userRepository } from '../repositories/UserRepository';
 import { notificationRepository } from '../repositories/NotificationRepository';
-import { sendInfoEmail, sendEmailFrom } from '../utils/email';
+import { sendInfoEmail, sendEmailFrom, sendWelcomeEmail, sendEOIEmail } from '../utils/email';
 import { sequelize } from '../config/database';
 import { CONSTANTS } from '../constants';
 
@@ -242,7 +242,6 @@ export class AdminService {
         const user = await userRepository.findById(userId);
         if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
         
-        const { sendWelcomeEmail } = require('../utils/email');
         await sendWelcomeEmail(user.email, user.fullName);
         return { success: true };
     }
@@ -251,7 +250,6 @@ export class AdminService {
         const user = await userRepository.findById(userId);
         if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
         
-        const { sendEOIEmail } = require('../utils/email');
         await sendEOIEmail(user.email);
         return { success: true };
     }

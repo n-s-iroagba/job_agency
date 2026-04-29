@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import { useApiQuery } from '@/lib/hooks';
+import api from '@/lib/api';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ApplicationStageManager } from '@/components/admin/ApplicationStageManager';
@@ -26,14 +26,14 @@ export default function AdminApplicantDetailPage() {
 
     const handleSendManualMail = async (type: 'welcome' | 'eoi') => {
         try {
-            const res = await fetch(`/api/admin/users/${id}/${type}-mail`, { method: 'POST' });
-            if (res.ok) {
+            const res = await api.post(`/admin/users/${id}/${type}-mail`);
+            if (res.status === 200) {
                 alert(`${type.toUpperCase()} mail sent successfully.`);
             } else {
                 alert(`Failed to send ${type} mail.`);
             }
-        } catch (e) {
-            alert('Network error while sending mail.');
+        } catch (e: any) {
+            alert(e.response?.data?.error || `Network error while sending ${type} mail.`);
         }
     };
 
