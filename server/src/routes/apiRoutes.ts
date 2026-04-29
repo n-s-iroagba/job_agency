@@ -78,6 +78,7 @@ router.post('/payments/:id/proof', ...applicantMW, paymentController.uploadProof
 router.get('/notifications', ...applicantMW, notificationController.getUserNotifications.bind(notificationController));
 router.put('/notifications/mark-all-read', ...applicantMW, notificationController.markAllRead.bind(notificationController));
 router.put('/notifications/:id/read', ...applicantMW, notificationController.markAsRead.bind(notificationController));
+router.post('/notifications/subscribe', ...applicantMW, notificationController.subscribeToPush.bind(notificationController));
 
 // =======================
 // Admin Routes (requireAuth + ADMIN role) — NFR-SEC-004

@@ -11,10 +11,15 @@ import { Application } from './Application';
 import { Payment } from './Payment';
 import { Notification } from './Notification';
 import { Interest } from './Interest';
+import { PushSubscription } from './PushSubscription';
 
 // User <-> Interest
 User.hasMany(Interest, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
 Interest.belongsTo(User, { foreignKey: 'userId' });
+
+// User <-> PushSubscription
+User.hasMany(PushSubscription, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
+PushSubscription.belongsTo(User, { foreignKey: 'userId' });
 
 // Job Category <-> Job Listing
 JobCategory.hasMany(JobListing, { foreignKey: 'categoryId' });
@@ -78,5 +83,6 @@ export {
     Application,
     Payment,
     Notification,
-    Interest
+    Interest,
+    PushSubscription
 };

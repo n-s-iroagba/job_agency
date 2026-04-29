@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import JivoChat from "@/components/ui/JivoChat";
+import { PushNotificationManager } from "@/components/PushNotificationManager";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,6 +13,14 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "JobNexe | Your Gateway to Global Opportunities",
   description: "Secure and transparent job application platform with real-time tracking.",
+  manifest: "/manifest.json",
+  themeColor: "#0b3486",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "JobNexe",
+  },
 };
 
 export default function RootLayout({
@@ -30,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans bg-surface text-on-surface">
         <Providers>
           {children}
+          <PushNotificationManager />
           <JivoChat />
         </Providers>
       </body>
