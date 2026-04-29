@@ -3,50 +3,50 @@ import { sequelize } from '../config/database';
 export async function migrateApexNetwork() {
     console.log('--- Initializing Apex Network Migration Sequence ---');
 
-    // 1. Update Users Table
+    // 1. Update users Table
     try {
-        await sequelize.query('ALTER TABLE Users ADD COLUMN isApexMember TINYINT(1) DEFAULT 0;');
-        await sequelize.query('ALTER TABLE Users ADD COLUMN apexStatus VARCHAR(255) DEFAULT "NONE";');
-        await sequelize.query('ALTER TABLE Users ADD COLUMN countryOfResidence VARCHAR(255);');
-        await sequelize.query('ALTER TABLE Users ADD COLUMN languages JSON;');
-        console.log('[SUCCESS] Users table updated with Apex metadata.');
+        await sequelize.query('ALTER TABLE users ADD COLUMN isApexMember TINYINT(1) DEFAULT 0;');
+        await sequelize.query("ALTER TABLE users ADD COLUMN apexStatus VARCHAR(255) DEFAULT 'NONE';");
+        await sequelize.query('ALTER TABLE users ADD COLUMN countryOfResidence VARCHAR(255);');
+        await sequelize.query('ALTER TABLE users ADD COLUMN languages JSON;');
+        console.log('[SUCCESS] users table updated with Apex metadata.');
     } catch (e: any) {
         if (e.message.includes("Duplicate column name")) {
-            console.log('[INFO] Users table already contains Apex metadata.');
+            console.log('[INFO] users table already contains Apex metadata.');
         } else {
-            console.error('[ERROR] Failed to update Users table:', e.message);
+            console.error('[ERROR] Failed to update users table:', e.message);
         }
     }
 
-    // 2. Update JobListings Table
+    // 2. Update job_listings Table
     try {
-        await sequelize.query('ALTER TABLE JobListings ADD COLUMN jobType VARCHAR(255) DEFAULT "NORMAL";');
-        console.log('[SUCCESS] JobListings table updated with jobType.');
+        await sequelize.query("ALTER TABLE job_listings ADD COLUMN jobType VARCHAR(255) DEFAULT 'NORMAL';");
+        console.log('[SUCCESS] job_listings table updated with jobType.');
     } catch (e: any) {
         if (e.message.includes("Duplicate column name")) {
-            console.log('[INFO] JobListings table already contains jobType.');
+            console.log('[INFO] job_listings table already contains jobType.');
         } else {
-            console.error('[ERROR] Failed to update JobListings table:', e.message);
+            console.error('[ERROR] Failed to update job_listings table:', e.message);
         }
     }
 
-    // 3. Update JobStages Table
+    // 3. Update job_stages Table
     try {
-        await sequelize.query('ALTER TABLE JobStages ADD COLUMN feeType VARCHAR(255) DEFAULT "NONE";');
-        await sequelize.query('ALTER TABLE JobStages ADD COLUMN refundMessage TEXT;');
-        console.log('[SUCCESS] JobStages table updated with feeType/refundMessage.');
+        await sequelize.query("ALTER TABLE job_stages ADD COLUMN feeType VARCHAR(255) DEFAULT 'NONE';");
+        await sequelize.query('ALTER TABLE job_stages ADD COLUMN refundMessage TEXT;');
+        console.log('[SUCCESS] job_stages table updated with feeType/refundMessage.');
     } catch (e: any) {
         if (e.message.includes("Duplicate column name")) {
-            console.log('[INFO] JobStages table already contains fee/refund metadata.');
+            console.log('[INFO] job_stages table already contains fee/refund metadata.');
         } else {
-            console.error('[ERROR] Failed to update JobStages table:', e.message);
+            console.error('[ERROR] Failed to update job_stages table:', e.message);
         }
     }
 
-    // 4. Create Interests Table
+    // 4. Create interests Table
     try {
         await sequelize.query(`
-            CREATE TABLE IF NOT EXISTS Interests (
+            CREATE TABLE IF NOT EXISTS interests (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 userId INT NOT NULL,
                 roles JSON,
@@ -55,12 +55,12 @@ export async function migrateApexNetwork() {
                 experience JSON,
                 createdAt DATETIME NOT NULL,
                 updatedAt DATETIME NOT NULL,
-                FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE
+                FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
             ) ENGINE=InnoDB;
         `);
-        console.log('[SUCCESS] Interests table synchronized.');
+        console.log('[SUCCESS] interests table synchronized.');
     } catch (e: any) {
-        console.error('[ERROR] Failed to create Interests table:', e.message);
+        console.error('[ERROR] Failed to create interests table:', e.message);
     }
 
     console.log('--- Apex Network Migration Sequence Completed ---');
