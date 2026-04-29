@@ -9,6 +9,7 @@ const navItems = [
     { label: 'Overview', href: CONSTANTS.ROUTES.ADMIN.DASHBOARD, icon: 'analytics' },
     { label: 'Applications', href: CONSTANTS.ROUTES.ADMIN.APPLICATIONS, icon: 'assignment' },
     { label: 'Applicants', href: '/admin/applicants', icon: 'groups' },
+    { label: 'Interests', href: '/admin/interests', icon: 'psychology' },
     { label: 'Payment Queue', href: CONSTANTS.ROUTES.ADMIN.UNVERIFIED, icon: 'account_tree' },
     { label: 'Payments', href: CONSTANTS.ROUTES.ADMIN.UNPAID, icon: 'receipt_long' },
     { label: 'Jobs', href: CONSTANTS.ROUTES.ADMIN.JOBS, icon: 'business_center' },

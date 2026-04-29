@@ -157,16 +157,17 @@ export const sendApexInvitationEmail = async (to: string, userName: string): Pro
     await sendAuthEmail(to, subject, content);
 };
 
-// Expression of Interest Template
+// Expression of Interest Template (Scouting)
 export const sendEOIEmail = async (to: string): Promise<void> => {
-    const subject = 'Expression of Interest: JobNexe Apex Audit';
+    const subject = 'Expression of Interest: Help Us Scout Your Next Role';
     const content = `
-        <p>Thank you for expressing interest in the JobNexe Apex Network.</p>
-        <p>To begin your rigorous audit, we require detailed information regarding your career trajectory, technical impact, and professional aspirations.</p>
+        <p>Thank you for choosing JobNexe to manage your professional trajectory.</p>
+        <p>This is <strong>not</strong> an invitation to the Apex Network. Instead, we want to understand your specific interests, target roles, and core competencies so our recruitment team can actively scout the market for you.</p>
+        <p>By filling out this form, you help us filter our unlisted registry for roles that match your exact aspirations.</p>
         <div class="cta-block">
-            <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/expression-of-interest" class="button">Complete Audit Form</a>
+            <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/expression-of-interest" class="button">Define My Interests</a>
         </div>
-        <p style="margin-top: 20px;"><strong>Note:</strong> 95% of applicants do not pass the Apex verification. Ensure your data is accurate and verifiable.</p>
+        <p style="margin-top: 20px;">Once your interests are defined, our automated system will alert you as soon as a matching role enters our pipeline.</p>
     `;
     await sendAuthEmail(to, subject, content);
 };
@@ -185,20 +186,27 @@ export const sendWelcomeEmail = async (to: string, userName: string): Promise<vo
         <div class="cta-block">
             <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/dashboard" class="button">Go to Dashboard</a>
         </div>
-        <p style="margin-top: 20px;">Accuracy in your biodata and CV structure significantly increases your visibility to top-tier employers.</p>
+        <p style="margin-top: 20px; color: #0b3486; font-weight: 800;">IMPORTANT: Please check your inbox for a separate "Expression of Interest" email. Filling that form allows our team to scout for roles that specifically match your career goals.</p>
+        <p style="margin-top: 10px;">Accuracy in your biodata and CV structure significantly increases your visibility to top-tier employers.</p>
     `;
 
-    const templatePath = path.resolve(process.cwd(), 'Universal Applicant CV Template.docx');
     const fs = require('fs');
-    const attachments = [];
+    let templatePath = path.resolve(process.cwd(), 'Universal Applicant CV Template.docx');
     
+    // Check root if not in server dir (for dev/prod consistency)
+    if (!fs.existsSync(templatePath)) {
+        templatePath = path.resolve(process.cwd(), '..', 'Universal Applicant CV Template.docx');
+    }
+
+    const attachments = [];
     if (fs.existsSync(templatePath)) {
         attachments.push({
             filename: 'Universal Applicant CV Template.docx',
             path: templatePath
         });
+        console.log(`[EmailUtil] Attaching CV Template from: ${templatePath}`);
     } else {
-        console.warn(`[EmailUtil] CV Template not found at ${templatePath}. Sending welcome mail without attachment.`);
+        console.warn(`[EmailUtil] CV Template not found at expected locations. Sending welcome mail without attachment.`);
     }
 
     await sendAuthEmail(to, subject, content, attachments);
