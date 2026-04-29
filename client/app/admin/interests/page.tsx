@@ -5,7 +5,7 @@ import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
 
 export default function AdminInterestsPage() {
-    const { data: interests = [], isLoading } = useApiQuery<any[]>(['admin', 'interests'], '/interests/all');
+    const { data: interests = [], isLoading } = useApiQuery<any[]>(['admin', 'interests'], '/admin/interests');
 
     if (isLoading) return <div className="p-12 text-center text-[10px] font-bold uppercase tracking-widest text-blue-400">Loading Market Interests...</div>;
 
