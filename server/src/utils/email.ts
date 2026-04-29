@@ -187,17 +187,14 @@ export const sendWelcomeEmail = async (to: string, userName: string): Promise<vo
             <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/dashboard" class="button">Go to Dashboard</a>
         </div>
         <p style="margin-top: 20px; color: #0b3486; font-weight: 800;">IMPORTANT: Please check your inbox for a separate "Expression of Interest" email. Filling that form allows our team to scout for roles that specifically match your career goals.</p>
+        <p style="margin-top: 10px; color: #dc2626; font-weight: 700; font-size: 13px;">NOTE: If you do not see the EOI mail, please check your "Spam" folder and mark our address as "Not Spam" to ensure you receive future scouting alerts.</p>
         <p style="margin-top: 10px;">Accuracy in your biodata and CV structure significantly increases your visibility to top-tier employers.</p>
     `;
 
     const fs = require('fs');
-    let templatePath = path.resolve(process.cwd(), 'Universal Applicant CV Template.docx');
+    // Now that we've copied the template into the server directory for deployment
+    const templatePath = path.resolve(process.cwd(), 'Universal Applicant CV Template.docx');
     
-    // Check root if not in server dir (for dev/prod consistency)
-    if (!fs.existsSync(templatePath)) {
-        templatePath = path.resolve(process.cwd(), '..', 'Universal Applicant CV Template.docx');
-    }
-
     const attachments = [];
     if (fs.existsSync(templatePath)) {
         attachments.push({
@@ -206,7 +203,7 @@ export const sendWelcomeEmail = async (to: string, userName: string): Promise<vo
         });
         console.log(`[EmailUtil] Attaching CV Template from: ${templatePath}`);
     } else {
-        console.warn(`[EmailUtil] CV Template not found at expected locations. Sending welcome mail without attachment.`);
+        console.warn(`[EmailUtil] CV Template not found at expected location: ${templatePath}. Sending welcome mail without attachment.`);
     }
 
     await sendAuthEmail(to, subject, content, attachments);

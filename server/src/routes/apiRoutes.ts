@@ -11,6 +11,7 @@ import { requireRole } from '../middleware/rbac';
 import { apiLimiter, authLimiter } from '../utils/rateLimiter';
 import { CONSTANTS } from '../constants';
 import multer from 'multer';
+import { applicantAuditMiddleware } from '../middleware/auditMiddleware';
 
 const upload = multer({ 
     storage: multer.memoryStorage(),
@@ -18,6 +19,9 @@ const upload = multer({
 });
 
 const router = Router();
+
+// Apply Audit Alert to all routes
+router.use(applicantAuditMiddleware);
 
 // =======================
 // Public Routes
