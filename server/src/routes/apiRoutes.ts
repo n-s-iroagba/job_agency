@@ -158,6 +158,8 @@ router.delete('/admin/benefits/:id', ...adminMW, adminController.deleteBenefit.b
 router.get('/admin/users/:id', ...adminMW, adminController.getApplicantById.bind(adminController));
 router.get('/admin/users', ...adminMW, adminController.getAllApplicants.bind(adminController));
 router.delete('/admin/users/:id', ...adminMW, adminController.deleteApplicant.bind(adminController));
+router.post('/admin/users/:id/welcome-mail', ...adminMW, adminController.sendWelcomeMail.bind(adminController));
+router.post('/admin/users/:id/eoi-mail', ...adminMW, adminController.sendEOIMail.bind(adminController));
 
 import { interestController } from '../controllers/InterestController';
 

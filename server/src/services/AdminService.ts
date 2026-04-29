@@ -237,6 +237,24 @@ export class AdminService {
         }
         await userRepository.delete(id);
     }
+
+    public async sendWelcomeMail(userId: number) {
+        const user = await userRepository.findById(userId);
+        if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        
+        const { sendWelcomeEmail } = require('../utils/email');
+        await sendWelcomeEmail(user.email, user.fullName);
+        return { success: true };
+    }
+
+    public async sendEOIMail(userId: number) {
+        const user = await userRepository.findById(userId);
+        if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
+        
+        const { sendEOIEmail } = require('../utils/email');
+        await sendEOIEmail(user.email);
+        return { success: true };
+    }
 }
 
 export const adminService = new AdminService();

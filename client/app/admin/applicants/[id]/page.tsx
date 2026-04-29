@@ -24,6 +24,19 @@ export default function AdminApplicantDetailPage() {
         </div>
     );
 
+    const handleSendManualMail = async (type: 'welcome' | 'eoi') => {
+        try {
+            const res = await fetch(`/api/admin/users/${id}/${type}-mail`, { method: 'POST' });
+            if (res.ok) {
+                alert(`${type.toUpperCase()} mail sent successfully.`);
+            } else {
+                alert(`Failed to send ${type} mail.`);
+            }
+        } catch (e) {
+            alert('Network error while sending mail.');
+        }
+    };
+
     return (
         <div className="font-sans antialiased text-blue-900 pb-24 max-w-6xl mx-auto">
             <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -38,7 +51,21 @@ export default function AdminApplicantDetailPage() {
                     <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mt-1">Record ID: {user.id} · {user.email}</p>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3 justify-end">
+                    <button
+                        onClick={() => handleSendManualMail('welcome')}
+                        className="bg-emerald-50 text-emerald-700 border-2 border-emerald-100 px-6 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all active:scale-95 flex items-center gap-2"
+                    >
+                        <span className="material-symbols-outlined text-base">handshake</span>
+                        Send Welcome
+                    </button>
+                    <button
+                        onClick={() => handleSendManualMail('eoi')}
+                        className="bg-amber-50 text-amber-700 border-2 border-amber-100 px-6 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-600 hover:text-white hover:border-amber-600 transition-all active:scale-95 flex items-center gap-2"
+                    >
+                        <span className="material-symbols-outlined text-base">verified</span>
+                        Send EOI
+                    </button>
                     <Link
                         href={`/admin/mail?to=${user.email}`}
                         className="bg-blue-900 text-white px-6 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-blue-900/20 active:scale-95 flex items-center gap-2"
@@ -50,7 +77,6 @@ export default function AdminApplicantDetailPage() {
                         onClick={async () => {
                             if (confirm('DANGER: This will permanently delete this applicant profile from the system. This action is irreversible.')) {
                                 try {
-                                    // Note: We use the existing common delete hook if available or just window.fetch
                                     const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
                                     if (res.ok) {
                                         alert('Profile deleted successfully.');

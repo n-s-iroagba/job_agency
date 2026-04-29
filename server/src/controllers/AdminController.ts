@@ -402,6 +402,29 @@ export class AdminController {
             res.status(status).json({ error: error.message });
         }
     }
+    public async sendWelcomeMail(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            const result = await adminService.sendWelcomeMail(id);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
+        } catch (error: any) {
+            console.error('[AdminController.sendWelcomeMail]', error);
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
+    }
+
+    public async sendEOIMail(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id as string, 10);
+            const result = await adminService.sendEOIMail(id);
+            res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
+        } catch (error: any) {
+            console.error('[AdminController.sendEOIMail]', error);
+            const status = error.message === CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND ? CONSTANTS.HTTP_STATUS.NOT_FOUND : CONSTANTS.HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            res.status(status).json({ error: error.message });
+        }
+    }
 }
 
 export const adminController = new AdminController();

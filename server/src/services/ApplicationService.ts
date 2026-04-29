@@ -156,6 +156,20 @@ export class ApplicationService {
                 type: 'SYSTEM',
             }, t);
 
+            // Notify Admin of New Application
+            await sendInfoEmail(
+                'jobnexe@gmail.com',
+                'Internal Alert: New Application Received',
+                `
+                <p>A new application has been submitted for a role.</p>
+                <div style="background-color: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #eef2f6;">
+                    <p><strong>Job Title:</strong> ${job.title}</p>
+                    <p><strong>Company:</strong> ${job.company}</p>
+                    <p><strong>Applicant ID:</strong> ${userId}</p>
+                </div>
+                `
+            ).catch(err => console.error('[ApplicationService] Admin notification failed:', err));
+
             await t.commit();
             return applicationRepository.findById(newApp.id);
         } catch (error) {

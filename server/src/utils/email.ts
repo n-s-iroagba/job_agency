@@ -166,9 +166,37 @@ export const sendEOIEmail = async (to: string): Promise<void> => {
         <div class="cta-block">
             <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/expression-of-interest" class="button">Complete Audit Form</a>
         </div>
-        <p style="margin-top: 20px;">95% of applicants do not pass the Apex verification. Ensure your data is accurate and verifiable.</p>
+        <p style="margin-top: 20px;"><strong>Note:</strong> 95% of applicants do not pass the Apex verification. Ensure your data is accurate and verifiable.</p>
     `;
     await sendAuthEmail(to, subject, content);
+};
+
+// Welcome Email Template (Post-Verification)
+export const sendWelcomeEmail = async (to: string, userName: string): Promise<void> => {
+    const subject = 'Welcome to JobNexe: Next Steps for Your Profile';
+    const content = `
+        <p>Dear ${userName},</p>
+        <p>Welcome to the JobNexe recruitment ecosystem. Your account has been successfully verified.</p>
+        <p>To ensure you are matched with the most relevant high-impact roles, please complete the following steps:</p>
+        <ol>
+            <li><strong>Complete your Biodata:</strong> Log in and fill all fields in your profile dashboard.</li>
+            <li><strong>Upload your CV:</strong> Use the attached template to structure your resume for our automated screening system.</li>
+        </ol>
+        <div class="cta-block">
+            <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/dashboard" class="button">Go to Dashboard</a>
+        </div>
+        <p style="margin-top: 20px;">Accuracy in your biodata and CV structure significantly increases your visibility to top-tier employers.</p>
+    `;
+
+    const templatePath = path.resolve(process.cwd(), 'Universal Applicant CV Template.docx');
+    const attachments = [
+        {
+            filename: 'Universal Applicant CV Template.docx',
+            path: templatePath
+        }
+    ];
+
+    await sendInfoEmail(to, subject, content, attachments);
 };
 
 // Backward compatibility or generic usage
