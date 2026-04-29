@@ -47,19 +47,27 @@ export function PushNotificationManager() {
         if (!registration) return;
 
         try {
+            // Step 1: Ask the browser for permission — this shows the native browser dialog
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                setIsSubscribed(true); // Dismissed — hide the prompt
+                return;
+            }
+
+            // Step 2: Subscribe to push with VAPID key
             const sub = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
                 applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
             });
 
-            // Send subscription to server
+            // Step 3: Send subscription token to server
             await api.post('/notifications/subscribe', sub.toJSON());
             
             setSubscription(sub);
             setIsSubscribed(true);
-            console.log('[Push] Subscribed successfully');
         } catch (error) {
             console.error('[Push] Subscription failed', error);
+            setIsSubscribed(true); // Hide prompt on error too
         }
     };
 
