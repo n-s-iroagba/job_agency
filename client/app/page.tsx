@@ -4,6 +4,7 @@ import { PublicHeader } from '@/components/layout/PublicHeader';
 import { PublicFooter } from '@/components/layout/PublicFooter';
 import { useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CONSTANTS } from '@/constants';
 import { JobListing } from '@/types/models';
 
@@ -79,9 +80,10 @@ export default function HomePage() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
+  // Decouple query from search input to prevent re-fetching on every keystroke
   const { data: jobs, isLoading } = useApiQuery<{ rows: JobListing[], count: number }>(
-    ['jobs', 'public', searchQuery],
-    `/jobs?search=${encodeURIComponent(searchQuery)}`
+    ['jobs', 'public', 'featured'],
+    `/jobs?featured=true&limit=6`
   );
 
   const jobList = jobs?.rows || [];
@@ -180,10 +182,12 @@ export default function HomePage() {
                 key={i}
                 className={`group relative overflow-hidden rounded-[3rem] border border-blue-50 shadow-sm hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-700 ${img.span}`}
               >
-                <img
+                <Image
                   src={img.src}
                   alt={img.role}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-10 backdrop-blur-[2px] group-hover:backdrop-blur-none">
                   <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{img.role}</span>
@@ -218,14 +222,14 @@ export default function HomePage() {
               ))
             ) : jobList.length === 0 ? (
               <div className="col-span-full py-24 text-center bg-blue-50/50 rounded-[3rem] border border-dashed border-blue-200">
-                <span className="material-symbols-outlined text-4xl text-blue-200 mb-4">search_off</span>
-                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">No roles matching "{searchQuery}" in current featured registry.</p>
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="mt-6 text-[8px] font-black text-blue-900 uppercase tracking-widest border-b-2 border-blue-900 pb-1"
+                <span className="material-symbols-outlined text-4xl text-blue-200 mb-4">clinical_notes</span>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">No featured roles currently available.</p>
+                <Link
+                  href="/jobs"
+                  className="mt-6 text-[8px] font-black text-blue-900 uppercase tracking-widest border-b-2 border-blue-900 pb-1 inline-block"
                 >
-                  Clear Protocol
-                </button>
+                  View Full Registry
+                </Link>
               </div>
             ) : (
               jobList.slice(0, 6).map((job: JobListing) => (
@@ -302,10 +306,13 @@ export default function HomePage() {
             <div className="relative z-10 transition-all duration-700 min-h-[300px] flex flex-col items-center justify-center text-center">
               <div className="mb-12 relative">
                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-2xl relative z-10">
-                  <img
+                  <Image
                     src={TESTIMONIALS[currentSlide].image}
                     alt={TESTIMONIALS[currentSlide].name}
-                    className="w-full h-full object-cover transition-all duration-500 scale-105"
+                    fill
+                    priority
+                    className="object-cover transition-all duration-500 scale-105"
+                    sizes="128px"
                   />
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-10 h-10 md:w-12 md:h-12 bg-blue-900 rounded-full flex items-center justify-center text-white shadow-xl z-20">

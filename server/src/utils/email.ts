@@ -112,6 +112,65 @@ export const sendInfoEmail = async (to: string, subject: string, content: string
     }
 };
 
+export const sendEmailFrom = async (fromType: 'auth' | 'info', to: string, subject: string, content: string, attachments: any[] = []): Promise<void> => {
+    const transporter = fromType === 'auth' ? authTransporter : infoTransporter;
+    const from = fromType === 'auth' 
+        ? (process.env.SMTP_AUTH_FROM || '"JobNexe Authentication" <donotreply@jobnexe.com>')
+        : (process.env.SMTP_INFO_FROM || '"JobNexe Infrastructure" <info@jobnexe.com>');
+
+    try {
+        await transporter.sendMail({
+            from,
+            to,
+            subject,
+            html: getStandardEmailTemplate(subject, content),
+            attachments,
+        });
+        console.log(`[EmailUtil] ${fromType} email dispatched to: ${to}`);
+    } catch (error: any) {
+        console.error(`[EmailUtil] ${fromType} email failed:`, error);
+        throw new Error(`${fromType} email dispatch failed`);
+    }
+};
+
+// Apex Invitation Template
+export const sendApexInvitationEmail = async (to: string, userName: string): Promise<void> => {
+    const subject = 'Invitation to the JobNexe Apex Network';
+    const content = `
+        <p>Dear ${userName},</p>
+        <p>Based on our initial audit of your professional node and market impact, you have been shortlisted for the <strong>JobNexe Apex Network</strong>.</p>
+        <p>Apex is not a job board; it is a high-stakes professional ecosystem restricted to the top 1% of vetted talent. Membership grants you immediate access to:</p>
+        <ul style="margin-bottom: 30px;">
+            <li><strong>High Priority Placement:</strong> Guaranteed placement within 3 weeks for Apex-exclusive roles commanding higher pay.</li>
+            <li><strong>Asymmetric Market Intelligence:</strong> Access to the "Black Box" Dashboard—see the true budget ceiling, team turnover rates, and time-to-hire metrics.</li>
+            <li><strong>Shadow Roles:</strong> Access to unlisted, confidential executive and high-level tech positions.</li>
+            <li><strong>The Power-Flipped Pipeline:</strong> You don't apply. Vetted employers pitch to you using credits.</li>
+            <li><strong>Bypass HR:</strong> Direct introductions to CTOs, VPs of Engineering, and Founders.</li>
+            <li><strong>High-Stakes Deal Structuring:</strong> Expert support for equity, performance bonuses, and fractional role negotiations with integrated escrow protection.</li>
+        </ul>
+        <p>Activation of your Apex status requires a one-time vetting and infrastructure fee of <strong>$503</strong>.</p>
+        <div class="cta-block">
+            <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/apex/activate" class="button">Accept Invitation & Activate</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 13px; color: #64748b;">Do not share this invitation. Membership is non-transferable and subject to continuous performance auditing.</p>
+    `;
+    await sendAuthEmail(to, subject, content);
+};
+
+// Expression of Interest Template
+export const sendEOIEmail = async (to: string): Promise<void> => {
+    const subject = 'Expression of Interest: JobNexe Apex Audit';
+    const content = `
+        <p>Thank you for expressing interest in the JobNexe Apex Network.</p>
+        <p>To begin your rigorous audit, we require detailed information regarding your career trajectory, technical impact, and professional aspirations.</p>
+        <div class="cta-block">
+            <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/expression-of-interest" class="button">Complete Audit Form</a>
+        </div>
+        <p style="margin-top: 20px;">95% of applicants do not pass the Apex verification. Ensure your data is accurate and verifiable.</p>
+    `;
+    await sendAuthEmail(to, subject, content);
+};
+
 // Backward compatibility or generic usage
 export const sendEmail = sendInfoEmail;
 

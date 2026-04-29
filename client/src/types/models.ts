@@ -23,7 +23,11 @@ export interface User {
     city?: string | null;
     state?: string | null;
     country?: string | null;
+    countryOfResidence?: string | null;
     zipCode?: string | null;
+    isApexMember?: boolean;
+    apexStatus?: string | null;
+    languages?: { language: string; level: string }[];
     createdAt: string;
     updatedAt: string;
 }
@@ -48,6 +52,7 @@ export interface JobListing {
     visaSponsorship: boolean;
     isActive: boolean;
     salary: string | null;
+    jobType?: 'NORMAL' | 'APEX';
     createdAt: string;
     updatedAt: string;
     JobCategory?: JobCategory;
@@ -86,6 +91,8 @@ export interface JobStage {
     notifyEmail: boolean;
     notifyPush: boolean;
     isCompleted: boolean;
+    feeType?: string | null;
+    refundMessage?: string | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -153,4 +160,16 @@ export interface Notification {
     type: string;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface Interest {
+    id: number;
+    userId: number;
+    roles: string[];
+    skills: string[];
+    qualifications: string[];
+    experience: any;
+    createdAt: string;
+    updatedAt: string;
+    User?: User;
 }

@@ -1,5 +1,9 @@
 import { userRepository } from '../repositories/UserRepository';
 import { CONSTANTS } from '../constants';
+import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
+import { screenCV } from '../utils/cvScreening';
 
 export class CvService {
     // Maps to STK-APP-CV-001, STK-APP-CV-002, STK-APP-CV-003
@@ -14,8 +18,26 @@ export class CvService {
         const user = await userRepository.findById(userId);
         if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
+        // Screen CV if it's a DOCX file
+        let screeningResults = null;
+        if (fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+            try {
+                const response = await axios.get(cvUrl, { responseType: 'arraybuffer' });
+                const tempPath = path.join(__dirname, `../../temp_cv_${userId}.docx`);
+                fs.writeFileSync(tempPath, response.data);
+                screeningResults = await screenCV(tempPath);
+                fs.unlinkSync(tempPath); // Cleanup
+            } catch (err) {
+                console.error('[CvService] Screening failed:', err);
+            }
+        }
+
         await userRepository.update(userId, { cvUrl });
-        return userRepository.findById(userId);
+        const updatedUser = await userRepository.findById(userId);
+        return {
+            ...updatedUser?.toJSON(),
+            screeningResults
+        };
     }
 
     // Maps to STK-APP-CV-001 (Read)

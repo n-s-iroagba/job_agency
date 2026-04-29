@@ -4,6 +4,7 @@ import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '.
 import { CONSTANTS } from '../constants';
 import { sendAuthEmail, sendInfoEmail } from '../utils/email';
 import crypto from 'crypto';
+import path from 'path';
 
 
 export class AuthService {
@@ -23,6 +24,8 @@ export class AuthService {
             role: CONSTANTS.ROLES.APPLICANT,
             verificationToken,
             isVerified: false,
+            phoneNumber: userData.phoneNumber,
+            countryOfResidence: userData.countryOfResidence,
         });
         console.log(verificationToken);
 
@@ -90,6 +93,30 @@ export class AuthService {
             isVerified: true,
             verificationToken: null
         });
+
+        // Send Welcome Email after verification
+        const welcomeSubject = 'Welcome to JobNexe - Activate Your Node';
+        const welcomeContent = `
+            <p>Your professional node has been successfully verified. To fully activate your profile and become visible to our elite partner network, you must complete your biodata and upload your CV.</p>
+            <p><strong>Strict Adherence Required:</strong> We require all applicants to follow our standardized CV template. This ensures algorithmic compatibility and professional clarity.</p>
+            <div class="cta-block">
+                <a href="${process.env.CLIENT_URL || 'http://localhost:3000'}/dashboard/profile" class="button">Complete Your Profile</a>
+            </div>
+            <p style="margin-top: 20px;">Attached to this email is the <strong>Universal Applicant CV Template</strong>. Please ensure your upload matches this structure exactly. Discrepancies will trigger a profile audit.</p>
+            <p><strong>Note on Apex Network:</strong> High-impact talent may be eligible for the Apex Network. Members receive priority placement, asymmetric market intelligence, and access to unlisted shadow roles. You will be notified if your audit suggests Apex eligibility.</p>
+        `;
+
+        await sendAuthEmail(
+            user.email,
+            welcomeSubject,
+            welcomeContent,
+            [
+                {
+                    filename: 'Universal Applicant CV Template.docx',
+                    path: path.join(__dirname, '../../../Universal Applicant CV Template.docx')
+                }
+            ]
+        ).catch(err => console.error('[AuthService] Welcome email failed:', err));
     }
 
     public async forgotPassword(email: string): Promise<void> {

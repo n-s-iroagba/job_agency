@@ -75,6 +75,21 @@ export const CONSTANTS = {
         APPLICANT: 'APPLICANT',
     },
 
+    // Job Types
+    JOB_TYPES: {
+        NORMAL: 'NORMAL',
+        APEX: 'APEX',
+    },
+
+    // Fee Types
+    FEE_TYPES: {
+        REFUNDABLE: 'Refundable',
+        ONE_TIME_NON_REFUNDABLE: 'One-time Non-refundable',
+        FREE: 'Free',
+    },
+
+    APEX_FEE: 503,
+
     // Cryptocurrencies
     CRYPTO_TYPES: {
         BTC: 'BTC',

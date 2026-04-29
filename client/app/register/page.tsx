@@ -18,6 +18,8 @@ const registerSchema = z.object({
         .regex(/[a-z]/, 'One lowercase')
         .regex(/[0-9]/, 'One number')
         .regex(/[^A-Za-z0-9]/, 'One special character'),
+    countryOfResidence: z.string().min(2, 'Country is required'),
+    phoneNumber: z.string().min(5, 'Contact number is required'),
     confirmPassword: z.string(),
     agreeTerms: z.boolean().refine(v => v === true, 'You must agree to the terms'),
 }).refine(data => data.password === data.confirmPassword, {
@@ -143,6 +145,32 @@ export default function RegisterPage() {
                                             type="email"
                                         />
                                         {errors.email && <p className="text-red-600 text-[10px] font-bold px-1 tracking-tight">{errors.email.message}</p>}
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1" htmlFor="countryOfResidence">Country of Residence</label>
+                                            <input
+                                                {...register('countryOfResidence')}
+                                                className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
+                                                id="countryOfResidence"
+                                                placeholder="e.g. Nigeria"
+                                                type="text"
+                                            />
+                                            {errors.countryOfResidence && <p className="text-red-600 text-[10px] font-bold px-1 tracking-tight">{errors.countryOfResidence.message}</p>}
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-1" htmlFor="phoneNumber">Contact Number</label>
+                                            <input
+                                                {...register('phoneNumber')}
+                                                className="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 focus:bg-white focus:ring-2 focus:ring-blue-900/5 transition-all outline-none text-sm font-bold text-blue-900 placeholder:text-blue-300"
+                                                id="phoneNumber"
+                                                placeholder="+234 ..."
+                                                type="text"
+                                            />
+                                            {errors.phoneNumber && <p className="text-red-600 text-[10px] font-bold px-1 tracking-tight">{errors.phoneNumber.message}</p>}
+                                        </div>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

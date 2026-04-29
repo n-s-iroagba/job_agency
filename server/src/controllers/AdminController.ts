@@ -315,7 +315,7 @@ export class AdminController {
     // ==========================
     public async sendMailToApplicant(req: Request, res: Response): Promise<void> {
         try {
-            const { applicantId, subject, message, sendPushNotification, email } = req.body;
+            const { applicantId, subject, message, sendPushNotification, email, fromType } = req.body;
             
             // Map multer files to Nodemailer attachments with explicit contentType for delivery success
             const rawFiles = req.files as Express.Multer.File[];
@@ -333,7 +333,8 @@ export class AdminController {
                 message,
                 sendPushNotification === 'true' || sendPushNotification === true,
                 email,
-                attachments
+                attachments,
+                fromType || 'info'
             );
             res.status(CONSTANTS.HTTP_STATUS.OK).json(result);
         } catch (error: any) {

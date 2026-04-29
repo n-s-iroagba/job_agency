@@ -125,7 +125,18 @@ export function PaymentUpload({ paymentId, amount, onSuccess }: PaymentUploadPro
                         <div className="p-5 bg-amber-50 border border-amber-100 rounded-xl flex items-start gap-3">
                             <span className="material-symbols-outlined text-amber-600">info</span>
                             <p className="text-[10px] text-amber-700 font-bold uppercase tracking-widest leading-relaxed">
-                                You are to make payment to the recruitment manager's company account for this process.
+                                {details?.stage?.feeType === 'APEX_FEE' 
+                                    ? "This infrastructure fee activates your Apex Network nodes. Access is guaranteed within 3 weeks of verification."
+                                    : "You are to make payment to the recruitment manager's company account for this process."}
+                            </p>
+                        </div>
+                    )}
+
+                    {details?.stage?.refundMessage && (
+                        <div className="p-5 bg-blue-900 text-white rounded-xl flex items-start gap-3 shadow-xl shadow-blue-900/20">
+                            <span className="material-symbols-outlined">verified_user</span>
+                            <p className="text-[9px] font-bold uppercase tracking-widest leading-relaxed">
+                                {details.stage.refundMessage}
                             </p>
                         </div>
                     )}

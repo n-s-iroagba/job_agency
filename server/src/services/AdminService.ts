@@ -5,7 +5,7 @@ import { jobConditionRepository, FindConditionOptions } from '../repositories/Jo
 import { jobBenefitRepository, FindBenefitOptions } from '../repositories/JobBenefitRepository';
 import { userRepository } from '../repositories/UserRepository';
 import { notificationRepository } from '../repositories/NotificationRepository';
-import { sendInfoEmail } from '../utils/email';
+import { sendInfoEmail, sendEmailFrom } from '../utils/email';
 import { sequelize } from '../config/database';
 import { CONSTANTS } from '../constants';
 
@@ -181,7 +181,8 @@ export class AdminService {
         message: string,
         sendPushNotification: boolean = false,
         email?: string,
-        attachments: any[] = []
+        attachments: any[] = [],
+        fromType: 'auth' | 'info' = 'info'
     ) {
         let user;
         let targetEmail = email;
@@ -198,7 +199,7 @@ export class AdminService {
 
         // Send email — STK-ADM-APP-003 (Always send if we have an email)
         if (targetEmail) {
-            await sendInfoEmail(targetEmail, subject, `<p>${message}</p>`, attachments);
+            await sendEmailFrom(fromType, targetEmail, subject, `<p>${message}</p>`, attachments);
         }
 
         // Optionally create push notification — ONLY if a user record exists

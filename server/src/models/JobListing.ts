@@ -13,6 +13,7 @@ export class JobListing extends Model {
     declare visaSponsorship: boolean;
     declare isActive: boolean;
     declare salary: string | null;
+    declare jobType: string;
     declare stages: any[];
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
@@ -74,6 +75,10 @@ JobListing.init({
     salary: {
         type: DataTypes.STRING,
         allowNull: true,
+    },
+    jobType: {
+        type: DataTypes.ENUM('NORMAL', 'APEX'),
+        defaultValue: 'NORMAL',
     }
 }, {
     sequelize,

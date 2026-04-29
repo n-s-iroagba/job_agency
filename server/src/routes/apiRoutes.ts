@@ -159,4 +159,11 @@ router.get('/admin/users/:id', ...adminMW, adminController.getApplicantById.bind
 router.get('/admin/users', ...adminMW, adminController.getAllApplicants.bind(adminController));
 router.delete('/admin/users/:id', ...adminMW, adminController.deleteApplicant.bind(adminController));
 
+import { interestController } from '../controllers/InterestController';
+
+// Expression of Interest Routes
+router.post('/interests', ...applicantMW, interestController.createInterest.bind(interestController));
+router.get('/interests/me', ...applicantMW, interestController.getUserInterest.bind(interestController));
+router.get('/admin/interests', ...adminMW, interestController.getAllInterests.bind(interestController));
+
 export default router;

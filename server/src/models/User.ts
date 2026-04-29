@@ -22,7 +22,11 @@ export class User extends Model {
     declare city: string | null;
     declare state: string | null;
     declare country: string | null;
+    declare countryOfResidence: string | null;
     declare zipCode: string | null;
+    declare isApexMember: boolean;
+    declare apexStatus: string | null; // 'PENDING', 'APPROVED', 'INVITED'
+    declare languages: object | null; // { language: string, level: string }[]
     declare readonly createdAt: Date;
     declare readonly updatedAt: Date;
 }
@@ -107,8 +111,24 @@ User.init({
         type: DataTypes.STRING,
         allowNull: true,
     },
+    countryOfResidence: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     zipCode: {
         type: DataTypes.STRING,
+        allowNull: true,
+    },
+    isApexMember: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    apexStatus: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    languages: {
+        type: DataTypes.JSON,
         allowNull: true,
     }
 }, {

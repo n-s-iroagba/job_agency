@@ -30,6 +30,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     const [requirements, setRequirements] = useState(initialData?.requirements || '');
     const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
     const [salary, setSalary] = useState(initialData?.salary || '');
+    const [jobType, setJobType] = useState<'NORMAL' | 'APEX'>(initialData?.jobType || 'NORMAL');
 
     const [selectedBenefits, setSelectedBenefits] = useState<number[]>(
         initialData?.JobBenefits?.map(b => b.id) || []
@@ -53,6 +54,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
             setSalary(initialData.salary || '');
             setCompany(initialData.company || '');
             setVisaSponsorship(initialData.visaSponsorship || false);
+            setJobType(initialData.jobType || 'NORMAL');
             setSelectedBenefits(initialData.JobBenefits?.map(b => b.id) || []);
             setSelectedConditions(initialData.JobConditions?.map(c => c.id) || []);
         }
@@ -83,6 +85,7 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                 salary,
                 company,
                 visaSponsorship,
+                jobType,
                 benefitsIds: selectedBenefits,
                 conditionsIds: selectedConditions
             });
@@ -135,6 +138,18 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                                 <option value="Contract">Contract</option>
                                 <option value="Part-time">Part-time</option>
                                 <option value="Internship">Internship</option>
+                            </select>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Job Tier</label>
+                            <select
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
+                                value={jobType}
+                                onChange={(e) => setJobType(e.target.value as any)}
+                                required
+                            >
+                                <option value="NORMAL">Standard Recruitment</option>
+                                <option value="APEX">Apex Network Exclusive</option>
                             </select>
                         </div>
                     </div>

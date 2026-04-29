@@ -10,6 +10,8 @@ export class JobStage extends Model {
     declare requiresPayment: boolean;
     declare amount: number | null;
     declare currency: string;
+    declare feeType: string | null;
+    declare refundMessage: string | null;
     declare instructions: string | null;
     declare deadlineDays: number | null;
     declare notifyEmail: boolean;
@@ -52,6 +54,14 @@ JobStage.init({
     currency: {
         type: DataTypes.STRING,
         defaultValue: 'USD',
+    },
+    feeType: {
+        type: DataTypes.STRING,
+        defaultValue: 'Free',
+    },
+    refundMessage: {
+        type: DataTypes.TEXT,
+        allowNull: true,
     },
     instructions: {
         type: DataTypes.TEXT,

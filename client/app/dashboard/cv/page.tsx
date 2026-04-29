@@ -51,12 +51,17 @@ function CvContent() {
         try {
             const cloudinaryUrl = await uploadFile(file, 'image');
 
-            await api.post('/cv', {
+            const res = await api.post('/cv', {
                 cvUrl: cloudinaryUrl,
                 fileName: file.name,
                 fileType: file.type,
                 fileSizeMb: parseFloat((file.size / (1024 * 1024)).toFixed(2))
             });
+            
+            if (res.data.screeningResults && !res.data.screeningResults.isValid) {
+                setError(`Screening Alert: ${res.data.screeningResults.discrepancies.join('. ')}`);
+                return;
+            }
             
             setSuccess(true);
             await refetch();
@@ -99,7 +104,7 @@ function CvContent() {
                             </div>
                             <h3 className="text-xl font-bold text-blue-900 mb-2">Upload Your Resume</h3>
                             <p className="text-blue-500 text-sm max-w-sm mb-8 leading-relaxed">
-                                Please upload your resume in PDF or DOCX format. This document will be accessible to recruitment partners during the application review process.
+                                You must strictly adhere to the <a href="/Universal Applicant CV Template.docx" download className="text-blue-900 font-bold underline">JobNexe Standardized Template</a>. Do not deviate from the structure.
                             </p>
                             <label className="bg-blue-900 text-white px-8 py-3.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95">
                                 {uploading ? 'Processing...' : 'Select Resume'}
@@ -111,7 +116,12 @@ function CvContent() {
                                     disabled={uploading}
                                 />
                             </label>
-                            {error && <p className="text-red-600 text-[10px] font-bold uppercase tracking-widest mt-6">{error}</p>}
+                            {error && (
+                                <div className="mt-6 p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
+                                    <span className="material-symbols-outlined text-sm block mb-2">warning</span>
+                                    {error}
+                                </div>
+                            )}
                         </section>
                     ) : (
                         <section className="space-y-4">

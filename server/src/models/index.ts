@@ -10,6 +10,11 @@ import { JobStage } from './JobStage';
 import { Application } from './Application';
 import { Payment } from './Payment';
 import { Notification } from './Notification';
+import { Interest } from './Interest';
+
+// User <-> Interest
+User.hasMany(Interest, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true });
+Interest.belongsTo(User, { foreignKey: 'userId' });
 
 // Job Category <-> Job Listing
 JobCategory.hasMany(JobListing, { foreignKey: 'categoryId' });
@@ -72,5 +77,6 @@ export {
     JobStage,
     Application,
     Payment,
-    Notification
+    Notification,
+    Interest
 };

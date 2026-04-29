@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export default function ApplicantDashboard() {
     const { data: summary, isLoading, refetch } = useApiQuery<any>(['applicant', 'dashboard'], '/dashboard');
+    const { data: user } = useApiQuery<any>(['auth', 'me'], '/auth/me');
     const [selectedPaymentApp, setSelectedPaymentApp] = useState<any>(null);
     const [appFilter, setAppFilter] = useState<'All' | 'Active' | 'Completed' | 'Payments'>('All');
 
@@ -284,6 +285,38 @@ export default function ApplicantDashboard() {
                             <Link href="/dashboard/jobs" className="block text-center pt-6 text-[9px] font-black text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-colors">
                                 Browse All Jobs
                             </Link>
+                        </div>
+                    </section>
+
+                    {/* Black Box Dashboard — Apex Locked */}
+                    <section className={`relative overflow-hidden p-8 rounded-[2.5rem] border transition-all duration-500 ${user?.user?.isApexMember ? 'bg-blue-900 text-white border-blue-900 shadow-2xl' : 'bg-white border-blue-100 grayscale-[0.8] opacity-60'}`}>
+                        {!user?.user?.isApexMember && (
+                            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/40 backdrop-blur-[2px] p-6 text-center">
+                                <span className="material-symbols-outlined text-3xl text-blue-900 mb-3">lock</span>
+                                <h4 className="text-[10px] font-black uppercase tracking-widest text-blue-900 mb-1">Black Box Dashboard</h4>
+                                <p className="text-[8px] font-bold text-blue-400 uppercase leading-tight">Apex Membership Required</p>
+                                <Link href="/apex/audit" className="mt-4 text-[8px] font-black text-blue-900 underline uppercase tracking-widest">Apply for Audit</Link>
+                            </div>
+                        )}
+                        <div className="space-y-6 relative z-0">
+                            <h3 className={`text-[10px] font-black uppercase tracking-[0.3em] mb-4 flex items-center gap-2 ${user?.user?.isApexMember ? 'text-white/60' : 'text-blue-400'}`}>
+                                <span className="material-symbols-outlined text-base">monitoring</span>
+                                Market Intelligence
+                            </h3>
+                            <div className="space-y-5">
+                                <div className="space-y-1">
+                                    <p className={`text-[8px] font-bold uppercase tracking-widest ${user?.user?.isApexMember ? 'text-white/40' : 'text-blue-300'}`}>Budget Ceiling (Avg)</p>
+                                    <p className="text-xl font-black tabular-nums tracking-tighter">$142,500 - $190,000</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className={`text-[8px] font-bold uppercase tracking-widest ${user?.user?.isApexMember ? 'text-white/40' : 'text-blue-300'}`}>Avg. Engineering Turnover</p>
+                                    <p className="text-xl font-black tabular-nums tracking-tighter">4.2% / Year</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className={`text-[8px] font-bold uppercase tracking-widest ${user?.user?.isApexMember ? 'text-white/40' : 'text-blue-300'}`}>Time-to-Hire Metric</p>
+                                    <p className="text-xl font-black tabular-nums tracking-tighter">18.5 Days</p>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>

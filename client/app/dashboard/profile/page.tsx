@@ -22,7 +22,9 @@ function ProfileContent() {
         city: '',
         state: '',
         country: '',
-        zipCode: ''
+        countryOfResidence: '',
+        zipCode: '',
+        languages: [] as { language: string, level: string }[]
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -40,7 +42,9 @@ function ProfileContent() {
                 city: user.city || '',
                 state: user.state || '',
                 country: user.country || '',
-                zipCode: user.zipCode || ''
+                countryOfResidence: user.countryOfResidence || '',
+                zipCode: user.zipCode || '',
+                languages: user.languages || []
             });
         }
     }, [data]);
@@ -198,8 +202,71 @@ function ProfileContent() {
                         </div>
                         <InputField label="City" value={formData.city} onChange={(v: string) => handleInputChange('city', v)} error={errors.city} />
                         <InputField label="State / Province" value={formData.state} onChange={(v: string) => handleInputChange('state', v)} error={errors.state} />
-                        <InputField label="Country" value={formData.country} onChange={(v: string) => handleInputChange('country', v)} error={errors.country} />
+                        <InputField label="Country of Residence" value={formData.countryOfResidence} onChange={(v: string) => handleInputChange('countryOfResidence', v)} error={errors.countryOfResidence} />
                         <InputField label="Zip / Postal Code" value={formData.zipCode} onChange={(v: string) => handleInputChange('zipCode', v)} />
+                    </div>
+                </section>
+
+                {/* Languages Section */}
+                <section className="bg-white p-10 rounded-3xl border border-blue-100 shadow-sm space-y-8">
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-4">
+                            <div className="p-2 bg-blue-900 rounded-lg text-white">
+                                <span className="material-symbols-outlined text-base">language</span>
+                            </div>
+                            <h2 className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">Languages Spoken</h2>
+                        </div>
+                        <button 
+                            onClick={() => setFormData(prev => ({ ...prev, languages: [...prev.languages, { language: '', level: 'Professional' }] }))}
+                            className="text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:text-blue-900 transition-colors"
+                        >
+                            + Add Language
+                        </button>
+                    </div>
+
+                    <div className="space-y-4">
+                        {formData.languages.map((lang, idx) => (
+                            <div key={idx} className="flex flex-col md:flex-row gap-4 items-end bg-blue-50/50 p-6 rounded-2xl border border-blue-50">
+                                <div className="flex-1 w-full">
+                                    <InputField 
+                                        label="Language" 
+                                        value={lang.language} 
+                                        onChange={(v) => {
+                                            const newLangs = [...formData.languages];
+                                            newLangs[idx].language = v;
+                                            setFormData(prev => ({ ...prev, languages: newLangs }));
+                                        }} 
+                                        placeholder="e.g. English"
+                                    />
+                                </div>
+                                <div className="flex-1 w-full">
+                                    <InputField 
+                                        label="Proficiency Level" 
+                                        value={lang.level} 
+                                        onChange={(v) => {
+                                            const newLangs = [...formData.languages];
+                                            newLangs[idx].level = v;
+                                            setFormData(prev => ({ ...prev, languages: newLangs }));
+                                        }} 
+                                        options={['Native', 'Professional', 'Limited']}
+                                    />
+                                </div>
+                                <button 
+                                    onClick={() => {
+                                        const newLangs = formData.languages.filter((_, i) => i !== idx);
+                                        setFormData(prev => ({ ...prev, languages: newLangs }));
+                                    }}
+                                    className="p-3 text-red-400 hover:text-red-600 transition-colors"
+                                >
+                                    <span className="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        ))}
+                        {formData.languages.length === 0 && (
+                            <p className="text-[10px] font-bold text-blue-300 uppercase tracking-widest text-center py-6 border-2 border-dashed border-blue-50 rounded-2xl">
+                                No languages added to profile.
+                            </p>
+                        )}
                     </div>
                 </section>
 

@@ -16,15 +16,26 @@ interface Job {
 }
 
 export default function BrowseJobsPage() {
+    const { data: user } = useApiQuery<any>(['auth', 'me'], '/auth/me');
+    const [showApexModal, setShowApexModal] = useState(false);
+    const [viewType, setViewType] = useState<'NORMAL' | 'APEX'>('NORMAL');
     const [searchQuery, setSearchQuery] = useState('');
     const [locationQuery, setLocationQuery] = useState('');
     const [employmentType, setEmploymentType] = useState('');
     const [sortBy, setSortBy] = useState<'Recommended' | 'Newest'>('Recommended');
 
     const { data: jobs, isLoading } = useApiQuery<any>(
-        ['jobs', 'list', searchQuery, employmentType, sortBy],
-        `/jobs?searchQuery=${searchQuery}&employmentType=${employmentType}&sortBy=${sortBy === 'Newest' ? 'createdAt' : ''}&sortOrder=DESC`
+        ['jobs', 'list', searchQuery, employmentType, sortBy, viewType],
+        `/jobs?searchQuery=${searchQuery}&employmentType=${employmentType}&sortBy=${sortBy === 'Newest' ? 'createdAt' : ''}&sortOrder=DESC&jobType=${viewType}`
     );
+
+    const handleToggleApex = (checked: boolean) => {
+        if (checked && !user?.isApexMember) {
+            setShowApexModal(true);
+            return;
+        }
+        setViewType(checked ? 'APEX' : 'NORMAL');
+    };
 
     const jobList = jobs?.rows || [];
 
@@ -46,16 +57,29 @@ export default function BrowseJobsPage() {
                     </p>
                 </div>
                 
-                <div className="flex items-center gap-1 bg-blue-50 p-1.5 rounded-2xl self-center md:self-end border border-blue-100 shadow-sm">
-                    {(['Recommended', 'Newest'] as const).map((option) => (
-                        <button
-                            key={option}
-                            onClick={() => setSortBy(option)}
-                            className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${sortBy === option ? 'bg-white text-blue-900 shadow-lg shadow-blue-900/5' : 'text-blue-400 hover:text-blue-600'}`}
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                    {/* Ghost Toggle */}
+                    <div className="flex items-center gap-4 bg-blue-50/50 p-2 pl-4 rounded-2xl border border-blue-100">
+                        <span className={`text-[9px] font-black uppercase tracking-widest ${viewType === 'APEX' ? 'text-blue-900' : 'text-blue-400'}`}>Apex Network</span>
+                        <button 
+                            onClick={() => handleToggleApex(viewType === 'NORMAL')}
+                            className={`w-12 h-6 rounded-full transition-all relative ${viewType === 'APEX' ? 'bg-blue-900' : 'bg-blue-200'}`}
                         >
-                            {option}
+                            <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${viewType === 'APEX' ? 'left-7' : 'left-1'}`} />
                         </button>
-                    ))}
+                    </div>
+
+                    <div className="flex items-center gap-1 bg-blue-50 p-1.5 rounded-2xl self-center md:self-end border border-blue-100 shadow-sm">
+                        {(['Recommended', 'Newest'] as const).map((option) => (
+                            <button
+                                key={option}
+                                onClick={() => setSortBy(option)}
+                                className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${sortBy === option ? 'bg-white text-blue-900 shadow-lg shadow-blue-900/5' : 'text-blue-400 hover:text-blue-600'}`}
+                            >
+                                {option}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </header>
 
@@ -137,6 +161,12 @@ export default function BrowseJobsPage() {
                                         <span className="text-[9px] font-black text-blue-300 uppercase tracking-widest leading-none bg-blue-50 px-3 py-1 rounded-lg">
                                             {job.JobCategory?.name || 'High Impact'}
                                         </span>
+                                        {viewType === 'APEX' && (
+                                            <div className="flex items-center gap-1.5 px-3 py-1 bg-black text-white text-[8px] font-black uppercase tracking-[0.2em] rounded-lg">
+                                                <span className="material-symbols-outlined text-[10px]">visibility_off</span>
+                                                Shadow Role
+                                            </div>
+                                        )}
                                     </div>
                                     
                                     <div>
@@ -193,6 +223,35 @@ export default function BrowseJobsPage() {
                             <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Refine your filters to find more opportunities.</p>
                         </div>
                     )}
+                </div>
+            )}
+            {/* Apex Access Modal */}
+            {showApexModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-blue-900/40 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl border border-blue-100 text-center space-y-8 animate-in zoom-in-95 duration-300">
+                        <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-blue-900">
+                            <span className="material-symbols-outlined text-4xl">lock</span>
+                        </div>
+                        <div className="space-y-4">
+                            <h2 className="text-2xl font-black text-blue-900 uppercase tracking-tight">Apex Access Restricted</h2>
+                            <p className="text-xs text-blue-500 font-medium leading-relaxed italic px-4">
+                                Sorry you can not view this page as this is only for JobNexe Apex Network Member Applicants, you’d be granted access after you’re invited.
+                            </p>
+                        </div>
+                        <div className="pt-4 flex flex-col gap-3">
+                            <button 
+                                onClick={() => setShowApexModal(false)}
+                                className="w-full bg-blue-900 text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-blue-800 transition-all"
+                            >
+                                Back to Standard
+                            </button>
+                            <Link href="/apex/audit" className="w-full">
+                                <button className="w-full bg-white text-blue-900 border border-blue-100 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-blue-50 transition-all">
+                                    Request Apex Audit
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
