@@ -20,11 +20,28 @@ export function PushNotificationManager() {
                     if (sub) {
                         setSubscription(sub);
                         setIsSubscribed(true);
+                    } else if (Notification.permission === 'granted') {
+                        // If already granted but not subscribed, do it automatically
+                        subscribeToPushInternal(reg);
                     }
                 });
             });
         }
     }, [user]);
+
+    const subscribeToPushInternal = async (reg: ServiceWorkerRegistration) => {
+        try {
+            const sub = await reg.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+            });
+            await api.post('/notifications/subscribe', sub.toJSON());
+            setSubscription(sub);
+            setIsSubscribed(true);
+        } catch (error) {
+            console.error('[Push] Auto-subscription failed', error);
+        }
+    };
 
     const subscribeToPush = async () => {
         if (!registration) return;
