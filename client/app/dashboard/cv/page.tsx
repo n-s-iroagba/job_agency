@@ -97,11 +97,11 @@ function CvContent() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-2 space-y-8">
                     {!cv ? (
-                        <section className="bg-white p-12 rounded-2xl border-2 border-dashed border-blue-200 flex flex-col items-center justify-center text-center">
-                            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-400 mb-6">
-                                <span className="material-symbols-outlined text-4xl">cloud_upload</span>
+                        <section className="bg-white p-8 md:p-12 rounded-2xl border-2 border-dashed border-blue-200 flex flex-col items-center justify-center text-center">
+                            <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-400 mb-6">
+                                <span className="material-symbols-outlined text-3xl md:text-4xl">cloud_upload</span>
                             </div>
-                            <h3 className="text-xl font-bold text-blue-900 mb-2">Upload Your Resume</h3>
+                            <h3 className="text-lg md:text-xl font-bold text-blue-900 mb-2">Upload Your Resume</h3>
                             <div className="mb-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center max-w-sm">
                                 <p className="text-[10px] font-bold text-blue-900 uppercase tracking-widest mb-3">Mandatory Structural Requirement</p>
                                 <p className="text-blue-500 text-[11px] leading-relaxed mb-4">
@@ -116,7 +116,7 @@ function CvContent() {
                                     Download Template
                                 </a>
                             </div>
-                            <label className="bg-blue-900 text-white px-8 py-3.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95">
+                            <label className="w-full md:w-auto bg-blue-900 text-white px-8 py-4 md:py-3.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95 text-center">
                                 {uploading ? 'Processing...' : 'Select Resume'}
                                 <input
                                     type="file"
@@ -136,30 +136,30 @@ function CvContent() {
                     ) : (
                         <section className="space-y-4">
                             <h2 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Active Resume</h2>
-                            <div className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm flex items-center justify-between">
-                                <div className="flex items-center gap-6">
-                                    <div className="w-14 h-14 rounded-xl bg-blue-900 text-white flex items-center justify-center">
-                                        <span className="material-symbols-outlined text-3xl">
+                            <div className="bg-white p-6 md:p-8 rounded-2xl border border-blue-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                <div className="flex items-center gap-4 md:gap-6">
+                                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-blue-900 text-white flex items-center justify-center shrink-0">
+                                        <span className="material-symbols-outlined text-2xl md:text-3xl">
                                             {cv.fileName?.endsWith('.pdf') ? 'picture_as_pdf' : 'description'}
                                         </span>
                                     </div>
-                                    <div className="flex flex-col">
-                                        <h4 className="font-bold text-lg text-blue-900 truncate max-w-[300px]">{cv.fileName || 'Document.pdf'}</h4>
-                                        <div className="flex items-center gap-4 text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-1">
+                                    <div className="flex flex-col min-w-0">
+                                        <h4 className="font-bold text-base md:text-lg text-blue-900 truncate pr-2">{cv.fileName || 'Document.pdf'}</h4>
+                                        <div className="flex flex-wrap items-center gap-2 md:gap-4 text-[9px] font-bold text-blue-400 uppercase tracking-widest mt-1">
                                             <span>{cv.fileSize ? (cv.fileSize / 1024 / 1024).toFixed(2) : '1.20'} MB</span>
-                                            <span>•</span>
+                                            <span className="hidden md:inline">•</span>
                                             <span>Uploaded {cv.createdAt ? new Date(cv.createdAt).toLocaleDateString() : 'Just now'}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-4">
+                                <div className="flex flex-wrap items-center gap-3 md:gap-4 border-t md:border-t-0 pt-4 md:pt-0">
                                     <button
                                         onClick={() => window.open(cv.fileUrl, '_blank')}
-                                        className="bg-blue-50 text-blue-900 border border-blue-200 px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-blue-100 transition-all"
+                                        className="flex-1 md:flex-none bg-blue-50 text-blue-900 border border-blue-200 px-4 py-2.5 md:py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-blue-100 transition-all text-center"
                                     >
                                         View
                                     </button>
-                                    <label className="bg-blue-900 text-white px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95">
+                                    <label className="flex-1 md:flex-none bg-blue-900 text-white px-4 py-2.5 md:py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95 text-center">
                                         {uploading ? 'Processing...' : 'Update'}
                                         <input
                                             type="file"
@@ -172,7 +172,7 @@ function CvContent() {
                                     <button
                                         onClick={() => deleteMutation.mutate({})}
                                         disabled={deleteMutation.isPending}
-                                        className="text-[9px] font-bold text-red-600 uppercase tracking-widest hover:underline px-4"
+                                        className="w-full md:w-auto text-[9px] font-bold text-red-600 uppercase tracking-widest hover:underline px-4 py-2 text-center"
                                     >
                                         {deleteMutation.isPending ? 'Removing...' : 'Delete'}
                                     </button>
