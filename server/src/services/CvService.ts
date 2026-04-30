@@ -19,25 +19,26 @@ export class CvService {
         if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
 
         // Screen CV if it's a DOCX file
-        let screeningResults = null;
         if (fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
             try {
                 const response = await axios.get(cvUrl, { responseType: 'arraybuffer' });
                 const tempPath = path.join(__dirname, `../../temp_cv_${userId}.docx`);
                 fs.writeFileSync(tempPath, response.data);
-                screeningResults = await screenCV(tempPath);
+                const screeningResults = await screenCV(tempPath);
                 fs.unlinkSync(tempPath); // Cleanup
-            } catch (err) {
+
+                if (!screeningResults.isValid) {
+                    throw new Error(`Template Discrepancy: ${screeningResults.discrepancies.join('. ')}`);
+                }
+            } catch (err: any) {
                 console.error('[CvService] Screening failed:', err);
+                throw err;
             }
         }
 
         await userRepository.update(userId, { cvUrl });
         const updatedUser = await userRepository.findById(userId);
-        return {
-            ...updatedUser?.toJSON(),
-            screeningResults
-        };
+        return updatedUser;
     }
 
     // Maps to STK-APP-CV-001 (Read)

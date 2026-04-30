@@ -58,11 +58,6 @@ function CvContent() {
                 fileSizeMb: parseFloat((file.size / (1024 * 1024)).toFixed(2))
             });
             
-            if (res.data.screeningResults && !res.data.screeningResults.isValid) {
-                setError(`Screening Alert: ${res.data.screeningResults.discrepancies.join('. ')}`);
-                return;
-            }
-            
             setSuccess(true);
             await refetch();
             await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
@@ -103,9 +98,20 @@ function CvContent() {
                                 <span className="material-symbols-outlined text-4xl">cloud_upload</span>
                             </div>
                             <h3 className="text-xl font-bold text-blue-900 mb-2">Upload Your Resume</h3>
-                            <p className="text-blue-500 text-sm max-w-sm mb-8 leading-relaxed">
-                                You must strictly adhere to the <a href="/Universal Applicant CV Template.docx" download className="text-blue-900 font-bold underline">JobNexe Standardized Template</a>. Do not deviate from the structure.
-                            </p>
+                            <div className="mb-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center max-w-sm">
+                                <p className="text-[10px] font-bold text-blue-900 uppercase tracking-widest mb-3">Mandatory Structural Requirement</p>
+                                <p className="text-blue-500 text-[11px] leading-relaxed mb-4">
+                                    You must strictly adhere to the JobNexe Standardized Template. Profiles with structural discrepancies will be automatically flagged.
+                                </p>
+                                <a 
+                                    href="/Universal Applicant CV Template.docx" 
+                                    download 
+                                    className="inline-flex items-center gap-2 text-blue-900 font-bold text-[10px] uppercase tracking-widest hover:underline"
+                                >
+                                    <span className="material-symbols-outlined text-sm">download</span>
+                                    Download Template
+                                </a>
+                            </div>
                             <label className="bg-blue-900 text-white px-8 py-3.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95">
                                 {uploading ? 'Processing...' : 'Select Resume'}
                                 <input

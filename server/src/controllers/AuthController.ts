@@ -162,8 +162,10 @@ export class AuthController {
                     city: user.city,
                     state: user.state,
                     country: user.country,
+                    countryOfResidence: user.countryOfResidence,
                     zipCode: user.zipCode,
-                    cvUrl: user.cvUrl
+                    cvUrl: user.cvUrl,
+                    languages: user.languages
                 }
             });
         } catch (error: any) {
@@ -191,8 +193,10 @@ export class AuthController {
                     city: user.city,
                     state: user.state,
                     country: user.country,
+                    countryOfResidence: user.countryOfResidence,
                     zipCode: user.zipCode,
-                    cvUrl: user.cvUrl
+                    cvUrl: user.cvUrl,
+                    languages: user.languages
                 }
             });
         } catch (error: any) {
