@@ -37,6 +37,10 @@ function CvContent() {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        setError(null);
+        setSuccess(false);
+        setUploading(true);
+
         const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
         if (!allowedTypes.includes(file.type)) {
             setError('Invalid file type. Only PDF and DOCX are allowed.');
@@ -155,6 +159,16 @@ function CvContent() {
                                     >
                                         View
                                     </button>
+                                    <label className="bg-blue-900 text-white px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95">
+                                        {uploading ? 'Processing...' : 'Update'}
+                                        <input
+                                            type="file"
+                                            className="hidden"
+                                            accept=".pdf,.docx"
+                                            onChange={handleFileUpload}
+                                            disabled={uploading}
+                                        />
+                                    </label>
                                     <button
                                         onClick={() => deleteMutation.mutate({})}
                                         disabled={deleteMutation.isPending}
@@ -173,6 +187,21 @@ function CvContent() {
                 </div>
 
                 <aside className="space-y-8">
+                    <section className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
+                        <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest block mb-4">Mandatory Template</span>
+                        <p className="text-[11px] text-blue-500 leading-relaxed mb-6">
+                            All applicants must use the JobNexe Universal Template. Our automated screening protocol rejects any document that deviates from this structure.
+                        </p>
+                        <a 
+                            href="/Universal Applicant CV Template.docx" 
+                            download 
+                            className="flex items-center justify-center gap-3 w-full py-4 bg-blue-50 border border-blue-100 rounded-xl text-[10px] font-bold text-blue-900 uppercase tracking-widest hover:bg-blue-100 transition-all"
+                        >
+                            <span className="material-symbols-outlined text-base">download</span>
+                            Download .DOCX Template
+                        </a>
+                    </section>
+
                     <section className="bg-blue-900 text-white p-8 rounded-2xl shadow-xl shadow-blue-900/10">
                         <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-6">Security & Privacy</span>
                         <div className="space-y-6">
