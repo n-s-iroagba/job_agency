@@ -6,72 +6,82 @@ import { useAuth } from '@/contexts/AuthContext';
 
 const VAPID_PUBLIC_KEY = 'BLX7h2AF-MbwFRRtf-YSBgLQ8FFOj7eiV6cP7HQicE0BvBFzfrFBzrjgXbAtfymNx53z4OT0R820HaZJvMCieVE';
 
+function urlBase64ToUint8Array(base64String: string) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+}
+
 export function PushNotificationManager() {
     const { user } = useAuth();
     const [isSubscribed, setIsSubscribed] = useState(false);
-    const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
+    // Check existing subscription on mount
     useEffect(() => {
-        if (typeof window !== 'undefined' && 'serviceWorker' in navigator && user) {
-            navigator.serviceWorker.ready.then((reg) => {
-                setRegistration(reg);
-                reg.pushManager.getSubscription().then((sub) => {
-                    if (sub) {
-                        setIsSubscribed(true);
-                    } else if (Notification.permission === 'granted') {
-                        // If already granted but not subscribed, do it automatically
-                        subscribeToPushInternal(reg);
-                    }
-                });
-            });
+        if (typeof window === 'undefined' || !user) return;
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+
+        // Check if already subscribed
+        if (Notification.permission === 'granted') {
+            navigator.serviceWorker.ready
+                .then(reg => reg.pushManager.getSubscription())
+                .then(sub => {
+                    if (sub) setIsSubscribed(true);
+                })
+                .catch(() => {});
         }
     }, [user]);
 
-    const subscribeToPushInternal = async (reg: ServiceWorkerRegistration) => {
+    const subscribeToPush = async () => {
+        setIsLoading(true);
+
         try {
+            // Step 1: Request browser permission — this triggers the native dialog
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                setIsSubscribed(true); // User denied — hide the prompt
+                return;
+            }
+
+            // Step 2: Check if service worker + push manager are available
+            if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                alert('Push notifications are not supported in this browser.');
+                setIsSubscribed(true);
+                return;
+            }
+
+            // Step 3: Wait for service worker to be ready (may take a moment)
+            const reg = await navigator.serviceWorker.ready;
+
+            // Step 4: Subscribe to push
             const sub = await reg.pushManager.subscribe({
                 userVisibleOnly: true,
                 applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
             });
-            await api.post('/notifications/subscribe', sub.toJSON());
 
+            // Step 5: Send subscription to server
+            await api.post('/notifications/subscribe', sub.toJSON());
             setIsSubscribed(true);
         } catch (error) {
-            console.error('[Push] Auto-subscription failed', error);
-        }
-    };
-
-    const subscribeToPush = async () => {
-        if (!registration) return;
-
-        try {
-            // Step 1: Ask the browser for permission — this shows the native browser dialog
-            const permission = await Notification.requestPermission();
-            if (permission !== 'granted') {
-                setIsSubscribed(true); // Dismissed — hide the prompt
-                return;
-            }
-
-            // Step 2: Subscribe to push with VAPID key
-            const sub = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
-            });
-
-            // Step 3: Send subscription token to server
-            await api.post('/notifications/subscribe', sub.toJSON());
-
-            setIsSubscribed(true);
-        } catch (error) {
-            console.error('[Push] Subscription failed', error);
-            setIsSubscribed(true); // Hide prompt on error too
+            console.error('[Push] Subscription failed:', error);
+            alert('Failed to enable push notifications. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     if (!user || isSubscribed) return null;
 
     return (
-        <div className="fixed bottom-6 right-6 z-[100] animate-in slide-in-from-bottom-10 duration-700">
+        <div className="fixed bottom-6 right-6 z-[100]">
             <div className="bg-white p-6 rounded-[2rem] shadow-2xl shadow-blue-900/20 border border-blue-50 max-w-sm flex flex-col gap-4">
                 <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-blue-900 rounded-2xl flex items-center justify-center text-white shrink-0">
@@ -85,9 +95,10 @@ export function PushNotificationManager() {
                 <div className="flex gap-2">
                     <button
                         onClick={subscribeToPush}
-                        className="flex-1 py-3 bg-blue-900 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-black transition-all"
+                        disabled={isLoading}
+                        className="flex-1 py-3 bg-blue-900 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-black transition-all disabled:opacity-50"
                     >
-                        Enable Now
+                        {isLoading ? 'Activating...' : 'Enable Now'}
                     </button>
                     <button
                         onClick={() => setIsSubscribed(true)}
@@ -99,19 +110,4 @@ export function PushNotificationManager() {
             </div>
         </div>
     );
-}
-
-function urlBase64ToUint8Array(base64String: string) {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding)
-        .replace(/\-/g, '+')
-        .replace(/_/g, '/');
-
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
 }
