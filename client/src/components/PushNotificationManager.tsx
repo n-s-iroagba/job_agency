@@ -9,7 +9,6 @@ const VAPID_PUBLIC_KEY = 'BLX7h2AF-MbwFRRtf-YSBgLQ8FFOj7eiV6cP7HQicE0BvBFzfrFBzr
 export function PushNotificationManager() {
     const { user } = useAuth();
     const [isSubscribed, setIsSubscribed] = useState(false);
-    const [subscription, setSubscription] = useState<PushSubscription | null>(null);
     const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
 
     useEffect(() => {
@@ -18,7 +17,6 @@ export function PushNotificationManager() {
                 setRegistration(reg);
                 reg.pushManager.getSubscription().then((sub) => {
                     if (sub) {
-                        setSubscription(sub);
                         setIsSubscribed(true);
                     } else if (Notification.permission === 'granted') {
                         // If already granted but not subscribed, do it automatically
@@ -36,7 +34,7 @@ export function PushNotificationManager() {
                 applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
             });
             await api.post('/notifications/subscribe', sub.toJSON());
-            setSubscription(sub);
+
             setIsSubscribed(true);
         } catch (error) {
             console.error('[Push] Auto-subscription failed', error);
@@ -62,8 +60,7 @@ export function PushNotificationManager() {
 
             // Step 3: Send subscription token to server
             await api.post('/notifications/subscribe', sub.toJSON());
-            
-            setSubscription(sub);
+
             setIsSubscribed(true);
         } catch (error) {
             console.error('[Push] Subscription failed', error);
@@ -86,13 +83,13 @@ export function PushNotificationManager() {
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <button 
+                    <button
                         onClick={subscribeToPush}
                         className="flex-1 py-3 bg-blue-900 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-black transition-all"
                     >
                         Enable Now
                     </button>
-                    <button 
+                    <button
                         onClick={() => setIsSubscribed(true)}
                         className="px-6 py-3 bg-blue-50 text-blue-900 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-blue-100 transition-all"
                     >
