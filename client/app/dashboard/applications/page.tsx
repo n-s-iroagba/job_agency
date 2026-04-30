@@ -23,6 +23,10 @@ export default function ApplicationsListPage() {
         ['applications', 'list'],
         '/applications'
     );
+    const { data: userData } = useApiQuery<any>(['auth', 'me'], '/auth/me');
+
+    const user = userData?.user;
+    const isProfileIncomplete = user && !(user.fullName && user.phoneNumber && user.nationality);
 
     const activeCount = data?.rows.filter(a => a.status === 'Active').length || 0;
 
@@ -34,6 +38,26 @@ export default function ApplicationsListPage() {
                 <h1 className="text-3xl font-bold text-blue-900 tracking-tight">Active Hub</h1>
                 <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Track your progress and active career paths</p>
             </div>
+
+            {isProfileIncomplete && (
+                <div className="mb-12 p-6 bg-blue-900 text-white rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-blue-900/20">
+                    <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                            <span className="material-symbols-outlined text-white">person_edit</span>
+                        </div>
+                        <div>
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-300">Profile Integrity Alert</h4>
+                            <p className="text-sm font-bold tracking-tight">Your professional biodata is incomplete. This may affect your recruitment priority.</p>
+                        </div>
+                    </div>
+                    <Link 
+                        href={`${CONSTANTS.ROUTES.PROFILE}?redirect=/dashboard/applications`}
+                        className="bg-white text-blue-900 px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-blue-50 transition-all shrink-0"
+                    >
+                        Reconcile Now
+                    </Link>
+                </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                 <div className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm flex flex-col gap-1">

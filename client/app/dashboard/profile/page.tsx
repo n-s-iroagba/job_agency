@@ -11,6 +11,7 @@ function ProfileContent() {
     const redirectPath = searchParams.get('redirect');
     const { data, isLoading, refetch } = useApiQuery<any>(['auth', 'me'], '/auth/me');
     const [successMessage, setSuccessMessage] = useState(false);
+    const [showErrorPopup, setShowErrorPopup] = useState(false);
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -103,7 +104,7 @@ function ProfileContent() {
         if (!formData.address.trim()) newErrors.address = 'Residential address is required.';
         if (!formData.city.trim()) newErrors.city = 'City is required.';
         if (!formData.state.trim()) newErrors.state = 'State/Province is required.';
-        if (!formData.country.trim()) newErrors.country = 'Country is required.';
+        if (!formData.countryOfResidence.trim()) newErrors.countryOfResidence = 'Country of Residence is required.';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -117,6 +118,7 @@ function ProfileContent() {
             };
             updateProfileMutation.mutate(submissionData);
         } else {
+            setShowErrorPopup(true);
             // Scroll to first error
             const firstErrorField = Object.keys(errors)[0];
             if (firstErrorField) {
@@ -141,6 +143,43 @@ function ProfileContent() {
                 <div className="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
                     <span className="material-symbols-outlined text-emerald-500">check_circle</span>
                     <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">Profile Updated Successfully {redirectPath ? '— Redirecting...' : '— Returning to Dashboard'}</p>
+                </div>
+            )}
+
+            {showErrorPopup && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-blue-900/40 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-10 shadow-2xl border border-red-100 text-center space-y-8 animate-in zoom-in-95 duration-300">
+                        <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto text-red-500">
+                            <span className="material-symbols-outlined text-4xl">warning</span>
+                        </div>
+                        <div className="space-y-4">
+                            <h2 className="text-2xl font-black text-blue-900 uppercase tracking-tight">Identity Audit Failed</h2>
+                            <p className="text-[11px] text-blue-500 font-medium leading-relaxed italic px-4">
+                                Several professional identity nodes are missing or invalid. Please reconcile all highlighted fields to proceed.
+                            </p>
+                            <div className="bg-red-50/50 p-4 rounded-xl border border-red-50 text-left">
+                                <ul className="space-y-2">
+                                    {Object.values(errors).slice(0, 3).map((err, i) => (
+                                        <li key={i} className="text-[9px] font-bold text-red-600 uppercase tracking-widest flex items-center gap-2">
+                                            <span className="w-1 h-1 bg-red-400 rounded-full" />
+                                            {err}
+                                        </li>
+                                    ))}
+                                    {Object.keys(errors).length > 3 && (
+                                        <li className="text-[9px] font-bold text-red-400 uppercase tracking-widest italic pt-1 border-t border-red-100/50">
+                                            + {Object.keys(errors).length - 3} more discrepancies detected
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                        </div>
+                        <button 
+                            onClick={() => setShowErrorPopup(false)}
+                            className="w-full bg-blue-900 text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-blue-900/10 hover:bg-blue-800 transition-all"
+                        >
+                            Reconcile Profile
+                        </button>
+                    </div>
                 </div>
             )}
 
