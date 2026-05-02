@@ -86,7 +86,8 @@ export function PushNotificationManager() {
             setIsSubscribed(true);
         } catch (error) {
             console.error('[Push] Subscription failed:', error);
-            alert('Failed to enable push notifications. Please try again.');
+            // Fail silently and hide the prompt to avoid annoying the user
+            setIsSubscribed(true);
         } finally {
             setIsLoading(false);
         }
