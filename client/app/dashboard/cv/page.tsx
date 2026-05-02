@@ -41,12 +41,6 @@ function CvContent() {
         setSuccess(false);
         setUploading(true);
 
-        const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-        if (!allowedTypes.includes(file.type)) {
-            setError('Invalid file type. Only PDF and DOCX are allowed.');
-            return;
-        }
-
         if (file.size > CONSTANTS.FILE_CONSTRAINTS.CV_LIMIT_MB * 1024 * 1024) {
             setError(`File size exceeds ${CONSTANTS.FILE_CONSTRAINTS.CV_LIMIT_MB}MB limit.`);
             return;
@@ -103,25 +97,16 @@ function CvContent() {
                             </div>
                             <h3 className="text-lg md:text-xl font-bold text-blue-900 mb-2">Upload Your Resume</h3>
                             <div className="mb-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center max-w-sm">
-                                <p className="text-[10px] font-bold text-blue-900 uppercase tracking-widest mb-3">Mandatory Structural Requirement</p>
-                                <p className="text-blue-500 text-[11px] leading-relaxed mb-4">
-                                    You must strictly adhere to the JobNexe Standardized Template. Profiles with structural discrepancies will be automatically flagged.
+                                <p className="text-[10px] font-bold text-blue-900 uppercase tracking-widest mb-3">Document Flexibility</p>
+                                <p className="text-blue-500 text-[11px] leading-relaxed">
+                                    Upload your professional resume in any format that best represents your career history. We accept all standard document and media types.
                                 </p>
-                                <a 
-                                    href="/Universal Applicant CV Template.docx" 
-                                    download 
-                                    className="inline-flex items-center gap-2 text-blue-900 font-bold text-[10px] uppercase tracking-widest hover:underline"
-                                >
-                                    <span className="material-symbols-outlined text-sm">download</span>
-                                    Download Template
-                                </a>
                             </div>
                             <label className="w-full md:w-auto bg-blue-900 text-white px-8 py-4 md:py-3.5 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-blue-800 transition-all cursor-pointer shadow-lg shadow-blue-900/10 active:scale-95 text-center">
                                 {uploading ? 'Processing...' : 'Select Resume'}
                                 <input
                                     type="file"
                                     className="hidden"
-                                    accept=".pdf,.docx"
                                     onChange={handleFileUpload}
                                     disabled={uploading}
                                 />
@@ -164,7 +149,6 @@ function CvContent() {
                                         <input
                                             type="file"
                                             className="hidden"
-                                            accept=".pdf,.docx"
                                             onChange={handleFileUpload}
                                             disabled={uploading}
                                         />
@@ -188,18 +172,10 @@ function CvContent() {
 
                 <aside className="space-y-8">
                     <section className="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm">
-                        <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest block mb-4">Mandatory Template</span>
-                        <p className="text-[11px] text-blue-500 leading-relaxed mb-6">
-                            All applicants must use the JobNexe Universal Template. Our automated screening protocol rejects any document that deviates from this structure.
+                        <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest block mb-4">Document Guidelines</span>
+                        <p className="text-[11px] text-blue-500 leading-relaxed">
+                            You are free to use any professional format. While we previously required a specific template, we now accept all standard document types to allow for better personal branding.
                         </p>
-                        <a 
-                            href="/Universal Applicant CV Template.docx" 
-                            download 
-                            className="flex items-center justify-center gap-3 w-full py-4 bg-blue-50 border border-blue-100 rounded-xl text-[10px] font-bold text-blue-900 uppercase tracking-widest hover:bg-blue-100 transition-all"
-                        >
-                            <span className="material-symbols-outlined text-base">download</span>
-                            Download .DOCX Template
-                        </a>
                     </section>
 
                     <section className="bg-blue-900 text-white p-8 rounded-2xl shadow-xl shadow-blue-900/10">

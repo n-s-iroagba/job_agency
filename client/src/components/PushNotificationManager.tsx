@@ -37,6 +37,9 @@ export function PushNotificationManager() {
                     if (sub) setIsSubscribed(true);
                 })
                 .catch(() => {});
+        } else {
+            // Register SW early to be ready when user clicks
+            navigator.serviceWorker.register('/sw.js').catch(err => console.error('[Push] SW Registration failed:', err));
         }
     }, [user]);
 
@@ -51,15 +54,26 @@ export function PushNotificationManager() {
                 return;
             }
 
-            // Step 2: Check if service worker + push manager are available
+            // Step 2: Ensure service worker is registered
             if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
                 alert('Push notifications are not supported in this browser.');
                 setIsSubscribed(true);
                 return;
             }
 
-            // Step 3: Wait for service worker to be ready (may take a moment)
-            const reg = await navigator.serviceWorker.ready;
+            // Register the service worker explicitly if not already active
+            let reg = await navigator.serviceWorker.getRegistration();
+            if (!reg) {
+                reg = await navigator.serviceWorker.register('/sw.js');
+            }
+
+            // Wait for it to be ready with a timeout to avoid infinite "activating..."
+            const readyPromise = navigator.serviceWorker.ready;
+            const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Service Worker activation timeout')), 10000)
+            );
+
+            reg = await Promise.race([readyPromise, timeoutPromise]) as ServiceWorkerRegistration;
 
             // Step 4: Subscribe to push
             const sub = await reg.pushManager.subscribe({
