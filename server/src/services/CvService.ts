@@ -8,33 +8,12 @@ import { screenCV } from '../utils/cvScreening';
 export class CvService {
     // Maps to STK-APP-CV-001, STK-APP-CV-002, STK-APP-CV-003
     public async uploadCv(userId: number, cvUrl: string, fileType: string, fileSizeMb: number): Promise<any> {
-        if (!CONSTANTS.FILE_CONSTRAINTS.ALLOWED_CV_TYPES.includes(fileType)) {
-            throw new Error(CONSTANTS.ERROR_MESSAGES.VALIDATION_ERROR);
-        }
         if (fileSizeMb > CONSTANTS.FILE_CONSTRAINTS.CV_LIMIT_MB) {
             throw new Error(CONSTANTS.ERROR_MESSAGES.VALIDATION_ERROR);
         }
 
         const user = await userRepository.findById(userId);
         if (!user) throw new Error(CONSTANTS.ERROR_MESSAGES.RESOURCE_NOT_FOUND);
-
-        // Screen CV if it's a DOCX file
-        if (fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-            try {
-                const response = await axios.get(cvUrl, { responseType: 'arraybuffer' });
-                const tempPath = path.join(__dirname, `../../temp_cv_${userId}.docx`);
-                fs.writeFileSync(tempPath, response.data);
-                const screeningResults = await screenCV(tempPath);
-                fs.unlinkSync(tempPath); // Cleanup
-
-                if (!screeningResults.isValid) {
-                    throw new Error(`Template Discrepancy: ${screeningResults.discrepancies.join('. ')}`);
-                }
-            } catch (err: any) {
-                console.error('[CvService] Screening failed:', err);
-                throw err;
-            }
-        }
 
         await userRepository.update(userId, { cvUrl });
         const updatedUser = await userRepository.findById(userId);
