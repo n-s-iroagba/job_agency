@@ -1,0 +1,22 @@
+{
+  "name": "job-agency",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JobNexe — Multi-role job placement platform",
+  "scripts": {
+    "_prepare": "cp -f .hooks/* .git/hooks/ 2>/dev/null; chmod +x .git/hooks/* 2>/dev/null || true",
+    "lint:client": "cd client && npx eslint . --max-warnings 0",
+    "lint:server": "cd server && npx eslint . --max-warnings 0",
+    "lint": "npm run lint:client && npm run lint:server",
+    "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "typecheck:client": "cd client && npx tsc --noEmit",
+    "typecheck:server": "cd server && npx tsc --noEmit",
+    "typecheck": "npm run typecheck:client && npm run typecheck:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "build": "npm run build:client && npm run build:server",
+    "test:server": "cd server && npm test",
+    "test:e2e": "cd client && npm run test:e2e"
+  }
+}
