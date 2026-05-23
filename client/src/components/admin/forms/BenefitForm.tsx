@@ -13,7 +13,7 @@ interface BenefitFormProps {
 
 export default function BenefitForm({ initialData, isEdit = false }: BenefitFormProps) {
     const router = useRouter();
-    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories?limit=1000');
     const categories = categoriesResult?.rows || [];
 
     const [type, setType] = useState(initialData?.benefitType || 'Salary & Wages');

@@ -13,7 +13,7 @@ interface JobFormProps {
 
 export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     const router = useRouter();
-    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories?limit=1000');
     const categories = categoriesResult?.rows || [];
 
     const { data: benefitsResult } = useApiQuery<{ rows: JobBenefit[], count: number }>(['admin', 'benefits'], '/admin/benefits');
