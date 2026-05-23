@@ -35,7 +35,19 @@ infoTransporter.verify((error, success) => {
 
 console.log(`[EmailUtil] SMTP Decoupled Transporters Initialized.`);
 
+const cleanHtmlContent = (content: string): string => {
+    let cleaned = content.trim();
+    if (cleaned.startsWith('<p>') && cleaned.endsWith('</p>')) {
+        const inner = cleaned.slice(3, -4).trim();
+        if (/<(p|div|ul|ol|li|h[1-6]|table|blockquote|pre)/i.test(inner)) {
+            cleaned = inner;
+        }
+    }
+    return cleaned;
+};
+
 const getStandardEmailTemplate = (subject: string, content: string) => {
+    const cleanedContent = cleanHtmlContent(content);
     return `
     <!DOCTYPE html>
     <html>
@@ -62,7 +74,7 @@ const getStandardEmailTemplate = (subject: string, content: string) => {
             <div class="content">
                 <h1>${subject}</h1>
                 <div style="font-size: 15px; font-weight: 500;">
-                    ${content}
+                    ${cleanedContent}
                 </div>
             </div>
             <div class="footer">

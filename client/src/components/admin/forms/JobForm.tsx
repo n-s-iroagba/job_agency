@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApiMutation, useApiQuery } from '@/lib/hooks';
 import Link from 'next/link';
@@ -42,6 +42,20 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
     const [company, setCompany] = useState(initialData?.company || '');
     const [visaSponsorship, setVisaSponsorship] = useState(initialData?.visaSponsorship || false);
 
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [categorySearch, setCategorySearch] = useState('');
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
@@ -73,6 +87,10 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!categoryId) {
+            alert('Please select a category.');
+            return;
+        }
         try {
             await mutation.mutateAsync({
                 title,
@@ -112,19 +130,72 @@ export default function JobForm({ initialData, isEdit = false }: JobFormProps) {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-2">
+                        <div className="space-y-2 relative" ref={dropdownRef}>
                             <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Category</label>
-                            <select
-                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none appearance-none"
-                                value={categoryId}
-                                onChange={(e) => setCategoryId(e.target.value)}
-                                required
+                            <button
+                                type="button"
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="w-full px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-900 focus:bg-white focus:ring-2 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none text-left flex justify-between items-center"
                             >
-                                <option value="">Select Category</option>
-                                {categories.map(cat => (
-                                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                ))}
-                            </select>
+                                <span>
+                                    {categories.find(c => c.id.toString() === categoryId.toString())?.name || 'Select Category'}
+                                </span>
+                                <span className="material-symbols-outlined text-sm text-blue-400 transition-transform duration-200" style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'none' }}>
+                                    keyboard_arrow_down
+                                </span>
+                            </button>
+
+                            {isDropdownOpen && (
+                                <div className="absolute z-50 w-full mt-1 bg-white border border-blue-200 rounded-xl shadow-xl p-2 space-y-2">
+                                    <div className="flex items-center gap-2 px-2 py-1.5 bg-blue-50/50 rounded-lg border border-blue-100">
+                                        <span className="material-symbols-outlined text-sm text-blue-400">search</span>
+                                        <input
+                                            type="text"
+                                            className="w-full bg-transparent text-xs outline-none text-blue-900 placeholder:text-blue-300 font-semibold"
+                                            placeholder="Search categories..."
+                                            value={categorySearch}
+                                            onChange={(e) => setCategorySearch(e.target.value)}
+                                        />
+                                        {categorySearch && (
+                                            <button type="button" onClick={() => setCategorySearch('')} className="text-blue-400 hover:text-blue-950">
+                                                <span className="material-symbols-outlined text-xs">close</span>
+                                            </button>
+                                        )}
+                                    </div>
+                                    <div className="max-h-48 overflow-y-auto space-y-1 pr-1 scrollbar-thin">
+                                        {categories
+                                            .filter(cat => cat.name.toLowerCase().includes(categorySearch.toLowerCase()))
+                                            .map(cat => {
+                                                const isSelected = cat.id.toString() === categoryId.toString();
+                                                return (
+                                                    <button
+                                                        key={cat.id}
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setCategoryId(cat.id.toString());
+                                                            setIsDropdownOpen(false);
+                                                            setCategorySearch('');
+                                                        }}
+                                                        className={`w-full text-left px-3 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all flex justify-between items-center ${
+                                                            isSelected 
+                                                            ? 'bg-blue-900 text-white shadow-md' 
+                                                            : 'text-blue-900 hover:bg-blue-50/70'
+                                                        }`}
+                                                    >
+                                                        <span>{cat.name}</span>
+                                                        {isSelected && (
+                                                            <span className="material-symbols-outlined text-xs text-blue-200">check</span>
+                                                        )}
+                                                    </button>
+                                                );
+                                            })}
+                                        {categories.filter(cat => cat.name.toLowerCase().includes(categorySearch.toLowerCase())).length === 0 && (
+                                            <p className="text-[10px] text-blue-400 font-bold text-center py-4 uppercase tracking-widest">No categories match</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                            <input type="hidden" name="categoryId" value={categoryId} required />
                         </div>
                         <div className="space-y-2">
                             <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Employment Type</label>

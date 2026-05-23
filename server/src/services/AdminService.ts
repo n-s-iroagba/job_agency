@@ -204,10 +204,12 @@ export class AdminService {
 
         // Optionally create push notification — ONLY if a user record exists
         if (sendPushNotification && user) {
+            const isHtml = /<[a-z][\s\S]*>/i.test(message);
+            const cleanNotificationMsg = isHtml ? message.replace(/<[^>]*>/g, '') : message;
             await notificationRepository.create({
                 userId: (user as any).id,
                 subject,
-                message,
+                message: cleanNotificationMsg,
                 type: 'ADMIN',
             });
         }

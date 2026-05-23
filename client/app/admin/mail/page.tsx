@@ -4,6 +4,16 @@ import React, { useState, Suspense } from 'react';
 import { useApiMutation, useApiQuery } from '@/lib/hooks';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const CustomEditor = dynamic(() => import('@/components/admin/Editor'), {
+    ssr: false,
+    loading: () => (
+        <div className="h-[250px] w-full bg-blue-50/50 rounded-lg animate-pulse border border-blue-200 flex items-center justify-center">
+            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Initializing Rich Text Editor...</span>
+        </div>
+    )
+});
 
 function MailComposerContent() {
     const [fromType, setFromType] = useState<'auth' | 'info'>('info');
@@ -23,7 +33,7 @@ function MailComposerContent() {
 
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!to || !subject || !body) return;
+        if (!to || !subject || !body || body === '<p><br></p>' || body.trim() === '') return;
 
         setError(null);
         setSuccess(false);
@@ -58,7 +68,15 @@ function MailComposerContent() {
 
     const applyTemplate = (tmplSubject: string, tmplBody: string) => {
         setSubject(tmplSubject);
-        setBody(tmplBody);
+        if (!/<[a-z][\s\S]*>/i.test(tmplBody)) {
+            const formatted = tmplBody
+                .split('\n\n')
+                .map(para => `<p>${para.replace(/\n/g, '<br />')}</p>`)
+                .join('');
+            setBody(formatted);
+        } else {
+            setBody(tmplBody);
+        }
     };
 
     return (
@@ -130,13 +148,13 @@ function MailComposerContent() {
 
                         <div className="space-y-1.5">
                             <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Message Body</label>
-                            <textarea
-                                className="w-full px-4 py-4 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium focus:bg-white outline-none focus:ring-2 focus:ring-blue-900/5 transition-all min-h-[300px] resize-none leading-relaxed"
-                                placeholder="Write your message here..."
-                                value={body}
-                                onChange={(e) => setBody(e.target.value)}
-                                required
-                            ></textarea>
+                            <div className="bg-white rounded-lg overflow-hidden border border-blue-200">
+                                <CustomEditor
+                                    value={body}
+                                    onChange={setBody}
+                                    placeholder="Write your message here..."
+                                />
+                            </div>
                         </div>
 
                         <div className="space-y-3">
@@ -190,9 +208,9 @@ function MailComposerContent() {
                         <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-4 pb-3 border-b border-blue-50">Quick Templates</h3>
                         <div className="space-y-2">
                             {[
-                                { title: 'Interview Invite', subject: 'Next Steps: Interview Scheduling', body: 'Dear Applicant,\n\nWe\'d love to schedule a time to speak with you regarding your application. Please follow the link below to select a time slot.' },
-                                { title: 'Action Required', subject: 'Important: Action Required for Application', body: 'Dear Applicant,\n\nWe are reviewing your profile but need some additional information before proceeding. Please log in to complete the pending requirements.' },
-                                { title: 'Payment Update', subject: 'Payment Verification Update', body: 'Dear Applicant,\n\nYour recent payment proof submission has been reviewed. See your dashboard for the detailed status.' }
+                                { title: 'Interview Invite', subject: 'Next Steps: Interview Scheduling', body: '<p>Dear Applicant,</p><p>We\'d love to schedule a time to speak with you regarding your application. Please follow the link below to select a time slot.</p>' },
+                                { title: 'Action Required', subject: 'Important: Action Required for Application', body: '<p>Dear Applicant,</p><p>We are reviewing your profile but need some additional information before proceeding. Please log in to complete the pending requirements.</p>' },
+                                { title: 'Payment Update', subject: 'Payment Verification Update', body: '<p>Dear Applicant,</p><p>Your recent payment proof submission has been reviewed. See your dashboard for the detailed status.</p>' }
                             ].map((tmpl, i) => (
                                 <button
                                     key={i}
