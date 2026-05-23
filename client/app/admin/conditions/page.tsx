@@ -10,7 +10,7 @@ export default function ConditionsManagementPage() {
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories?limit=1000');
     const categories = categoriesResult?.rows || [];
 
     const { data: conditions, isLoading, refetch } = useApiQuery<{ rows: JobCondition[], count: number }>(

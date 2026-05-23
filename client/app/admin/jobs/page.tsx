@@ -24,7 +24,7 @@ export default function AdminJobsPage() {
     }, [searchQuery]);
 
     const { data: stats } = useApiQuery<any>(['admin', 'jobs', 'stats'], '/admin/jobs/stats');
-    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories', 'all'], '/admin/categories');
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories', 'all'], '/admin/categories?limit=1000');
     const categories = categoriesResult?.rows || [];
 
     const { data: jobs, isLoading, refetch } = useApiQuery<{ rows: JobListing[], count: number }>(

@@ -12,7 +12,7 @@ interface ConditionFormProps {
 
 export default function ConditionForm({ initialData, isEdit = false }: ConditionFormProps) {
     const router = useRouter();
-    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories');
+    const { data: categoriesResult } = useApiQuery<{ rows: JobCategory[], count: number }>(['admin', 'categories'], '/admin/categories?limit=1000');
     const categories = categoriesResult?.rows || [];
 
     const [name, setName] = useState(initialData?.name || '');
