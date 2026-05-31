@@ -24,6 +24,7 @@ function MailComposerContent() {
     const [attachments, setAttachments] = useState<File[]>([]);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [editorMode, setEditorMode] = useState<'rich' | 'html'>('rich');
 
     const { mutateAsync: sendMail, isPending: sending } = useApiMutation<any, any>('post', '/admin/mail');
 
@@ -147,13 +148,40 @@ function MailComposerContent() {
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest px-1">Message Body</label>
+                            <div className="flex justify-between items-center px-1 mb-1">
+                                <label className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Message Body</label>
+                                <div className="flex gap-2 bg-blue-50 p-1 rounded-lg border border-blue-100">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditorMode('rich')}
+                                        className={`px-3 py-1 rounded text-[9px] font-bold uppercase tracking-wider transition-all ${editorMode === 'rich' ? 'bg-blue-900 text-white shadow-sm' : 'text-blue-400 hover:text-blue-900'}`}
+                                    >
+                                        Rich Editor
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditorMode('html')}
+                                        className={`px-3 py-1 rounded text-[9px] font-bold uppercase tracking-wider transition-all ${editorMode === 'html' ? 'bg-blue-900 text-white shadow-sm' : 'text-blue-400 hover:text-blue-900'}`}
+                                    >
+                                        Plain HTML (Canva)
+                                    </button>
+                                </div>
+                            </div>
                             <div className="bg-white rounded-lg overflow-hidden border border-blue-200">
-                                <CustomEditor
-                                    value={body}
-                                    onChange={setBody}
-                                    placeholder="Write your message here..."
-                                />
+                                {editorMode === 'rich' ? (
+                                    <CustomEditor
+                                        value={body}
+                                        onChange={setBody}
+                                        placeholder="Write your message here..."
+                                    />
+                                ) : (
+                                    <textarea
+                                        value={body}
+                                        onChange={(e) => setBody(e.target.value)}
+                                        placeholder="Paste your raw HTML email here (e.g. Canva export)..."
+                                        className="w-full h-[250px] p-4 bg-white border-0 text-sm font-mono focus:outline-none focus:ring-0 resize-y text-blue-900"
+                                    />
+                                )}
                             </div>
                         </div>
 

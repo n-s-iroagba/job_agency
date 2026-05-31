@@ -47,6 +47,10 @@ const cleanHtmlContent = (content: string): string => {
 };
 
 const getStandardEmailTemplate = (subject: string, content: string) => {
+    const trimmed = content.trim();
+    if (/^\s*<!DOCTYPE\s+html/i.test(trimmed) || /<html/i.test(trimmed) || /<body/i.test(trimmed)) {
+        return content;
+    }
     const cleanedContent = cleanHtmlContent(content);
     return `
     <!DOCTYPE html>

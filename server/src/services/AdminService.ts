@@ -199,7 +199,8 @@ export class AdminService {
 
         // Send email — STK-ADM-APP-003 (Always send if we have an email)
         if (targetEmail) {
-            await sendEmailFrom(fromType, targetEmail, subject, `<p>${message}</p>`, attachments);
+            const formattedMessage = /<[a-z][\s\S]*>/i.test(message) ? message : `<p>${message}</p>`;
+            await sendEmailFrom(fromType, targetEmail, subject, formattedMessage, attachments);
         }
 
         // Optionally create push notification — ONLY if a user record exists
